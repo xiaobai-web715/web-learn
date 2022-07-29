@@ -1,0 +1,35 @@
+@import '../../public/scss/public.scss';
+.loading-content{
+    width: 100px;
+    height: 100px;
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    z-index:10;
+    background-color: $color-0;
+    opacity: 0.9;
+    @keyframes loading{
+        0%{transform: rotate(0);}
+        50%{transform: rotate(180deg);}
+        100%{transform: rotate(360deg);}
+    }
+    .content{
+        //目的解决transform与animation同时使用失效的问题
+        height: 50%;
+        width: 50%;
+        position:absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        .image{
+            height: 100%;
+            width: 100%;
+            background-size:100% 100%;
+            // 默认情况下webpack无法处理css样式当中的url地址(无论是图片还是字体库,要使用url-loader进行图片url的处理)
+            background-image: url('../.././image/components/Loading/loading_b_2.png');
+            background-repeat: no-repeat;
+            animation:loading 2s linear infinite;
+        }
+    }
+}
