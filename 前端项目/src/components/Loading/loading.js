@@ -1,12 +1,13 @@
 import React from 'react'
 import './loading.scss'
+const Css = require('./loading.scss')
 
-const LoadingIndex = (props) => {
+const LoadingIndex = () => {
     return(
         <>
-            <div className='loading-content'>
-                <div className='content'>
-                    <div className='image'></div>
+            <div className={Css['loading-content']}>
+                <div className={Css['content']}>
+                    <div className={Css['image']}></div>
                 </div>
             </div>
         </>

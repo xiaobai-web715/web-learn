@@ -10,9 +10,17 @@ const server = app.listen(3001, () => {
 app.get('/', (req, res) => {
     res.send(JSON.stringify({firstName: 'liu', lastName: 'xinghua'}));
     console.log('当前进程的PID', process.pid); //目前不清楚在别的应用程序中这个进程的PID如何获取
-    process.kill(process.pid , 'SIGTERM');
+    // process.kill(process.pid , 'SIGTERM');
 })
-
+app.get('/todoList', (req, res) => {
+    res.send(JSON.stringify({
+        list: [
+            {takeId: 1, value: '吃饭'},
+            {takeId: 2, value: '睡觉'},
+            {taskId: 3, value: '打豆豆'},
+        ]
+    }))
+})
 //nodejs想要退出程序 => 最直接的写法就是process.exit() => 但这对于http服务器来说这样会终止一切正在等待的请求
                  //  => 所以可以通过发出信号的方式去执行 SIGTEMR 
                  //  => 这个就相当于发布订阅模式(在此处发布,其余地方订阅后这里去执行)
