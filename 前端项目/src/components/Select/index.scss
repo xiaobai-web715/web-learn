@@ -1,0 +1,105 @@
+//目前因为title与item以及value为了满足js中计算宽度的情况(item与value的line-height比title大1，border少1，导致下拉框产生的时候字体的位置会有一个些许的抖动)
+//还并没有兼容rem的情况(目前定的是一个死值)
+.mask{
+    position:absolute;
+    width:100%;
+    z-index:2;
+    display:none;
+    top:0;
+    left:0;
+    background-color: rgba(0,0,0,0.5);
+    &.show{
+        display:block;
+    }
+}
+.box{
+    color:#999999;
+    //无论是title还是item还是value =》line-height+border[top|bottom]的值相等即可
+    //不要用height(目前的想法就是这样可以实现换行，一旦height确定下来那就没法换行了)
+    .title{
+        position:relative;//目的就是给::after中的定位提供一个参照对象
+        border-radius: 4px;
+        border : 1px solid #DDDDDD;
+        width : 343px;
+        background-color:#FFFFFF;
+        line-height:32px;
+        padding-left:10px;
+        &::after{
+            content:"";
+            display:block;
+            right:8px;
+            top:50%;
+            transform: translate(0 , -25%);
+            position:absolute;
+            // width:16px;
+            // height:16px;
+            // background-color:#999999;
+            //生成一个三角形
+            border:8px solid #999999;
+            border-right-color:transparent;
+            border-left-color:transparent;
+            border-bottom:0;
+        }
+    }
+    .select{
+        border-radius: 4px;
+        background-color:#FFFFFF;
+        border : 1px solid #DDDDDD;
+        visibility:hidden;//这里不用display:none的目的就是为了能够成功给滚动轴进行定位
+        position:absolute;
+        z-index:4;
+        &.show{
+            visibility:visible;
+        }
+        &.borderBottom{
+            border-bottom:0;
+        }&.borderTop{
+            border-top:0;
+        }
+        .content{
+            overflow-y: scroll;
+            .item{
+                padding-left:10px;
+                line-height:33px;
+                width : 343px;
+                &.borderBottom{
+                    border-bottom:1px solid #DDDDDD;
+                }
+                &.borderTop{
+                    border-top:1px solid #DDDDDD;
+                }
+            }
+            &::-webkit-scrollbar{
+                display:none; //这里可以让浏览器默认的滚动条消失
+            }
+        }
+        .value{
+            position:relative;
+            padding-left:10px;
+            line-height:33px;
+            width : 343px;
+            &.borderBottom{
+                border-bottom:1px solid #DDDDDD;
+            }
+            &.borderTop{
+                border-top:1px solid #DDDDDD;
+            }
+            &::after{
+                content:"";
+                display:block;
+                right:8px;
+                top:50%;
+                transform: translate(0 , -75%);
+                position:absolute;
+                // width:16px;
+                // height:16px;
+                // background-color:#999999;
+                //生成一个三角形
+                border:8px solid #999999;
+                border-right-color:transparent;
+                border-left-color:transparent;
+                border-top:0;
+            }
+        }
+    }
+}

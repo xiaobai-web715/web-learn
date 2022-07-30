@@ -1,43 +1,28 @@
-import React, {useEffect, useState} from 'react'
-import Loading from './components/Loading/loading'
-// axios会自动转换 JSON 数据
-import axios from 'axios'
+import React from 'react'
+import { useNavigate , Routes , Route} from 'react-router-dom';
+// import './App.scss'
+import SelectIndex from './view/SelectContent/index';
+const Css = require('./App.scss')
 
-const App = () => {
-    const [value, setValue] = useState({});
-    const [loading, setLoading] = useState(true);
-    //现在要模拟一个东西(就是我的请求放在useEffect里面),顺序执行逻辑用到这个值
-    const valueData = (value) => {
-        console.log('value', value);
-        if(value.status === 200){
-            return value.data;
-        }else{
-            throw new Error('请求出错');
-        }
+const App = (props) => {
+    console.log('props', props);
+    const navigate = useNavigate()
+    const goPage = (url) => {
+        navigate(url);
     }
-    useEffect(() => {
-        const request = () => {
-            axios.get('api').then(valueData).then((res) => {
-                setValue(res); //这里将状态进行更新
-                setLoading(false);
-            }).catch((err) => {
-                console.log('err', err);
-            })
-        }
-        request()
-    }, []);
-    //对于react来说本身的setValue是在render之前(也就是不能够立即访问到相应的变化)
-    return (
-        <>
-            <button>点击发起请求</button>
-            {
-                loading ?  
-                <div className='loading'>
-                    <Loading></Loading>
-                </div> : ''
-            } 
-        </>
-    )
+    return(
+        <React.Fragment>
+            <div className={Css['page']}>
+                <div className={Css['tabnv']}>
+                    <div onClick={goPage.bind(null, 'select')}>下拉框</div>
+                </div>
+                <div className={Css['content']}>
+                    <Routes>
+                        <Route path="/select" element={<SelectIndex></SelectIndex>}></Route>
+                    </Routes>
+                </div>
+            </div>
+        </React.Fragment>
+    );
 }
-
-export default App
+export default App;

@@ -1,3 +1,17 @@
-// .loading{
-//     width:
-// }
+.page{
+    .tabnv{
+        position:fixed;
+        left:0;
+        border-right:1px solid black;
+        div{
+            width: 100px;
+            line-height: 34px;
+            padding-left:10px;
+            background-image: linear-gradient(to right, #e4afcb 0%, #b8cbb8 0%, #b8cbb8 0%, #e2c58b 30%, #c2ce9c 64%, #7edbdc 100%);
+        }
+    }
+    .content{
+        padding-left:10px;
+        margin-left:111px;
+    }
+}

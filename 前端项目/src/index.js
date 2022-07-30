@@ -1,8 +1,6 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import App from './App'
+import {createRoot} from 'react-dom/client'
+import RouterIndex from './router/index'
+import './index.scss'
 
-ReactDOM.render(
-    <App/>,
-    document.getElementById('root')
-);
+createRoot(document.getElementById('root')).render(<RouterIndex/>)
