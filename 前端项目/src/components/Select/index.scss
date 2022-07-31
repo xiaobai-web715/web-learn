@@ -51,11 +51,11 @@
         &.show{
             visibility:visible;
         }
-        &.borderBottom{
-            border-bottom:0;
-        }&.borderTop{
-            border-top:0;
-        }
+        // &.borderBottom{
+        //     border-bottom:0;
+        // }&.borderTop{
+        //     border-top:0;
+        // }
         .content{
             overflow-y: scroll;
             .item{
@@ -78,12 +78,6 @@
             padding-left:10px;
             line-height:33px;
             width : 343px;
-            &.borderBottom{
-                border-bottom:1px solid #DDDDDD;
-            }
-            &.borderTop{
-                border-top:1px solid #DDDDDD;
-            }
             &::after{
                 content:"";
                 display:block;

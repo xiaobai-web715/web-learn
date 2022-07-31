@@ -15,8 +15,8 @@ app.get('/', (req, res) => {
 app.get('/todoList', (req, res) => {
     res.send(JSON.stringify({
         list: [
-            {takeId: 1, value: '吃饭'},
-            {takeId: 2, value: '睡觉'},
+            {taskId: 1, value: '吃饭'},
+            {taskId: 2, value: '睡觉'},
             {taskId: 3, value: '打豆豆'},
         ]
     }))

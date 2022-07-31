@@ -10,6 +10,7 @@ const Index = () => {
     const [loading, setLoading] = useState(true);
     const [targetValue, setTargetValue] = useStateCallBack('');
     const [list, setList] = useState([]);
+    const [checkValue, setCheckValue] = useState([]);
     const inputContent = useRef()
     const listFn = useCallback(() => {
         axios.get('/api/todoList').then((res) => {
@@ -33,42 +34,116 @@ const Index = () => {
                 // } //这里这个样子是拿不到最新值的 =》在平常的定时函数里面写回调拿外作用域的值每次调用都是一个赋值的过程。
                 // console.log('obj拿不到最新值', obj);
                 setList((state) => {
-                    objValue.current.taskId = state.length;
+                    objValue.current.taskId = state.length + 1;
                     return [...state, objValue.current];
                 })
             }
         })
     }, [])
     const target = (val) => {
-        if(typeof taskId !== 'undefined'){
-            //修改任务值 => 怎样不改变公共组件input达到
-        }else{
-            //新建
-            setTargetValue(val , (val) => {
-                objValue.current.value = val
-            });
+        //新建
+        setTargetValue(val , (val) => {
+            objValue.current.value = val
+        });
+    }
+    const checkStyle = (e) => {
+        // e.target.previousSibling.style = 'display: none'; //这样的情况也是可以实现的
+        if(Css['buttonExit'] === e.target.className){
+            e.target.style = 'display: none';
+            e.target.parentNode.firstChild.style = 'display: inline-block';
+            e.target.parentNode.firstChild.focus();
+            e.target.previousSibling.style = 'display: none'; 
         }
     }
+    const blur = (e, item) => {
+        e.target.nextSibling.style = 'display: inline-block';
+        e.target.style = 'display: none';
+        //然后控制对应的编辑button产生
+        let childs = e.target.parentNode.childNodes;
+        childs.forEach((node) => {
+            if(Css['buttonExit'] === node.className){
+                node.style = '';
+            }
+        })
+        if(e.target.value !== ''){
+            list.forEach((row) => {
+                if(row.taskId == item.taskId){
+                    row.value = e.target.value;
+                }
+            })
+        }else{
+            alert('任务不能为空');
+        }
+        setList([...list]);
+    }
+    const deleteWork = (row) => {
+        //confirm与alert一样
+        if(confirm('确认删除吗')){
+            let listTarget = list.filter((item) => {
+                return item.taskId !== row.taskId
+            })
+            listTarget.forEach((item, index) => {
+                item.taskId = index;
+            })
+            setList([...listTarget]);
+            //对checkValue的值进行判断
+            let checkValueCopy = checkValue.filter((item) => parseInt(item) !== parseInt(row.taskId));
+            setCheckValue([...checkValueCopy]);
+        }
+    }
+    const checkBox = (e) => {
+        let taskId = e.target.value;
+        let list = [...checkValue];
+        if(list.length === 0){
+            list.push(taskId);
+        }else{
+            let choose = checkValue.some((item) => parseInt(item) === parseInt(taskId))
+            if(choose){
+                list = checkValue.filter((item) => item !== taskId);
+            }else{
+                list.push(taskId);
+            }
+        }
+        setCheckValue([...list])
+    };
+    const deleteAll = () => {
+        let listTarget = list.filter((list) => {
+            let target = checkValue.some((item) => parseInt(item) === parseInt(list.taskId));
+            return !target;
+        })
+        setList([...listTarget]);
+        setCheckValue([]);
+    };
     return(
-        <React.Fragment>
+        <div className={Css['todoList']}>
             <div className={Css['header']}>
-                <Header refContent={inputContent} placeholder='添加任务' onChange={target}></Header>
+                <Header refContent={inputContent} placeholder='请输入你的任务名称 并按回车' onChange={target}></Header>
             </div>
-            <div className={Css['content']}>
+            {list.length > 0 ? <div className={Css['content']} onClick={checkStyle}>
                 {
                     list.map((item) => {
                         return(
-                            <Content key={item.value} defaultValue={item.value}></Content>
+                            <div className={Css['box']} key={item.value + item.taskId}>
+                                <Content defaultValue={item.value} onBlur={blur} row={item}></Content>
+                                <p>{item.value}</p>
+                                <button className={Css['buttonExit']}>编辑</button>
+                                <button className={Css['buttonDelete']} onClick={deleteWork.bind(null, item)}>删除</button>
+                                <input className={Css['checkout']} type='checkbox' value={item.taskId} onChange={checkBox}></input>
+                            </div>
                         )
                     })
                 }
+            </div> : ''}
+            <div className={Css['footer']}>
+                <div>{`已完成${checkValue.length} / 全部${list.length}`}</div>
+                <button className={Css['delete']} onClick={deleteAll}>清除已完成任务</button>
             </div>
             {
                 loading ? (
                     <Loading></Loading>
                 ) : ''
             }
-        </React.Fragment>
+        </div>
     )
 }
 export default Index;

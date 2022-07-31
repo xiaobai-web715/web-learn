@@ -84,7 +84,7 @@ const Select = (props) => {
             <div className={Css['box']}>
                 <div className={Css['title']} onClick={selectShow} ref={titleDOM}>{value}</div>
                 <div className={`${Css['select']} ${show ? Css['show'] : ''} ${reverse ? Css['borderBottom'] : Css['borderTop']}`} ref={selectDOM}>
-                    {!reverse ? <div className={`${Css['value']} ${reverse ? Css['borderBottom'] : Css['borderTop']}`} onClick={selectDisappear}>{value}</div> : ''}
+                    {!reverse ? <div className={`${Css['value']}`} onClick={selectDisappear}>{value}</div> : ''}
                     <div className={Css['content']} ref={selectContent}>
                         {
                             (reverse ? [...options].reverse() : options).map((item) => {
@@ -96,7 +96,7 @@ const Select = (props) => {
                             })
                         }
                     </div>
-                    {reverse ? <div className={`${Css['value']} ${reverse ? Css['borderBottom'] : Css['borderTop']}`} onClick={selectDisappear}>{value}</div> : ''}
+                    {reverse ? <div className={`${Css['value']}`} onClick={selectDisappear}>{value}</div> : ''}
                 </div>
             </div>
         </>
