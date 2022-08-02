@@ -1,5 +1,6 @@
 import React, { useEffect, useRef} from 'react'
 import PublishSubscribe from '../../components/publishSubscribe';
+const Css = require('./index.scss')
 
 const Index = () => {
     let iframe = useRef();
@@ -55,7 +56,9 @@ const Index = () => {
         }
     }, []);
     return(
-        <button onClick={goPage}>返回上一页</button>
+        <div className={Css['page']}>
+            <button onClick={goPage}>返回上一页</button>
+        </div>
     )
 }
 
