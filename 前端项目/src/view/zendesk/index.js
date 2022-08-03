@@ -1,6 +1,5 @@
 import React, { useEffect, useRef} from 'react'
 import PublishSubscribe from '../../components/publishSubscribe';
-const Css = require('./index.scss')
 
 const Index = () => {
     let iframe = useRef();
@@ -36,6 +35,7 @@ const Index = () => {
     const getZendesk = () => {
         iframe.current = document.querySelector('#webWidget');
         if(!iframe.current){
+            console.log('没找到是吗');
             return setTimeout(getZendesk, 500);
             // return getZendesk(); //这样的话这里会报栈溢出错误(用上面的延时函数的形式就不会有)
         }else{
@@ -56,7 +56,7 @@ const Index = () => {
         }
     }, []);
     return(
-        <div className={Css['page']}>
+        <div>
             <button onClick={goPage}>返回上一页</button>
         </div>
     )

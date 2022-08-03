@@ -15,8 +15,11 @@ const App = (props) => {
                     <div onClick={goPage.bind(null, 'select')}>下拉框</div>
                     <div onClick={goPage.bind(null, 'todoList')}>todoList</div>
                     <div onClick={goPage.bind(null, 'zendesk')}>zendesk</div>
+                    <div onClick={goPage.bind(null, 'CSS/charge')}>css充电动画</div>
                 </div>
-                <Outlet/>
+                <div className={Css['content']}>
+                    <Outlet/>
+                </div>
             </div>
         </React.Fragment>
     );

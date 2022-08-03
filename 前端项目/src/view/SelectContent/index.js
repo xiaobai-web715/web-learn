@@ -7,7 +7,7 @@ const Index = () => {
         alert(value) //适用组件的地方可以通过回调函数的方式获取到选择的值
     }
   return (
-    <div id='selectPage' className={Css['selectPage']}>
+    <div id='selectPage'>
         {/* Select可以接收的参数
                 options:代表你的下拉框中所需要的值 array //必传
                 num:代表当下拉框最多展示的长度(超过部分滚动,默认是6) number //非必传
