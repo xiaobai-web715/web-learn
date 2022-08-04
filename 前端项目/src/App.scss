@@ -1,4 +1,4 @@
-@import './public/scss/page.scss';
+@use './public/scss/page';
 .page{
     .tabnv{
         position:fixed;
@@ -14,6 +14,6 @@
         }
     }
     .content{
-        @extend %page;
+        @extend %page; //这里对scss文件进行导入好像也是会有名称污染的原因在
     }
 }
