@@ -3,6 +3,7 @@ import PublishSubscribe from '../../components/publishSubscribe';
 
 const Index = () => {
     let iframe = useRef();
+    let timeout = useRef();
     window.zESettings = {
         webWidget: {
             position: { horizontal: 'right', vertical: 'bottom' },
@@ -36,7 +37,8 @@ const Index = () => {
         iframe.current = document.querySelector('#webWidget');
         if(!iframe.current){
             console.log('没找到是吗');
-            return setTimeout(getZendesk, 500);
+            timeout.current =  setTimeout(getZendesk, 500);
+            return null;
             // return getZendesk(); //这样的话这里会报栈溢出错误(用上面的延时函数的形式就不会有)
         }else{
             console.log('iframe标签成功获取到');
@@ -53,6 +55,7 @@ const Index = () => {
         },0);
         return () => {
             window.zE('webWidget', 'logout');
+            clearTimeout(timeout.current);
         }
     }, []);
     return(

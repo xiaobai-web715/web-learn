@@ -4,9 +4,17 @@ const Css = require('./index.scss')
 const Index = () => {
   return (
     <div className={Css['page']}>
-        我初始就没陈宫
-        <div className={Css['source']}></div>
+        <div className={Css['source']}>
+          <div className={Css['content']}></div>
+          <div className={Css['filing']}>80%</div>
+        </div>
         <div className={Css['electric']}></div>
+        <div>
+          <div className={Css['bubble']}></div>
+          <div className={Css['bubble']}></div>
+          <div className={Css['bubble']}></div>
+          <div className={Css['bubble']}></div>
+        </div>
     </div>
   )
 }
