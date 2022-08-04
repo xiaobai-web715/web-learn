@@ -4,13 +4,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const appSrc = path.resolve(process.cwd(), 'src');
 // console.log(path.resolve(__dirname, '..' , 'src'));
 module.exports = {
+    // mode : 'production', webpack如何打包生产环境下的
     mode : 'development',
     entry : {
         app : './src/index.js',
         //app : path.resolve(__dirname, '..' ,'./src/index.js'), //这里改成绝对路径也没有用在处理history二级路由请求资源的时候
     },
     output : {
-        // publicPath: '/', //这样绝对路径的写法不知道会不会对打包后的引用资源造成错误(这个还有HtmlWebpackPlugin的public的引用资源加前缀的)
+        publicPath: '/', //这样绝对路径的写法不知道会不会对打包后的引用资源造成错误(这个还有HtmlWebpackPlugin的public的引用资源加前缀的)
         path : path.join(__dirname , '..' , 'dist'), //这里要使用绝对路径
         filename : '[name].js'
     },
@@ -54,9 +55,9 @@ module.exports = {
                 ]
             },
             {
-                test :[/\.png$/],
+                test :[/\.png$/, /\.jpeg$/],
                 exclude : /node_modules/,
-                use : ['url-loader']
+                use : ['url-loader', 'file-loader']
             }
         ]
     },
