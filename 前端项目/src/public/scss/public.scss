@@ -18,6 +18,12 @@ $border-50: 50% 50%;
     transform: translate(-50%, 0);
 }
 
+@mixin top-center{
+    top: 50%;
+    position: absolute;
+    transform: translate(0, -50%);
+}
+
 /*边距类 加这个是因为在@use之前用前面的@mixin会报错*/
 @mixin page{
     // sass中特殊的占位符选择器,仅能通过@extend延展来进行使用
