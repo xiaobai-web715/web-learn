@@ -18,7 +18,8 @@ const todoListReducer = createSlice({
                 ...state.value,
                 value : state.value - action.payload,
             }
-        }
+        },
+        
     }
 })
 export const {addValue, decrementValue} = todoListReducer.actions;

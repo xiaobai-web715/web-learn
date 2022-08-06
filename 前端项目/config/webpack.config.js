@@ -81,5 +81,5 @@ module.exports = {
         //contentBase: "./", //本地服务器所加载的页面所在的目录
         hot : true,
         port : 3000,
-    }
+    },
 }

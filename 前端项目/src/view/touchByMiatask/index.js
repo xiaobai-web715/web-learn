@@ -8,7 +8,21 @@ const Index = () => {
     const dispatch = useDispatch();
     const {value} = useSelector((state) => state.todoList);
     let preventDefaultFn = useCallback((e) => {e.preventDefault();}, [])
+    //异步的逻辑函数thunk action creators
+    const asyncFn = payload => (dispatch, getState) => {
+        console.log('dispatch', dispatch)
+        console.log('getState', getState)
+        return setTimeout(() => {dispatch(addValue(payload))}, 2000)
+    }
     useEffect(() => {
+        //我这里有一个异步逻辑并且要传入store仓库当中
+        // dispatch((dispatch, getState)  => setTimeout(() => {dispatch(addValue(20))}, 1000))
+        dispatch(asyncFn(100))
+        // dispatch((dispatch, getState) => {
+        //     console.log('dispatch', dispatch)
+        //     console.log('getState', getState)
+        //     return setTimeout(() => {dispatch(addValue(20))}, 1000)
+        // })
         document.addEventListener('contextmenu', preventDefaultFn)
         return(
             () => {

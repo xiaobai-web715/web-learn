@@ -17,6 +17,7 @@ const App = (props) => {
                     <div onClick={goPage.bind(null, 'zendesk')}>zendesk</div>
                     <div onClick={goPage.bind(null, 'touchByMiatask')}>点击事件防止误触</div>
                     <div onClick={goPage.bind(null, 'CSS/charge')}>css充电动画</div>
+                    <div onClick={goPage.bind(null, 'ReduxPosts')}>redux官网示例</div>
                 </div>
                 <div className={Css['content']}>
                     <Outlet/>
