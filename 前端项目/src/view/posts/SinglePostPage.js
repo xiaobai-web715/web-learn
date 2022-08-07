@@ -1,6 +1,7 @@
 import React from 'react';
 import {useParams, useNavigate, Link} from 'react-router-dom';
 import {useSelector} from 'react-redux'
+import { PostAuthor } from './PostAuthor';
 
 export const SinglePostPage = () => {
     const {postId} = useParams();
@@ -21,6 +22,7 @@ export const SinglePostPage = () => {
             <button onClick={goPage}>点击返回原页面</button>
             <article>
                 <h2>{post.title}</h2>
+                <PostAuthor userId={post.user}></PostAuthor>
                 <p>{post.content}</p>
                 <Link to={`/ReduxPosts/editPost/${postId}`}>
                     Edit Post

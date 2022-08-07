@@ -1,6 +1,7 @@
 import React from 'react'
 import {useSelector} from 'react-redux'
 import { AddPostForm } from './AddPostForm';
+import { PostAuthor } from './PostAuthor';
 import { Link, Outlet} from 'react-router-dom';
 
 const PostsList = () => {
@@ -8,6 +9,7 @@ const PostsList = () => {
     const renderedPosts = posts.map(post => (
         <article key={post.id}>
             <h3>{post.title}</h3>
+            <PostAuthor userId={post.use}></PostAuthor>
             <p>{post.content.substring(0, 100)}</p>
             <Link to={`/ReduxPosts/${post.id}`}>View Post</Link>
         </article>

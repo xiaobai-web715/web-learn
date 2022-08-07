@@ -1,4 +1,5 @@
 import {createSlice, nanoid} from '@reduxjs/toolkit'
+import { useId } from 'react';
 
 const postsSlice = createSlice({
     name: 'posts',
@@ -15,13 +16,14 @@ const postsSlice = createSlice({
             reducer(state, action){
                 state.push(action.payload);
             },
-            prepare(title, content){
+            prepare(title, content, useId){
                 //接收多个参数返回一个我们想要的payload
                 return {
                     payload: {
                         id: nanoid(),
                         title,
                         content,
+                        use: useId,
                     }
                 }
             }

@@ -10,6 +10,7 @@ module.exports = {
         app : './src/index.js',
         //app : path.resolve(__dirname, '..' ,'./src/index.js'), //这里改成绝对路径也没有用在处理history二级路由请求资源的时候
     },
+    devtool: 'inline-source-map', //好像这个可以解决debugger的时候报一个奇怪的错误
     output : {
         publicPath: '/', //这样绝对路径的写法不知道会不会对打包后的引用资源造成错误(这个还有HtmlWebpackPlugin的public的引用资源加前缀的)
         path : path.join(__dirname , '..' , 'dist'), //这里要使用绝对路径
