@@ -1,5 +1,7 @@
 import React, { useEffect, useCallback} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
+// import {test} from '@jest/globals'
 import { addValue, decrementValue} from '../../reducer/todoListReducer'
 const Css = require('./index.scss')
 // import url from '../../image/components/TouchByMiatask/二维码.jpeg' //引入jpeg方式的图片不成功
@@ -22,6 +24,21 @@ const Index = () => {
         //     console.log('dispatch', dispatch)
         //     console.log('getState', getState)
         //     return setTimeout(() => {dispatch(addValue(20))}, 1000)
+        // })
+        const test = async () => {
+            await axios.get('/user').then((res) => {
+                console.log('res', res);
+            }).catch((err) => {
+                console.log('请求失败', err);
+            })
+        }
+        test()
+        // test(async () => {
+        //     await axios.get('/user').then((res) => {
+        //         console.log('res', res);
+        //     }).catch((err) => {
+        //         console.log('请求失败', err);
+        //     })
         // })
         document.addEventListener('contextmenu', preventDefaultFn)
         return(
