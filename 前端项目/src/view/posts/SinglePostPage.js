@@ -7,7 +7,7 @@ import { ReactionButtons } from './ReactionButtons';
 
 export const SinglePostPage = () => {
     const {postId} = useParams();
-    const post = useSelector(state => state.postsSlice.find(post => post.id === postId));
+    const post = useSelector(state => state.postsSlice.posts.find(post => post.id === postId));
     const navigate = useNavigate();
     if(!post){
         return (

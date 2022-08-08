@@ -58,7 +58,7 @@ module.exports = {
             {
                 test :[/\.png$/, /\.jpeg$/],
                 exclude : /node_modules/,
-                use : ['url-loader', 'file-loader']
+                use : ['url-loader']  //, 'file-loader'这个加上之后好像css当中引入的图片加载不出来了
             }
         ]
     },

@@ -1,5 +1,6 @@
 const express = require('express');
 const history = require('connect-history-api-fallback')
+const {sub} = require('date-fns');
 const app = express()
 
 // app.listen 仅仅使用http模块(如果要使用https则使用https.createServer)
@@ -18,6 +19,41 @@ app.get('/todoList', (req, res) => {
             {taskId: 1, value: '吃饭'},
             {taskId: 2, value: '睡觉'},
             {taskId: 3, value: '打豆豆'},
+        ]
+    }))
+})
+//因为mock失败,所以在这里建立响应为了模拟redux的createAsyncThunk.
+app.get('/fakeApi/posts', (req, res) => {
+    res.send(JSON.stringify({
+        list: [
+            { id: '1', title: 'First Post!', content: 'Hello!' , date: sub(new Date(), {minutes: 10}).toISOString(), reactions: {
+                thumbsUp: 0,
+                hooray: 0,
+                heart: 0,
+                rocket: 0,
+                eyes: 0
+            }},
+            { id: '2', title: 'Second Post', content: 'More text', date: sub(new Date(), {minutes: 5}).toISOString(), reactions: {
+                thumbsUp: 0,
+                hooray: 0,
+                heart: 0,
+                rocket: 0,
+                eyes: 0
+            }},
+            { id: '3', title: 'Three Post!', content: 'Javascript!' , date: sub(new Date(), {minutes: 3}).toISOString(), reactions: {
+                thumbsUp: 0,
+                hooray: 0,
+                heart: 0,
+                rocket: 0,
+                eyes: 0
+            }},
+            { id: '4', title: 'Four Post', content: 'Node', date: sub(new Date(), {minutes: 20}).toISOString(), reactions: {
+                thumbsUp: 0,
+                hooray: 0,
+                heart: 0,
+                rocket: 0,
+                eyes: 0
+            }}
         ]
     }))
 })

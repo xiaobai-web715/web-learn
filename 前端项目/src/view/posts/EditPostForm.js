@@ -5,7 +5,7 @@ import { postUpdated } from '../../reducer/postsSlice';
 
 export const EditPostForm = () => {
     const {postId} = useParams();
-    const post = useSelector(state => state.postsSlice.find(post => post.id === postId));
+    const post = useSelector(state => state.postsSlice.posts.find(post => post.id === postId));
     const [title, setTitle] = useState(post.title);
     const [content, setContent] = useState(post.content);
     const dispatch = useDispatch();
