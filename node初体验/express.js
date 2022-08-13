@@ -57,6 +57,11 @@ app.get('/fakeApi/posts', (req, res) => {
         ]
     }))
 })
+
+//hoc高阶组件获取data数据模拟
+app.get('/hoc', (req, res) => {
+    res.send(JSON.stringify(['react', 'redux', 'node', 'react-router', 'vue', 'vuex', 'vue-router']));
+})
 //nodejs想要退出程序 => 最直接的写法就是process.exit() => 但这对于http服务器来说这样会终止一切正在等待的请求
                  //  => 所以可以通过发出信号的方式去执行 SIGTEMR 
                  //  => 这个就相当于发布订阅模式(在此处发布,其余地方订阅后这里去执行)

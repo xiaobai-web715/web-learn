@@ -1,0 +1,45 @@
+.position{
+    position: relative;
+    display: inline-block; //只是想父元素的宽度是内部子元素的宽度(设置成inline-block)
+    input{
+        display: block; //解决input放入div之后(div靠内容撑起的高度会有点变大的问题)
+        width: 166px;
+        box-sizing: border-box;
+    }
+    @mixin iconPosition{
+        right: 0;
+        position: absolute;
+    }
+    @mixin iconPositionAfter{
+        content: '';
+        display: block;
+        //形成三角形的方式
+        // border: 5px solid black;
+        // border-left-color: transparent;
+        // border-bottom-color: transparent;
+        // border-right-color: transparent;
+        width: 10px;
+        height: 10px;
+        box-sizing: border-box;
+        border-left: 1px solid #999999;
+        border-top: 1px solid #999999;
+        // top: 50%;不起作用(目前感觉的原因是父元素高度是0的原因)
+        //@include top-center;  //.position的高度受影响会长一点(所以导致top: 50%;后定位不准确的问题)
+    }
+    .iconPositionClose{
+        @include iconPosition;
+        &::after{
+            @include iconPositionAfter;
+            @include position-marginTop(-12px, 6px);
+            @include rotate(45deg);
+        }
+    }
+    .iconPositionUp{
+        @include iconPosition;
+        &::after{
+            @include iconPositionAfter;
+            @include position-marginTop(-17px, 6px);
+            @include rotate(-139deg);
+        }
+    }
+}

@@ -24,9 +24,27 @@ $border-50: 50% 50%;
     transform: translate(0, -50%);
 }
 
+// @mixin top-center-rotate45{
+//     top: 50%;
+//     position: absolute;
+//     transform: translate(0, -50%) rotate(45deg); //当translate与rotate一起使用的时候会有问题,因为rotate是按照dom第一次出现的位置中心为轴进行旋转的(所以translate与rotate不建议一起使用)
+// }
+
+//给mixin的函数传参
+@mixin position-marginTop($marginTop, $right){
+    position: absolute;
+    margin-top: $marginTop;
+    right: $right;
+}
+
 /*边距类 加这个是因为在@use之前用前面的@mixin会报错*/
 @mixin page{
     // sass中特殊的占位符选择器,仅能通过@extend延展来进行使用
     padding-left:10px;
     margin-left:162px;
+}
+
+/*旋转类*/
+@mixin rotate($deg){
+    transform: rotate($deg);
 }
