@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import axios from 'axios'
 
 const BootedDatas = (WrappedComponent) => {
-    //在这一层的高阶组件当中请求数据,并根据输入框中值来对数据进行筛选
+    //在这一层的高阶组件当中请求数据,保存value状态,并根据输入框中值来对数据进行筛选
     return () => {
         const [inputValue, setInputValue] = useState('')
         const [data, setData] = useState([]);

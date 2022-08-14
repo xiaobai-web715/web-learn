@@ -1,0 +1,14 @@
+.paiMeng{
+    position: absolute;
+    top:0;
+    left:0;
+    width:100px;
+    height:100px;
+    img{
+        //img通过src引入的图片进行等比例缩放
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+    }
+}

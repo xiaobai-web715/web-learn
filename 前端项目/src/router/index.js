@@ -14,6 +14,7 @@ import Posts from '../view/posts/PostsList'
 import { SinglePostPage } from "../view/posts/SinglePostPage";
 import { EditPostForm } from "../view/posts/EditPostForm";
 import HOC from '../view/HOC/index'
+import ReactRender from '../view/ReactRender/index'
 
 const store = configureStore({
     reducer,
@@ -34,6 +35,7 @@ const RouterIndex = () => {
                         <Route path='ReduxPosts/:postId' element={<SinglePostPage></SinglePostPage>}></Route>
                         <Route path='ReduxPosts/editPost/:postId' element={<EditPostForm></EditPostForm>}></Route>
                         <Route path="HOC" element={<HOC></HOC>}></Route>
+                        <Route path="ReactRender" element={<ReactRender></ReactRender>}></Route>
                     </Route>
                 </Routes>
             </Router>
