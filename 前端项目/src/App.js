@@ -20,6 +20,7 @@ const App = (props) => {
                     <div onClick={goPage.bind(null, 'ReduxPosts')}>redux官网示例</div>
                     <div onClick={goPage.bind(null, 'HOC')}>HOC</div>
                     <div onClick={goPage.bind(null, 'ReactRender')}>ReactRender</div>
+                    <div onClick={goPage.bind(null, 'UploadFile')}>UploadFile</div>
                 </div>
                 <div className={Css['content']}>
                     <Outlet/>
