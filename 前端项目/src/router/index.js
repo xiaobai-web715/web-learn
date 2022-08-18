@@ -10,6 +10,7 @@ import TableIndex from '../view/todoList/index'
 import ZendeskIndex from '../view/zendesk/index'
 import TouchByMiatask from '../view/touchByMiatask/index'
 import Charge from '../view/CSS动画/充电效果/index'
+import Button from '../view/CSS动画/button动画/index';
 import Posts from '../view/posts/PostsList'
 import { SinglePostPage } from "../view/posts/SinglePostPage";
 import { EditPostForm } from "../view/posts/EditPostForm";
@@ -32,6 +33,7 @@ const RouterIndex = () => {
                         <Route path="zendesk" element={<ZendeskIndex></ZendeskIndex>}></Route>
                         <Route path="touchByMiatask" element={<TouchByMiatask></TouchByMiatask>}></Route>
                         <Route path="CSS/charge" element={<Charge></Charge>}></Route>
+                        <Route path="CSS/button" element={<Button></Button>}></Route>
                         <Route path="ReduxPosts" element={<Posts></Posts>}></Route>
                         <Route path='ReduxPosts/:postId' element={<SinglePostPage></SinglePostPage>}></Route>
                         <Route path='ReduxPosts/editPost/:postId' element={<EditPostForm></EditPostForm>}></Route>

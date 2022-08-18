@@ -73,8 +73,8 @@ app.get('/hoc', (req, res) => {
 
 //post请求
 app.post('/newFormData', fileUpload.any() ,(req, res) => {
-    console.log('req', req);
-    res.send('POST request to homepage');
+    res.header("Content-Type", "text/html; charset=utf-8"); //这个好像是可以解决返回的响应是中文带来的乱码问题
+    res.send('文件在node层保存成功');
 })
 //nodejs想要退出程序 => 最直接的写法就是process.exit() => 但这对于http服务器来说这样会终止一切正在等待的请求
                  //  => 所以可以通过发出信号的方式去执行 SIGTEMR 

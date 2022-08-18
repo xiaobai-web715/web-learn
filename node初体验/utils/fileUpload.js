@@ -6,7 +6,7 @@ const allowExts = ['.txt', '.log', '.xls', '.xlsx', '.csv', '.doc', '.docx', '.p
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         //用来确定上传文件存储在那个文件里面
-        cb(null, path.join(__dirname, '..', '/temp'));
+        cb(null, path.join(__dirname, '..', '/tmp'));
     },
     filename: function(req, file, cb){
         //用来确定存储进入文件家当中的文件名称

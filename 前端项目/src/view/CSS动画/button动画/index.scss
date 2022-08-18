@@ -1,0 +1,35 @@
+.position{
+    position: fixed;
+    top: 50%;
+    left: 10%;
+    width: 100%;
+    @keyframes buttonJump {
+        0%{
+            transform: scale(1);
+        }
+        50%{
+            transform: scale(1.2);
+        }
+        100%{
+            transform: scale(1);
+        }
+    }
+    .button{
+        @include widthPricent(590);
+        @include topPricent(88);
+        position:relative;
+        border-style: none;
+        // background-image:url(./image/subscr.png);
+        background-repeat:no-repeat;
+        background-size: 100% 100%;
+        .center{
+            @include page-center;
+            div{
+                font-size: 12px;
+                color: black;
+                text-align: center;
+                animation: buttonJump 1s ease infinite;
+            }
+        }
+    }
+}
