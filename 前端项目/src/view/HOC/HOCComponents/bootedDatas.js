@@ -24,6 +24,7 @@ const BootedDatas = (WrappedComponent) => {
                 return item.indexOf(val) !== -1;
             })
             setData(target);
+            setData((state) => {console.log('我是state的回调函数', state, state === data, '这里不相同因为是引用值传进来的是拷贝了一下，所以指针变化了');})
             setInputValue(val);
         }
         return (

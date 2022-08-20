@@ -1,12 +1,14 @@
-import React, { useEffect, useCallback} from 'react'
+import React, { useEffect, useCallback, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 // import {test} from '@jest/globals'
 import { addValue, decrementValue} from '../../reducer/todoListReducer'
+import FunctionConstructor from './FunctionConstructor'
 const Css = require('./index.scss')
 // import url from '../../image/components/TouchByMiatask/二维码.jpeg' //引入jpeg方式的图片不成功
 const Index = () => {
     // const url = require('../../image/components/TouchByMiatask/二维码.jpeg')
+    const [operateDom, setOperateDom] = useState(); //创建一个状态用来保存new的实例
     const dispatch = useDispatch();
     const {value} = useSelector((state) => state.todoList);
     let preventDefaultFn = useCallback((e) => {e.preventDefault();}, [])
@@ -41,6 +43,8 @@ const Index = () => {
         //     })
         // })
         document.addEventListener('contextmenu', preventDefaultFn)
+        let operateDom = new FunctionConstructor();
+        setOperateDom(operateDom); //将构造函数的实例化保存到状态当中
         return(
             () => {
                 document.removeEventListener('contextmenu', preventDefaultFn);
@@ -48,9 +52,11 @@ const Index = () => {
         )
     }, [])
     const add = () => {
+        operateDom.addDom();
         dispatch(addValue(10));
     }
     const decerment = () => {
+        operateDom.removeDom();
         dispatch(decrementValue(5));
     }
     return (
