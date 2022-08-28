@@ -51,9 +51,9 @@ $border-50: 50% 50%;
 
 /*百分比类*/
 @mixin widthPricent($num, $parentWidth : 750) {
-    width: $num / $parentWidth * 100%;
+    width: calc($num / $parentWidth) * 100%;
 }
 
 @mixin topPricent($num, $parentWidth : 750) {  //top是按照宽度取的百分比值
-    padding-top: $num / $parentWidth * 100%;
+    padding-top: calc($num / $parentWidth) * 100%;
 }
