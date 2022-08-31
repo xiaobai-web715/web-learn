@@ -31,5 +31,28 @@
                 animation: buttonJump 1s ease infinite;
             }
         }
+        .discount{
+            height: 20px;
+            width:auto;
+            top: -20%;
+            @include left-center;
+            div{
+                padding:0 10px;
+                height: 18px;
+                line-height: 18px;
+                background-color: red;
+                position: relative;
+                border-radius:12px;
+                &::after{
+                    content: '';
+                    display: block;
+                    @include left-center;
+                    border: 4px solid green;
+                    border-left-color: transparent;
+                    border-right-color: transparent;
+                    border-bottom:0;
+                }
+            }
+        }
     }
 }
