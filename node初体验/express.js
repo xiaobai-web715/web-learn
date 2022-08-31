@@ -4,6 +4,8 @@ const {sub} = require('date-fns');
 const bodyParser = require('body-parser');
 const app = express()
 const fileUpload = require('./utils/fileUpload')
+const fs = require('fs');
+const path = require('path');
 
 //为什么要使用json()或urlencoded()这两个方式来获取请求参数呢
   //get请求默认的请求头content-type:'默认是application/x-www-form-urlencoded -> 请求体中的数据以表单键值对的形式发送给后端'
@@ -75,6 +77,31 @@ app.get('/hoc', (req, res) => {
 app.post('/newFormData', fileUpload.any() ,(req, res) => {
     res.header("Content-Type", "text/html; charset=utf-8"); //这个好像是可以解决返回的响应是中文带来的乱码问题
     res.send('文件在node层保存成功');
+})
+
+//get请求获取csv文件
+app.get('/getCsv', (req, res) => {
+    console.log('文件地址', path.join(__dirname, 'tmp/测试文件.csv'));
+    let exists = fs.existsSync(path.join(__dirname, 'tmp/测试文件.csv')); //fs.existsSync()判断当前文件夹下的文件是否存在
+    if (exists) {
+        res.set({
+            "Content-type" : "application/octet-stream", //意思是 *未知的应用程序文件 ，*浏览器一般不会自动执行或询问执行。
+            "Content-Disposition" : "attachment; filename=" + encodeURIComponent('测试文件.csv'), //指示回复的内容该以何种形式进行展现,以内联还是附件
+                                                                                                  //inline是以内联的形式,attachment是以附件的形式来展现.
+                                                                                                  //encodeURIComponent()用来解决中文名字导致Content-Disposition设置出错的问题
+        })
+        let file = fs.createReadStream(path.join(__dirname, 'tmp/测试文件.csv'), {encoding: "binary"}); //{encoding: "utf8"}传到客户端就是乱码,{encoding: "binary"}下载下来就是正常的.
+        file.on("data",(chunk) => {
+            console.log('chunk', chunk);
+            res.write(chunk,"binary");
+        });
+        file.on("end",function () {
+            res.end();
+        });
+        file.on('error', function () {
+            res.send();
+        })
+    }
 })
 //nodejs想要退出程序 => 最直接的写法就是process.exit() => 但这对于http服务器来说这样会终止一切正在等待的请求
                  //  => 所以可以通过发出信号的方式去执行 SIGTEMR 
