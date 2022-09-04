@@ -13,6 +13,8 @@ const path = require('path');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false})); //express引入中间件(body-parser用来拦截请求,urlencoded方法会判断请求中是否有请求参数,如果包含就会将请求参数转换成对象类型,再给req请求对象添加body属性)
 app.use(bodyParser.text({extended: false}));
+
+app.use('/static', express.static('public')); //express提供的方式来请求静态资源
 // app.listen 仅仅使用http模块(如果要使用https则使用https.createServer)
 const server = app.listen(3001, () => {
     console.log('Sever onReady');

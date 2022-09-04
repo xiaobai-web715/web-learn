@@ -64,19 +64,16 @@ const Index = () => {
         dispatch(decrementValue(5));
     }
     const getCsv = () => {
-        // axios.get('/api/getCsv').then((res) => {
-        //     console.log('res', res);    =>接口请求返回的信息要双击控制台网络中的请求来下载
-        // })
-        let url = window.open('/api/getCsv');
-        const link = document.createElement('a');
-        link.addEventListener('click', (e) => {
-            e.preventDefault(); //这里来取消掉a标签的默认事件可以实现不跳转页面导致下面显示页面未找到的报错
-        }, false)
-        link.style.display = 'none';
-        link.href = url;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        //window.open('/api/static/excel/ceshi.csv'); //通过window.open方式打开新的页面来下载文件
+                                                      //配合着express的中间件express.static来获取静态文件
+                                                      //不过这样会存在一个问题就是页面会闪烁一下
+        const iframe = document.createElement('iframe');
+        iframe.src = '/api/static/excel/ceshi.csv';
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+        setTimeout(() => {
+            document.body.removeChild(iframe);
+        }, 1000);
     }
     return (
         <div className={Css['page']}>
