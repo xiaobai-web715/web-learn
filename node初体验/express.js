@@ -3,9 +3,13 @@ const history = require('connect-history-api-fallback')
 const {sub} = require('date-fns');
 const bodyParser = require('body-parser');
 const app = express()
-const fileUpload = require('./utils/fileUpload')
 const fs = require('fs');
 const path = require('path');
+const todoList = require('./route/todoList');
+const post = require('./route/posts');
+const hoc = require('./route/HOC');
+const UploadFile = require('./route/uploadFile');
+const touchByMiatask = require('./route/touchByMiatask');
 
 //为什么要使用json()或urlencoded()这两个方式来获取请求参数呢
   //get请求默认的请求头content-type:'默认是application/x-www-form-urlencoded -> 请求体中的数据以表单键值对的形式发送给后端'
@@ -15,6 +19,15 @@ app.use(bodyParser.urlencoded({extended: false})); //express引入中间件(body
 app.use(bodyParser.text({extended: false}));
 
 app.use('/static', express.static('public')); //express提供的方式来请求静态资源
+
+/*
+    注册路由模块
+*/
+app.use('/todo', todoList); //请求/api/todo的请求会到这个模块当中去请求资源
+app.use('/fakeApi', post); 
+app.use(hoc);
+app.use(UploadFile);
+app.use(touchByMiatask);
 // app.listen 仅仅使用http模块(如果要使用https则使用https.createServer)
 const server = app.listen(3001, () => {
     console.log('Sever onReady');
@@ -24,86 +37,6 @@ app.get('/', (req, res) => {
     res.send(JSON.stringify({firstName: 'liu', lastName: 'xinghua'}));
     console.log('当前进程的PID', process.pid); //目前不清楚在别的应用程序中这个进程的PID如何获取
     // process.kill(process.pid , 'SIGTERM');
-})
-app.get('/todoList', (req, res) => {
-    res.send(JSON.stringify({
-        list: [
-            {taskId: 1, value: '吃饭'},
-            {taskId: 2, value: '睡觉'},
-            {taskId: 3, value: '打豆豆'},
-        ]
-    }))
-})
-//因为mock失败,所以在这里建立响应为了模拟redux的createAsyncThunk.
-app.get('/fakeApi/posts', (req, res) => {
-    res.send(JSON.stringify({
-        list: [
-            { id: '1', title: 'First Post!', content: 'Hello!' , date: sub(new Date(), {minutes: 10}).toISOString(), reactions: {
-                thumbsUp: 0,
-                hooray: 0,
-                heart: 0,
-                rocket: 0,
-                eyes: 0
-            }},
-            { id: '2', title: 'Second Post', content: 'More text', date: sub(new Date(), {minutes: 5}).toISOString(), reactions: {
-                thumbsUp: 0,
-                hooray: 0,
-                heart: 0,
-                rocket: 0,
-                eyes: 0
-            }},
-            { id: '3', title: 'Three Post!', content: 'Javascript!' , date: sub(new Date(), {minutes: 3}).toISOString(), reactions: {
-                thumbsUp: 0,
-                hooray: 0,
-                heart: 0,
-                rocket: 0,
-                eyes: 0
-            }},
-            { id: '4', title: 'Four Post', content: 'Node', date: sub(new Date(), {minutes: 20}).toISOString(), reactions: {
-                thumbsUp: 0,
-                hooray: 0,
-                heart: 0,
-                rocket: 0,
-                eyes: 0
-            }}
-        ]
-    }))
-})
-
-//hoc高阶组件获取data数据模拟
-app.get('/hoc', (req, res) => {
-    res.send(JSON.stringify(['react', 'redux', 'node', 'react-router', 'vue', 'vuex', 'vue-router']));
-})
-
-//post请求
-app.post('/newFormData', fileUpload.any() ,(req, res) => {
-    res.header("Content-Type", "text/html; charset=utf-8"); //这个好像是可以解决返回的响应是中文带来的乱码问题
-    res.send('文件在node层保存成功');
-})
-
-//get请求获取csv文件
-app.get('/getCsv', (req, res) => {
-    console.log('文件地址', path.join(__dirname, 'tmp/测试文件.csv'));
-    let exists = fs.existsSync(path.join(__dirname, 'tmp/测试文件.csv')); //fs.existsSync()判断当前文件夹下的文件是否存在
-    if (exists) {
-        res.set({
-            "Content-type" : "application/octet-stream", //意思是 *未知的应用程序文件 ，*浏览器一般不会自动执行或询问执行。
-            "Content-Disposition" : "attachment; filename=" + encodeURIComponent('测试文件.csv'), //指示回复的内容该以何种形式进行展现,以内联还是附件
-                                                                                                  //inline是以内联的形式,attachment是以附件的形式来展现.
-                                                                                                  //encodeURIComponent()用来解决中文名字导致Content-Disposition设置出错的问题
-        })
-        let file = fs.createReadStream(path.join(__dirname, 'tmp/测试文件.csv'), {encoding: "binary"}); //{encoding: "utf8"}传到客户端就是乱码,{encoding: "binary"}下载下来就是正常的.
-        file.on("data",(chunk) => {
-            console.log('chunk', chunk);
-            res.write(chunk,"binary");
-        });
-        file.on("end",function () {
-            res.end();
-        });
-        file.on('error', function () {
-            res.send();
-        })
-    }
 })
 //nodejs想要退出程序 => 最直接的写法就是process.exit() => 但这对于http服务器来说这样会终止一切正在等待的请求
                  //  => 所以可以通过发出信号的方式去执行 SIGTEMR 

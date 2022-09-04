@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
         // const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
         // cb(null, decode(file.originalname) + '-' + uniqueSuffix);
         let { originalname } = file;
-        let filename = originalname,
+        let filename = originalname
             ext = '';
         let pos = originalname.lastIndexOf('.');
         let name = originalname.substring(0, pos);
@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
             let originExt = originalname.substring(pos) || '';
             if (allowExts.includes(originExt.toLowerCase())) ext = originExt;
         }
-        filename = name + ext;
+        filename = decode(Buffer.from(name), 'ascii') + ext;
 
         cb(null, filename);
     },

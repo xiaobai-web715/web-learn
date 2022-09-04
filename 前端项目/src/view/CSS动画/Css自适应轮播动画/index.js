@@ -16,7 +16,7 @@ const Index = () => {
         //         translateRoot.current.style.cssText = `transition: transform 0s;transform: translateX(${-count * 100}%);`
         //     }
         // })
-        setInterval(() => {
+        let timeId = setInterval(() => {
             console.log('我没有执行吗;', translateRoot.current);
             count++;
             if(count > len-1){ //这里在超过4的时候会立即变换
@@ -27,7 +27,10 @@ const Index = () => {
             }
             translateRoot.current.style.transform = `translateX(${-count * 100}%)`;
             // translateRoot.current.style.transition = 'transform 2s' ; //这里下面的这行样式会覆盖上面的样式
-        }, 2000)
+        }, 2000);
+        return () => {
+            clearInterval(timeId);
+        }
     }, [])
     return (
         <div className={Css['translate']}>

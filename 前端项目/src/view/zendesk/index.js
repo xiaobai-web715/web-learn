@@ -36,7 +36,6 @@ const Index = () => {
     const getZendesk = () => {
         iframe.current = document.querySelector('#webWidget');
         if(!iframe.current){
-            console.log('没找到是吗');
             timeout.current =  setTimeout(getZendesk, 500);
             return null;
             // return getZendesk(); //这样的话这里会报栈溢出错误(用上面的延时函数的形式就不会有)
@@ -46,7 +45,8 @@ const Index = () => {
     }
     useEffect(() => {
         let intervalId = setInterval(() => {
-            if(typeof window.zESettings !== 'undefined'){
+            console.log('window.zE', window.zE);
+            if(typeof window.zESettings !== 'undefined' && window.zE){
                 publishSubscribe.publish('zendask');
                 clearInterval(intervalId);
             }else{
@@ -54,8 +54,11 @@ const Index = () => {
             }
         },0);
         return () => {
-            window.zE('webWidget', 'logout');
+            if(window.zE) {
+                window.zE('webWidget', 'logout');
+            }
             clearTimeout(timeout.current);
+            clearInterval(intervalId);
         }
     }, []);
     return(

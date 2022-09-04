@@ -13,7 +13,7 @@ const Index = () => {
     const [checkValue, setCheckValue] = useState([]);
     const inputContent = useRef()
     const listFn = useCallback(() => {
-        axios.get('/api/todoList').then((res) => {
+        axios.get('/api/todo/todoList').then((res) => {
             if(res.status === 200){
                 let data = res.data.list;
                 setLoading(false);
