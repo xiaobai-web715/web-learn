@@ -1,4 +1,5 @@
 const express = require('express');
+const xlsx = require('node-xlsx');
 const router = express.Router();
 
 //get请求获取csv文件
@@ -23,6 +24,42 @@ router.get('/getCsv', (req, res) => {
         file.on('error', function () {
             res.send();
         })
+    }
+})
+
+//get请求获取数据列表并保存的excel里面
+router.get('/sn/downloadExcel', (req, res) => {
+    let list = {
+        code : 200,
+        data : [
+            {
+                title: '星期一',
+                weather: '多云'
+            },
+            {
+                title: '星期二',
+                weather: '阴天'
+            }
+        ]
+    }
+    if (list.code == 200) {
+        let excelData = [['日期', '天气']];
+        let fields = ['title', 'weather'];
+        let data = list.data? list.data : [];
+        data.forEach(itemObj => {
+            let result = []
+            fields.forEach(item => {
+                result.push(itemObj[item]);
+            })
+            excelData.push(result);
+        })
+        // 后面的这个空对象可以设置表格宽度(就像下面这个配置)
+        // const sheetOptions = {'!cols': [{wch: 6}, {wch: 7}, {wch: 10}, {wch: 20}]};
+        let buffer = xlsx.build([{name: '天气数据', data: excelData}], {});
+        res.header('Content-Type', 'multipart/form-data') //设置请求头
+        // 响应头指示回复的内容该以何种形式展示 attachment意味着应该下载到本地 fileName=后面跟文件的名字
+        res.header('Content-Disposition', `attachment;fileName=batch.xlsx`);
+        res.status(200).send(buffer);
     }
 })
 module.exports = router;
