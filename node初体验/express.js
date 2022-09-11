@@ -9,6 +9,7 @@ const post = require('./route/posts');
 const hoc = require('./route/HOC');
 const UploadFile = require('./route/uploadFile');
 const touchByMiatask = require('./route/touchByMiatask');
+const upFile = require('./route/upFile');
 
 //为什么要使用json()或urlencoded()这两个方式来获取请求参数呢
   //get请求默认的请求头content-type:'默认是application/x-www-form-urlencoded -> 请求体中的数据以表单键值对的形式发送给后端'
@@ -27,6 +28,7 @@ app.use('/fakeApi', post);
 app.use(hoc);
 app.use(UploadFile);
 app.use(touchByMiatask);
+app.use('/upFile', upFile);
 // app.listen 仅仅使用http模块(如果要使用https则使用https.createServer)
 const server = app.listen(3001, () => {
     console.log('Sever onReady');

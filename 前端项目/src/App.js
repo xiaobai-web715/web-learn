@@ -22,6 +22,7 @@ const App = (props) => {
                     <div onClick={goPage.bind(null, 'HOC')}>HOC</div>
                     <div onClick={goPage.bind(null, 'ReactRender')}>ReactRender</div>
                     <div onClick={goPage.bind(null, 'UploadFile')}>UploadFile</div>
+                    <div onClick={goPage.bind(null, 'upFile')}>upFile</div>
                 </div>
                 <div className={Css['content']}>
                     <Outlet/>

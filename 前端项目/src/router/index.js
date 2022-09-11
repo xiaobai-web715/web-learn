@@ -17,6 +17,7 @@ import { EditPostForm } from "../view/posts/EditPostForm";
 import HOC from '../view/HOC/index'
 import ReactRender from '../view/ReactRender/index';
 import UploadFile from "../view/uploadFile";
+import UpFile from '../view/upFile/upFile'
 
 const store = configureStore({
     reducer,
@@ -40,6 +41,7 @@ const RouterIndex = () => {
                         <Route path="HOC" element={<HOC></HOC>}></Route>
                         <Route path="ReactRender" element={<ReactRender></ReactRender>}></Route>
                         <Route path="UploadFile" element={<UploadFile></UploadFile>}></Route>
+                        <Route path="upFile" element={<UpFile></UpFile>}></Route>
                     </Route>
                 </Routes>
             </Router>

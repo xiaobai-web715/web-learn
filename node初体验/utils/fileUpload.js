@@ -5,7 +5,7 @@ const path = require('path');
 const allowExts = ['.txt', '.log', '.xls', '.xlsx', '.csv', '.doc', '.docx', '.ppt', '.jpg', '.png', '.gif', '.jpeg', '.bmp'];
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        //用来确定上传文件存储在那个文件里面
+        //用来确定上传文件存储在那个文件里面(这里就是一个绝对路径根据当前文件的位置的一个绝对路径)
         cb(null, path.join(__dirname, '..', '/tmp'));
     },
     filename: function(req, file, cb){
