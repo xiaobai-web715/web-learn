@@ -1,23 +1,28 @@
-const express = require('express');
-const history = require('connect-history-api-fallback')
-const bodyParser = require('body-parser');
-const app = express()
-const fs = require('fs');
-const path = require('path');
+import express,  { Application } from "express";
+import bodyParser from 'body-parser'; //node原生的api用来作为中间件来处理post请求
+// const express = require('express');
+// const history = require('connect-history-api-fallback')
+// const bodyParser = require('body-parser');
+const app: Application = express()
 const todoList = require('./route/todoList');
 const post = require('./route/posts');
 const hoc = require('./route/HOC');
 const UploadFile = require('./route/uploadFile');
 const touchByMiatask = require('./route/touchByMiatask');
 const upFile = require('./route/upFile');
+// const vueVite = require('./route/vueVite')
+import vueVite from './route/vueVite'
 
 //为什么要使用json()或urlencoded()这两个方式来获取请求参数呢
   //get请求默认的请求头content-type:'默认是application/x-www-form-urlencoded -> 请求体中的数据以表单键值对的形式发送给后端'
   //post请求默认的请求头content-type: '默认是application/json -> 请求体中的数据以json字符串形式发送给后盾'
+app.use(bodyParser.urlencoded({extended: true})); //express引入中间件(body-parser用来拦截请求,urlencoded方法会判断请求中是否有请求参数,如果包含就会将请求参数转换成对象类型,再给req请求对象添加body属性)
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false})); //express引入中间件(body-parser用来拦截请求,urlencoded方法会判断请求中是否有请求参数,如果包含就会将请求参数转换成对象类型,再给req请求对象添加body属性)
-app.use(bodyParser.text({extended: false}));
+// app.use(bodyParser.text({extended: false}));
 
+/*
+    请求返回静态资源的方式
+*/
 app.use('/static', express.static('public')); //express提供的方式来请求静态资源
 
 /*
@@ -29,6 +34,7 @@ app.use(hoc);
 app.use(UploadFile);
 app.use(touchByMiatask);
 app.use('/upFile', upFile);
+app.use('/vueVite', vueVite);
 // app.listen 仅仅使用http模块(如果要使用https则使用https.createServer)
 const server = app.listen(3001, () => {
     console.log('Sever onReady');
@@ -47,4 +53,4 @@ process.on('SIGTEMR', () => {
         console.log('响应成功,退出nodejs程序');
     })
 })
-app.use(history());
+// app.use(history());
