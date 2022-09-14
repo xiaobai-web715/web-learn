@@ -75,6 +75,13 @@ const Index = () => {
             document.body.removeChild(iframe);
         }, 1000);
     }
+    const downloadFile = () => {
+        let link = document.createElement('a');
+        link.href = '/api/sn/downloadExcel';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
     return (
         <div className={Css['page']}>
             <img src={'https://pic.90sheji.com/design/01/24/80/47/5906e618b27fb.png!/fw/280/quality/90/unsharp/true/compress/true/canvas/280x297a0a0/cvscolor/FFFFFFFF'}></img>
@@ -87,6 +94,7 @@ const Index = () => {
                 redux的核心就是reducer函数需是纯函数的形式:即不会修改输入的值,不产生异步等的副作用,计算值只靠输入的参数进行计算(即不受外界的影响)
                 具体规则: 1.不会修改传入的state,保证不可变性,每次返回值都需满足当前形式{'{...state, value:action.payload}'},2.内部计算的值只会用到state和action这两者不会受外部的影响,3.函数中不能存在异步等的有副作用的逻辑.
             </div>
+            <button onClick={downloadFile}>导出excel</button>
         </div>
     )
 }
