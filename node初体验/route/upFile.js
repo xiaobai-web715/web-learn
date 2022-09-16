@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const fileUpload = require('../utils/fileUpload')
-const xlsx = require('node-xlsx')
+const xlsx_read = require('node-xlsx')
+const {utils, write} = require('xlsx');
 
 router.post('/submit/xlsx', fileUpload.any() ,(req, res, next) => {
     const files = req.files; 
     let filePath = files[0].path; //这里就可以拿到对应的excel文件的路径
-    let list = xlsx.parse(filePath);
+    let list = xlsx_read.parse(filePath);
     // console.log('list', list);
     //获取每一列对应的数据
     let result = []; //多个表的话会向这里面存储
@@ -25,14 +26,21 @@ router.post('/submit/xlsx', fileUpload.any() ,(req, res, next) => {
                 })
             }
         })
-        // result.push(obj);
+        result.push(obj);
     })
-    console.log(result);
-    res.send({
-        code: 200,
-        message: 'success',
-        data: result,
-    })
+    console.log(result, list);
+
+    const sheeltName = list[0].name;
+    const sheeltData = list[0].data;
+    const ws = utils.aoa_to_sheet(sheeltData);//这里去构造数据流才是重点
+    console.log('ws', ws);
+    const wb = utils.book_new();
+    utils.book_append_sheet(wb, ws, 'data');
+    const file = write(wb, { bookType: 'xlsx', type: 'buffer'}); 
+    res.header('Content-Disposition', 'attachment; filename="SheetJSDrash.xlsx"');
+    res.header('Context-Type', 'application/vnd.ms-excel'); //这里并不是重点(只是告诉该以怎样的形式去下载)
+    // res.header('Context-Type', 'application/zip');
+    res.status(200).send(file);
 });
 
 module.exports = router;
