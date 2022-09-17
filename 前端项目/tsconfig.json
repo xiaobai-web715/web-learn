@@ -116,7 +116,8 @@
     "module": "esnext", // 指定模块代码生成
     "moduleResolution": "node", // 使用 Node.js 风格解析模块
     "resolveJsonModule": true, // 允许使用 .json 扩展名导入的模块
-    "noEmit": false, // 不输出(意思是不编译代码，只执行类型检查)
+    "noEmit": false,  //改为false解决TypeScript emitted no output for ...的问题
+    // "noEmit": true, // 不输出(意思是不编译代码，只执行类型检查)
     "jsx": "react", // 在.tsx文件中支持JSX
     "sourceMap": true, // 生成相应的.map文件
     "declaration": true, // 生成相应的.d.ts文件

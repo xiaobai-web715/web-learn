@@ -7,15 +7,23 @@ import { IList } from '../../../typings/utils';
 const Index = () => {
     const list: Array<IList> = [
         {
-            url: './image/3.jpg',
+            url: '3.jpg',
             title: '轮播图1',
         },
         {
-            url: './image/33.jpg',
+            url: '26.jpg',
             title: '轮播图2',
         },
         {
-            url: './image/88.jpg',
+            url: '33.jpg',
+            title: '轮播图2',
+        },
+        {
+            url: '54.jpg',
+            title: '轮播图2',
+        },
+        {
+            url: '88.jpg',
             title: '轮播图3',
         }
     ]
