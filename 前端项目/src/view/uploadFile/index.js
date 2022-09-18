@@ -17,7 +17,7 @@ const UploadFile = () => {
                 data: data,
             }).then(res => {
                 console.log('res', res);
-            })
+            });
         });
     }, []);
     const getFileName = async (e) => {
@@ -33,7 +33,7 @@ const UploadFile = () => {
         render.readAsDataURL(files[0]);
         render.onload = function (){
             console.log('render.result', render.result);
-        }
+        };
     };
     return (
         <React.Fragment>
@@ -43,6 +43,6 @@ const UploadFile = () => {
                 <input name='submit' type='submit'></input>
             </form>
         </React.Fragment>
-    )
-}
+    );
+};
 export default UploadFile;

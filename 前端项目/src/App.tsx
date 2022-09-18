@@ -1,13 +1,12 @@
-import React from 'react'
+import React from 'react';
 import { useNavigate , Outlet} from 'react-router-dom';
-const Css = require('./App.scss')
+const Css = require('./App.scss');
 
-const App = (props) => {
-    console.log('props', props);
-    const navigate = useNavigate()
-    const goPage = (url) => {
+const App = () => {
+    const navigate = useNavigate();
+    const goPage = (url: string) => {
         navigate(url);
-    }
+    };
     return(
         <React.Fragment>
             <div className={Css['page']}>
@@ -30,5 +29,5 @@ const App = (props) => {
             </div>
         </React.Fragment>
     );
-}
+};
 export default App;

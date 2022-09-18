@@ -1,12 +1,12 @@
-import {createSlice, nanoid, createAsyncThunk} from '@reduxjs/toolkit'
+import {createSlice, nanoid, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 //目测来看createAsyncThunk生成的函数还必须写在和reducer函数同一个文件夹当中(因为extraReducers后面的链式结构会用到这个名字)
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', 
     async () => {
-        const res =  await axios.get('/api/fakeApi/posts')
+        const res =  await axios.get('/api/fakeApi/posts');
         return res.data.list;
     }
-)
+);
 const postsSlice = createSlice({
     name: 'posts',
     // initialState: [
@@ -56,7 +56,7 @@ const postsSlice = createSlice({
                             eyes: 0
                         }
                     }
-                }
+                };
             }
         },
         postUpdated: {
@@ -77,7 +77,7 @@ const postsSlice = createSlice({
                         content,
                         date: new Date().toISOString(),
                     }
-                }
+                };
             }
         },
         // postUpdated(state, action){
@@ -96,7 +96,7 @@ const postsSlice = createSlice({
                         postId, //对应的文章id
                         reaction, //对应的表情
                     }
-                }
+                };
             },
             reducer(state, action){
                 const {postId, reaction} = action.payload;
@@ -115,15 +115,15 @@ const postsSlice = createSlice({
             })
             .addCase(fetchPosts.fulfilled, (state, action) => {
                 console.log('action-fulfilled', action);
-                state.status = 'succeeded'
+                state.status = 'succeeded';
                 state.posts = action.payload;
             })
             .addCase(fetchPosts.rejected, (state, action) => {
                 console.log('action-rejected', action);
-                state.status = 'failed'
+                state.status = 'failed';
                 state.error = action.error.message;
-            })
+            });
     }
-})
-export const {postAdded, postUpdated, reactionAdded} = postsSlice.actions
+});
+export const {postAdded, postUpdated, reactionAdded} = postsSlice.actions;
 export default postsSlice.reducer;

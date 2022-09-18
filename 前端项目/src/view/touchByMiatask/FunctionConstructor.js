@@ -5,10 +5,10 @@ function FunctionConstructor(){
     console.log(this.removeDom);
     this.addDom = () => {
         document.body.appendChild(dom); //调用该实例的addDom方法会将dom元素绑定到body的身上
-    }
+    };
     this.removeDom = () => {
         document.body.removeChild(dom);
-    }
+    };
 }
 
 export default FunctionConstructor;

@@ -1,5 +1,6 @@
 import React from 'react';
-import {parseISO, formatDistanceToNow} from 'date-fns'
+import {parseISO, formatDistanceToNow} from 'date-fns';
+import PropTypes from 'prop-types';
 
 export const TimeAgo = ({timestamp}) => {
     let timeAgo = '';
@@ -8,5 +9,9 @@ export const TimeAgo = ({timestamp}) => {
         const timePeriod = formatDistanceToNow(date);
         timeAgo = `${timePeriod} ago`;
     }
-    return <span title={timestamp}>&nbsp; <i>{timeAgo}</i></span>
-}
+    return <span title={timestamp}>&nbsp; <i>{timeAgo}</i></span>;
+};
+
+TimeAgo.propTypes = {
+    timestamp: PropTypes.any
+};

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef} from 'react'
+import React, { useEffect, useRef} from 'react';
 import PublishSubscribe from '../../components/publishSubscribe';
 
 const Index = () => {
@@ -17,16 +17,16 @@ const Index = () => {
                 contactFormLabel: { '*': 'Leave a message' }//给我们留言
             }
         }
-    }
-    const publishSubscribe = new PublishSubscribe()
+    };
+    const publishSubscribe = new PublishSubscribe();
     publishSubscribe.subscribe('zendask', () => {
-        window.zE('webWidget', 'open')
-        getZendesk() //执行函数获取到webWidget对应iframe标签
+        window.zE('webWidget', 'open');
+        getZendesk(); //执行函数获取到webWidget对应iframe标签
         console.log('我是订阅者,并且成功执行了');
     });
     const goPage = () => {
         //在点击返回上一页的时候去处理这个事件就不需要定时器了
-        const button = iframe.current.contentDocument.querySelector('main button[data-garden-id="buttons.button"]')
+        const button = iframe.current.contentDocument.querySelector('main button[data-garden-id="buttons.button"]');
         //querySelector与querySelectorAll可以通过多方式结合的形式进行dom选择,上述的方式是匹配父元素是main标签,自身是一个button标签且带有一个属性是data-garden-id='buttons.button'的第一个满足的标签.
         button && button.click();
         window.zE('webWidget', 'logout');
@@ -42,7 +42,7 @@ const Index = () => {
         }else{
             console.log('iframe标签成功获取到');
         }
-    }
+    };
     useEffect(() => {
         let intervalId = setInterval(() => {
             console.log('window.zE', window.zE);
@@ -59,13 +59,13 @@ const Index = () => {
             }
             clearTimeout(timeout.current);
             clearInterval(intervalId);
-        }
+        };
     }, []);
     return(
         <div>
             <button onClick={goPage}>返回上一页</button>
         </div>
-    )
-}
+    );
+};
 
-export default Index
+export default Index;

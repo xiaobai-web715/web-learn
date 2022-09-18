@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {fetchPosts} from '../../reducer/postsSlice'
+import {fetchPosts} from '../../reducer/postsSlice';
 import { AddPostForm } from './AddPostForm';
 import { PostAuthor } from './PostAuthor';
 import { TimeAgo } from './TimeAgo';
 import { ReactionButtons } from './ReactionButtons';
 import { Link } from 'react-router-dom';
-import Loading from '../../components/Loading/loading'
+import Loading from '../../components/Loading/loading';
 
 const PostsList = () => {
     const postStatus = useSelector(state => state.postsSlice.status);
@@ -46,14 +46,14 @@ const PostsList = () => {
             //用express模拟请求测试createAsyncThunk
             dispatch(fetchPosts()); //这里一样也是可以dispatch这个createAsyncThunk构造的
         }
-    },[])
+    },[]);
     const posts = useSelector(state => state.postsSlice.posts);
     const error = useSelector(state => state.postsSlice.error);
     let content = null;
     if(postStatus === 'loading'){
         content = (
             <Loading></Loading>
-        )
+        );
     }else if(postStatus === 'succeeded'){
         content = Array.isArray(posts) ? [...posts].sort((a, b) => {
             return new Date(b.date).valueOf() - new Date(a.date).valueOf();
@@ -66,9 +66,9 @@ const PostsList = () => {
                 <TimeAgo timestamp={post.date}></TimeAgo>
                 <ReactionButtons post={post}></ReactionButtons>
             </article>
-        )) : ''
+        )) : '';
     }else if(postStatus === 'failed'){
-        content = <div>{error}</div>
+        content = <div>{error}</div>;
     }
     return (
         <React.Fragment>
@@ -78,7 +78,7 @@ const PostsList = () => {
                 {content}
             </section>
         </React.Fragment>
-    )
-}
+    );
+};
 
-export default PostsList
+export default PostsList;

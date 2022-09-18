@@ -11,7 +11,7 @@ class ClassZuJian extends React.Component{
     render(){
         return (
             <div>我是class组件</div>
-        )
+        );
     }
 }
 

@@ -1,15 +1,14 @@
 import React, {useState} from 'react';
 import { useDispatch, useSelector} from 'react-redux';
-import { nanoid } from '@reduxjs/toolkit';
 import { postAdded } from '../../reducer/postsSlice'; //导出action creator函数
 
 export const AddPostForm = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [userId, setUserId] = useState('');
     // 获取用户列表
-    const users = useSelector(state => state.users)
+    const users = useSelector(state => state.users);
     const onTitleChanged = e => setTitle(e.target.value);
     const onContentChanged = e => setContent(e.target.value);
     const onAuthorChanged = e => setUserId(e.target.value);
@@ -25,13 +24,13 @@ export const AddPostForm = () => {
             setTitle('');
             setContent('');
             setUserId('');
-    }
+    };
     //将用户列列表变成下拉框
     const usersOptions = users.map(user => (
         <option key={user.id} value={user.id}>
             {user.name}
         </option>
-    ))
+    ));
     //当标题作者内容都存在的时候才让他发表
     const canSave = Boolean(title) && Boolean(userId) && Boolean(content);
     return(
@@ -50,5 +49,5 @@ export const AddPostForm = () => {
                 <button type='button' onClick={onSavePostClicked} disabled={!canSave}>保存帖子</button>
             </form>
         </section>
-    )
-}
+    );
+};

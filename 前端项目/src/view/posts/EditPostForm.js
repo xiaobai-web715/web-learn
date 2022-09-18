@@ -16,9 +16,9 @@ export const EditPostForm = () => {
         e.preventDefault();
         if(title && content){
             dispatch(postUpdated(postId, title, content));
-            navgite(`/ReduxPosts/${postId}`)
+            navgite(`/ReduxPosts/${postId}`);
         }
-    }
+    };
     return (
         <section>
             <h2>编辑帖子</h2>
@@ -35,5 +35,5 @@ export const EditPostForm = () => {
                 <input type='submit' onClick={onSavePostClicked}></input>
             </form>
         </section>
-    )
-}
+    );
+};

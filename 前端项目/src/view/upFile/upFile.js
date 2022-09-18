@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import Css from './upFile.scss'
+import React, {useState} from 'react';
+import Css from './upFile.scss';
 import axios from 'axios';
 
 const UpFile = () => {
@@ -14,13 +14,13 @@ const UpFile = () => {
         setTimeout(() => {
             document.body.removeChild(iframe);
         }, 1000);
-    }
+    };
     const chooseFile = (e) => {
         if(e.target.files[0]) {
             setFile(e.target.files[0]);
             setWarning(false);
         }
-    }
+    };
     const submit = () => {
         let result = file != null;
         if (result) {
@@ -78,7 +78,7 @@ const UpFile = () => {
             setWarning(true);
             return null;
         }
-    }
+    };
     return (
         <React.Fragment>
             <div className={Css['download']} onClick={downFile}>下载模板</div>
@@ -91,7 +91,7 @@ const UpFile = () => {
             </div>
             <button className={Css['submit']} onClick={submit}>上传</button>
         </React.Fragment>
-    )
-}
+    );
+};
 
-export default UpFile
+export default UpFile;

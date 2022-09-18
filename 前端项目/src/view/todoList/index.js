@@ -1,17 +1,17 @@
-import React, { useEffect, useState, useRef, useCallback} from 'react'
-import useStateCallBack from '../../components/useStateCallback/index'
-import axios from 'axios'
-import Loading from '../../components/Loading/loading'
-import Header from '../../components/Input/index'
-import Content from '../../components/Input/index'
-const Css = require('./index.scss')
+import React, { useEffect, useState, useRef, useCallback} from 'react';
+import useStateCallBack from '../../components/useStateCallback/index';
+import axios from 'axios';
+import Loading from '../../components/Loading/loading';
+import Header from '../../components/Input/index';
+import Content from '../../components/Input/index';
+const Css = require('./index.scss');
 
 const Index = () => {
     const [loading, setLoading] = useState(true);
     const [targetValue, setTargetValue] = useStateCallBack('');
     const [list, setList] = useState([]);
     const [checkValue, setCheckValue] = useState([]);
-    const inputContent = useRef()
+    const inputContent = useRef();
     const listFn = useCallback(() => {
         axios.get('/api/todo/todoList').then((res) => {
             if(res.status === 200){
@@ -19,8 +19,8 @@ const Index = () => {
                 setLoading(false);
                 setList(data);
             }
-        })
-    }, [])
+        });
+    }, []);
     let objValue = useRef({}); //这里要拿useRef包一下 =》 要不然每一次刷新都是{}
     useEffect(() => {
         listFn();
@@ -36,16 +36,16 @@ const Index = () => {
                 setList((state) => {
                     objValue.current.taskId = state.length + 1;
                     return [...state, objValue.current];
-                })
+                });
             }
-        })
-    }, [])
+        });
+    }, []);
     const target = (val) => {
         //新建
         setTargetValue(val , (val) => {
-            objValue.current.value = val
+            objValue.current.value = val;
         });
-    }
+    };
     const checkStyle = (e) => {
         // e.target.previousSibling.style = 'display: none'; //这样的情况也是可以实现的
         if(Css['buttonExit'] === e.target.className){
@@ -54,7 +54,7 @@ const Index = () => {
             e.target.parentNode.firstChild.focus();
             e.target.previousSibling.style = 'display: none'; 
         }
-    }
+    };
     const blur = (e, item) => {
         e.target.nextSibling.style = 'display: inline-block';
         e.target.style = 'display: none';
@@ -64,53 +64,53 @@ const Index = () => {
             if(Css['buttonExit'] === node.className){
                 node.style = '';
             }
-        })
+        });
         if(e.target.value !== ''){
             list.forEach((row) => {
                 if(row.taskId == item.taskId){
                     row.value = e.target.value;
                 }
-            })
+            });
         }else{
             alert('任务不能为空');
         }
         setList([...list]);
-    }
+    };
     const deleteWork = (row) => {
         //confirm与alert一样
         if(confirm('确认删除吗')){
             let listTarget = list.filter((item) => {
-                return item.taskId !== row.taskId
-            })
+                return item.taskId !== row.taskId;
+            });
             listTarget.forEach((item, index) => {
                 item.taskId = index;
-            })
+            });
             setList([...listTarget]);
             //对checkValue的值进行判断
             let checkValueCopy = checkValue.filter((item) => parseInt(item) !== parseInt(row.taskId));
             setCheckValue([...checkValueCopy]);
         }
-    }
+    };
     const checkBox = (e) => {
         let taskId = e.target.value;
         let list = [...checkValue];
         if(list.length === 0){
             list.push(taskId);
         }else{
-            let choose = checkValue.some((item) => parseInt(item) === parseInt(taskId))
+            let choose = checkValue.some((item) => parseInt(item) === parseInt(taskId));
             if(choose){
                 list = checkValue.filter((item) => item !== taskId);
             }else{
                 list.push(taskId);
             }
         }
-        setCheckValue([...list])
+        setCheckValue([...list]);
     };
     const deleteAll = () => {
         let listTarget = list.filter((list) => {
             let target = checkValue.some((item) => parseInt(item) === parseInt(list.taskId));
             return !target;
-        })
+        });
         setList([...listTarget]);
         setCheckValue([]);
     };
@@ -130,7 +130,7 @@ const Index = () => {
                                 <button className={Css['buttonDelete']} onClick={deleteWork.bind(null, item)}>删除</button>
                                 <input className={Css['checkout']} type='checkbox' value={item.taskId} onChange={checkBox}></input>
                             </div>
-                        )
+                        );
                     })
                 }
             </div> : ''}
@@ -144,6 +144,6 @@ const Index = () => {
                 ) : ''
             }
         </div>
-    )
-}
+    );
+};
 export default Index;

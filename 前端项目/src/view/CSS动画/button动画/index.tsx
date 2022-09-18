@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 import Css from './index.scss';
-import AdaptationTroll from '../js轮播动画/index'
-import CssIndex from '../css轮播动画/index'
+import AdaptationTroll from '../js轮播动画/index';
+import CssIndex from '../css轮播动画/index';
 import { IList } from '../../../typings/utils';
 
 const Index = () => {
@@ -26,7 +26,7 @@ const Index = () => {
             url: '88.jpg',
             title: '轮播图3',
         }
-    ]
+    ];
     return (
         <div>
             <CssIndex list={list}></CssIndex>
@@ -42,7 +42,7 @@ const Index = () => {
                 </button>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Index;

@@ -7,7 +7,7 @@ export const handlers = [
         sessionStroage.setItem('is-authenticates', 'true');
         return res(
             ctx.status(200),
-        )
+        );
     }),
     rest.get('/user', (req, res, ctx) => {
         const isAuthenticated = sessionStorage.getItem('is-authenticates');
@@ -17,13 +17,13 @@ export const handlers = [
                 ctx.json({
                     errorMessage: 'Not authorized',
                 })
-            )
+            );
         }
         return res(
             ctx.status(200),
             ctx.json({
                 username: 'admin',
             })
-        )
+        );
     })
-]
+];

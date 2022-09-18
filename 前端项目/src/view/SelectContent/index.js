@@ -1,11 +1,11 @@
-import React from 'react'
-import Select from '../../components/Select'
-const Css = require('./index.scss')
+import React from 'react';
+import Select from '../../components/Select';
+const Css = require('./index.scss');
 
 const Index = () => {
     const selectValue = (value) => {
-        alert(value) //适用组件的地方可以通过回调函数的方式获取到选择的值
-    }
+        alert(value); //适用组件的地方可以通过回调函数的方式获取到选择的值
+    };
   return (
     <div id='selectPage'>
         {/* Select可以接收的参数
@@ -22,7 +22,7 @@ const Index = () => {
         </div>
         <div className={Css['bg-s']}></div>
     </div>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;

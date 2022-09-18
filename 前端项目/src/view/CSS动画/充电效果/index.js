@@ -1,5 +1,5 @@
-import React from 'react'
-const Css = require('./index.scss')
+import React from 'react';
+const Css = require('./index.scss');
 
 const Index = () => {
   return (
@@ -16,7 +16,7 @@ const Index = () => {
           <div className={Css['bubble']}></div>
         </div>
     </div>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;

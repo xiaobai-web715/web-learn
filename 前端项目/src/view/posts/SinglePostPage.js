@@ -1,6 +1,6 @@
 import React from 'react';
 import {useParams, useNavigate, Link} from 'react-router-dom';
-import {useSelector} from 'react-redux'
+import {useSelector} from 'react-redux';
 import { PostAuthor } from './PostAuthor';
 import { TimeAgo } from './TimeAgo';
 import { ReactionButtons } from './ReactionButtons';
@@ -14,11 +14,11 @@ export const SinglePostPage = () => {
             <section>
                 <h2>要去请求对应的信息</h2>
             </section>
-        )
+        );
     }
     const goPage = () => {
         navigate('/ReduxPosts');
-    }
+    };
     return (
         <section>
             <button onClick={goPage}>点击返回原页面</button>
@@ -33,5 +33,5 @@ export const SinglePostPage = () => {
                 </Link>
             </article>
         </section>
-    )
-}
+    );
+};

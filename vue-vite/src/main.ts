@@ -1,9 +1,10 @@
-import { createApp } from 'vue'
-import store from './store'
+import { createApp } from 'vue';
+import store from './store';
 import router from './router';
-import App from './App.vue'
-import {routerBeforeEach} from '@/router/route'
+import App from './App.vue';
+import {routerBeforeEach} from '@/router/route';
+import '@/assets/public.scss';
 
 routerBeforeEach(router, store); //动态权限路由管理
 
-createApp(App).use(store).use(router).mount('#app')
+createApp(App).use(store).use(router).mount('#app');
