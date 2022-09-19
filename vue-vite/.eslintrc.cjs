@@ -6,6 +6,7 @@ module.exports = {
         // 'plugin:vue/recommended',
     ],
     parserOptions: {
+        "parser": "@typescript-eslint/parser",
         "ecmaVersion": 2018, //代表兼容的es语法
         "sourceType": "module"
     },
@@ -18,5 +19,6 @@ module.exports = {
         }],
         "semi": 2,
         "vue/html-indent": ["warn", 4], //html缩进的规则 默认2个空格
+        "vue/multi-word-component-names": 'off',
     },
 };

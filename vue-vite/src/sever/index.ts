@@ -6,9 +6,9 @@ const getUserRouteList = (uid: number) => {
         return res;
     }).catch((err) => {
         throw err;
-    })
-}
+    });
+};
 
 export {
     getUserRouteList,
-}
+};

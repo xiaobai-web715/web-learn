@@ -3,4 +3,4 @@ const SET_AUTH: string = 'SET_AUTH';
 export {
     SET_ROUTE_TREE,
     SET_AUTH
-}
+};

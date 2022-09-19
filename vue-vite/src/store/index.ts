@@ -6,4 +6,4 @@ export default createStore<IState>({
     state,
     actions,
     mutations,
-})
+});

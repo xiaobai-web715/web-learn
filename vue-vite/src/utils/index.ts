@@ -1,4 +1,4 @@
-import { IRoute } from "@/typings/sever"
+import { IRoute } from "@/typings/sever";
 
 const formatRouteTree = (routeList: IRoute[]) => {
     const parent = routeList.filter(routeInfo => routeInfo.pid === 0);
@@ -18,13 +18,13 @@ const formatRouteTree = (routeList: IRoute[]) => {
                         parent.children =[child];
                     }
                 }
-            })
-        })
+            });
+        });
     }
     dateToTree(parent, child);
     return parent;
-}
+};
 
 export {
     formatRouteTree
-}
+};

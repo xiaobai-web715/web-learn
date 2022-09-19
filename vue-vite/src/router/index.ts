@@ -1,5 +1,5 @@
 import {createRouter, RouteRecordRaw, createWebHistory} from 'vue-router';
-import Home from '@/view/Home.vue'
+import Home from '@/view/Home.vue';
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
@@ -10,9 +10,9 @@ const routes: Array<RouteRecordRaw> = [
         name: 'NotFound',
         component: () => import(/* webpackChunkName: "NotFound" */'@/view/NotFound.vue'),
     }
-]
+];
 
 export default createRouter({
     history: createWebHistory(),
     routes,
-})
+});

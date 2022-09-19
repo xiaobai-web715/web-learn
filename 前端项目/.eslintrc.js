@@ -8,6 +8,7 @@ module.exports = {
         //'plugin:prettier/recommended', => 这里是prettier的相关配置，目前没办法实现保存按照prettier的规则来自动格式化
     ],
     parserOptions: {
+        // parser: '',
         ecmaVersion: 2018, // 允许解析最新的 ECMAScript 特性
         sourceType: 'module', // 允许使用 import
         ecmaFeatures: {

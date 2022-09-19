@@ -37,7 +37,8 @@ router.post('/submit/xlsx', fileUpload.any() ,(req, res, next) => {
     const wb = utils.book_new();
     utils.book_append_sheet(wb, ws, 'data');
     const file = write(wb, { bookType: 'xlsx', type: 'buffer'}); 
-    res.header('Content-Disposition', 'attachment; filename="SheetJSDrash.xlsx"');
+    res.header('Content-Disposition', 'attachment; filename=SheetJSDrash.xlsx');
+    // res.header('Content-Disposition', 'attachment; filename="SheetJSDrash.xlsx"'); "SheetJSDrash.xlsx"这样的写法是错误的,通过res.headers['content-disposition'].split('=')[1]获得字符串好像赋予download会出问题
     res.header('Context-Type', 'application/vnd.ms-excel'); //这里并不是重点(只是告诉该以怎样的形式去下载)
     // res.header('Context-Type', 'application/zip');
     res.status(200).send(file);
