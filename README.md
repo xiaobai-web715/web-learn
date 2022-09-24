@@ -38,4 +38,8 @@
   ```
   ### 细节问题
     1.React当中引入本地图片: 需借助require('./image/1.jpg').default方式读取 => require()只能接受字符串,不能直接接受变量,但有一个委婉的方式 let url = '3.jpg'; let image = require('./image/' + url); 只能这样来实现。
-  
+
+## node项目
+  npm install express-handlebars 编写服务端渲染模板(通过engine与set来配置Handlebars视图) res.render('xxx')返回views下的xxx.handlebars文件
+
+  npm install jest 安装jest进行qa测试

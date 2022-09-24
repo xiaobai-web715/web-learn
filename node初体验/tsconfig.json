@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "outDir": "./",
+        "allowJs": true,
+        "target": "es6",
+        "esModuleInterop": true,
+        "moduleResolution": "node", //告诉ts文件改以何种方式来寻找依赖模块
+        "module": "CommonJs", //TypeScript文件中的module，采用何种方式实现
+    },
+    "include": [
+        "./"
+    ],
+    "exclude": ["node_modules", "public", "tmp", "mode", "route", "utils"], //无法写入文件“e:/node/node初体验/utils/fileUpload.js”，因为它会覆盖输入文件。感觉是因为ts下有js文件的原因
+}

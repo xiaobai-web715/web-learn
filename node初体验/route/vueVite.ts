@@ -29,4 +29,4 @@ router.post('/user_router_list', (request: Request, response: Response) => {
         })
     }
 })
-export default router;
+module.exports =  router;

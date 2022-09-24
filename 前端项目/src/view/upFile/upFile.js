@@ -61,7 +61,7 @@ const UpFile = () => {
                         let link = document.createElement('a');
                         link.style.display = 'none';
                         link.href = url;
-                        console.log('file', res.headers['content-disposition'].split('=')[1], blob);
+                        console.log('file', res.headers['content-disposition'].split('=')[1], blob, url);
                         link.setAttribute(
                             "download",
                             res.headers['content-disposition'].split('=')[1],

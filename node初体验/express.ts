@@ -1,17 +1,28 @@
-import express,  { Application } from "express";
-import bodyParser from 'body-parser'; //node原生的api用来作为中间件来处理post请求
-// const express = require('express');
+const express = require('express');
+const bodyParser = require('body-parser');
+// const expressHandlebars = require('express-handlebars'); //引入服务端html模板框架 => 这样的引入有错误expressHandlebars is not founction
+const {engine} = require('express-handlebars');
 // const history = require('connect-history-api-fallback')
-// const bodyParser = require('body-parser');
-const app: Application = express()
+
+const app = express()
 const todoList = require('./route/todoList');
 const post = require('./route/posts');
 const hoc = require('./route/HOC');
 const UploadFile = require('./route/uploadFile');
 const touchByMiatask = require('./route/touchByMiatask');
 const upFile = require('./route/upFile');
-// const vueVite = require('./route/vueVite')
-import vueVite from './route/vueVite'
+const vueVite = require('./route/vueVite');
+
+const severRendering = require('./utils/handlers'); //服务段渲染路由
+
+//配置Handlebars视图引擎
+app.engine('handlebars', engine({
+    defaultLayout: 'main'
+}));
+// app.engine('handlebars', expressHandlebars({
+//     defaultLayout: 'main'
+// }));
+app.set('view engine', 'handlebars');
 
 //为什么要使用json()或urlencoded()这两个方式来获取请求参数呢
   //get请求默认的请求头content-type:'默认是application/x-www-form-urlencoded -> 请求体中的数据以表单键值对的形式发送给后端'
@@ -45,6 +56,12 @@ app.get('/', (req, res) => {
     console.log('当前进程的PID', process.pid); //目前不清楚在别的应用程序中这个进程的PID如何获取
     // process.kill(process.pid , 'SIGTERM');
 })
+
+/*
+    app.use加载路由无法找到的404中间件(服务端渲染)
+*/
+app.use(severRendering.notFoundPage)
+
 //nodejs想要退出程序 => 最直接的写法就是process.exit() => 但这对于http服务器来说这样会终止一切正在等待的请求
                  //  => 所以可以通过发出信号的方式去执行 SIGTEMR 
                  //  => 这个就相当于发布订阅模式(在此处发布,其余地方订阅后这里去执行)
