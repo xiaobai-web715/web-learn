@@ -1,8 +1,8 @@
 module.exports = {
-    parser: '@typescript-eslint/parser', // 指定ESLint解析器
+    // parser: '@typescript-eslint/parser', // 指定ESLint解析器 （好像和17行加18行具有同样的作用）
     extends: [
         'plugin:react/recommended', // 使用来自 @eslint-plugin-react 的推荐规则
-        'plugin:@typescript-eslint/recommended', // 使用来自@typescript-eslint/eslint-plugin的推荐规则
+        //'plugin:@typescript-eslint/recommended', // 使用来自@typescript-eslint/eslint-plugin的推荐规则
         // 下面这一行加上会报错 好像是prettier/@typescript-eslint被高版本的prettier啥的兼容了
         //'prettier/@typescript-eslint',  // 使用 ESLint -config-prettier 禁用来自@typescript-eslint/ ESLint 与 prettier 冲突的 ESLint 规则
         //'plugin:prettier/recommended', => 这里是prettier的相关配置，目前没办法实现保存按照prettier的规则来自动格式化
@@ -14,6 +14,8 @@ module.exports = {
         ecmaFeatures: {
             jsx: true, // 允许对JSX进行解析
         },
+        // project: ['./tsconfig.json'],
+        // tsconfigRootDir: __dirname
     },
     rules: {
         // 自定义规则

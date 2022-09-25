@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --open --config ./config/webpack.config.js"
+    "start": "webpack-dev-server --open --config ./config/webpack.config.js",
+    "lint": "eslint src"
   },
   "author": "",
   "license": "ISC",

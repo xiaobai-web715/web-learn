@@ -42,4 +42,9 @@
 ## node项目
   npm install express-handlebars 编写服务端渲染模板(通过engine与set来配置Handlebars视图) res.render('xxx')返回views下的xxx.handlebars文件
 
-  npm install jest 安装jest进行qa测试
+  npm install jest 安装jest进行qa测试 在package.json里面添加"test" : 'jest' 然后运行npm test -- --watch即可(测试的文件需要写成.test.js作为后缀或者写在__tests__文件下面, 感觉写成.test.js文件在项目根目录项运行npm test就可以进行测试)
+
+  npm install --save-dev eslint 然后再项目根目录运行./node_modules/.bin/eslint --init 配置后会生成.eslintrc.js文件 ,然后再package.json里面的script键入"lint": "eslint express.js utils"告诉要对哪些文件或目录进行lint
+  除了能在.eslintrc.js文件当中的rules设置当前项目的全局规则,还能在某一条语句上下添加规则(形成局不禁用规则),而不影响到整个项目.(例如node初体验\utils\integration-tests\basic-navigation.test.js)第一行与第三的写法
+
+  在.eslint.js的parserOptions里添加    project: ['tsconfig.json'],   tsconfigRootDir: __dirname这两行可以使用命令行的方式来校验规则 => 但是这样好像回合parser添加的产生冲突(不过这样会解决另一个报错 Parsing error: "parserOptions.project" has been set for @typescript-eslint/parser.The file does not match your project config: route\vueVite.ts.The file must be included in at least one of the projects provided.) <= 这个报错还有一个可能是你的ts文件包含的文件夹被tsconfig.json当中的exclude所排除掉了

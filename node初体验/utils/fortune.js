@@ -1,8 +1,8 @@
 const fortuneCookies = [
-    "not found page",
-    "lostConnection"
+  'not found page',
+  'lost connection'
 ]
 
-module.exports = getForture = () => {
-    return fortuneCookies[Math.floor(Math.random() * fortuneCookies.length)];
+module.exports = () => {
+  return fortuneCookies[Math.floor(Math.random() * fortuneCookies.length)]
 }

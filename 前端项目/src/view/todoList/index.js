@@ -8,7 +8,9 @@ const Css = require('./index.scss');
 
 const Index = () => {
     const [loading, setLoading] = useState(true);
+    /* eslint-disable no-unused-vars */ //局部禁用规则(允许定义未被使用的变量)
     const [targetValue, setTargetValue] = useStateCallBack('');
+    /* eslint-ensable no-unused-vars */
     const [list, setList] = useState([]);
     const [checkValue, setCheckValue] = useState([]);
     const inputContent = useRef();
