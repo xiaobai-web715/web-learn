@@ -70,6 +70,11 @@ app.get('/', (req, res) => {
 */
 app.use('/home', severRendering.home)
 app.use('/about', severRendering.about)
+app.get('/headers', (req, res) => {
+  res.type('text/plain')
+  const headers = Object.entries(req.headers).map(([key, value]) => `${key}: ${value}`)
+  res.send(headers.join('\n'))
+})
 /*
     app.use加载路由无法找到的404与500中间件(服务端渲染)
 */
