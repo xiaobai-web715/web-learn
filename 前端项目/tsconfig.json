@@ -130,7 +130,8 @@
     "outDir": "./",
   },
   "include": [
-    "src/**/*" // *** TypeScript文件应该进行类型检查 ***
+    "src/**/*.tsx", // *** TypeScript文件应该进行类型检查 ***
+    "src/**/*.ts",
   ],
   "exclude": ["node_modules", "dist"] // *** 不进行类型检查的文件 ***
 }

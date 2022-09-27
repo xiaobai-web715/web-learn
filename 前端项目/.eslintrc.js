@@ -1,5 +1,5 @@
 module.exports = {
-    // parser: '@typescript-eslint/parser', // 指定ESLint解析器 （好像和17行加18行具有同样的作用）
+    parser: '@typescript-eslint/parser', // 指定ESLint解析器 （好像和17行加18行具有同样的作用）
     extends: [
         'plugin:react/recommended', // 使用来自 @eslint-plugin-react 的推荐规则
         //'plugin:@typescript-eslint/recommended', // 使用来自@typescript-eslint/eslint-plugin的推荐规则
@@ -14,7 +14,7 @@ module.exports = {
         ecmaFeatures: {
             jsx: true, // 允许对JSX进行解析
         },
-        // project: ['./tsconfig.json'],
+        // project: ['tsconfig.json'],
         // tsconfigRootDir: __dirname
     },
     rules: {
