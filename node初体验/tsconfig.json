@@ -10,5 +10,5 @@
     "include": [
         "./"
     ],
-    "exclude": ["node_modules", "public", "tmp", "mode" , "utils"], //无法写入文件“e:/node/node初体验/utils/fileUpload.js”，因为它会覆盖输入文件。感觉是因为ts下有js文件的原因
+    "exclude": ["node_modules", "public", "tmp", "mode"], //无法写入文件“e:/node/node初体验/utils/fileUpload.js”，因为它会覆盖输入文件。感觉是因为ts下有js文件的原因
 }
