@@ -6,7 +6,9 @@ module.exports = {
     es2021: true,
     jest: true
   },
-  extends: 'standard-with-typescript',
+  extends: [
+    'standard-with-typescript'
+  ],
   overrides: [
   ],
   parserOptions: {

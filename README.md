@@ -48,3 +48,5 @@
   除了能在.eslintrc.js文件当中的rules设置当前项目的全局规则,还能在某一条语句上下添加规则(形成局不禁用规则),而不影响到整个项目.(例如node初体验\utils\integration-tests\basic-navigation.test.js)第一行与第三的写法
 
   在.eslint.js的parserOptions里添加    project: ['tsconfig.json'],   tsconfigRootDir: __dirname这两行可以使用命令行的方式来校验规则 => 但是这样好像回合parser添加的产生冲突(不过这样会解决另一个报错 Parsing error: "parserOptions.project" has been set for @typescript-eslint/parser.The file does not match your project config: route\vueVite.ts.The file must be included in at least one of the projects provided.) <= 这个报错还有一个可能是你的ts文件包含的文件夹被tsconfig.json当中的exclude所排除掉了
+
+  commonjs没有模块化概念 => 会导致一个问题就是引入的文件在解构赋值的时候如果是相同的名字,ts会报错不允许重复声明同一个const变量 => 目前的解决思路(安装@babel/plugin-transform-modules-commonjs),添加babel.config.js文件并编写配置, tsconfig.json文件中esModuleInterop属性设置为true , 然后ts文件的导出下面都添加一个export {}来进行欺骗ts的操作,并用@babel/plugin-transform-modules-commonjs将export {}进行忽略掉

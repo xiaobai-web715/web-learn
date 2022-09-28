@@ -13,7 +13,9 @@ const touchByMiatask = require('./route/touchByMiatask')
 const upFile = require('./route/upFile')
 const vueVite = require('./route/vueVite.ts')
 
-const severRendering = require('./utils/handlers') // 服务段渲染路由
+const { getParams } = require('./utils/request/paramUtil')
+
+const severRendering = require('./utils/handlers') // 服务端渲染路由
 
 // 配置Handlebars视图引擎
 app.engine('handlebars', engine({
@@ -60,6 +62,8 @@ if (require.main === module) {
 }
 
 app.get('/', (req, res) => {
+  const params = getParams(req)
+  console.log('params', params)
   res.send(JSON.stringify({ firstName: 'liu', lastName: 'xinghua' }))
   console.log('当前进程的PID', process.pid) // 目前不清楚在别的应用程序中这个进程的PID如何获取
   // process.kill(process.pid , 'SIGTERM');
