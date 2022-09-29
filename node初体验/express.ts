@@ -26,11 +26,9 @@ app.engine('handlebars', engine({
 // }));
 app.set('view engine', 'handlebars')
 
-// 为什么要使用json()或urlencoded()这两个方式来获取请求参数呢
-// get请求默认的请求头content-type:'默认是application/x-www-form-urlencoded -> 请求体中的数据以表单键值对的形式发送给后端'
-// post请求默认的请求头content-type: '默认是application/json -> 请求体中的数据以json字符串形式发送给后盾'
-app.use(bodyParser.urlencoded({ extended: true })) // express引入中间件(body-parser用来拦截请求,urlencoded方法会判断请求中是否有请求参数,如果包含就会将请求参数转换成对象类型,再给req请求对象添加body属性)
-app.use(bodyParser.json())
+// express引入中间件(body-parser用来拦截请求,解析req.body属性,再将原有的body属性进行覆盖)
+app.use(bodyParser.urlencoded({ extended: true })) // 解析通常通过form表单提交的数据 content-type: application/x-www-form-urlencoded
+app.use(bodyParser.json()) // 解析content-type: application/json格式发起请求传输的数据
 // app.use(bodyParser.text({extended: false}));
 
 /*
@@ -75,6 +73,7 @@ app.get('/', (req, res) => {
 app.use('/home', severRendering.home)
 app.use('/about', severRendering.about)
 app.get('/headers', (req, res) => {
+  console.log('浏览器请求还是ajax请求', req.xhr) // req.xhr ajax调用返回true
   res.type('text/plain')
   const headers = Object.entries(req.headers).map(([key, value]) => `${key}: ${value}`)
   res.send(headers.join('\n'))

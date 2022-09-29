@@ -39,6 +39,10 @@
   ### 细节问题
     1.React当中引入本地图片: 需借助require('./image/1.jpg').default方式读取 => require()只能接受字符串,不能直接接受变量,但有一个委婉的方式 let url = '3.jpg'; let image = require('./image/' + url); 只能这样来实现。
 
+  ### 使用思考
+    form表单提交默认是get并且会跳转页面,可以通过method属性来指定post请求, target='iframe的名字'以及创建一个name='iframe的名字'的iframe标签来达到不让form表单提交跳转页面的能力
+    form表单默认的请求头content-type是application/x-www-form-urlencoded, 可以通过enctype属性指定content-type (当指定multipart/form-data并通过multer中间件可以获取文件信息,在req.files属性里面)
+
 ## node项目
   npm install express-handlebars 编写服务端渲染模板(通过engine与set来配置Handlebars视图) res.render('xxx')返回views下的xxx.handlebars文件
 

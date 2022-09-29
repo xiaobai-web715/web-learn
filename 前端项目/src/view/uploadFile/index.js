@@ -3,18 +3,23 @@ import axios from 'axios';
 
 const UploadFile = () => {
     const [fileURL, setFileURL] = useState('请先选择你要上传的文件');
+    const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
     useEffect(() => {
         document.forms[0].addEventListener('submit', (e) => {
             e.preventDefault();
             //new FormData()可以将表单进行序列化操作(但是默认传参是FormData的情况下,content-Type是multipart/form-data)
             // axios中如何配置请求头(https://blog.csdn.net/suyalei4/article/details/102940611?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522166055226316781432952095%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=166055226316781432952095&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-102940611-null-null.142^v40^pc_rank_34_2,185^v2^control&utm_term=axios%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AEcontent-type&spm=1018.2226.3001.4187)
+            let formData = new FormData();
+            for (let element of e.target.elements) {
+                if (element.value) {
+                    formData.append(element.name, element.value);
+                }
+            }
             axios({
-                // headers: {
-                //     'Content-Type': 'application/x-www-form-urlencoded'
-                // },
                 method: 'POST',
                 url: '/api/newFormData',
-                data: data,
+                data: formData,
             }).then(res => {
                 console.log('res', res);
             });
@@ -35,12 +40,39 @@ const UploadFile = () => {
             console.log('render.result', render.result);
         };
     };
+    const submit = (e) => {
+        // 提交表单时没有指明编码方式,那默认就是application/x-www-form-urlencoded
+        const node = document.createElement('iframe');
+        node.style.display = 'none';
+        node.name = 'myIframe';
+        document.body.appendChild(node);
+        setTimeout(() => {
+            document.body.removeChild(node);
+        }, 1000);
+    };
     return (
         <React.Fragment>
             <form>
                 <input name='file' type='file' onChange={getFileName} accept='.csv,.txt,.jpg'></input>
                 <input name='url' placeholder={fileURL}></input>
                 <input name='submit' type='submit'></input>
+            </form>
+            <form method='post' action='/api/newFormData' role='form' target='myIframe' encType='multipart/form-data'>
+                {/* encType用来设置form表单请求的content-type */}
+                {/* 通过target链接到iframe身上防止跳转页面 */}
+                <label>
+                    用户名:
+                    <input type='text' value={name} name='userName' onChange={(e) => {setName(e.target.value);}}></input>
+                </label><br/>
+                <label>
+                    密码:
+                    <input type='password' value={password} name='userPassword' onChange={(e) => {setPassword(e.target.value);}}></input>
+                </label><br/>
+                <label>
+                    选择文件:
+                    <input type='file' accept='.csv' name='file'></input>
+                </label>
+                <button onClick={submit}>提交</button>
             </form>
         </React.Fragment>
     );
