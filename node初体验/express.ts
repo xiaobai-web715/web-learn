@@ -27,8 +27,8 @@ app.engine('handlebars', engine({
 app.set('view engine', 'handlebars')
 
 // express引入中间件(body-parser用来拦截请求,解析req.body属性,再将原有的body属性进行覆盖)
-app.use(bodyParser.urlencoded({ extended: true })) // 解析通常通过form表单提交的数据 content-type: application/x-www-form-urlencoded
-app.use(bodyParser.json()) // 解析content-type: application/json格式发起请求传输的数据
+app.use(bodyParser.urlencoded({ extended: true })) // 解析 content-type: application/x-www-form-urlencoded格式请求所携带的参数
+app.use(bodyParser.json()) // 解析content-type: application/json格式请求携带的参数
 // app.use(bodyParser.text({extended: false}));
 
 /*
