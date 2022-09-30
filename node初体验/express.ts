@@ -4,6 +4,9 @@ const bodyParser = require('body-parser')
 const { engine } = require('express-handlebars')
 // const history = require('connect-history-api-fallback')
 
+const { credentials } = require('./config/config.js')
+console.log('credentials', credentials)
+
 const app = express()
 const todoList = require('./route/todoList')
 const post = require('./route/posts')

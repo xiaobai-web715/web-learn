@@ -75,7 +75,7 @@ const UploadFile = () => {
                 <input type='submit'></input>
             </form>
             <form method='post' action='/api/newFormData' role='form' target='myIframe' encType='multipart/form-data'>
-                {/* encType用来设置form表单请求的content-type */}
+                {/* encType用来设置form表单请求的content-type, 必须设置成multipart/form-data属性才能够实现文件的上传 */}
                 {/* 通过target链接到iframe身上防止跳转页面 */}
                 {/* form表单里面元素的name属性是必须的,作为表单提交请求时,请求参数的key */}
                 <label>
