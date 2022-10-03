@@ -3,6 +3,10 @@ const express = require('express')
 const router = express.Router()
 
 router.get('/todoList', (req, res) => {
+  /**
+   * 设置cookie
+   */
+  res.cookie('monster', 'nom mon')
   res.send(JSON.stringify({
     list: [
       { taskId: 1, value: '吃饭' },

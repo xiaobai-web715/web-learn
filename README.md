@@ -3,6 +3,11 @@
 ## javascript
   测试用法的demo
     http_createServer与http_request 模拟服务端以application/json或application/x-www-form-urlencoded格式发送对应格式数据并在客户端获取二进制数据流进行解析
+  middleTest测试demo
+    测试express中间件与路由处理函数的链式调用的规则
+      1.当中间件或者满足匹配的路由处理函数执行,但没有调用next的话,会将这个链式调用进行终止.
+      2.app.get()匹配路由抛出错误后,虽然没有在代码中显示调用next,但后续的链式仍能执行=》应该是代码的封装当中有调用,并且这个调用应该是使用了next(err)会链式到兜底的500处理
+      3.next()的话如果还是执行到了兜底函数则会链式到404
 ## React项目
   在未引入ts的时候用prop-types来进行props的属性声明
 
@@ -59,3 +64,7 @@
   在.eslint.js的parserOptions里添加    project: ['tsconfig.json'],   tsconfigRootDir: __dirname这两行可以使用命令行的方式来校验规则 => 但是这样好像回合parser添加的产生冲突(不过这样会解决另一个报错 Parsing error: "parserOptions.project" has been set for @typescript-eslint/parser.The file does not match your project config: route\vueVite.ts.The file must be included in at least one of the projects provided.) <= 这个报错还有一个可能是你的ts文件包含的文件夹被tsconfig.json当中的exclude所排除掉了
 
   commonjs没有模块化概念 => 会导致一个问题就是引入的文件在解构赋值的时候如果是相同的名字,ts会报错不允许重复声明同一个const变量 => 目前的解决思路(安装@babel/plugin-transform-modules-commonjs),添加babel.config.js文件并编写配置, tsconfig.json文件中esModuleInterop属性设置为true , 然后ts文件的导出下面都添加一个export {}来进行欺骗ts的操作,并用@babel/plugin-transform-modules-commonjs将export {}进行忽略掉
+
+  npm install cookie-parser中间件来使劲儿在设置与访问token
+
+  npm install express-session中间件用来实现内存存储(要在链入cookie中间件之后)

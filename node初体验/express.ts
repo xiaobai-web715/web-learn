@@ -3,9 +3,10 @@ const bodyParser = require('body-parser')
 // const expressHandlebars = require('express-handlebars'); //引入服务端html模板框架 => 这样的引入有错误expressHandlebars is not founction
 const { engine } = require('express-handlebars')
 // const history = require('connect-history-api-fallback')
+const cookieParser = require('cookie-parser')
+const expressSession = require('express-session')
 
 const { credentials } = require('./config/config.js')
-console.log('credentials', credentials)
 
 const app = express()
 const todoList = require('./route/todoList')
@@ -34,6 +35,18 @@ app.use(bodyParser.urlencoded({ extended: true })) // 解析 content-type: appli
 app.use(bodyParser.json()) // 解析content-type: application/json格式请求携带的参数
 // app.use(bodyParser.text({extended: false}));
 
+/**
+ * 引入设置cookie的中间件
+ */
+app.use(cookieParser(credentials.cookieSerect))
+/**
+ * 链入session中间件
+ */
+app.use(expressSession({
+  resave: false,
+  saveUninitialized: false,
+  secret: credentials.cookieSerect
+}))
 /*
     请求返回静态资源的方式
 */
