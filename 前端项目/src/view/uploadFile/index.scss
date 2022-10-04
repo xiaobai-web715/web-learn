@@ -1,8 +1,10 @@
-input{
-    margin: 10px 0 10px 10px;
-    &[type='submit']{
-        width: 60px;
-        height: 30px;
-        margin-left: 60px;
+.uploadFileStyle{
+    input{
+        margin: 10px 0 10px 10px;
+        &[type='submit']{
+            width: 60px;
+            height: 30px;
+            margin-left: 60px;
+        }
     }
 }

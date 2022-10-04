@@ -70,29 +70,31 @@ const UploadFile = () => {
     };
     return (
         <React.Fragment>
-            <form name='formJSON'>
-                <input name='file' type='file' onChange={getFileName} accept='.csv,.txt,.jpg'></input><br/>
-                <input name='url' placeholder={fileURL}></input><br/>
-                <input type='submit'></input><br/>
-            </form>
-            <form method='post' action='/api/newFormData' role='form' target='myIframe' encType='multipart/form-data'>
-                {/* encType用来设置form表单请求的content-type, 必须设置成multipart/form-data属性才能够实现文件的上传 */}
-                {/* 通过target链接到iframe身上防止跳转页面 */}
-                {/* form表单里面元素的name属性是必须的,作为表单提交请求时,请求参数的key */}
-                <label>
-                    用户名:
-                    <input type='text' value={name} name='phone' onChange={(e) => {setName(e.target.value);}} placeholder='请输入手机号'></input>
-                </label><br/>
-                <label>
-                    密码:
-                    <input type='password' value={password} name='password' onChange={(e) => {setPassword(e.target.value);}} placeholder='请输入密码'></input>
-                </label><br/>
-                <label>
-                    选择文件:
-                    <input type='file' accept='.csv' name='file'></input>
-                </label><br/>
-                <input type='submit' onClick={submit}></input>
-            </form>
+            <div className={Css['uploadFileStyle']}>
+                <form name='formJSON'>
+                    <input name='file' type='file' onChange={getFileName} accept='.csv,.txt,.jpg'></input><br/>
+                    <input name='url' placeholder={fileURL}></input><br/>
+                    <input type='submit'></input><br/>
+                </form>
+                <form method='post' action='/api/newFormData' role='form' target='myIframe' encType='multipart/form-data'>
+                    {/* encType用来设置form表单请求的content-type, 必须设置成multipart/form-data属性才能够实现文件的上传 */}
+                    {/* 通过target链接到iframe身上防止跳转页面 */}
+                    {/* form表单里面元素的name属性是必须的,作为表单提交请求时,请求参数的key */}
+                    <label>
+                        用户名:
+                        <input type='text' value={name} name='phone' onChange={(e) => {setName(e.target.value);}} placeholder='请输入手机号'></input>
+                    </label><br/>
+                    <label>
+                        密码:
+                        <input type='password' value={password} name='password' onChange={(e) => {setPassword(e.target.value);}} placeholder='请输入密码'></input>
+                    </label><br/>
+                    <label>
+                        选择文件:
+                        <input type='file' accept='.csv' name='file'></input>
+                    </label><br/>
+                    <input type='submit' onClick={submit}></input>
+                </form>
+            </div>
         </React.Fragment>
     );
 };
