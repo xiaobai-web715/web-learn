@@ -54,6 +54,7 @@ app.use((req, res, next) => {
     console.log('404路由没有处理');
     res.send('404-not found');
 })
+const port = process.env.PORT || 3002;
 app.listen(3002, () => {
-    console.log('Express started on http://localhost:3002; press Ctrl-C to terminate')
+    console.log(`Express started in ${app.get('env')} on http://localhost:${port}; press Ctrl-C to terminate`)
 })

@@ -5,6 +5,9 @@ const { engine } = require('express-handlebars')
 // const history = require('connect-history-api-fallback')
 const cookieParser = require('cookie-parser')
 const expressSession = require('express-session')
+const morgan = require('morgan')
+const fs = require('fs')
+const path = require('path')
 
 const { credentials } = require('./config/config.js')
 
@@ -20,6 +23,16 @@ const vueVite = require('./route/vueVite.ts')
 const { getParams } = require('./utils/request/paramUtil')
 
 const severRendering = require('./utils/handlers') // 服务端渲染路由
+
+switch (app.get('env')) {
+  case 'development':
+    app.use(morgan('dev'))
+    break
+  case 'production':
+    const stream = fs.createWriteStream(path.join(__dirname, './', 'access.log'), { flags: 'a' })
+    app.use(morgan('combined', { stream }))
+    break
+}
 
 // 配置Handlebars视图引擎
 app.engine('handlebars', engine({
@@ -64,12 +77,13 @@ app.use('/upFile', upFile)
 app.use('/vueVite', vueVite)
 // app.listen 仅仅使用http模块(如果要使用https则使用https.createServer)
 let server = null
+const port = process.env.PORT || 3001
 
 // 对于node来说，当require.main === module的时候说明是node直接运行的该文件
 // 不等的时候说明该文件是导入的
 if (require.main === module) {
   server = app.listen(3001, () => {
-    console.log('Express started on http://localhost:3001; press Ctrl-C to terminate')
+    console.log(`Express started in ${app.get('env')} on http://localhost:${port}; press Ctrl-C to terminate`)
   })
 } else {
   module.exports = app
