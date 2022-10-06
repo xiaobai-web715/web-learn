@@ -71,6 +71,6 @@
 
   npm install express-session中间件用来实现内存存储(要在链入cookie中间件之后)
 
-  npm install cross-env网上搜索资料是用来在package.json文件当中用来替代windows环境下的set NODE_ENV=production的这个set的,但是网上的资料是结合webpack来使得,不知道为啥在起node项目的时候好像并没有让app.get('dev')的值变成production
+  npm install cross-env网上搜索资料是用来在package.json文件当中用来替代windows环境下的set NODE_ENV=production的这个set的,但是网上的资料是结合webpack来使得,不知道为啥在起node项目的时候cross-nev好像并没有让app.get('dev')的值变成production =>package.json里面的写法(set NODE_ENV=production&&ts-node-dev ./express.ts)
 
   npm install morgan引入日志中间件 会记录对于当前express执行当中的日志
