@@ -17,9 +17,12 @@ const Index = (props) => {
             props.onBlur(e, row);
         }
     };
+    // useEffect(() => {
+    //     setValue(defaultValue);
+    // }, [props]);
     useEffect(() => {
         setValue(defaultValue);
-    }, [props]);
+    }, []);
     return (
     <React.Fragment>
         <input className={Css['input']} ref={props.refContent} type='text' value={value} placeholder={props.placeholder} onChange={changeValue} onBlur = {blurValue}></input>

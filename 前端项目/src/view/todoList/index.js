@@ -37,6 +37,15 @@ const Index = () => {
                 // console.log('obj拿不到最新值', obj);
                 setList((state) => {
                     objValue.current.taskId = state.length + 1;
+                    axios({
+                        method: 'post',
+                        url: '/api/todo/addList',
+                        data: objValue.current
+                    }).then(res => {
+                        if (res.status === 200) {
+                            console.log('数据库写入成功');
+                        }
+                    });
                     return [...state, objValue.current];
                 });
             }

@@ -38,6 +38,29 @@ router.get('/todoList', (req, res) => {
   // }))
 })
 
+const addOne = async (client, options, dbName, dbTable): Promise<void> => {
+  return await new Promise((resolve, reject) => {
+    client.db(dbName).collection(dbTable).insertOne(options, (err, res) => {
+      if (err) reject(err)
+      resolve()
+    })
+  })
+}
+
+router.post('/addList', (res, req) => {
+  const params = res.body
+  addOne(client, params, 'todoList', 'raskList').then(result => {
+    req.status(200)
+    req.send({ message: '数据库写入成功' })
+  }).catch(err => {
+    req.status(200)
+    req.send({
+      code: 0,
+      message: err
+    })
+  })
+})
+
 export {}
 
 module.exports = router

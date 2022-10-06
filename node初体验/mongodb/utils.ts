@@ -7,6 +7,16 @@ const findData = async <T>(client, options, dbName, dbTable): Promise<T> => {
   })
 }
 
+const addOne = async (client, options, dbName, dbTable): Promise<void> => {
+  return await new Promise((resolve, reject) => {
+    client.db(dbName).collection(dbTable).insertOne(options, (err, res) => {
+      if (err) reject(err)
+      resolve()
+    })
+  })
+}
+
 module.exports = {
-  findData
+  findData,
+  addOne
 }
