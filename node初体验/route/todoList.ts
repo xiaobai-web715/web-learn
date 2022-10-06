@@ -53,9 +53,34 @@ router.post('/addList', (res, req) => {
     req.status(200)
     req.send({ message: '数据库写入成功' })
   }).catch(err => {
-    req.status(200)
+    req.status(500)
     req.send({
       code: 0,
+      message: err
+    })
+  })
+})
+
+const deleteOne = async (client, options, dbName, dbTable): Promise<void> => {
+  return await new Promise((resolve, reject) => {
+    // deleteOne只删除数据库当中查询到的第一条数据
+    // deleteMany删除数据库当中查询到的所有数据
+    client.db(dbName).collection(dbTable).deleteOne(options, (err, res) => {
+      if (err) reject(err)
+      resolve()
+    })
+  })
+}
+
+router.post('/deleteList', (res, req) => {
+  const params = res.body
+  console.log('params', params)
+  deleteOne(client, params, 'todoList', 'raskList').then(result => {
+    req.status(200)
+    req.send({ message: '数据库删除成功' })
+  }).catch(err => {
+    req.status(500)
+    req.send({
       message: err
     })
   })

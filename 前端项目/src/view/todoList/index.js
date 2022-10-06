@@ -36,17 +36,21 @@ const Index = () => {
                 // } //这里这个样子是拿不到最新值的 =》在平常的定时函数里面写回调拿外作用域的值每次调用都是一个赋值的过程。
                 // console.log('obj拿不到最新值', obj);
                 setList((state) => {
-                    objValue.current.taskId = state.length + 1;
+                    // objValue.current.taskId = state.length + 1;
+                    //这里要修改一下
+                    objValue.current.taskId = state[state.length-1].taskId + 1;
                     axios({
                         method: 'post',
                         url: '/api/todo/addList',
                         data: objValue.current
                     }).then(res => {
                         if (res.status === 200) {
-                            console.log('数据库写入成功');
+                            alert(res.data.message);
+                        } else {
+                            alert(res.data.message);
                         }
                     });
-                    return [...state, objValue.current];
+                    return [...state, {...objValue.current}];
                 });
             }
         });
@@ -100,6 +104,19 @@ const Index = () => {
             //对checkValue的值进行判断
             let checkValueCopy = checkValue.filter((item) => parseInt(item) !== parseInt(row.taskId));
             setCheckValue([...checkValueCopy]);
+            axios({
+                method: 'post',
+                url: '/api/todo/deleteList',
+                data: {
+                    taskId: row.taskId
+                }
+            }).then(res => {
+                if (res.status === 200) {
+                    alert(res.data.message);
+                } else {
+                    alert(res.data.message);
+                }
+            });
         }
     };
     const checkBox = (e) => {
