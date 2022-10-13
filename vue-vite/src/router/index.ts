@@ -1,15 +1,28 @@
 import {createRouter, RouteRecordRaw, createWebHistory} from 'vue-router';
-import Home from '@/view/Home.vue';
+import Home from '../view/Home.vue';
+import Base from '../view/Base.vue';
+import Login from '../view/Login.vue';
 const routes: Array<RouteRecordRaw> = [
     {
-        path: '/',
-        name: 'Home',
-        component: Home,
-    }, {
-        path: '/:pathMatch(.*)*',
-        name: 'NotFound',
-        component: () => import(/* webpackChunkName: "NotFound" */'@/view/NotFound.vue'),
+        path: '/login',
+        name: 'login',
+        component: Login
     }
+];
+
+export const dynamicRouter = [
+    {
+        path: '/',
+        redirect: '/home',
+        name: 'base',
+        component: Base,
+        children: []
+    },
+    {
+        path: '/home',
+        name: 'home',
+        component: Home,
+    },
 ];
 
 export default createRouter({

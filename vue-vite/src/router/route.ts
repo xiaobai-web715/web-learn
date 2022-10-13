@@ -3,6 +3,7 @@ import { IState } from "@/store/state";
 import { IRoute } from "@/typings/sever";
 import {RouteRecordRaw, Router} from 'vue-router';
 import {Store} from 'vuex';
+import {dynamicRouter} from '@/router/index';
 
 function generateRouter (routeTree: IRoute[]) {
     let newRoutes = routeTree.map(route => {
@@ -21,14 +22,25 @@ function generateRouter (routeTree: IRoute[]) {
 }
 
 export function routerBeforeEach(router: Router, store: Store<IState>) {
-    router.beforeEach(async (to, from , next) => {
-        if(!store.state.hasAuth) {
-            await store.dispatch(SET_ROUTE_TREE);
-            const newRoutes = generateRouter(store.state.routeTree);
-            newRoutes.forEach(route => router.addRoute(route));
-            next({path: to.path});
+    router.beforeEach((to, from, next) => {
+        let token = store.state.token;
+        if (!token) {
+            // next()才是放行的意思如果这里不加入判断知识next('/login')那就是死循环router.beforeEach(('/login', from, next) => {})
+            if (to.path === '/login') {
+                next();
+            } else {
+                next('/login');
+            }
         } else {
-            next();
+            if (store.state.routeTree.length > 0) {
+                next();
+            } else {
+                store.dispatch(SET_ROUTE_TREE).then(res => {
+                    dynamicRouter[0].children = res;
+                    dynamicRouter.forEach(route => router.addRoute(route));
+                    next({...to}); //next({...to})要紧跟动态路由添加之后,否则会一直刷新
+                });
+            }
         }
     });
 }

@@ -38,7 +38,7 @@ const Index = () => {
                 setList((state) => {
                     // objValue.current.taskId = state.length + 1;
                     //这里要修改一下
-                    objValue.current.taskId = state[state.length-1].taskId + 1;
+                    objValue.current.taskId = state.lenght > 0 ? state[state.length-1].taskId + 1: 1;
                     axios({
                         method: 'post',
                         url: '/api/todo/addList',

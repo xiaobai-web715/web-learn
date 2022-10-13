@@ -1,7 +1,6 @@
 import axios from '@/http/index';
-const getUserRouteList = (uid: number) => {
+const getUserRouteList = () => {
     return axios.post('/api/vueVite/user_router_list', {
-        uid,
     }).then((res) => {
         return res;
     }).catch((err) => {
@@ -9,6 +8,17 @@ const getUserRouteList = (uid: number) => {
     });
 };
 
+const useSubmit = (params:{account: String, password: String}) => {
+    return axios({
+        method: 'post',
+        url: '/api/vueVite/userToken',
+        data: params
+    }).then(res => res).catch(err => {
+        console.log(err);
+    });
+};
+
 export {
     getUserRouteList,
+    useSubmit,
 };

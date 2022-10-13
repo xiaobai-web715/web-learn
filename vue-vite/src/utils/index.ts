@@ -8,7 +8,7 @@ const formatRouteTree = (routeList: IRoute[]) => {
     function dateToTree (parents: IRoute[], childs: IRoute[]) {
         parents.map(parent => {
             childs.map((child, index) => {
-                if (parent.id === child.pid) {
+                if (parent._id === child.pid) {
                     let _childrens = JSON.parse(JSON.stringify(childs));
                     _childrens.splice(index, 1); //将当前子节点(是父节点的直接子路由)去掉
                     dateToTree([child], _childrens); //找寻当前子节点所包含的后续子节点

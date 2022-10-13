@@ -22,6 +22,7 @@ module.exports = {
     '@typescript-eslint/no-base-to-string': 'off', // 防止你想输出一个对象但是却调用了toString
     '@typescript-eslint/restrict-template-expressions': 'off',
     'no-new': 'off', // 关掉必须用变量承接new 构造函数返回的对象
-    'no-case-declarations': 'off' // 允许switch case当中在case下面直接写let, const, function and class（不关闭的话可以使用对象形式的写法https://eslint.org/docs/latest/rules/no-case-declarations）
+    'no-case-declarations': 'off', // 允许switch case当中在case下面直接写let, const, function and class（不关闭的话可以使用对象形式的写法https://eslint.org/docs/latest/rules/no-case-declarations）
+    'n/handle-callback-err': 'off'
   }
 }
