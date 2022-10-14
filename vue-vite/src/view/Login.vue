@@ -29,6 +29,7 @@ const submit = () => {
     useSubmit(formData.value).then(res => {
         if ( res.code === 200) {
             store.dispatch(SET_AUTH, {token: true});
+            sessionStorage.setItem('token', true);
             router.push('/');
         }
     });

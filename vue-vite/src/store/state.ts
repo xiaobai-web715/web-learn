@@ -1,4 +1,5 @@
 import { IRoute } from "@/typings/sever";
+const token = sessionStorage.getItem('token');
 export interface IState {
     uid: number,
     token: boolean,
@@ -6,6 +7,6 @@ export interface IState {
 }
 export default {
     uid:3,
-    token: false,
+    token: token ? token : false,
     routeTree:[],
 };

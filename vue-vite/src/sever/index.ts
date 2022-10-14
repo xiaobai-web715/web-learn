@@ -1,4 +1,5 @@
 import axios from '@/http/index';
+// 可以对axios进行请求拦截比如添加sig参数
 const getUserRouteList = () => {
     return axios.post('/api/vueVite/user_router_list', {
     }).then((res) => {
