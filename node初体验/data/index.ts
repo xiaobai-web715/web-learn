@@ -1,8 +1,6 @@
-import routes, { IRoute } from './routes'
-import users, { IUser } from './users'
+import { IRoute } from './routes'
+import { IUser } from './users'
 export {
-  users,
-  routes,
   IRoute,
   IUser
 }
