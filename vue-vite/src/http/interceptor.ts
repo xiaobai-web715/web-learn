@@ -4,14 +4,13 @@
  * 前后端约定好接口返回的数据格式
  * {
  *     status: 200,
- *     data: 成功返回的数据
- *     message: '', 返回的相应的信息
+ *     data: {里面是包含的信息}
  * }
  */
 import axios from "axios";
 import {ElMessage} from 'element-plus';
 const service = axios.create({
-    baseURL: '/api',
+    baseURL: '/api', //请求接口的时候会自动拼上
     headers:{}, //可以定义请求的头部信息
     timeout: 10000, //请求超时时间
 });
@@ -21,17 +20,16 @@ const service = axios.create({
  */
 service.interceptors.request.use(config => {
     // 这里面目前看来可以向请求头当中添加token,sig等后端需要的头部信息
-    console.log('config', config);
+    // console.log('config', config);
     return config;
 });
 /**
  * 响应拦截器
  */
 service.interceptors.response.use(response => {
-    const res = response.data;
-    if(res.status === 200) {
-        return res;
-    } else if(res.code === 403) {
+    if(response.status === 200) {
+        return response.data;
+    } else if(response.status === 403) {
         // 可以提示当前账号没有相应的权限
     } else {
         // 这里就提示相应的返回信息

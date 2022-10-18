@@ -1,17 +1,21 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosResponseHeaders} from 'axios';
+import service from './interceptor';
 
-//拦截request
-axios.interceptors.request.use((config:AxiosRequestConfig) => {
-    return config;
-});
+const request = <T>(url: string, method: string, params?: T, headers?: AxiosResponseHeaders) => {
+        let data = {};
+        if (method === 'get') {
+            data = {params};
+        }
+        if (method === 'post') {
+            data = {data: params};
+        }
+        //这里还能使用判断来判断是不是mock请求
+        return service({
+            url,
+            ...params,
+            method,
+            headers,
+        });
+};
 
-axios.interceptors.response.use((res: AxiosResponse) => {
-    if(res.data.err === 1) {
-        return Promise.reject(res.data.err);
-    }
-    return Promise.resolve(res.data.data);
-}, (err) => {
-    return Promise.reject(err);
-});
-
-export default axios;
+export default request;

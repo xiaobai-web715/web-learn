@@ -7,9 +7,7 @@ import { formatRouteTree } from '@/utils/index';
 export default {
     async [SET_ROUTE_TREE] ({commit, state}: {commit:Commit, state:IState}) {
         const routeList = await getUserRouteList() as unknown as IRoute[];
-        console.log('routeList',routeList);
         const routeTree = formatRouteTree(routeList); //将routeList变成routeTree;
-        console.log('routeTree', routeTree);
         commit(SET_ROUTE_TREE, routeTree);
         // commit(SET_AUTH, true);
         return Promise.resolve(routeTree);

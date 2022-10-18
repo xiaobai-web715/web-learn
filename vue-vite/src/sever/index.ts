@@ -1,22 +1,19 @@
 import axios from '@/http/index';
 // 可以对axios进行请求拦截比如添加sig参数
 const getUserRouteList = () => {
-    return axios.post('/api/vueVite/user_router_list', {
-    }).then((res) => {
-        return res;
-    }).catch((err) => {
-        throw err;
-    });
+    return axios(
+        '/vueVite/user_router_list', 
+        'post' ,
+        {}
+    ).then(res => res.data);
 };
 
 const useSubmit = (params:{account: String, password: String}) => {
-    return axios({
-        method: 'post',
-        url: '/api/vueVite/userToken',
-        data: params
-    }).then(res => res).catch(err => {
-        console.log(err);
-    });
+    return axios(
+        '/vueVite/userToken',
+        'post',
+        params
+    ).then(res => res.data);;
 };
 
 export {
