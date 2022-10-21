@@ -2,7 +2,7 @@ import { IRoute } from "@/typings/sever";
 const token = sessionStorage.getItem('token');
 export interface IState {
     uid: number,
-    token: boolean,
+    token: boolean | string,
     routeTree: IRoute[],
 }
 export default {

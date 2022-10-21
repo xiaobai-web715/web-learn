@@ -36,7 +36,8 @@ export function routerBeforeEach(router: Router, store: Store<IState>) {
                 next();
             } else {
                 store.dispatch(SET_ROUTE_TREE).then(res => {
-                    dynamicRouter[0].children = res;
+                    dynamicRouter[0].children.push(...res);
+                    console.log('dynamicRouter', dynamicRouter);
                     dynamicRouter.forEach(route => router.addRoute(route));
                     next({...to}); //next({...to})要紧跟动态路由添加之后,否则会一直刷新
                 });
