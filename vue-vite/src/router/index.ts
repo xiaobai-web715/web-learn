@@ -10,14 +10,14 @@ const routes: Array<RouteRecordRaw> = [
     }
 ];
 
-export const dynamicRouter = [
+export const dynamicRouter: Array<RouteRecordRaw> = [
     {
-        path: '/',
+        path: '/', 
         component: Base,
         redirect: '/home',
-        name: '首页',
         children: [{
-            path: 'home',
+            path: '/home',
+            name: 'home',
             component: Home
         }]
     },

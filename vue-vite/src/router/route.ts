@@ -5,7 +5,7 @@ import {RouteRecordRaw, Router} from 'vue-router';
 import {Store} from 'vuex';
 import {dynamicRouter} from '@/router/index';
 
-function generateRouter (routeTree: IRoute[]) {
+function generateRouter (routeTree: IRoute[]):RouteRecordRaw[] {
     let newRoutes = routeTree.map(route => {
         let _route:RouteRecordRaw = {
             path: route.path,
@@ -36,10 +36,12 @@ export function routerBeforeEach(router: Router, store: Store<IState>) {
                 next();
             } else {
                 store.dispatch(SET_ROUTE_TREE).then(res => {
-                    dynamicRouter[0].children.push(...res);
+                    let resultRouter = generateRouter(res);
+                    // !解决ts报错children对象可能不存在,用!判断对象是否存在后再push进去
+                    dynamicRouter[0].children!.push(...resultRouter);
                     console.log('dynamicRouter', dynamicRouter);
                     dynamicRouter.forEach(route => router.addRoute(route));
-                    next({...to}); //next({...to})要紧跟动态路由添加之后,否则会一直刷新
+                    next({...to, replace: true}); //next({...to})要紧跟动态路由添加之后,否则会一直刷新
                 });
             }
         }

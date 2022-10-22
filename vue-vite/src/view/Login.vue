@@ -1,16 +1,18 @@
 <template>
-    <div>登录页面</div>
     <div>
-        <form>
-            <input v-model="formData.account"><br>
-            <input
-                v-model="formData.password"
-                type="password"
-            >
-        </form>
-        <button @click="submit">
-            登录
-        </button>
+        <div>登录页面</div>
+        <div>
+            <form>
+                <input v-model="formData.account"><br>
+                <input
+                    v-model="formData.password"
+                    type="password"
+                >
+            </form>
+            <button @click="submit">
+                登录
+            </button>
+        </div>
     </div>
 </template>
 <script setup>
