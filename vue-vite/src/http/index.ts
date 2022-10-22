@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosResponse, AxiosResponseHeaders} from 'axios';
+import { AxiosResponseHeaders} from 'axios';
 import service from './interceptor';
 
 const request = <T>(url: string, method: string, params?: T, headers?: AxiosResponseHeaders) => {

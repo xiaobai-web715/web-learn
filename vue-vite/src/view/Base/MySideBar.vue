@@ -28,7 +28,6 @@ import {ElSubMenu, ElMenu} from 'element-plus';
 const store = useStore();
 const routeList = computed(() => {
     let routeList = store.state.routeTree.filter(item => item.path === '/')[0].children.filter(item => item.name !== 'home');
-    console.info('routeList', routeList);
     return routeList;
 });
 </script>

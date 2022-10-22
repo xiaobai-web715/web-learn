@@ -39,5 +39,4 @@ const props = defineProps({
         }
     }
 });
-console.log('我传入的是啥',props.indexKey, props.childernList);
 </script>
