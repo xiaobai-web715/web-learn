@@ -1,27 +1,43 @@
 <template>
-    <div>
-        <ul
-            v-if="item.children && item.children.length > 0"
+    <div
+        v-for="({ name, children}, index) in childrenList"
+        :key="name"
+    >
+        <el-sub-menu
+            v-if="Array.isArray(children) && children.length > 0"
+            :index="`${indexKey}-${index+1}`"
         >
-            <li>
-                <router-link :to="item.link || item.path">
-                    {{ item.title }}
-                </router-link>
-                <template 
-                    v-for="(child, index) of item.children"
-                    :key="index"
-                >
-                    <MenuItem :item="child" />
-                </template>
-            </li>
-        </ul>
+            <template #title>
+                <span>{{ name }}</span>
+            </template>
+            <MenuItem
+                :children-list="children"
+                :index-key="`${indexKey}-${index+1}`"
+            />
+        </el-sub-menu>
+        <el-menu-item
+            v-else
+            :index="`${indexKey}-${index+1}`"
+        >
+            {{ name }}
+        </el-menu-item>
     </div>
 </template>
 <script setup>
-    const props = defineProps({
-        item: {
-            type: Object,
-            default: () => ({})
+import {defineProps} from 'vue';
+import {ElMenuItem,ElSubMenu} from 'element-plus';
+const props = defineProps({
+    indexKey: {
+        type: String,
+        default: '1'
+    },
+    childrenList: {
+        type: Array ,
+        default(val){
+            console.log('...',val);
+            return [];
         }
-    });
+    }
+});
+console.log('我传入的是啥',props.indexKey, props.childernList);
 </script>

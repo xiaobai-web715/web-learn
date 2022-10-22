@@ -39,7 +39,7 @@ export function routerBeforeEach(router: Router, store: Store<IState>) {
                     let resultRouter = generateRouter(res);
                     // !解决ts报错children对象可能不存在,用!判断对象是否存在后再push进去
                     dynamicRouter[0].children!.push(...resultRouter);
-                    console.log('dynamicRouter', dynamicRouter);
+                    store.commit(SET_ROUTE_TREE, dynamicRouter);
                     dynamicRouter.forEach(route => router.addRoute(route));
                     next({...to, replace: true}); //next({...to})要紧跟动态路由添加之后,否则会一直刷新
                 });
