@@ -91,3 +91,12 @@ npm install express-session 中间件用来实现内存存储(要在链入 cooki
 npm install cross-env 网上搜索资料是用来在 package.json 文件当中用来替代 windows 环境下的 set NODE_ENV=production 的这个 set 的,但是网上的资料是结合 webpack 来使得,不知道为啥在起 node 项目的时候 cross-nev 好像并没有让 app.get('dev')的值变成 production =>package.json 里面的写法(set NODE_ENV=production&&ts-node-dev ./express.ts)
 
 npm install morgan 引入日志中间件 会记录对于当前 express 执行当中的日志
+
+## vue-vite 项目
+
+前置路由守卫实现动态路由,结合 el-ui 生成动态侧边栏菜单
+
+### 细节问题
+
+vue3 对应的 el-ui 的引入方式变成了 el-plus,对应的 ui 组件的引入与写法不同
+脚手架搭建的项目,并未配置 scss 相关可以在<style lang='scss'></style>下以@import '你的 scss 文件的路径'来局部加载 scss 公共文件
