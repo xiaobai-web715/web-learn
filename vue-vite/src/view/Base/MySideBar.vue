@@ -63,7 +63,7 @@ const routeList = computed(() => {
                         content:''; //这一行是伪元素生效的关键
                         @include centerVertically;
                         transform: translateY(-75%) rotate(-45deg);
-                        right:10px;
+                        right:20px;
                         width:10px;
                         height:10px;
                         box-sizing: border-box;
@@ -72,6 +72,9 @@ const routeList = computed(() => {
                         z-index:11;
                     }
                 }
+            }
+            .el-menu-item{
+                position: relative;
             }
             .el-sub-menu__title{
                 line-height: 50px;

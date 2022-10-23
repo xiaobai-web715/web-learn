@@ -16,7 +16,7 @@ export const dynamicRouter: Array<RouteRecordRaw> = [
         component: Base,
         redirect: '/home',
         children: [{
-            path: '/home',
+            path: 'home',
             name: 'home',
             component: Home
         }]

@@ -4,6 +4,6 @@ export interface IRoute {
     path: string,
     name: string,
     title: string,
-    link?: string,
+    filePath?: string,
     children?: IRoute[],
 }

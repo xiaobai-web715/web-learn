@@ -5,17 +5,20 @@ import {RouteRecordRaw, Router} from 'vue-router';
 import {Store} from 'vuex';
 import {dynamicRouter} from '@/router/index';
 
+let modules = import.meta.glob('../**/*.vue');
+console.log('modules', modules);
 function generateRouter (routeTree: IRoute[]):RouteRecordRaw[] {
     let newRoutes = routeTree.map(route => {
         let _route:RouteRecordRaw = {
             path: route.path,
             name: route.name,
-            component: () => import(`/* webpackChunkName: "${route.name}" */@/view/${route.name}.vue`),
+            // component: () => import(`/* webpackChunkName: "${route.name}" */@/view${route.filePath}.vue`),
+            component: modules[`../view${route.filePath}.vue`],
             children: [],
         };
         if(route.children) {
             _route.children = generateRouter(route.children);
-        }
+        } 
         return _route;
     });
     return newRoutes;

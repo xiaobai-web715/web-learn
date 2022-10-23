@@ -21,12 +21,18 @@
             :index="`${indexKey}-${index+1}`"
             :class="`menu_style${indexKey.split('-').length + 1}`"
         >
+            <!-- 按照导航菜单的想法有子菜单的不会跳转路由 -->
+            <router-link
+                class="router-link"
+                :to="{name}"
+            />
             <span>{{ name }}</span>
         </ElMenuItem>
     </div>
 </template>
 <script setup>
 import {defineProps} from 'vue';
+import {RouterLink} from 'vue-router';
 import {ElMenuItem,ElSubMenu} from 'element-plus';
 const props = defineProps({
     indexKey: {
@@ -43,6 +49,15 @@ const props = defineProps({
 });
 </script>
 <style scoped lang="scss">
+.router-link{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top:0;
+    left:0;
+    z-index:12;
+    opacity: 1;
+}
 @keyframes moveOpen{
     0%{
         opacity: 0;
