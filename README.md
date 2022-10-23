@@ -100,3 +100,7 @@ npm install morgan 引入日志中间件 会记录对于当前 express 执行当
 
 vue3 对应的 el-ui 的引入方式变成了 el-plus,对应的 ui 组件的引入与写法不同
 脚手架搭建的项目,并未配置 scss 相关可以在<style lang='scss'></style>下以@import '你的 scss 文件的路径'来局部加载 scss 公共文件
+
+路由嵌套子路由 => 因为只是通过嵌套来实现分层级,父级路由并没有需要显示的内容,但仍然需要给与一个 component 以及文件来内嵌一个<router-view/>来使用
+
+动态加载路由的时候,需要使用 let modules = import.meta.glob('../\*_/_.vue');优先获取动态路由对应的页面,然后再给 component 赋值 modules[`../view${route.filePath}.vue`]对应的文件
