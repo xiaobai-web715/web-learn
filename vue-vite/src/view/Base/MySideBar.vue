@@ -2,21 +2,10 @@
     <header class="my-side-bar">
         <!-- 侧边连部分可以对左侧导航的显示情况进行编辑 -->
         <ElMenu>
-            <ElSubMenu
-                v-for="({name, children}, index) in routeList"
-                :key="name"
-                :index="String(index+1)"
-                class="moveUp"
-            >
-                <template #title>
-                    <span class="icon">{{ name }}</span>
-                </template>
-                <MenuItem
-                    v-if="Array.isArray(children) && children.length > 0"
-                    :children-list="children"
-                    :index-key="String(index+1)"
-                />
-            </ElSubMenu>
+            <MenuItem
+                :children-list="routeList"
+                index-key="null"
+            />
         </ElMenu>
     </header>
 </template>
@@ -24,7 +13,7 @@
 import {useStore} from 'vuex';
 import {computed} from 'vue';
 import MenuItem from './MenuItem.vue';
-import {ElSubMenu, ElMenu} from 'element-plus';
+import {ElMenu} from 'element-plus';
 const store = useStore();
 const routeList = computed(() => {
     let routeList = store.state.routeTree.filter(item => item.path === '/')[0].children.filter(item => item.name !== 'home');

@@ -1,39 +1,41 @@
 <template>
     <div
-        v-for="({ name, children}, index) in childrenList"
+        v-for="({ name, children, props}, index) in childrenList"
         :key="name"
     >
         <ElSubMenu
             v-if="Array.isArray(children) && children.length > 0"
-            :index="`${indexKey}-${index+1}`"
-            :class="`menu_style${indexKey.split('-').length + 1} moveUp`"
+            :index="`${indexKey !== 'null' ? (indexKey + '-' + index+1) : index +1 }`"
+            :class="`${indexKey !== 'null' ? 'menu_style' + (indexKey.split('-').length + 1) : ''} moveUp`"
         >
             <template #title>
-                <span class="icon">{{ name }}</span>
+                <span class="icon">{{ props.title }}</span>
             </template>
             <MenuItem
                 :children-list="children"
-                :index-key="`${indexKey}-${index+1}`"
+                :index-key="`${indexKey !== 'null' ? (indexKey + '-' + index+1) : index +1 }`"
             />
         </ElSubMenu>
         <ElMenuItem
             v-else
-            :index="`${indexKey}-${index+1}`"
-            :class="`menu_style${indexKey.split('-').length + 1}`"
+            :index="`${indexKey !== 'null' ? (indexKey + '-' + index+1) : index +1 }`"
+            :class="`${indexKey !== 'null' ? 'menu_style' + (indexKey.split('-').length + 1) : ''} moveUp`"
         >
+            <!-- @click="jumpRoute(props.filePath)" -->
             <!-- 按照导航菜单的想法有子菜单的不会跳转路由 -->
             <router-link
-                class="router-link"
                 :to="{name}"
-            />
-            <span>{{ name }}</span>
+            >
+                <span class="routerStyle">{{ props.title }}</span>
+            </router-link>
         </ElMenuItem>
     </div>
 </template>
 <script setup>
 import {defineProps} from 'vue';
-import {RouterLink} from 'vue-router';
+import {useRouter} from 'vue-router';
 import {ElMenuItem,ElSubMenu} from 'element-plus';
+const router = useRouter();
 const props = defineProps({
     indexKey: {
         type: String,
@@ -47,6 +49,10 @@ const props = defineProps({
         }
     }
 });
+// const jumpRoute = (path) => {
+//     console.log('path', path);
+//     router.push(path);
+// };
 </script>
 <style scoped lang="scss">
 .router-link{
@@ -74,5 +80,8 @@ const props = defineProps({
     & > ul {
         animation: moveOpen 0.1s linear;
     }
+}
+.routerStyle{
+    color:#fff;
 }
 </style>

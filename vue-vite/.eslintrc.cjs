@@ -22,5 +22,6 @@ module.exports = {
         "semi": 2,
         "vue/html-indent": ["warn", 4], //html缩进的规则 默认2个空格
         "vue/multi-word-component-names": 'off',
+        'vue/no-template-shadow':'off',
     },
 };

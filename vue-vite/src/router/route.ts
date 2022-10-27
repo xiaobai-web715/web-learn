@@ -15,7 +15,19 @@ function generateRouter (routeTree: IRoute[]):RouteRecordRaw[] {
             // component: () => import(`/* webpackChunkName: "${route.name}" */@/view${route.filePath}.vue`),
             component: modules[`../view${route.filePath}.vue`],
             children: [],
+            props: {
+                title: route.title,
+                filePath: route.filePath,
+            }
         };
+        // if (Array.isArray(route.children) && route.children.length > 0) {
+        //     _route.component = Base;
+        //     if(route.children) {
+        //         _route.children = generateRouter(route.children);
+        //     } 
+        // } else {
+        //     _route.component = modules[`../view${route.filePath}.vue`];
+        // }
         if(route.children) {
             _route.children = generateRouter(route.children);
         } 
