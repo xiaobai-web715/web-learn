@@ -13,7 +13,7 @@ const useSubmit = (params:{account: String, password: String}) => {
         '/vueVite/userToken',
         'post',
         params
-    ).then(res => res.data);;
+    );
 };
 
 export {

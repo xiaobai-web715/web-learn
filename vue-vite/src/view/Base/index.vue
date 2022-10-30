@@ -5,7 +5,9 @@
         <div class="pageContent">
             <MySideBarVue />
             <!-- 嵌套的子路由需要在父路由加载的组件当中也添加router-view才能成功显示子路由 -->
-            <router-view />
+            <div class="page">
+                <router-view />
+            </div>
         </div>
     </div>
 </template>
@@ -20,5 +22,8 @@
   display:flex;
   justify-content: flex-start;
   min-height: 100vh;
+  .page{
+    flex-grow: 1;
+  }
 }
 </style>

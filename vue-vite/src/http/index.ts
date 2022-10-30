@@ -12,7 +12,7 @@ const request = <T>(url: string, method: string, params?: T, headers?: AxiosResp
         //这里还能使用判断来判断是不是mock请求
         return service({
             url,
-            ...params,
+            ...data,
             method,
             headers,
         });
