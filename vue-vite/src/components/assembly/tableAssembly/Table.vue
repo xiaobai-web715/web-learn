@@ -20,7 +20,7 @@
     </el-table>
 </template>
 <script setup>
-import { defineProps } from 'vue';
+// import { defineProps } from 'vue';
 import { ElTable, ElTableColumn } from 'element-plus';
 const props = defineProps({
     dataList: {

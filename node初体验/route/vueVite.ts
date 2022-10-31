@@ -55,6 +55,25 @@ router.post('/admin/hosp/hospitalList', (req: Request, res: Response) => {
     })
   })
 })
+
+router.post('/admin/hosp/add', (req: Request, res: Response) => {
+  const params = req.body
+  addOne(client, params, 'Vue', 'hospList').then(_ => {
+    res.status(200).send({
+      code: 200,
+      data: {
+        message: 'success'
+      }
+    })
+  }).catch(err => {
+    res.status(200).send({
+      code: 0,
+      data: {
+        message: 'filed'
+      }
+    })
+  })
+})
 module.exports = router
 
 export {}
