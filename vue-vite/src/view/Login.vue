@@ -18,7 +18,7 @@
 <script setup>
 import {useRouter} from 'vue-router';
 import {ref} from 'vue';
-import {useSubmit} from '../sever/index';
+import axios from '@/http/index';
 import {useStore} from 'vuex';
 import {SET_AUTH} from '@/store/actionsTypes';
 const store = useStore();
@@ -28,7 +28,12 @@ const formData = ref({
     password:'',
 });
 const submit = () => {
-    useSubmit(formData.value).then(res => {
+    axios(
+        '/vueVite/userToken',
+        'post',
+        formData.value
+    ).then(res => {
+        console.log('res', res);
         if (res.code === 200) {
             store.dispatch(SET_AUTH, {token: true});
             sessionStorage.setItem('token', true);

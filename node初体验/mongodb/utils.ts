@@ -1,3 +1,13 @@
+const getNextSquenceValue = async (client, dbName, dbTable, keyName): Promise<any> => {
+  // return await new Promise((resolve, reject) => {
+  return client.db(dbName).collection(dbTable).findOneAndUpdate(
+    { _id: keyName },
+    { $inc: { value: 1 } },
+    { new: true }
+  )
+  // })
+}
+
 const findData = async <T>(client, options, dbName, dbTable): Promise<T> => {
   return await new Promise((resolve, reject) => {
     client.db(dbName).collection(dbTable).find(options).toArray((err, res) => {
@@ -10,10 +20,15 @@ const findData = async <T>(client, options, dbName, dbTable): Promise<T> => {
 const addOne = async (client, options, dbName, dbTable): Promise<void> => {
   return await new Promise((resolve, reject) => {
     // 添加一个判断来看看数据库中是否已经存在某个数据了
-    client.db(dbName).collection(dbTable).insertOne(options, (err, res) => {
-      if (err) reject(err)
-      resolve()
-    })
+    getNextSquenceValue(client, dbName, 'hospListNum', 'hospId').then(res => {
+      const _id = res.value.value
+      options._id = _id
+      client.db(dbName).collection(dbTable).insertOne(options, (err, res) => {
+        if (err) reject(err)
+        resolve(err)
+      })
+    }).catch(err => { console.log(err) })
+    // console.log('options', options)
   })
 }
 
@@ -58,9 +73,21 @@ const paging = async (client, options, dbName, dbTable): Promise<object> => {
   )
   return await Promise.all(promiseArr)
 }
+
+const update = async (client, options, dbName, dbTable): Promise<any> => {
+  console.log('options', options)
+  return await new Promise((resolve, reject) => {
+    client.db(dbName).collection(dbTable).update({ _id: options._id }, { $set: options }).then(res => {
+      resolve('success')
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
 module.exports = {
   findData,
   addOne,
   deleteOne,
-  paging
+  paging,
+  update
 }

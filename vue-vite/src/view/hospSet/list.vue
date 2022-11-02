@@ -41,16 +41,115 @@
             />
         </div>
     </div>
+    <el-dialog
+        v-model="dialogEdit"
+        title="编辑"
+        center
+    >
+        <el-form
+            ref="form"
+            :model="formDataEdit"
+            label-width="100px"
+            label-position="right"
+            :rules="rules"
+        >
+            <el-form-item
+                label="医院名称"
+                prop="name"
+            >
+                <el-input
+                    v-model="formDataEdit.name"
+                    placeholder="请输入医院名称"
+                    class="el-input-style"
+                />
+            </el-form-item>
+            <el-form-item
+                label="医院地址"
+                prop="address"
+            >
+                <el-input
+                    v-model="formDataEdit.address"
+                    placeholder="请输入医院地址"
+                    class="el-input-style"
+                />
+            </el-form-item>
+            <el-form-item
+                label="医院电话"
+            >
+                <el-input
+                    v-model="formDataEdit.phone"
+                    placeholder="请输入医院电话"
+                    class="el-input-style"
+                />
+            </el-form-item>
+            <el-form-item label="医院性质">
+                <el-select
+                    v-model="formDataEdit.nature"
+                    placeholder="请选择医院性质"
+                >
+                    <el-option
+                        v-for="{title, value} in natures"
+                        :key="value"
+                        :value="title"
+                        :label="title"
+                    />
+                </el-select>
+            </el-form-item>
+            <el-form-item label="官网地址">
+                <el-input
+                    v-model="formDataEdit.link"
+                    placeholder="请输入医院官网地址"
+                    class="el-input-style"
+                />
+            </el-form-item>
+        </el-form>
+        <template
+            #footer
+        >
+            <el-button @click="editCancel">
+                取 消
+            </el-button>
+            <el-button
+                type="primary"
+                @click="editSure"
+            >
+                确 定
+            </el-button>
+        </template>
+    </el-dialog>
 </template>
 <script setup>
 import Table from '../../components/assembly/tableAssembly/Table.vue';
-import { ElForm, ElFormItem, ElInput, ElButton } from 'element-plus';
-import request from '@/http/index';
+import { ElForm, ElFormItem, ElInput, ElButton, ElDialog, ElSelect, ElOption, ElMessage } from 'element-plus';
+import axios from '@/http/index';
+import {natures} from './enum';
 import { onMounted, ref } from 'vue';
 const formData = ref({
     name: '',
     number: ''
 });
+const formDataEdit = ref({});
+const rules = {
+    name:[
+        {required:true,message:'请输入医院名称'}
+    ],
+    address: [
+        {required:true,message: '请输入医院地址'}
+    ]
+};
+const dialogEdit = ref(false);
+const editCancel = () => {
+    dialogEdit.value = false;
+    formDataEdit.value = {};
+};
+const editSure = () => {
+    axios('/vueVite/admin/hosp/edit', 'post', formDataEdit.value).then(res => {
+        if(res.code === 200) {
+            ElMessage.success('修改成功');
+            dialogEdit.value = false;
+        }
+    });
+};
 const dataList = ref([]);
 const dataTotal = ref(0);
 const colums = [
@@ -75,8 +174,29 @@ const colums = [
         prop: 'link',
     }
 ];
+let o = {
+    title: '操作',
+    buttons: [],
+};
+let editFun = {
+    title: '编辑',
+    type: 'primary',
+    callback: (val, index) => {
+        formDataEdit.value = val;
+        dialogEdit.value = true;
+    }
+};
+let deleteFun = {
+    title: '删除',
+    type: 'danger',
+    callback: (val, index) => {
+        console.log('val', val, index);
+    }
+};
+o.buttons.push(editFun, deleteFun);
+colums.push(o);
 const getHospList = (params = {}) => {
-    request('/vueVite/admin/hosp/hospitalList', 'post', params).then(res => {
+    axios('/vueVite/admin/hosp/hospitalList', 'post', params).then(res => {
         if (res.code === 200) {
             dataList.value = res.data.list;
             dataTotal.value = res.data.total;
@@ -103,5 +223,8 @@ const search = () => {
     .search{
         margin-top: 10px;
     }
+}
+.el-input-style{
+    width: 300px;
 }
 </style>

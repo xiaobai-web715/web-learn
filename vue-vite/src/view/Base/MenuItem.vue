@@ -42,13 +42,11 @@ const props = defineProps({
     childrenList: {
         type: Array ,
         default(val){
-            console.log('...',val);
             return [];
         }
     }
 });
 const jumpRoute = (path) => {
-    console.log('path', path);
     router.push(path);
 };
 </script>

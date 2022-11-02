@@ -55,7 +55,7 @@
             <el-form-item label="官网地址">
                 <el-input
                     v-model="formData.link"
-                    placeholder="请输入医院电话"
+                    placeholder="请输入医院官网地址"
                     class="el-input-style"
                 />
             </el-form-item>
@@ -72,7 +72,7 @@
 </template>
 <script setup>
 import {ref} from 'vue';
-import { ElForm, ElFormItem, ElInput, ElSelect, ElOption, ElButton } from 'element-plus';
+import { ElForm, ElFormItem, ElInput, ElSelect, ElOption, ElButton, ElMessage } from 'element-plus';
 import {natures} from './enum';
 import request from '@/http';
 const formData = ref({
@@ -92,7 +92,9 @@ const rules = {
 };
 const submit = () => {
     request('/vueVite/admin/hosp/add', 'post', formData.value).then(res => {
-        console.log('res', res);
+        if (res.code === 200) {
+            ElMessage.success('添加成功');
+        }
     });
 };
 </script>

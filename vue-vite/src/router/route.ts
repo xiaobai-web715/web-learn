@@ -6,7 +6,6 @@ import {Store} from 'vuex';
 import {dynamicRouter} from '@/router/index';
 
 let modules = import.meta.glob('../**/*.vue');
-console.log('modules', modules);
 function generateRouter (routeTree: IRoute[]):RouteRecordRaw[] {
     let newRoutes = routeTree.map(route => {
         let _route:RouteRecordRaw = {
