@@ -23,6 +23,19 @@
                         placeholder="医院编号"
                     />
                 </el-form-item>
+                <el-form-item label="医院性质">
+                    <el-select
+                        v-model="formData.nature"
+                        placeholder="请选择医院等级"
+                    >
+                        <el-option
+                            v-for="item in natures"
+                            :key="item.value"
+                            :label="item.title"
+                            :value="item.title"
+                        />
+                    </el-select>
+                </el-form-item>
                 <el-form-item>
                     <el-button
                         type="primary"
@@ -35,9 +48,11 @@
         </div>
         <div>
             <Table
+                ref="tableHosp"
                 :data-list="dataList"
                 :colums="colums"
                 :data-total="dataTotal"
+                :table-info="tableState"
             />
         </div>
     </div>
@@ -117,6 +132,26 @@
             </el-button>
         </template>
     </el-dialog>
+    <el-dialog
+        v-model="dialogDelete"
+        title="删除"
+        center
+    >
+        <span>确定要删除当前信息吗</span>
+        <template
+            #footer
+        >
+            <el-button @click="deleteCancel">
+                取 消
+            </el-button>
+            <el-button
+                type="primary"
+                @click="deleteSure"
+            >
+                确 定
+            </el-button>
+        </template>
+    </el-dialog>
 </template>
 <script setup>
 import Table from '../../components/assembly/tableAssembly/Table.vue';
@@ -126,9 +161,16 @@ import {natures} from './enum';
 import { onMounted, ref } from 'vue';
 const formData = ref({
     name: '',
-    number: ''
+    number: '',
+    nature: ''
 });
 const formDataEdit = ref({});
+const tableHosp = ref();
+const dialogEdit = ref(false);
+const dialogDelete = ref(false);
+const deleteHospId = ref();
+const dataList = ref([]);
+const dataTotal = ref(0);
 const rules = {
     name:[
         {required:true,message:'请输入医院名称'}
@@ -137,7 +179,6 @@ const rules = {
         {required:true,message: '请输入医院地址'}
     ]
 };
-const dialogEdit = ref(false);
 const editCancel = () => {
     dialogEdit.value = false;
     formDataEdit.value = {};
@@ -150,8 +191,17 @@ const editSure = () => {
         }
     });
 };
-const dataList = ref([]);
-const dataTotal = ref(0);
+const deleteCancel = () => {
+    dialogDelete.value = false;
+};
+const deleteSure = () => {
+    axios('/vueVite/admin/hosp/delete', 'post', {_id:deleteHospId.value}).then(res => {
+        if (res.code === 200) {
+            ElMessage.success('删除成功');
+            dialogDelete.value = false;
+        }
+    });
+};
 const colums = [
     {
         title: '医院名称',
@@ -191,11 +241,14 @@ let deleteFun = {
     type: 'danger',
     callback: (val, index) => {
         console.log('val', val, index);
+        dialogDelete.value = true;
+        deleteHospId.value = val._id;
     }
 };
 o.buttons.push(editFun, deleteFun);
 colums.push(o);
 const getHospList = (params = {}) => {
+    console.log('最终请求的参数', params);
     axios('/vueVite/admin/hosp/hospitalList', 'post', params).then(res => {
         if (res.code === 200) {
             dataList.value = res.data.list;
@@ -204,10 +257,13 @@ const getHospList = (params = {}) => {
     });
 };
 onMounted(() => {
-    getHospList();
+    tableHosp.value.search(1);
 });
 const search = () => {
-    getHospList(formData.value);
+    tableHosp.value.search(1);
+};
+const tableState = (params) => {
+    getHospList({...formData.value, ...params.value});
 };
 </script>
 <style scoped lang="scss">
