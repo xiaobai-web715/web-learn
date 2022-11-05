@@ -17,6 +17,16 @@ const findData = async <T>(client, options, dbName, dbTable): Promise<T> => {
   })
 }
 
+const noIncreaseAddOne = async (client, options, dbName, dbTable): Promise<void> => {
+  return await new Promise((resolve, reject) => {
+    // 添加一个判断来看看数据库中是否已经存在某个数据了
+    client.db(dbName).collection(dbTable).insertOne(options, (err, res) => {
+      if (err) reject(err)
+      resolve()
+    })
+  })
+}
+
 const addOne = async (client, options, dbName, dbTable): Promise<void> => {
   return await new Promise((resolve, reject) => {
     // 添加一个判断来看看数据库中是否已经存在某个数据了
@@ -86,6 +96,7 @@ const update = async (client, options, dbName, dbTable): Promise<any> => {
 }
 module.exports = {
   findData,
+  noIncreaseAddOne,
   addOne,
   deleteOne,
   paging,

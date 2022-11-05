@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express'
 const client = require('../mongodb/mongodb')
-const { findData, addOne, paging, update, deleteOne } = require('../mongodb/utils')
+const { findData, addOne, paging, update, deleteOne, noIncreaseAddOne } = require('../mongodb/utils')
 const router = express.Router()
 router.post('/user_router_list', (req: Request, res: Response) => {
   findData(client, {}, 'Vue', 'vueRouter').then(resp => {
@@ -19,7 +19,7 @@ router.post('/user_router_list', (req: Request, res: Response) => {
 })
 router.post('/userToken', (req: Request, res: Response) => {
   const params = req.body
-  addOne(client, params, 'Vue', 'vueUser').then(_ => {
+  noIncreaseAddOne(client, params, 'Vue', 'vueUser').then(_ => {
     res.status(200).send({
       code: 200,
       data: {
