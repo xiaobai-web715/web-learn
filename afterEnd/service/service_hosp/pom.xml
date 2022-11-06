@@ -1,16 +1,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
-        <artifactId>syt</artifactId>
+        <artifactId>service</artifactId>
         <groupId>com.lxh</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>service</artifactId>
-    <packaging>pom</packaging>
-    <name>Archetype - service</name>
+    <artifactId>service_hosp</artifactId>
+    <name>Archetype - service_hosp</name>
     <url>http://maven.apache.org</url>
-    <modules>
-        <module>service_hosp</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <!--加入依赖使得服务类可以一直启动-->
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
 </project>
