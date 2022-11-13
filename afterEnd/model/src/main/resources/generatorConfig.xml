@@ -93,7 +93,7 @@
             <!-- 该元素可选，最多配置一个。如果不配置该元素，就不会生成Mapper接口。-->
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-        <table tableName="hosp_set" domainObjectName="hosp">
+        <table tableName="hosp_set" domainObjectName="hospSet">
             <!-- 要生成的表  tableName:数据库中的表名或视图名  domainObjectName:实体类名-->
             <!--<table tableName="blog" domainObjectName="Blog"></table>-->
             <!--只有配置的才会生成实体类和其他文件。-->

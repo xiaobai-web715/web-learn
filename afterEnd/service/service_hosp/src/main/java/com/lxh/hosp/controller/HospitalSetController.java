@@ -1,7 +1,8 @@
 package com.lxh.hosp.controller;
 
-import com.lxh.hosp.service.HospitalSetServiceLXH;
+import com.lxh.hosp.service.impl.HospitalSetService;
 import com.lxh.mybatis.entity.hospSet;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,14 +12,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/hosp/hospitalList")
-public class HospitalSetControllerLXH {
-    //注入service
+public class HospitalSetController {
+    // 注入service进行调用
     @Autowired
-    private HospitalSetServiceLXH hospitalSetServiceLXH;
+    private HospitalSetService hospitalSetService;
 
     @GetMapping("findAll")
     public List<hospSet> findAllHospitalSet() {
-        List<hospSet> list = hospitalSetServiceLXH.list();
+        // 调用hospitalSetService的方法
+        List<hospSet> list = hospitalSetService.list();
         return list;
     }
 

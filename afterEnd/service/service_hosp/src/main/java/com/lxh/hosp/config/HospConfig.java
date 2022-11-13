@@ -5,5 +5,5 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @MapperScan("com.lxh.hosp.mapper")
-public class HospConfigLXH {
+public class HospConfig {
 }
