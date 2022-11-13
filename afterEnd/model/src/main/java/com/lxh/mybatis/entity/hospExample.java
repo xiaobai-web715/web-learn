@@ -255,143 +255,143 @@ public class hospExample {
             return (Criteria) this;
         }
 
-        public Criteria andHosnameIsNull() {
-            addCriterion("hosname is null");
+        public Criteria andHospnameIsNull() {
+            addCriterion("hospname is null");
             return (Criteria) this;
         }
 
-        public Criteria andHosnameIsNotNull() {
-            addCriterion("hosname is not null");
+        public Criteria andHospnameIsNotNull() {
+            addCriterion("hospname is not null");
             return (Criteria) this;
         }
 
-        public Criteria andHosnameEqualTo(String value) {
-            addCriterion("hosname =", value, "hosname");
+        public Criteria andHospnameEqualTo(String value) {
+            addCriterion("hospname =", value, "hospname");
             return (Criteria) this;
         }
 
-        public Criteria andHosnameNotEqualTo(String value) {
-            addCriterion("hosname <>", value, "hosname");
+        public Criteria andHospnameNotEqualTo(String value) {
+            addCriterion("hospname <>", value, "hospname");
             return (Criteria) this;
         }
 
-        public Criteria andHosnameGreaterThan(String value) {
-            addCriterion("hosname >", value, "hosname");
+        public Criteria andHospnameGreaterThan(String value) {
+            addCriterion("hospname >", value, "hospname");
             return (Criteria) this;
         }
 
-        public Criteria andHosnameGreaterThanOrEqualTo(String value) {
-            addCriterion("hosname >=", value, "hosname");
+        public Criteria andHospnameGreaterThanOrEqualTo(String value) {
+            addCriterion("hospname >=", value, "hospname");
             return (Criteria) this;
         }
 
-        public Criteria andHosnameLessThan(String value) {
-            addCriterion("hosname <", value, "hosname");
+        public Criteria andHospnameLessThan(String value) {
+            addCriterion("hospname <", value, "hospname");
             return (Criteria) this;
         }
 
-        public Criteria andHosnameLessThanOrEqualTo(String value) {
-            addCriterion("hosname <=", value, "hosname");
+        public Criteria andHospnameLessThanOrEqualTo(String value) {
+            addCriterion("hospname <=", value, "hospname");
             return (Criteria) this;
         }
 
-        public Criteria andHosnameLike(String value) {
-            addCriterion("hosname like", value, "hosname");
+        public Criteria andHospnameLike(String value) {
+            addCriterion("hospname like", value, "hospname");
             return (Criteria) this;
         }
 
-        public Criteria andHosnameNotLike(String value) {
-            addCriterion("hosname not like", value, "hosname");
+        public Criteria andHospnameNotLike(String value) {
+            addCriterion("hospname not like", value, "hospname");
             return (Criteria) this;
         }
 
-        public Criteria andHosnameIn(List<String> values) {
-            addCriterion("hosname in", values, "hosname");
+        public Criteria andHospnameIn(List<String> values) {
+            addCriterion("hospname in", values, "hospname");
             return (Criteria) this;
         }
 
-        public Criteria andHosnameNotIn(List<String> values) {
-            addCriterion("hosname not in", values, "hosname");
+        public Criteria andHospnameNotIn(List<String> values) {
+            addCriterion("hospname not in", values, "hospname");
             return (Criteria) this;
         }
 
-        public Criteria andHosnameBetween(String value1, String value2) {
-            addCriterion("hosname between", value1, value2, "hosname");
+        public Criteria andHospnameBetween(String value1, String value2) {
+            addCriterion("hospname between", value1, value2, "hospname");
             return (Criteria) this;
         }
 
-        public Criteria andHosnameNotBetween(String value1, String value2) {
-            addCriterion("hosname not between", value1, value2, "hosname");
+        public Criteria andHospnameNotBetween(String value1, String value2) {
+            addCriterion("hospname not between", value1, value2, "hospname");
             return (Criteria) this;
         }
 
-        public Criteria andHoscodeIsNull() {
-            addCriterion("hoscode is null");
+        public Criteria andHospcodeIsNull() {
+            addCriterion("hospcode is null");
             return (Criteria) this;
         }
 
-        public Criteria andHoscodeIsNotNull() {
-            addCriterion("hoscode is not null");
+        public Criteria andHospcodeIsNotNull() {
+            addCriterion("hospcode is not null");
             return (Criteria) this;
         }
 
-        public Criteria andHoscodeEqualTo(String value) {
-            addCriterion("hoscode =", value, "hoscode");
+        public Criteria andHospcodeEqualTo(String value) {
+            addCriterion("hospcode =", value, "hospcode");
             return (Criteria) this;
         }
 
-        public Criteria andHoscodeNotEqualTo(String value) {
-            addCriterion("hoscode <>", value, "hoscode");
+        public Criteria andHospcodeNotEqualTo(String value) {
+            addCriterion("hospcode <>", value, "hospcode");
             return (Criteria) this;
         }
 
-        public Criteria andHoscodeGreaterThan(String value) {
-            addCriterion("hoscode >", value, "hoscode");
+        public Criteria andHospcodeGreaterThan(String value) {
+            addCriterion("hospcode >", value, "hospcode");
             return (Criteria) this;
         }
 
-        public Criteria andHoscodeGreaterThanOrEqualTo(String value) {
-            addCriterion("hoscode >=", value, "hoscode");
+        public Criteria andHospcodeGreaterThanOrEqualTo(String value) {
+            addCriterion("hospcode >=", value, "hospcode");
             return (Criteria) this;
         }
 
-        public Criteria andHoscodeLessThan(String value) {
-            addCriterion("hoscode <", value, "hoscode");
+        public Criteria andHospcodeLessThan(String value) {
+            addCriterion("hospcode <", value, "hospcode");
             return (Criteria) this;
         }
 
-        public Criteria andHoscodeLessThanOrEqualTo(String value) {
-            addCriterion("hoscode <=", value, "hoscode");
+        public Criteria andHospcodeLessThanOrEqualTo(String value) {
+            addCriterion("hospcode <=", value, "hospcode");
             return (Criteria) this;
         }
 
-        public Criteria andHoscodeLike(String value) {
-            addCriterion("hoscode like", value, "hoscode");
+        public Criteria andHospcodeLike(String value) {
+            addCriterion("hospcode like", value, "hospcode");
             return (Criteria) this;
         }
 
-        public Criteria andHoscodeNotLike(String value) {
-            addCriterion("hoscode not like", value, "hoscode");
+        public Criteria andHospcodeNotLike(String value) {
+            addCriterion("hospcode not like", value, "hospcode");
             return (Criteria) this;
         }
 
-        public Criteria andHoscodeIn(List<String> values) {
-            addCriterion("hoscode in", values, "hoscode");
+        public Criteria andHospcodeIn(List<String> values) {
+            addCriterion("hospcode in", values, "hospcode");
             return (Criteria) this;
         }
 
-        public Criteria andHoscodeNotIn(List<String> values) {
-            addCriterion("hoscode not in", values, "hoscode");
+        public Criteria andHospcodeNotIn(List<String> values) {
+            addCriterion("hospcode not in", values, "hospcode");
             return (Criteria) this;
         }
 
-        public Criteria andHoscodeBetween(String value1, String value2) {
-            addCriterion("hoscode between", value1, value2, "hoscode");
+        public Criteria andHospcodeBetween(String value1, String value2) {
+            addCriterion("hospcode between", value1, value2, "hospcode");
             return (Criteria) this;
         }
 
-        public Criteria andHoscodeNotBetween(String value1, String value2) {
-            addCriterion("hoscode not between", value1, value2, "hoscode");
+        public Criteria andHospcodeNotBetween(String value1, String value2) {
+            addCriterion("hospcode not between", value1, value2, "hospcode");
             return (Criteria) this;
         }
 

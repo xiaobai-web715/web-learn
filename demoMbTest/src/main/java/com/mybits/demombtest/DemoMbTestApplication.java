@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.mybits.demombtest.mapper")
+//@MapperScan("com.mybits.demombtest.mapper")
 public class DemoMbTestApplication {
 
 	public static void main(String[] args) {
