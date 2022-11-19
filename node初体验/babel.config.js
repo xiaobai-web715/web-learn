@@ -1,6 +1,6 @@
 module.exports = {
-  // presets: ['babel'],
-  plugins: [
-    '@babel/plugin-transform-modules-commonjs'
-  ]
+    // presets: ['babel'],
+    plugins: [
+        '@babel/plugin-transform-modules-commonjs'
+    ]
 }

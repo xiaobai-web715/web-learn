@@ -3,6 +3,7 @@ package com.lxh.hosp.controller;
 import com.lxh.hosp.service.impl.HospitalSetService;
 import com.lxh.mybatis.entity.hospSet;
 
+import com.lxh.utils.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,10 +19,10 @@ public class HospitalSetController {
     private HospitalSetService hospitalSetService;
 
     @GetMapping("findAll")
-    public List<hospSet> findAllHospitalSet() {
+    public Result findAllHospitalSet() {
         // 调用hospitalSetService的方法
         List<hospSet> list = hospitalSetService.list();
-        return list;
+        return Result.success(list);
     }
 
 }

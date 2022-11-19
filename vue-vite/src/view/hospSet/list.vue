@@ -249,7 +249,8 @@ o.buttons.push(editFun, deleteFun);
 colums.push(o);
 const getHospList = (params = {}) => {
     console.log('最终请求的参数', params);
-    axios('/vueVite/admin/hosp/hospitalList', 'post', params).then(res => {
+    axios('/syt/hospList/findAll', 'post', params).then(res => {
+        console.log('我是请求的参数', res);
         if (res.code === 200) {
             dataList.value = res.data.list;
             dataTotal.value = res.data.total;

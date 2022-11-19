@@ -19,24 +19,25 @@ const UploadFile = require('./route/uploadFile')
 const touchByMiatask = require('./route/touchByMiatask')
 const upFile = require('./route/upFile')
 const vueVite = require('./route/vueVite.ts')
+const syt = require('./route/syt')
 
 const { getParams } = require('./utils/request/paramUtil')
 
 const severRendering = require('./utils/handlers') // 服务端渲染路由
 
 switch (app.get('env')) {
-  case 'development':
-    app.use(morgan('dev'))
-    break
-  case 'production':
-    const stream = fs.createWriteStream(path.join(__dirname, './', 'access.log'), { flags: 'a' })
-    app.use(morgan('combined', { stream }))
-    break
+    case 'development':
+        app.use(morgan('dev'))
+        break
+    case 'production':
+        const stream = fs.createWriteStream(path.join(__dirname, './', 'access.log'), { flags: 'a' })
+        app.use(morgan('combined', { stream }))
+        break
 }
 
 // 配置Handlebars视图引擎
 app.engine('handlebars', engine({
-  defaultLayout: 'main'
+    defaultLayout: 'main'
 }))
 // app.engine('handlebars', expressHandlebars({
 //     defaultLayout: 'main'
@@ -56,9 +57,9 @@ app.use(cookieParser(credentials.cookieSerect))
  * 链入session中间件
  */
 app.use(expressSession({
-  resave: false,
-  saveUninitialized: false,
-  secret: credentials.cookieSerect
+    resave: false,
+    saveUninitialized: false,
+    secret: credentials.cookieSerect
 }))
 /*
     请求返回静态资源的方式
@@ -75,6 +76,7 @@ app.use(UploadFile)
 app.use(touchByMiatask)
 app.use('/upFile', upFile)
 app.use('/vueVite', vueVite)
+app.use('/syt', syt)
 // app.listen 仅仅使用http模块(如果要使用https则使用https.createServer)
 let server = null
 const port = process.env.PORT || 3001
@@ -82,19 +84,19 @@ const port = process.env.PORT || 3001
 // 对于node来说，当require.main === module的时候说明是node直接运行的该文件
 // 不等的时候说明该文件是导入的
 if (require.main === module) {
-  server = app.listen(3001, () => {
-    console.log(`Express started in ${app.get('env')} on http://localhost:${port}; press Ctrl-C to terminate`)
-  })
+    server = app.listen(3001, () => {
+        console.log(`Express started in ${app.get('env')} on http://localhost:${port}; press Ctrl-C to terminate`)
+    })
 } else {
-  module.exports = app
+    module.exports = app
 }
 
 app.get('/', (req, res) => {
-  const params = getParams(req)
-  console.log('params', params)
-  res.send(JSON.stringify({ firstName: 'liu', lastName: 'xinghua' }))
-  console.log('当前进程的PID', process.pid) // 目前不清楚在别的应用程序中这个进程的PID如何获取
-  // process.kill(process.pid , 'SIGTERM');
+    const params = getParams(req)
+    console.log('params', params)
+    res.send(JSON.stringify({ firstName: 'liu', lastName: 'xinghua' }))
+    console.log('当前进程的PID', process.pid) // 目前不清楚在别的应用程序中这个进程的PID如何获取
+    // process.kill(process.pid , 'SIGTERM');
 })
 
 /*
@@ -103,10 +105,10 @@ app.get('/', (req, res) => {
 app.use('/home', severRendering.home)
 app.use('/about', severRendering.about)
 app.get('/headers', (req, res) => {
-  console.log('浏览器请求还是ajax请求', req.xhr) // req.xhr ajax调用返回true
-  res.type('text/plain')
-  const headers = Object.entries(req.headers).map(([key, value]) => `${key}: ${value}`)
-  res.send(headers.join('\n'))
+    console.log('浏览器请求还是ajax请求', req.xhr) // req.xhr ajax调用返回true
+    res.type('text/plain')
+    const headers = Object.entries(req.headers).map(([key, value]) => `${key}: ${value}`)
+    res.send(headers.join('\n'))
 })
 /*
     app.use加载路由无法找到的404与500中间件(服务端渲染)
@@ -118,8 +120,8 @@ app.use(severRendering.severError)
 //  => 所以可以通过发出信号的方式去执行 SIGTEMR
 //  => 这个就相当于发布订阅模式(在此处发布,其余地方订阅后这里去执行)
 process.on('SIGTEMR', () => {
-  server.close(() => {
-    console.log('响应成功,退出nodejs程序')
-  })
+    server.close(() => {
+        console.log('响应成功,退出nodejs程序')
+    })
 })
 // app.use(history());

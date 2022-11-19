@@ -1,5 +1,5 @@
 export interface IUser {
-  id: number
-  username: string
-  auth: number[]
+    id: number
+    username: string
+    auth: number[]
 }
