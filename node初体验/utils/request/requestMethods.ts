@@ -1,17 +1,20 @@
 const http = require('http')
+const logger = require('../logger/index')
 const { credentials } = require('../../config/config')
 interface resp {
     data: number[]
     headers: object
 }
-const requestAdmin = async <T> (url: string, method: string = 'POST', params: T): Promise<any> => {
+const requestAdmin = async <T> (url: string, params: T, method: string = 'POST'): Promise<any> => {
     const options = {
         host: credentials.biServer.host,
         port: credentials.biServer.port,
         path: url,
-        method
+        method,
+        headers: {
+            'Content-Type': 'application/json'
+        }
     }
-    console.log('options', options)
     return await new Promise((resolve, reject) => {
         const buffer = []
         const req = http.request(options, (res) => {
@@ -29,10 +32,12 @@ const requestAdmin = async <T> (url: string, method: string = 'POST', params: T)
         req.on('error', (err) => {
             console.log('err', err)
         })
-        req.write(JSON.stringify({})) // 这里不加上请求无法成功,目前不清楚原因
+        req.write(JSON.stringify(params || {})) // 这里不加上请求无法成功,目前不清楚原因
         req.end()
     }).then(({ data, headers }: resp) => {
         if (headers['content-type'] === 'application/json') {
+            logger.info('hello', { message: 'world' })
+            logger.log('error', 'hello', { message: 'world' })
             return JSON.parse(data.toString())
         } else if (headers['content-type'] === 'application/x-www-form-urlencoded') {
             const keyValue = data.toString()
