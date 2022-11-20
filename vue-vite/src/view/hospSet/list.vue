@@ -208,7 +208,7 @@ const colums = [
         prop: 'status',
         custom: (val, row) => {
             if (val) return '可用';
-            else '不可用';
+            else return '不可用';
         }
     },
     {
@@ -246,7 +246,6 @@ o.buttons.push(editFun, deleteFun);
 colums.push(o);
 const getHospList = (params = {}) => {
     axios('/syt/hospList/findAll', 'post', params).then(res => {
-        console.log('我是请求的参数', res);
         if (res.code === 200) {
             //接口暂时不返回对象的data与total
             dataList.value = res.data;
