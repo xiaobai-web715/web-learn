@@ -1,4 +1,4 @@
-export const natures = [
-    {title: '三甲医院', value: 1},
-    {title: '二甲医院', value: 2}
+export const status = [
+    {title: '不可用', value: 0},
+    {title: '可用', value: 1},
 ];

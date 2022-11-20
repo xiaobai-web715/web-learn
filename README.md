@@ -92,6 +92,8 @@ npm install cross-env 网上搜索资料是用来在 package.json 文件当中�
 
 npm install morgan 引入日志中间件 会记录对于当前 express 执行当中的日志
 
+npm install winston 引入日志中间件 记录接口请求的参数与返回信息的日志文件
+
 ## vue-vite 项目
 
 前置路由守卫实现动态路由,结合 el-ui 生成动态侧边栏菜单

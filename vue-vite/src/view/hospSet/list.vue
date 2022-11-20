@@ -62,60 +62,52 @@
         center
     >
         <el-form
-            ref="form"
-            :model="formDataEdit"
             label-width="100px"
             label-position="right"
-            :rules="rules"
         >
             <el-form-item
                 label="医院名称"
-                prop="name"
             >
                 <el-input
-                    v-model="formDataEdit.name"
+                    v-model="formDataEdit.hospname"
                     placeholder="请输入医院名称"
                     class="el-input-style"
                 />
             </el-form-item>
             <el-form-item
-                label="医院地址"
-                prop="address"
+                label="医院联系人"
             >
                 <el-input
-                    v-model="formDataEdit.address"
-                    placeholder="请输入医院地址"
+                    v-model="formDataEdit.contactsName"
+                    placeholder="请输入医院联系人"
                     class="el-input-style"
                 />
             </el-form-item>
             <el-form-item
-                label="医院电话"
+                label="联系人电话"
             >
                 <el-input
-                    v-model="formDataEdit.phone"
-                    placeholder="请输入医院电话"
+                    v-model="formDataEdit.contactsPhone"
+                    placeholder="请输入联系人电话"
                     class="el-input-style"
                 />
-            </el-form-item>
-            <el-form-item label="医院性质">
-                <el-select
-                    v-model="formDataEdit.nature"
-                    placeholder="请选择医院性质"
-                >
-                    <el-option
-                        v-for="{title, value} in natures"
-                        :key="value"
-                        :value="title"
-                        :label="title"
-                    />
-                </el-select>
             </el-form-item>
             <el-form-item label="官网地址">
                 <el-input
-                    v-model="formDataEdit.link"
+                    v-model="formDataEdit.apiUrl"
                     placeholder="请输入医院官网地址"
                     class="el-input-style"
                 />
+            </el-form-item>
+            <el-form-item label="是否可用">
+                <el-select v-model="formDataEdit.status">
+                    <el-option
+                        v-for="({title, value}) in status"
+                        :key="value"
+                        :label="title"
+                        :value="value"
+                    />
+                </el-select>
             </el-form-item>
         </el-form>
         <template
@@ -157,7 +149,7 @@
 import Table from '../../components/assembly/tableAssembly/Table.vue';
 import { ElForm, ElFormItem, ElInput, ElButton, ElDialog, ElSelect, ElOption, ElMessage } from 'element-plus';
 import axios from '@/http/index';
-import {natures} from './enum';
+import {status} from './enum';
 import { onMounted, ref } from 'vue';
 const formData = ref({
     name: '',
@@ -171,20 +163,12 @@ const dialogDelete = ref(false);
 const deleteHospId = ref();
 const dataList = ref([]);
 const dataTotal = ref(0);
-const rules = {
-    name:[
-        {required:true,message:'请输入医院名称'}
-    ],
-    address: [
-        {required:true,message: '请输入医院地址'}
-    ]
-};
 const editCancel = () => {
     dialogEdit.value = false;
     formDataEdit.value = {};
 };
 const editSure = () => {
-    axios('/vueVite/admin/hosp/edit', 'post', formDataEdit.value).then(res => {
+    axios('/syt/hospList/edit', 'post', formDataEdit.value).then(res => {
         if(res.code === 200) {
             ElMessage.success('修改成功');
             dialogEdit.value = false;
@@ -205,23 +189,35 @@ const deleteSure = () => {
 const colums = [
     {
         title: '医院名称',
-        prop: 'name',
+        prop: 'hospname',
     },
     {
-        title: '医院地址',
-        prop: 'address',
+        title: '医院联系人',
+        prop: 'contactsName',
     },
     {
-        title: '医院电话',
-        prop: 'phone',
-    },
-    {
-        title: '医院性质',
-        prop: 'nature',
+        title: '联系人电话',
+        prop: 'contactsPhone',
     },
     {
         title: '医院官网',
-        prop: 'link',
+        prop: 'apiUrl',
+    },
+    {
+        title: '医院状态',
+        prop: 'status',
+        custom: (val, row) => {
+            if (val) return '可用';
+            else '不可用';
+        }
+    },
+    {
+        title: '创建时间',
+        prop: 'createTime'
+    },
+    {
+        title: '更新时间',
+        prop: 'updateTime'
     }
 ];
 let o = {
@@ -232,7 +228,8 @@ let editFun = {
     title: '编辑',
     type: 'primary',
     callback: (val, index) => {
-        formDataEdit.value = val;
+        const {id, hospname, contactsName, contactsPhone, apiUrl, status} = val;
+        formDataEdit.value = {id, hospname, contactsName, contactsPhone, apiUrl, status};
         dialogEdit.value = true;
     }
 };
@@ -248,12 +245,13 @@ let deleteFun = {
 o.buttons.push(editFun, deleteFun);
 colums.push(o);
 const getHospList = (params = {}) => {
-    console.log('最终请求的参数', params);
     axios('/syt/hospList/findAll', 'post', params).then(res => {
         console.log('我是请求的参数', res);
         if (res.code === 200) {
-            dataList.value = res.data.list;
-            dataTotal.value = res.data.total;
+            //接口暂时不返回对象的data与total
+            dataList.value = res.data;
+            dataTotal.value = res.data?.length;
+            // dataTotal.value = res.data.total;
         }
     });
 };
