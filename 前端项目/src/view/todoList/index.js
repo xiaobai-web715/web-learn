@@ -3,7 +3,8 @@ import useStateCallBack from '../../components/useStateCallback/index';
 import axios from 'axios';
 import Loading from '../../components/Loading/loading';
 import Header from '../../components/Input/index';
-import Content from '../../components/Input/index';
+// import Content from '../../components/Input/index';
+import Content from '@/components/Input/index';
 const Css = require('./index.scss');
 
 const Index = () => {

@@ -94,6 +94,10 @@ npm install morgan 引入日志中间件 会记录对于当前 express 执行当
 
 npm install winston 引入日志中间件 记录接口请求的参数与返回信息的日志文件
 
+npm install pm2 进程管理器 => 用来对前端的项目进程进行控制
+
+日志相关的是另一个部分 => 可以设置日志只在开发环境进行 console,生产环境打印 log 文件当中
+
 ## vue-vite 项目
 
 前置路由守卫实现动态路由,结合 el-ui 生成动态侧边栏菜单
