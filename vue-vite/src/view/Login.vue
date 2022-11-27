@@ -3,7 +3,7 @@
         <div>登录页面</div>
         <div>
             <form>
-                <input v-model="formData.account"><br>
+                <input v-model="formData.user"><br>
                 <input
                     v-model="formData.password"
                     type="password"
@@ -24,12 +24,12 @@ import {SET_AUTH} from '@/store/actionsTypes';
 const store = useStore();
 const router = useRouter();
 const formData = ref({
-    account:'',
+    user:'',
     password:'',
 });
 const submit = () => {
     axios(
-        '/vueVite/userToken',
+        '/sytUser/login',
         'post',
         formData.value
     ).then(res => {

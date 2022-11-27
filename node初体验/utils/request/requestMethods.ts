@@ -5,7 +5,7 @@ interface resp {
     data: number[]
     headers: object
 }
-const requestAdmin = async <T> (url: string, params: T, method: string = 'POST'): Promise<any> => {
+const requestAdmin = async <T, U> (url: string, params: T, method: string = 'POST', option: U): Promise<any> => {
     const options = {
         host: credentials.biServer.host,
         port: credentials.biServer.port,
@@ -15,6 +15,10 @@ const requestAdmin = async <T> (url: string, params: T, method: string = 'POST')
             'Content-Type': 'application/json'
         }
     }
+    if (option) {
+        Object.assign(options, option)
+    }
+    console.log('options', options)
     return await new Promise((resolve, reject) => {
         const buffer = []
         const req = http.request(options, (res) => {
