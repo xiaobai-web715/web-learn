@@ -82,7 +82,15 @@ module.exports = {
         extensions: ['.js', '.json', '.ts', '.tsx'], //告诉webpack你引入的文件要寻找哪些后缀的。
     },
     devServer: {
-        historyApiFallback: true, //因为刷新页面的情况下会向服务器发送请求(因为hash模式下#后面的不会作为参数去请求，但history模式下后面的会成为请求的样式但是服务器又没有这个响应所以会报错，这里是一种方式来解决 =》但是否是最好的办法目前不清楚)
+        //historyApiFallback: true, //因为刷新页面的情况下会向服务器发送请求(因为hash模式下#后面的不会作为参数去请求，但history模式下后面的会成为请求的样式但是服务器又没有这个响应所以会报错，这里是一种方式来解决 =》但是否是最好的办法目前不清楚)
+        // historyApiFallback: {
+        //     rewrites: [
+        //         {
+        //             from : /^\/rn\/.*$/,
+        //             to : '/index.html'
+        //         }
+        //     ]
+        // },
         proxy: {
             '/api': {
                 target: 'http://localhost:3001',

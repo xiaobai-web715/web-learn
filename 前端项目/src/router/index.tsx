@@ -29,6 +29,7 @@ const RouterIndex = () => {
             <Router>
                 <Routes>
                     <Route path="/*" element={<App/>}>
+                        <Route path="rn/select" element={<div>测试一下</div>}></Route>
                         <Route path="select" element={<SelectIndex></SelectIndex>}></Route>
                         <Route path="todoList" element={<TableIndex></TableIndex>}></Route>
                         <Route path="zendesk" element={<ZendeskIndex></ZendeskIndex>}></Route>

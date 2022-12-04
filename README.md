@@ -21,6 +21,10 @@
 
     测试xml与按规定要求的对象间的相互转换 https://blog.csdn.net/hsany330/article/details/115168342
 
+### concurrencyTest node 并发测试
+
+    install chalk 最新的5版本不支持require的导入 ， 降低版本到4
+
 ## React 项目
 
 在未引入 ts 的时候用 prop-types 来进行 props 的属性声明
