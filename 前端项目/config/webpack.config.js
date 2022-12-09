@@ -84,7 +84,12 @@ module.exports = {
         extensions: ['.js', '.json', '.ts', '.tsx'], //告诉webpack你引入的文件要寻找哪些后缀的。
     },
     devServer: {
-        historyApiFallback: true, //开启history Api(这样才能正常使用history router)
+        // historyApiFallback: true, //开启history Api(这样才能正常使用history router)
+        historyApiFallback: {
+            rewrites: [
+                {from: /\/rn\/.*$/, to: '/index.html'}
+            ]
+        },
         proxy: {
             '/api': {
                 target: 'http://localhost:3001',
