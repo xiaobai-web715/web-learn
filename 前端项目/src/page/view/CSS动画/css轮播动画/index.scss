@@ -1,0 +1,29 @@
+.boxImage{
+    width: 388px;
+    height: 262px;
+    position: relative;
+    overflow-x: hidden;
+    margin-left: 200px;
+    background-color: #333;
+    @keyframes carouselAnimation{
+        0%{
+            transform: translateX(0);
+        }
+        100%{
+            transform: translateX(-50%);
+        }
+    }
+    .content{
+        position: absolute;
+        display: flex;
+        animation: carouselAnimation 11s linear  infinite;
+        .contentItem{
+            flex-shrink: 0;
+            width: 288px;
+            height: 162px;
+            margin: 50px 50px;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+    }
+}

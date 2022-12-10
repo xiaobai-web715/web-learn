@@ -1,0 +1,84 @@
+.todoList{
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 578px;
+    padding: 10px 10px;
+    .header{
+        width: 100%;
+        padding:4px 0;
+        input{
+            border: 1px solid #ddd;
+        }
+    }
+    .content{
+        width:100%;
+        border: 1px solid #ddd;
+        border-radius: 2px;
+        margin: 16px 0;
+        .box{
+            // last-child匹配与box同级的所有box元素的最后一个元素
+            &:last-child{
+                border-bottom: none;
+            }
+            position: relative;
+            border-bottom: 1px solid #ddd;
+            padding-left: 32px;
+            &:hover{
+                background-color: #dddddd;
+            }
+            &:hover button{
+                display: inline-block;
+            }
+            p{
+                height: 36px;
+                line-height: 36px;
+            }
+            input{
+                display: none;
+            }
+            button{
+                list-style: none;
+                top: 50%;
+                transform: translate(0,-50%);
+                padding: 4px 12px;
+                display: none;
+            }
+            .buttonExit{
+                position: absolute;
+                right: 80px;
+                color: #fff;
+                background-color: #26c6ee;
+                border: 1px solid #bcebf3;
+            }
+            .buttonDelete{
+                position: absolute;
+                right: 10px;
+                color: #fff;
+                background-color: #da4f49;
+                border: 1px solid #bd362f;
+            }
+            .checkout{
+                display:inline;
+                position: absolute;
+                left: 10px;
+                top: 50%;
+                transform: translate(0, -50%);
+            }
+        }
+    }
+    .footer{
+        display: flex;
+        height:40px;
+        width: 100%;
+        align-items:center;
+        justify-content: space-between;
+        .delete{
+            color: #fff;
+            background-color: #da4f49;
+            border: 1px solid #bd362f;
+            border-radius: 4px;
+            padding: 4px 12px;
+        }
+    }
+}

@@ -3,11 +3,37 @@ const process = require('process');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const appSrc = path.resolve(process.cwd(), 'src');
 // console.log(path.resolve(__dirname, '..' , 'src'));
+const modules = ['app', 'test'];
+const appHtml = modules.reduce((pv, cv) => {
+    const options = {
+        template: `./public/${cv}.html`,
+        chunks: [cv],
+        filename: `${cv}.html`
+    };
+    console.log('options', options);
+    pv.push(new HtmlWebpackPlugin(options));
+    return pv;
+}, []);
+const rewrites = modules.map(item => {
+    const redirect = {
+        from: new RegExp(`^/rn/${item}`),
+        to: `/${item}.html`,
+    };
+    return redirect;
+});
+rewrites.push(
+    {
+        form : /./,
+        to: '/app.html'
+    }
+);
+console.log('rewrites', rewrites);
 module.exports = {
     // mode : 'production', webpack如何打包生产环境下的
     mode: 'development',
     entry: {
-        app: './src/index.js',
+        app: './src/entry/app.js',
+        test: './src/entry/test.js'
         //app : path.resolve(__dirname, '..' ,'./src/index.js'), //这里改成绝对路径也没有用在处理history二级路由请求资源的时候
     },
     devtool: 'inline-source-map', //好像这个可以解决debugger的时候报一个奇怪的错误
@@ -19,13 +45,13 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: [
                     {
                         loader: 'babel-loader',
                         options: {
-                            presets: ['@babel/preset-react'],
+                            presets: ['@babel/preset-react', '@babel/preset-env'],
                         },
                     },
                 ],
@@ -74,30 +100,26 @@ module.exports = {
             },
         ],
     },
-    plugins: [new HtmlWebpackPlugin({ template: './public/index.html' })],
+    // plugins: [new HtmlWebpackPlugin({ template: './public/index.html' })],
+    plugins: appHtml,
     resolve: {
         alias: {
-            '@': path.resolve(__dirname, '..', 'src'), //获取绝对路径下的src文件夹,在后面的引入中就可以通过@来开始
+            'src': path.resolve(__dirname, '..', 'src'), //获取绝对路径下的src文件夹,在后面的引入中就可以通过@来开始
         },
-        extensions: ['.js', '.json', '.ts', '.tsx'], //告诉webpack你引入的文件要寻找哪些后缀的。
+        extensions: ['.js', '.json', '.ts', '.tsx', '.jsx'], //告诉webpack你引入的文件要寻找哪些后缀的。
     },
     devServer: {
         //historyApiFallback: true, //因为刷新页面的情况下会向服务器发送请求(因为hash模式下#后面的不会作为参数去请求，但history模式下后面的会成为请求的样式但是服务器又没有这个响应所以会报错，这里是一种方式来解决 =》但是否是最好的办法目前不清楚)
-        // historyApiFallback: {
-        //     rewrites: [
-        //         {
-        //             from : /^\/rn\/.*$/,
-        //             to : '/index.html'
-        //         }
-        //     ]
-        // },
+        historyApiFallback: {
+            rewrites,
+        },
         proxy: {
             '/api': {
                 target: 'http://localhost:3001',
                 pathRewrite: { '^/api': '' },
             },
         },
-        contentBase: './index.html',
+        // contentBase: './index.html',
         //contentBase: "./", //本地服务器所加载的页面所在的目录
         hot: true,
         port: 3000,
