@@ -67,6 +67,7 @@ npm install prettier eslint-config-prettier eslint-plugin-prettier --dev 创建.
 
 
   从单页面入口修改为多页面入口(csdn上的总结地址) => https://blog.csdn.net/beilingxiaogu/article/details/127972892?csdn_share_tail=%7B%22type%22%3A%22blog%22%2C%22rType%22%3A%22article%22%2C%22rId%22%3A%22127972892%22%2C%22source%22%3A%22beilingxiaogu%22%7D
+  目前在开发环境下对不同模块的路由通过webpack的配置实现了不同入口
 ```
 
 ### 细节问题
