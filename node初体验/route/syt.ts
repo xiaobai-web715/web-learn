@@ -3,7 +3,8 @@ const router = express.Router()
 const { requestAdmin } = require('../utils/request/requestMethods')
 const { credentials } = require('../config/config')
 router.post('/hospList/findAll', (req, res) => {
-    const params = res.body
+    const params = req.body
+    console.log('params', params)
     const baseUrl: string = credentials.biServer.baseUrl
     const url: string = baseUrl + '/hospitalList/findAll'
     requestAdmin(url, params, 'GET').then(resp => {

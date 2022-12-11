@@ -27,7 +27,7 @@ rewrites.push(
         to: '/app.html'
     }
 );
-console.log('rewrites', rewrites);
+// console.log('rewrites', rewrites);
 module.exports = {
     // mode : 'production', webpack如何打包生产环境下的
     mode: 'development',

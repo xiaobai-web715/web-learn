@@ -1,11 +1,18 @@
 const http = require('http')
 const logger = require('../logger/index')
 const { credentials } = require('../../config/config')
+const path = require('path')
+const fs = require('fs')
 interface resp {
     data: number[]
     headers: object
 }
-const requestAdmin = async <T, U> (url: string, params: T, method: string = 'POST', option: U): Promise<any> => {
+
+// 目前使用泛型想从函数调用处来声明类型，但是会报非类型函数调用不能使用类型参数的警告（所以先使用这种方式来替代）
+interface IParams {
+    message: string
+}
+const requestAdmin = async <U> (url: string, params: IParams, method: string = 'POST', option: U): Promise<any> => {
     const options = {
         host: credentials.biServer.host,
         port: credentials.biServer.port,
@@ -40,8 +47,24 @@ const requestAdmin = async <T, U> (url: string, params: T, method: string = 'POS
         req.end()
     }).then(({ data, headers }: resp) => {
         if (headers['content-type'] === 'application/json') {
-            logger.info('hello', { message: 'world' })
-            logger.log('error', 'hello', { message: 'world' })
+            const { message } = params
+            if (message) {
+                console.log('message', path.join(__dirname, '../..', 'logs/test.log'))
+                // fs.writeFile(path.join(__dirname, '../..', 'logs/test.log'), JSON.stringify({ message }), 'utf-8', (res) => {
+                //     console.log('写入完成')
+                // })
+                // fs.writeFile(path.join(__dirname, '../..', 'logs/test.log'), JSON.stringify({ message: message + '123456789' }), 'utf-8', (res) => {
+                //     console.log('写入完成')
+                // })
+                fs.appendFile(path.join(__dirname, '../..', 'logs/test.log'), JSON.stringify({ message }) + '\n', 'utf-8', (res) => {
+                    console.log('写入完成')
+                })
+                fs.appendFile(path.join(__dirname, '../..', 'logs/test.log'), JSON.stringify({ message: message + '123456789' }) + '\n', 'utf-8', (res) => {
+                    console.log('写入完成')
+                })
+                logger.info({ message })
+                // logger.log('error', 'hello', { message: 'world' })
+            }
             return JSON.parse(data.toString())
         } else if (headers['content-type'] === 'application/x-www-form-urlencoded') {
             const keyValue = data.toString()
