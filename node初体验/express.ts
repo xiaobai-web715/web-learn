@@ -20,6 +20,7 @@ const touchByMiatask = require('./route/touchByMiatask')
 const upFile = require('./route/upFile')
 const vueVite = require('./route/vueVite.ts')
 const syt = require('./route/syt')
+const sytUser = require('./route/sytUser')
 
 const { getParams } = require('./utils/request/paramUtil')
 
@@ -77,6 +78,7 @@ app.use(touchByMiatask)
 app.use('/upFile', upFile)
 app.use('/vueVite', vueVite)
 app.use('/syt', syt)
+app.use('/sytUser', sytUser)
 // app.listen 仅仅使用http模块(如果要使用https则使用https.createServer)
 let server = null
 const port = process.env.PORT || 3001

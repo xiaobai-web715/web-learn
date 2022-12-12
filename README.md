@@ -21,6 +21,10 @@
 
     测试xml与按规定要求的对象间的相互转换 https://blog.csdn.net/hsany330/article/details/115168342
 
+### concurrencyTest node 并发测试
+
+    install chalk 最新的5版本不支持require的导入 ， 降低版本到4
+
 ## React 项目
 
 在未引入 ts 的时候用 prop-types 来进行 props 的属性声明
@@ -60,6 +64,10 @@ npm install prettier eslint-config-prettier eslint-plugin-prettier --dev 创建.
   4.TypeScript emitted no output for ... => 将tsconfig.json的"noEmit": false  这样build的时候就不会报错
   5.如果你是使用webpack的css模块化这样的import Css from './index.scss';也会报一个错误 => 这个错误是因为像这样的文件是没有导出的,可以在src文件下面加一个typings.d.ts配置来解决。但是目前看来是这个文件必须打开,要不还是有ts的警告提示，但不影响后续过程。
   6.如果发现eslint没有生效,打开eslintrc.js文件,在vscode右下角有一个地方会显示其打印日志(然后搜一下解决即可)
+
+
+  从单页面入口修改为多页面入口(csdn上的总结地址) => https://blog.csdn.net/beilingxiaogu/article/details/127972892?csdn_share_tail=%7B%22type%22%3A%22blog%22%2C%22rType%22%3A%22article%22%2C%22rId%22%3A%22127972892%22%2C%22source%22%3A%22beilingxiaogu%22%7D
+  目前在开发环境下对不同模块的路由通过webpack的配置实现了不同入口
 ```
 
 ### 细节问题

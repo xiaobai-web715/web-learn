@@ -102,6 +102,11 @@
   // }
   "compilerOptions": {
     "target": "ES2016", // 指定 ECMAScript 版本
+    //下面这两行加入后解决了以src/typings/utils文件时 ts校验显示找不到这个文件路径的问题
+    "baseUrl": "./",
+    "paths": {
+      "src": ["./src/"]
+    },
     "lib": [
       "dom",
       "dom.iterable",
