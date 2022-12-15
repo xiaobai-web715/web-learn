@@ -10,7 +10,7 @@ const BootedDatas = (WrappedComponent) => {
         useEffect(() => {
             //当然这里的url啥的也可以通过props的形式传递过来
             //let {url, params} = this.props;
-            axios.get('/api/hoc').then((res) => {
+            axios.get('/api/hoc', {params: {id: 1100}}).then((res) => {
                 if(res.status == 200){
                     initital.current = res.data;
                     setData(res.data);

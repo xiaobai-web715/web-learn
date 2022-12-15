@@ -50,18 +50,18 @@ const requestAdmin = async <U> (url: string, params: IParams, method: string = '
             const { message } = params
             if (message) {
                 console.log('message', path.join(__dirname, '../..', 'logs/test.log'))
-                // fs.writeFile(path.join(__dirname, '../..', 'logs/test.log'), JSON.stringify({ message }), 'utf-8', (res) => {
-                //     console.log('写入完成')
-                // })
-                // fs.writeFile(path.join(__dirname, '../..', 'logs/test.log'), JSON.stringify({ message: message + '123456789' }), 'utf-8', (res) => {
-                //     console.log('写入完成')
-                // })
-                fs.appendFile(path.join(__dirname, '../..', 'logs/test.log'), JSON.stringify({ message }) + '\n', 'utf-8', (res) => {
+                fs.writeFile(path.join(__dirname, '../..', 'logs/test.log'), JSON.stringify({ message }) + '\n', 'utf-8', (res) => {
                     console.log('写入完成')
                 })
-                fs.appendFile(path.join(__dirname, '../..', 'logs/test.log'), JSON.stringify({ message: message + '123456789' }) + '\n', 'utf-8', (res) => {
+                fs.writeFile(path.join(__dirname, '../..', 'logs/test.log'), JSON.stringify({ message: message + '卷心菜' }) + '\n', 'utf-8', (res) => {
                     console.log('写入完成')
                 })
+                // fs.appendFile(path.join(__dirname, '../..', 'logs/test.log'), `当前工作进程：${process.pid}` + JSON.stringify({ message }) + '\n', 'utf-8', (res) => {
+                //     console.log('写入完成')
+                // })
+                // fs.appendFile(path.join(__dirname, '../..', 'logs/test.log'), JSON.stringify({ message: '卷心菜' }) + '\n', 'utf-8', (res) => {
+                //     console.log('写入完成')
+                // })
                 logger.info({ message })
                 // logger.log('error', 'hello', { message: 'world' })
             }

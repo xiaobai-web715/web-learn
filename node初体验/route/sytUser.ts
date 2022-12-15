@@ -9,8 +9,9 @@ router.post('/login', (req, res) => {
     const { port } = credentials.biServerUser
     console.log('我是传过来的采纳数', params, port)
     const url: string = baseUrl + '/login'
-    requestAdmin(url, params, 'post', { port }).then(res => {
-        console.log('res', res)
+    requestAdmin(url, params, 'post', { port }).then(resq => {
+        console.log('resq', resq)
+        res.send(resq)
     })
 })
 export {}

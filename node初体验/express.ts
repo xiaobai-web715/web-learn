@@ -8,6 +8,9 @@ const expressSession = require('express-session')
 const morgan = require('morgan')
 const fs = require('fs')
 const path = require('path')
+// node实现多进程
+const cluster = require('cluster')
+const numCPUs = require('os').cpus().length
 
 const { credentials } = require('./config/config.js')
 
@@ -86,9 +89,17 @@ const port = process.env.PORT || 3001
 // 对于node来说，当require.main === module的时候说明是node直接运行的该文件
 // 不等的时候说明该文件是导入的
 if (require.main === module) {
-    server = app.listen(3001, () => {
-        console.log(`Express started in ${app.get('env')} on http://localhost:${port}; press Ctrl-C to terminate`)
-    })
+    if (cluster.isMaster) {
+        for (let i = 0; i < numCPUs; i++) {
+            cluster.fork()
+        }cluster.on('exit', () => {
+            console.log(`工作进程${process.pid}已退出`)
+        })
+    } else {
+        server = app.listen(3001, () => {
+            console.log(`Express ${process.pid} started in ${app.get('env')} on http://localhost:${port}; press Ctrl-C to terminate`)
+        })
+    }
 } else {
     module.exports = app
 }
