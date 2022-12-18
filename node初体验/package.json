@@ -6,7 +6,8 @@
   "scripts": {
     "start": "set NODE_ENV=development&&ts-node-dev ./express.ts",
     "test": "jest",
-    "lint": "eslint express.ts utils"
+    "lint": "eslint express.ts utils",
+    "pm2": "set NODE_ENV=development&& pm2 start ecosystem.config.js --env dev"
   },
   "author": "",
   "license": "ISC",
@@ -28,6 +29,7 @@
     "os": "^0.1.2",
     "pm2": "^5.2.2",
     "progress": "^2.0.3",
+    "ts-node": "^10.9.1",
     "winston": "^3.8.2",
     "xslx": "^1.0.0"
   },

@@ -88,18 +88,28 @@ const port = process.env.PORT || 3001
 
 // 对于node来说，当require.main === module的时候说明是node直接运行的该文件
 // 不等的时候说明该文件是导入的
+console.log('cluster.isMaster', cluster.isMaster)
 if (require.main === module) {
     if (cluster.isMaster) {
         for (let i = 0; i < numCPUs; i++) {
             cluster.fork()
-        }cluster.on('exit', () => {
-            console.log(`工作进程${process.pid}已退出`)
+        }
+        cluster.on('online', function (worker) {
+            console.log('Worker ' + `${worker.process.pid}` + ' is online')
+        })
+        cluster.on('exit', function (worker, code, signal) {
+            console.log('Worker ' + `${worker.process.pid}` + ' died with code: ' + `${code}` + ', and signal: ' + `${signal}`)
+            console.log('Starting a new worker')
+            cluster.fork() // 这里监听到子进程有退出的情况这里就会重启一个， 然后就会被online事件监听到
         })
     } else {
         server = app.listen(3001, () => {
             console.log(`Express ${process.pid} started in ${app.get('env')} on http://localhost:${port}; press Ctrl-C to terminate`)
         })
     }
+    // server = app.listen(3001, () => {
+    //     console.log(`Express ${process.pid} started in ${app.get('env')} on http://localhost:${port}; press Ctrl-C to terminate`)
+    // })
 } else {
     module.exports = app
 }
@@ -133,6 +143,7 @@ app.use(severRendering.severError)
 //  => 所以可以通过发出信号的方式去执行 SIGTEMR
 //  => 这个就相当于发布订阅模式(在此处发布,其余地方订阅后这里去执行)
 process.on('SIGTEMR', () => {
+    console.log(`pid: ${process.pid}收到消息`)
     server.close(() => {
         console.log('响应成功,退出nodejs程序')
     })
