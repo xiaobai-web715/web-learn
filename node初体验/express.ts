@@ -88,7 +88,7 @@ const port = process.env.PORT || 3001
 
 // 对于node来说，当require.main === module的时候说明是node直接运行的该文件
 // 不等的时候说明该文件是导入的
-console.log('cluster.isMaster', cluster.isMaster)
+console.log('process.argv', process.argv)
 if (require.main === module) {
     if (cluster.isMaster) {
         for (let i = 0; i < numCPUs; i++) {

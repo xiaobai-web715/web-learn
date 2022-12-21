@@ -1,11 +1,12 @@
 {
     "compilerOptions": {
-        "outDir": "./",
+        "outDir": "./dist", //编译后的输出目录
+        "rootDir": "./", //参与编译的根目录
         "allowJs": false,
-        "target": "es6",
+        "target": "es6", //编译后的js版本
         "esModuleInterop": true, //允许在commonjs中使用export
         "moduleResolution": "node", //告诉ts文件改以何种方式来寻找依赖模块
-        "module": "CommonJs", //TypeScript文件中的module，采用何种方式实现
+        "module": "commonJs", //TypeScript文件中的module，采用何种方式实现
     },
     "include": [
         "./"
