@@ -9,10 +9,13 @@ const morgan = require('morgan')
 const fs = require('fs')
 const path = require('path')
 // node实现多进程
-const cluster = require('cluster')
-const numCPUs = require('os').cpus().length
+// const cluster = require('cluster')
+// const numCPUs = require('os').cpus().length
 
-const { credentials } = require('./config/config.js')
+const pm2 = require('pm2')
+const { promisify } = require('util')
+
+const { credentials } = require('./config/config')
 
 const app = express()
 const todoList = require('./route/todoList')
@@ -90,20 +93,56 @@ const port = process.env.PORT || 3001
 // 不等的时候说明该文件是导入的
 console.log('process.argv', process.argv)
 if (require.main === module) {
-    if (cluster.isMaster) {
-        for (let i = 0; i < numCPUs; i++) {
-            cluster.fork()
-        }
-        cluster.on('online', function (worker) {
-            console.log('Worker ' + `${worker.process.pid}` + ' is online')
-        })
-        cluster.on('exit', function (worker, code, signal) {
-            console.log('Worker ' + `${worker.process.pid}` + ' died with code: ' + `${code}` + ', and signal: ' + `${signal}`)
-            console.log('Starting a new worker')
-            cluster.fork() // 这里监听到子进程有退出的情况这里就会重启一个， 然后就会被online事件监听到
-        })
+    // if (cluster.isMaster) {
+    // for (let i = 0; i < numCPUs; i++) {
+    //     cluster.fork()
+    // }
+    // cluster.on('online', function (worker) {
+    //     console.log('Worker ' + `${worker.process.pid}` + ' is online')
+    // })
+    // cluster.on('exit', function (worker, code, signal) {
+    //     console.log('Worker ' + `${worker.process.pid}` + ' died with code: ' + `${code}` + ', and signal: ' + `${signal}`)
+    //     console.log('Starting a new worker')
+    //     cluster.fork() // 这里监听到子进程有退出的情况这里就会重启一个， 然后就会被online事件监听到
+    // })
+    if (process.argv[2] === 'master') {
+        // 代表这里是想当做主进程来使用
+        // (async () => {
+        //     const connect = promisify(pm2.connect.bind(pm2))
+        //     const launchBus = promisify(pm2.launchBus.bind(pm2))
+        //     const target = await connect()
+        //     const bus = await launchBus()
+        //     bus.on('process:msg', (packet) => {
+        //         const { raw, process: { pm_id: processId } } = packet
+        //         // console.log('pm2的busApi获取的信息:', JSON.stringify(raw), processId)
+        //         pm2.sendDataToProcessId(processId, raw, () => {})
+        //     })
+        //     process.send({ topic: 'test', data: 'Hello, Billion Bottle!' })
+        // })().catch(err => console.log('立即执行函数返回的结果是什么', err))
+        process.on('message', (raw) => {
+            console.log('我是pm2接收的消息:', JSON.stringify(raw))
+        });
+        (async () => {
+            const connect = promisify(pm2.connect.bind(pm2))
+            const launchBus = promisify(pm2.launchBus.bind(pm2))
+            try {
+                await connect()
+                const bus = await launchBus()
+                bus.on('process:msg', (packet) => {
+                    const { raw, process: { pm_id: processId } } = packet
+                    // console.log('pm2的busApi获取的信息:', JSON.stringify(raw), processId)
+                    pm2.sendDataToProcessId(processId, raw, () => {})
+                })
+                process.send({ topic: 'test', data: 'Hello, Billion Bottle!' })
+                return true
+            } catch (err) {
+                // return err //这样返回的话好像不会进入到catch里面
+                return new Error(err)
+            }
+        })().catch(err => console.error(err))
     } else {
         server = app.listen(3001, () => {
+            process.send('Hello, Father。')
             console.log(`Express ${process.pid} started in ${app.get('env')} on http://localhost:${port}; press Ctrl-C to terminate`)
         })
     }

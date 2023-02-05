@@ -57,4 +57,10 @@ public class Result<T> {
     public static <T> Result<T> success(T data) {
         return build(data, ResultCodeEnum.SUCCESS);
     }
+    public static <T> Result<T> fail(T data) {
+        return build(data, ResultCodeEnum.PASSWORDERROR);
+    }
+    public static <T> Result<T> noUser(T data) {
+        return build(data, ResultCodeEnum.NOUSER);
+    }
 }
