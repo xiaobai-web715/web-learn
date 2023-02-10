@@ -14,5 +14,15 @@ router.post('/login', (req, res) => {
         res.send(resq)
     })
 })
+router.post('/register', (req, res) => {
+    const params = req.body
+    const baseUrl: string = credentials.biServerUser.baseUrl
+    const { port } = credentials.biServerUser
+    const url: string = baseUrl + '/register'
+    requestAdmin(url, params, 'post', { port }).then(resq => {
+        console.log('resq', resq)
+        res.send(resq)
+    })
+})
 export {}
 module.exports = router

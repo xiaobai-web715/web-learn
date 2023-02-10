@@ -31,9 +31,12 @@ public class UserSetController {
         if (list.size() > 0) {
             hospUser useInfo = list.get(0);
             String userPassword = useInfo.getPassword();
+            String userName = userInfo.getUser();
+            Long uid = userInfo.getId();
+            
             System.out.print(Objects.equals(password, userPassword));
             if (Objects.equals(password, userPassword)) {
-                return Result.success(true);
+                return Result.success(useInfo);
             } else {
                 return Result.fail(null);
             }
@@ -41,4 +44,15 @@ public class UserSetController {
             return Result.noUser(null);
         }
     };
+    @PostMapping("register")
+    public Result register(@RequestBody hospUser userInfo) {
+        System.out.print(userInfo);
+        Boolean result = userSetService.save(userInfo);
+        System.out.print(result);
+        if (result) {
+            return Result.success(true);
+        } else {
+            return Result.fail(null);
+        }
+    }
 }

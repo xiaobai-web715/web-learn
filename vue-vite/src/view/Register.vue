@@ -1,0 +1,56 @@
+<template>
+    <div>
+        <el-form :inline="true">
+            <el-form-item label="用户名">
+                <el-input v-model="registerInfo.user" />
+            </el-form-item>
+            <el-form-item label="密码">
+                <el-input
+                    v-model="registerInfo.password"
+                    type="password"
+                />
+            </el-form-item>
+            <el-form-item label="确认密码">
+                <el-input
+                    v-model="registerInfo.againPassword"
+                    type="password"
+                />
+            </el-form-item>
+        </el-form>
+        <div>
+            <el-button
+                type="primary"
+                @click="registerUserInfo"
+            >
+                注册
+            </el-button>
+        </div>
+    </div>
+</template>
+<script>
+import {ref} from 'vue';
+import axios from '@/http/index';
+import { useRouter } from 'vue-router';
+export default {
+    setup() {
+        const registerInfo = ref({});
+        const router = useRouter();
+        return {
+            registerInfo,
+            router,
+        };
+    },
+    methods: {
+        registerUserInfo() {
+            axios('/sytUser/register', 'post', this.registerInfo).then(res => {
+                console.log('注册结果', res);
+                if (res.code === 200) {
+                    this.$message.success('用户注册成功');
+                    this.router.back();
+                }
+            });
+        }
+    }
+};
+</script>
+<style lang="scss" scoped></style>

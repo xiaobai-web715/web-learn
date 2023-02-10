@@ -12,6 +12,16 @@ export default {
                 'post' ,
                 {}
             ).then(res => res.data);
+            /**
+             * 将node的数据迁移到数据库当中
+             */
+            // return axios(
+            //     'sytRouter/getUserRouter',
+            //     'post',
+            //     {
+            //         id: '', //根据用户的id获取对应的路由权限
+            //     }
+            // ).then(res => res.data);
         };
         const routeList = await getUserRouteList() as unknown as IRoute[];
         const routeTree = formatRouteTree(routeList); //将routeList变成routeTree;

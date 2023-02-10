@@ -6,6 +6,7 @@ export default {
         state.routeTree = routeTree;
     },
     [SET_AUTH] (state: IState, token: boolean) {
+        console.log('打印一下', token);
         state.token = token;
     }
 };
