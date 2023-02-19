@@ -12,49 +12,53 @@
         >
             <el-form-item
                 label="医院名称"
-                prop="name"
+                prop="hospname"
             >
                 <el-input
-                    v-model="formData.name"
+                    v-model="formData.hospname"
                     placeholder="请输入医院名称"
                     class="el-input-style"
                 />
             </el-form-item>
             <el-form-item
-                label="医院地址"
-                prop="address"
+                label="医院联系人"
+                prop="contactsName"
             >
                 <el-input
-                    v-model="formData.address"
-                    placeholder="请输入医院地址"
+                    v-model="formData.contactsName"
+                    placeholder="请输入医院联系人姓名"
                     class="el-input-style"
                 />
             </el-form-item>
             <el-form-item
-                label="医院电话"
+                label="联系人电话"
+                prop="contactsPhone"
             >
                 <el-input
-                    v-model="formData.phone"
-                    placeholder="请输入医院电话"
+                    v-model="formData.contactsPhone"
+                    placeholder="请输入医院联系人电话"
                     class="el-input-style"
                 />
             </el-form-item>
-            <el-form-item label="医院性质">
+            <el-form-item
+                label="医院状态"
+                prop="status"
+            >
                 <el-select
-                    v-model="formData.nature"
-                    placeholder="请选择医院性质"
+                    v-model="formData.status"
+                    placeholder="请选择医院状态"
                 >
                     <el-option
-                        v-for="{title, value} in natures"
+                        v-for="{title, value} in status"
                         :key="value"
-                        :value="title"
+                        :value="value"
                         :label="title"
                     />
                 </el-select>
             </el-form-item>
-            <el-form-item label="官网地址">
+            <el-form-item label="医院官网">
                 <el-input
-                    v-model="formData.link"
+                    v-model="formData.apiUrl"
                     placeholder="请输入医院官网地址"
                     class="el-input-style"
                 />
@@ -73,20 +77,26 @@
 <script setup>
 import {ref} from 'vue';
 import { ElForm, ElFormItem, ElInput, ElSelect, ElOption, ElButton, ElMessage } from 'element-plus';
-import {natures} from './enum';
+import {status} from './enum';
 import request from '@/http';
 const formData = ref({
-    name: '',
-    address: '',
-    phone: '',
-    nature: '',
-    link: '',
+    hospname: '', // 医院名称
+    contactsName: '', // 医院联系人姓名
+    contactsPhone: '', // 医院联系人电话
+    status: '', // 医院是否可用
+    apiUrl: '', // 医院官网地址
 });
 const rules = {
-    name:[
+    hospname:[
         {required:true,message:'请输入医院名称'}
     ],
-    address: [
+    contactsName: [
+        {required:true,message: '请输入医院地址'}
+    ],
+    contactsPhone: [
+        {required:true,message: '请输入医院地址'}
+    ],
+    status: [
         {required:true,message: '请输入医院地址'}
     ]
 };
@@ -94,6 +104,17 @@ const submit = () => {
     request('/vueVite/admin/hosp/add', 'post', formData.value).then(res => {
         if (res.code === 200) {
             ElMessage.success('添加成功');
+        }
+    });
+    request({
+        url: '/sytHospInfo/hospList/add',
+        method: 'post',
+        params: formData.value
+    }).then(res => {
+        if (res.code === 200) {
+            ElMessage.success('添加成功');
+        } else {
+            ElMessage.fail('添加失败');
         }
     });
 };

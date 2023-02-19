@@ -1,5 +1,6 @@
 package com.lxh.hosp.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.lxh.hosp.service.impl.HospitalSetService;
 import com.lxh.mybatis.entity.hospSet;
 
@@ -21,17 +22,30 @@ public class HospitalSetController {
     @Autowired
     private HospitalSetService hospitalSetService;
 
-    @GetMapping("findAll")
-    public Result findAllHospitalSet() {
+    @GetMapping("query")
+    public Result findAllHospitalSet(@RequestBody hospSet hospInfo) {
+        System.out.println(hospInfo);
         // 调用hospitalSetService的方法
+        LambdaQueryWrapper<hospSet> queryWrapper = new LambdaQueryWrapper<>();
         List<hospSet> list = hospitalSetService.list();
         print.printArray(list);
         return Result.success(list);
     }
     @PostMapping("edit")
     public Result editHospitalInfo(@RequestBody hospSet hospInfo) {
+        System.out.println(hospInfo);
         boolean result = hospitalSetService.updateById(hospInfo);
         System.out.println(result);
         return Result.success(result);
+    }
+    @PostMapping("add")
+    public Result addHospitalInfo(@RequestBody hospSet hospInfo) {
+//        System.out.print(hospInfo);
+        boolean result = hospitalSetService.save(hospInfo);
+        if (result) {
+            return Result.success(result);
+        } else {
+            return Result.fail(result);
+        }
     }
 }

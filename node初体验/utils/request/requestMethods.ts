@@ -25,7 +25,6 @@ const requestAdmin = async <U> (url: string, params: IParams, method: string = '
     if (option) {
         Object.assign(options, option)
     }
-    console.log('options', options)
     return await new Promise((resolve, reject) => {
         const buffer = []
         const req = http.request(options, (res) => {
@@ -43,7 +42,7 @@ const requestAdmin = async <U> (url: string, params: IParams, method: string = '
         req.on('error', (err) => {
             console.log('err', err)
         })
-        req.write(JSON.stringify(params || {})) // 这里不加上请求无法成功,目前不清楚原因
+        req.write(JSON.stringify(params || {})) // 目前都是以JSON的格式进行传递的
         req.end()
     }).then(({ data, headers }: resp) => {
         if (headers['content-type'] === 'application/json') {

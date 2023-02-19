@@ -13,26 +13,27 @@
                     label="医院名称"
                 >
                     <el-input
-                        v-model="formData.name"
+                        v-model="formData.hospname"
                         placeholder="医院名称"
                     />
                 </el-form-item>
-                <el-form-item label="医院编号">
+                <!-- 现在只增加这两个搜索,医院所在地的模糊搜索之后再添加 -->
+                <!-- <el-form-item label="医院所在地">
                     <el-input
-                        v-model="formData.number"
-                        placeholder="医院编号"
+                        v-model="formData.hospAddress"
+                        placeholder="请选择医院所在地"
                     />
-                </el-form-item>
-                <el-form-item label="医院性质">
+                </el-form-item> -->
+                <el-form-item label="医院是否可用">
                     <el-select
-                        v-model="formData.nature"
+                        v-model="formData.status"
                         placeholder="请选择医院等级"
                     >
                         <el-option
-                            v-for="item in natures"
+                            v-for="item in status"
                             :key="item.value"
                             :label="item.title"
-                            :value="item.title"
+                            :value="item.value"
                         />
                     </el-select>
                 </el-form-item>
@@ -147,14 +148,15 @@
 </template>
 <script setup>
 import Table from '../../components/assembly/tableAssembly/Table.vue';
-import { ElForm, ElFormItem, ElInput, ElButton, ElDialog, ElSelect, ElOption, ElMessage } from 'element-plus';
-import axios from '@/http/index';
+// import { ElForm, ElFormItem, ElInput, ElButton, ElDialog, ElSelect, ElOption, ElMessage } from 'element-plus';
+import request from '@/http/index';
 import {status} from './enum';
 import { onMounted, ref } from 'vue';
+import moment from 'moment';
 const formData = ref({
-    name: '',
-    number: '',
-    nature: ''
+    hospname: '',
+    // number: '',
+    status: ''
 });
 const formDataEdit = ref({});
 const tableHosp = ref();
@@ -168,10 +170,11 @@ const editCancel = () => {
     formDataEdit.value = {};
 };
 const editSure = () => {
-    axios('/syt/hospList/edit', 'post', formDataEdit.value).then(res => {
+    request({url: '/sytHospInfo/hospList/edit', method: 'post', params: formDataEdit.value}).then(res => {
         if(res.code === 200) {
             ElMessage.success('修改成功');
             dialogEdit.value = false;
+            getHospList({...formData.value});
         }
     });
 };
@@ -179,7 +182,7 @@ const deleteCancel = () => {
     dialogDelete.value = false;
 };
 const deleteSure = () => {
-    axios('/vueVite/admin/hosp/delete', 'post', {_id:deleteHospId.value}).then(res => {
+    request({url: '/vueVite/admin/hosp/delete', method: 'post', params: {_id:deleteHospId.value}}).then(res => {
         if (res.code === 200) {
             ElMessage.success('删除成功');
             dialogDelete.value = false;
@@ -213,15 +216,24 @@ const colums = [
     },
     {
         title: '创建时间',
-        prop: 'createTime'
+        prop: 'createTime', //引入moment来生成时间
+        minWidth: 150,
+        custom: (val, row) => {
+            return moment(val).format('YYYY-MM-DD hh:mm:ss');
+        }
     },
     {
         title: '更新时间',
-        prop: 'updateTime'
+        prop: 'updateTime',
+        minWidth: 150,
+        custom: (val, row) => {
+            return moment(val).format('YYYY-MM-DD hh:mm:ss');
+        }
     }
 ];
 let o = {
     title: '操作',
+    fixed: 'right',
     buttons: [],
 };
 let editFun = {
@@ -237,7 +249,6 @@ let deleteFun = {
     title: '删除',
     type: 'danger',
     callback: (val, index) => {
-        console.log('val', val, index);
         dialogDelete.value = true;
         deleteHospId.value = val._id;
     }
@@ -245,7 +256,7 @@ let deleteFun = {
 o.buttons.push(editFun, deleteFun);
 colums.push(o);
 const getHospList = (params = {}) => {
-    axios('/syt/hospList/findAll', 'post', params).then(res => {
+    request({url: '/sytHospInfo/hospList/query', method: 'post', params}).then(res => {
         if (res.code === 200) {
             //接口暂时不返回对象的data与total
             dataList.value = res.data;

@@ -33,7 +33,7 @@ public class UserSetController {
             String userPassword = useInfo.getPassword();
             String userName = userInfo.getUser();
             Long uid = userInfo.getId();
-            
+
             System.out.print(Objects.equals(password, userPassword));
             if (Objects.equals(password, userPassword)) {
                 return Result.success(useInfo);

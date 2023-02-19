@@ -83,7 +83,7 @@ app.use(UploadFile)
 app.use(touchByMiatask)
 app.use('/upFile', upFile)
 app.use('/vueVite', vueVite)
-app.use('/syt', syt)
+app.use('/sytHospInfo', syt)
 app.use('/sytUser', sytUser)
 // app.listen 仅仅使用http模块(如果要使用https则使用https.createServer)
 let server = null

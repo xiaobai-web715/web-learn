@@ -3,15 +3,14 @@ import { IState } from './state';
 import {Commit} from 'vuex';
 import { IRoute } from '@/typings/sever';
 import { formatRouteTree } from '@/utils/index';
-import axios from '@/http/index';
+import request from '@/http/index';
 export default {
     async [SET_ROUTE_TREE] ({commit, state}: {commit:Commit, state:IState}) {
         const getUserRouteList = () => {
-            return axios(
-                '/vueVite/user_router_list', 
-                'post' ,
-                {}
-            ).then(res => res.data);
+            return request<null>({
+                url: '/vueVite/user_router_list', 
+                method: 'post' ,
+            }).then(res => res.data);
             /**
              * 将node的数据迁移到数据库当中
              */

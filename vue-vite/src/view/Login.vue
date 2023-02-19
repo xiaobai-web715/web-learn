@@ -24,7 +24,7 @@
 // setup模式下可以在export default{}使用useRouter以及useStore生成全局变量,但组合式情况下不生效
 import {useRouter} from 'vue-router';
 import {ref} from 'vue';
-import axios from '@/http/index';
+import request from '@/http/index';
 import {useStore} from 'vuex';
 import {SET_AUTH} from '@/store/actionsTypes';
 import {loginInfos} from './enums';
@@ -44,11 +44,11 @@ export default {
     },
     methods: {
         submit() {
-            axios(
-                '/sytUser/login',
-                'post',
-                this.formData
-            ).then(res => {
+            request({
+                url: '/sytUser/login',
+                method: 'post',
+                params: this.formData
+            }).then(res => {
                 console.log('res', res, this.store);
                 if (res.code === 200) {
                     this.store.dispatch(SET_AUTH, {token: true});

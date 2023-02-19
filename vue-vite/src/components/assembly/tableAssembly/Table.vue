@@ -11,6 +11,8 @@
             <el-table-column
                 v-if="Array.isArray(item.buttons)"
                 :label="item.title"
+                :min-width="item.minWidth"
+                :fixed="item.fixed"
             >
                 <template
                     #default="scope"
@@ -31,6 +33,8 @@
                 v-else
                 :label="item.title"
                 :prop="item.prop"
+                :fixed="item.fixed"
+                :min-width="item.minWidth"
             >
                 <template
                     v-if="typeof item.custom === 'function'"
@@ -54,8 +58,6 @@
     />
 </template>
 <script setup>
-// import { defineProps } from 'vue';
-import { ElTable, ElTableColumn, ElButton, ElPagination } from 'element-plus';
 import { ref } from 'vue';
 const props = defineProps({
     dataList: {
