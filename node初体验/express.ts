@@ -27,6 +27,7 @@ const upFile = require('./route/upFile')
 const vueVite = require('./route/vueVite.ts')
 const syt = require('./route/syt')
 const sytUser = require('./route/sytUser')
+const sytRouter = require('./route/sytRouter')
 
 const { getParams } = require('./utils/request/paramUtil')
 
@@ -85,6 +86,7 @@ app.use('/upFile', upFile)
 app.use('/vueVite', vueVite)
 app.use('/sytHospInfo', syt)
 app.use('/sytUser', sytUser)
+app.use('/sytRouter', sytRouter)
 // app.listen 仅仅使用http模块(如果要使用https则使用https.createServer)
 let server = null
 const port = process.env.PORT || 3001
@@ -131,7 +133,7 @@ if (require.main === module) {
                 bus.on('process:msg', (packet) => {
                     const { raw, process: { pm_id: processId } } = packet
                     // console.log('pm2的busApi获取的信息:', JSON.stringify(raw), processId)
-                    pm2.sendDataToProcessId(processId, raw, () => {})
+                    pm2.sendDataToProcessId(processId, raw, () => { })
                 })
                 process.send({ topic: 'test', data: 'Hello, Billion Bottle!' })
                 return true

@@ -22,7 +22,7 @@ public class HospitalSetController {
     @Autowired
     private HospitalSetService hospitalSetService;
 
-    @GetMapping("query")
+    @PostMapping("query")
     public Result findAllHospitalSet(@RequestBody hospSet hospInfo) {
         System.out.println(hospInfo);
         // 调用hospitalSetService的方法

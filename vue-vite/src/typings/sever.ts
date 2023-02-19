@@ -1,5 +1,5 @@
 export interface IRoute {
-    _id: number,
+    fPid: number,
     pid: number,
     path: string,
     name: string,

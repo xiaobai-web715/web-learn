@@ -2,11 +2,11 @@ const express = require('express')
 const router = express.Router()
 const { requestAdmin } = require('../utils/request/requestMethods')
 const { credentials } = require('../config/config')
-router.post('/hospList/findAll', (req, res) => {
+router.post('/hospList/query', (req, res) => {
     const params = req.body
     const baseUrl: string = credentials.biServer.baseUrl
-    const url: string = baseUrl + '/hospitalList/findAll'
-    requestAdmin(url, params, 'GET').then(resp => {
+    const url: string = baseUrl + '/hospitalList/query'
+    requestAdmin(url, params, 'POST').then(resp => {
         res.status(200).send(resp)
     })
 })
@@ -26,5 +26,5 @@ router.post('/hospList/add', (req, res) => {
         res.status(200).send(resp)
     })
 })
-export {}
+export { }
 module.exports = router
