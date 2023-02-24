@@ -1,0 +1,13 @@
+body {
+    margin: 0;
+}
+.contioner{
+    width: 750px;
+    .operationImage{
+        width: 100%;
+        .background{
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+    }
+}

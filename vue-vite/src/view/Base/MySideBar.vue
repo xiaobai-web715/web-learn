@@ -1,7 +1,7 @@
 <template>
     <header class="my-side-bar">
         <!-- 侧边连部分可以对左侧导航的显示情况进行编辑 -->
-        <ElMenu
+        <!-- <ElMenu
             background-color="#545c64"
             text-color="#fff"
             active-text-color="#ffd04b"
@@ -10,12 +10,18 @@
                 :children-list="routeList"
                 index-key="null"
             />
-        </ElMenu>
+        </ElMenu> -->
+        <!-- 侧边栏导航部分自组件处理 -->
+        <Menu
+            class="menu-style"
+            :menus="routeList"
+        />
     </header>
 </template>
 <script setup>
 import {useStore} from 'vuex';
 import {computed} from 'vue';
+import Menu from '@/components/menu/menu.vue';
 import MenuItem from './MenuItem.vue';
 import {ElMenu} from 'element-plus';
 const store = useStore();
@@ -33,5 +39,9 @@ const routeList = computed(() => {
         .el-menu{
             height: 100%;
         }
+    }
+    .menu-style{
+        background-color: #545c64;
+        height: 100%;
     }
 </style>

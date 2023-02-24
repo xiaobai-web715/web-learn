@@ -70,6 +70,8 @@ npm install prettier eslint-config-prettier eslint-plugin-prettier --dev 创建.
   目前在开发环境下对不同模块的路由通过webpack的配置实现了不同入口
 ```
 
+utils 加入模拟 app 与 h5 交互的异步的方法等待
+
 ### 细节问题
 
     1.React当中引入本地图片: 需借助require('./image/1.jpg').default方式读取 => require()只能接受字符串,不能直接接受变量,但有一个委婉的方式 let url = '3.jpg'; let image = require('./image/' + url); 只能这样来实现。

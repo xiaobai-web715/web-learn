@@ -3,7 +3,7 @@
         <MyHeaderVue />
         <MyFotterVue />
         <div class="pageContent">
-            <MySideBarVue />
+            <MySideBarVue class="fixed" />
             <!-- 嵌套的子路由需要在父路由加载的组件当中也添加router-view才能成功显示子路由 -->
             <div class="page">
                 <router-view />
@@ -22,6 +22,10 @@
   display:flex;
   justify-content: flex-start;
   min-height: 100vh;
+  .fixed{
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
   .page{
     flex-grow: 1;
   }
