@@ -22,13 +22,14 @@
 import {useStore} from 'vuex';
 import {computed} from 'vue';
 import Menu from '@/components/menu/menu.vue';
-import MenuItem from './MenuItem.vue';
-import {ElMenu} from 'element-plus';
+// import MenuItem from './MenuItem.vue';
+// import {ElMenu} from 'element-plus';
 const store = useStore();
 const routeList = computed(() => {
     let routeList = store.state.routeTree.filter(item => item.path === '/')[0].children.filter(item => item.name !== 'home');
     return routeList;
 });
+console.log('routeList', routeList);
 </script>
 <style scoped lang="scss">
 @import '@/components/scss/color.scss';
@@ -38,6 +39,26 @@ const routeList = computed(() => {
         z-index:1;
         .el-menu{
             height: 100%;
+        }
+        :deep() .menu-1{
+            width: 100%;
+            padding-left: 10px;
+            .title{
+                height: 30px;
+                line-height: 30px;
+                font-size: 20px;
+            }
+            box-sizing: border-box;
+        }
+        :deep() .menu-2{
+            width: 100%;
+            padding-left: 10px;
+            box-sizing: border-box;
+            .title{
+                font-size: 15px;
+                height: 30px;
+                line-height: 30px;
+            }
         }
     }
     .menu-style{

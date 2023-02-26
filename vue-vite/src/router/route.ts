@@ -17,6 +17,7 @@ function generateRouter (routeTree: IRoute[]):RouteRecordRaw[] {
             props: {
                 title: route.title,
                 filePath: route.filePath,
+                className: route.className
             }
         };
         if(route.children) {

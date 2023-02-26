@@ -3,15 +3,15 @@ import { IRoute } from "@/typings/sever";
 const formatRouteTree = (routeList: IRoute[]) => {
     const parent = routeList.filter(routeInfo => routeInfo.fPid === 0);
     const child = routeList.filter(routeInfo => routeInfo.fPid !== 0);
-    console.log(parent, child)
+    let count = 1; // 记录层数，用来解决样式问题
     //递归函数
-    function dateToTree(parents: IRoute[], childs: IRoute[]) {
+    function dateToTree(parents: IRoute[], childs: IRoute[], count: number) {
         parents.map(parent => {
             childs.map((child, index) => {
                 if (parent.pid === child.fPid) {
                     let _childrens = JSON.parse(JSON.stringify(childs));
                     _childrens.splice(index, 1); //将当前子节点(是父节点的直接子路由)去掉
-                    dateToTree([child], _childrens); //找寻当前子节点所包含的后续子节点
+                    dateToTree([child], _childrens, count + 1); //找寻当前子节点所包含的后续子节点
                     if (parent.children) {
                         parent.children.push(child);
                     } else {
@@ -19,9 +19,10 @@ const formatRouteTree = (routeList: IRoute[]) => {
                     }
                 }
             });
+            parent.className = `menu-${count}`;
         });
     }
-    dateToTree(parent, child);
+    dateToTree(parent, child, count);
     return parent;
 };
 

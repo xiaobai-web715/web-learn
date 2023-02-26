@@ -1,6 +1,7 @@
 package com.lxh.hosp.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.lxh.hosp.service.impl.HospitalSetService;
 import com.lxh.mybatis.entity.hospSet;
 
@@ -10,10 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.baomidou.mybatisplus.core.toolkit.ObjectUtils.isNotNull;
 
 @RestController
 @RequestMapping("/admin/hosp/hospitalList")
@@ -23,11 +25,15 @@ public class HospitalSetController {
     private HospitalSetService hospitalSetService;
 
     @PostMapping("query")
-    public Result findAllHospitalSet(@RequestBody hospSet hospInfo) {
+    public Result findHospitalSet(@RequestBody hospSet hospInfo) {
         System.out.println(hospInfo);
+        System.out.println(StringUtils.isNotEmpty(hospInfo.getHospname()));
+        System.out.println(isNotNull(hospInfo.getStatus()));
         // 调用hospitalSetService的方法
         LambdaQueryWrapper<hospSet> queryWrapper = new LambdaQueryWrapper<>();
-        List<hospSet> list = hospitalSetService.list();
+        queryWrapper.eq(isNotNull(hospInfo.getStatus()), hospSet::getStatus, hospInfo.getStatus());
+        queryWrapper.like(StringUtils.isNotEmpty(hospInfo.getHospname()), hospSet::getHospname, hospInfo.getHospname());
+        List<hospSet> list = hospitalSetService.list(queryWrapper);
         print.printArray(list);
         return Result.success(list);
     }

@@ -1,4 +1,6 @@
 <template>
+    <!-- 当前的菜单组件还有一个致命的问题就是定时器来处理height会导致快速点击菜单出现展开与缩回的 -->
+    <!-- 目前的处理方式是通过试验何时的定时时长来进行避免 -->
     <div
         ref="menuBox"
         class="disapper"
@@ -6,9 +8,12 @@
         <div
             v-for="({children, props},index) in menus"
             :key="index"
-            @click="() => {navOperate(children, props, index)}"
+            :class="'baseStyle ' + props.className"
+            @click.stop="() => {navOperate(children, props, index)}"
         >
-            {{ props.title }}
+            <div class="title">
+                {{ props.title }}
+            </div>
             <div v-if="Array.isArray(children) && children.length > 0">
                 <Menu
                     :ref="(node) => {
@@ -62,25 +67,29 @@ export default {
     },
     mounted() {
         console.log('menu的长度', this.menus.length , this.menus[0].children.length);
-        if (this.menus.length === 1 && (this.menus[0].children?.length || []).length === 0) {
-            console.log('我没有执行吗');
+        // if (this.menus.length === 1 && (this.menus[0].children?.length || []).length === 0) {
+        //     console.log('我没有执行吗');
+        //     this.canGetHeightFn();
+        // }
+        // 这里的铺【判断逻辑修改一下（最底层的判断应该是我传入的menus列表中得每一个都没有children了）
+        const result = this.menus.every(item => (item.children || []).length === 0);
+        if (result) {
             this.canGetHeightFn();
         }
     },
     methods: {
         navOperate(childList, info, index) {
+            console.log('我执行了两边');
             if (!Array.isArray(childList) || childList.length === 0 ) {
                 console.log('childList', childList, info);
                 this.$router.push(info.filePath);
             } else {
-                // 如果不是跳转路由的话就要进行导航的开启与关闭功能了
                 const dom = this.menuDom[index].$refs['menuBox'];
                 if (this.menuOffState) {
-                    console.log('最下一级应该我执行');
                     dom.style.height = this.menuHeight[index] + 'px';
                     setTimeout(() => {
                         dom.style.height = 'auto';
-                    }, 1);
+                    }, 500);
                 } else {
                     // 先获取当前dom元素的实际高度,然后进行加载
                     console.log('最下一级我却执行了');
@@ -107,5 +116,9 @@ export default {
 .disapper{
     overflow: hidden;
     transition: height 1s;
+    background-color: #545c64;
+    .baseStyle{
+        color: #fff;
+    }
 }
 </style>
