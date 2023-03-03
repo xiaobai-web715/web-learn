@@ -93,14 +93,15 @@
             <!-- 该元素可选，最多配置一个。如果不配置该元素，就不会生成Mapper接口。-->
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-        <table tableName="hosp_set" domainObjectName="hospSet">
-            <!-- 要生成的表  tableName:数据库中的表名或视图名  domainObjectName:实体类名-->
-            <!--<table tableName="blog" domainObjectName="Blog"></table>-->
-            <!--只有配置的才会生成实体类和其他文件。-->
-            <!--
-                属性: tableName:指定要生成的表名，可以使用SQL通配符匹配多个表。
-            -->
-        </table>
+<!--            不使用的时候暂时注释掉,防止重置实体类文件导致toString方法以及long转字符串的丢失-->
+<!--        <table tableName="hosp_set" domainObjectName="hospSet">-->
+<!--            &lt;!&ndash; 要生成的表  tableName:数据库中的表名或视图名  domainObjectName:实体类名&ndash;&gt;-->
+<!--            &lt;!&ndash;<table tableName="blog" domainObjectName="Blog"></table>&ndash;&gt;-->
+<!--            &lt;!&ndash;只有配置的才会生成实体类和其他文件。&ndash;&gt;-->
+<!--            &lt;!&ndash;-->
+<!--                属性: tableName:指定要生成的表名，可以使用SQL通配符匹配多个表。-->
+<!--            &ndash;&gt;-->
+<!--        </table>-->
         <table tableName="hosp_router" domainObjectName="hospRouter"></table>
     </context>
 </generatorConfiguration>

@@ -94,9 +94,7 @@ const props = defineProps({
     },
     tableInfo: {
         type: Function,
-        default(){
-
-        }
+        default: () => {}
     }
 });
 const pageSize = ref(1);

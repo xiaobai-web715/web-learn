@@ -60,6 +60,16 @@ console.log('routeList', routeList);
                 line-height: 30px;
             }
         }
+        :deep() .menu-3{
+            width: 100%;
+            padding-left: 10px;
+            box-sizing: border-box;
+            .title{
+                font-size: 13px;
+                height: 20px;
+                line-height: 20px;
+            }
+        }
     }
     .menu-style{
         background-color: #545c64;

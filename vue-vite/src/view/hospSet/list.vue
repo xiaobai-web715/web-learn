@@ -15,6 +15,7 @@
                     <el-input
                         v-model="formData.hospname"
                         placeholder="医院名称"
+                        clearable
                     />
                 </el-form-item>
                 <!-- 现在只增加这两个搜索,医院所在地的模糊搜索之后再添加 -->
@@ -28,6 +29,7 @@
                     <el-select
                         v-model="formData.status"
                         placeholder="请选择医院等级"
+                        clearable
                     >
                         <el-option
                             v-for="item in status"
@@ -43,6 +45,14 @@
                         @click="search"
                     >
                         查询
+                    </el-button>
+                </el-form-item>
+                <el-form-item>
+                    <el-button
+                        type="primary"
+                        @click="importData"
+                    >
+                        导出数据
                     </el-button>
                 </el-form-item>
             </el-form>
@@ -148,6 +158,7 @@
 </template>
 <script setup>
 import Table from '../../components/assembly/tableAssembly/Table.vue';
+import { ElMessage } from 'element-plus';
 // import { ElForm, ElFormItem, ElInput, ElButton, ElDialog, ElSelect, ElOption, ElMessage } from 'element-plus';
 import request from '@/http/index';
 import {status} from './enum';
@@ -171,6 +182,7 @@ const editCancel = () => {
 };
 const editSure = () => {
     request({url: '/sytHospInfo/hospList/edit', method: 'post', params: formDataEdit.value}).then(res => {
+        console.log('res', res);
         if(res.code === 200) {
             ElMessage.success('修改成功');
             dialogEdit.value = false;
@@ -256,6 +268,7 @@ let deleteFun = {
 o.buttons.push(editFun, deleteFun);
 colums.push(o);
 const getHospList = (params = {}) => {
+    console.log('params', params);
     request({url: '/sytHospInfo/hospList/query', method: 'post', params}).then(res => {
         if (res.code === 200) {
             //接口暂时不返回对象的data与total
@@ -272,7 +285,11 @@ const search = () => {
     tableHosp.value.search(1);
 };
 const tableState = (params) => {
-    getHospList({...formData.value, ...params.value});
+    console.log('params', params);
+    getHospList({...formData.value, ...params});
+};
+const importData = () => {
+    // 对获取的excel的数据进行导出
 };
 </script>
 <style scoped lang="scss">

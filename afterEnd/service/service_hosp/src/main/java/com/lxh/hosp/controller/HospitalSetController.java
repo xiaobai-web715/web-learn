@@ -25,10 +25,8 @@ public class HospitalSetController {
     private HospitalSetService hospitalSetService;
 
     @PostMapping("query")
-    public Result findHospitalSet(@RequestBody hospSet hospInfo) {
+    public Result findHospitalSet(@RequestBody pageClass hospInfo) {
         System.out.println(hospInfo);
-        System.out.println(StringUtils.isNotEmpty(hospInfo.getHospname()));
-        System.out.println(isNotNull(hospInfo.getStatus()));
         // 调用hospitalSetService的方法
         LambdaQueryWrapper<hospSet> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(isNotNull(hospInfo.getStatus()), hospSet::getStatus, hospInfo.getStatus());
