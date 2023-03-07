@@ -12,10 +12,12 @@ interface paramsI {
     columns: columnI[],
     excelListRows: number,
 }
+import format from 'format';
 function createTemplate(params: paramsI){
     const length: number = params.data.length;
     const tableNums: number = Math.ceil(length / params.excelListRows);
     const listArray: Array<dataI>[] = [];
+    const tableArr: Blob[] = [];
     for (let i = 0; i < tableNums; i++) {
         listArray.push(params.data.slice(i * params.excelListRows, (i + 1) * params.excelListRows));
     }
@@ -49,7 +51,27 @@ function createTemplate(params: paramsI){
             table.appendChild(thead);
             table.appendChild(tbody);
             // 对数据处理后转化成base64,通过uri数据导出
+            // const uri = 'data:application/vnd.ms-excel;base64,';
+            const template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">' +
+                '<head>' +
+                '<!--[if gte mso 9]>' +
+                '<xml>' +
+                '<x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>' +
+                '<x:Name>%s</x:Name>' +
+                '<x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets>' +
+                '</x:ExcelWorkbook>' +
+                '</xml>' +
+                '<![endif]-->' +
+                '</xml>' +
+                '<meta charset="UTF-8"></head><body><table>%s</table></body></html>';
+            const ctx = {
+                worksheet: 'Worksheet',
+                table: table.innerHTML,
+            };
+            const excelUrl = new Blob([format(template, 'Worksheet', table.innerHTML)], {type: 'application/vnd.ms-excel'});
+            tableArr.push(excelUrl);
         })(i);
     }
+    return tableArr;
 }
 export default createTemplate;

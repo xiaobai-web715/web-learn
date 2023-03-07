@@ -158,6 +158,7 @@
 </template>
 <script setup>
 import Table from '../../components/assembly/tableAssembly/Table.vue';
+import createTemplate from '@/utils/importInfos/importExcel';
 import { ElMessage } from 'element-plus';
 // import { ElForm, ElFormItem, ElInput, ElButton, ElDialog, ElSelect, ElOption, ElMessage } from 'element-plus';
 import request from '@/http/index';
@@ -289,7 +290,45 @@ const tableState = (params) => {
     getHospList({...formData.value, ...params});
 };
 const importData = () => {
+    const columns = [
+        {
+            title: '医院名称',
+            dataIndex: 'hospname',
+            key: 'hospname'
+        },
+        {
+            title: '医院联系人',
+            dataIndex: 'contactsName',
+            key: 'contactsName'
+        },
+        {
+            title: '是否可用',
+            dataIndex: 'status',
+            key: 'status',
+            render: (info, index) => {
+                console.log('我是对应的信息', info);
+                if (info.status == 1) {
+                    return '可用';
+                } else {
+                    return '不可用';
+                }
+            } 
+        }
+    ];
     // 对获取的excel的数据进行导出
+    const arrUrl = createTemplate({
+        data: dataList.value,
+        columns,
+        excelListRows: 1
+    });
+    arrUrl.forEach(item => {
+        const a = document.createElement('a');
+        a.href = window.URL.createObjectURL(item);
+        a.download = '测试文件下载.xls';
+        a.style.display = 'none';
+        a.click();
+    });
+    // console.log('arrUrl', arrUrl);
 };
 </script>
 <style scoped lang="scss">
