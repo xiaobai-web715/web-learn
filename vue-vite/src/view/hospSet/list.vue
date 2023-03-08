@@ -1,6 +1,14 @@
 <template>
     <div class="header">
-        <span>医院设置列表</span>
+        <div class="title">
+            医院设置列表
+        </div>
+        <el-button
+            type="primary"
+            @click="() => {addHospInfo()}"
+        >
+            新增
+        </el-button>
     </div>
     <div class="content">
         <div class="search">
@@ -67,74 +75,6 @@
         </div>
     </div>
     <el-dialog
-        v-model="dialogEdit"
-        title="编辑"
-        center
-    >
-        <el-form
-            label-width="100px"
-            label-position="right"
-        >
-            <el-form-item
-                label="医院名称"
-            >
-                <el-input
-                    v-model="formDataEdit.hospname"
-                    placeholder="请输入医院名称"
-                    class="el-input-style"
-                />
-            </el-form-item>
-            <el-form-item
-                label="医院联系人"
-            >
-                <el-input
-                    v-model="formDataEdit.contactsName"
-                    placeholder="请输入医院联系人"
-                    class="el-input-style"
-                />
-            </el-form-item>
-            <el-form-item
-                label="联系人电话"
-            >
-                <el-input
-                    v-model="formDataEdit.contactsPhone"
-                    placeholder="请输入联系人电话"
-                    class="el-input-style"
-                />
-            </el-form-item>
-            <el-form-item label="官网地址">
-                <el-input
-                    v-model="formDataEdit.apiUrl"
-                    placeholder="请输入医院官网地址"
-                    class="el-input-style"
-                />
-            </el-form-item>
-            <el-form-item label="是否可用">
-                <el-select v-model="formDataEdit.status">
-                    <el-option
-                        v-for="({title, value}) in status"
-                        :key="value"
-                        :label="title"
-                        :value="value"
-                    />
-                </el-select>
-            </el-form-item>
-        </el-form>
-        <template
-            #footer
-        >
-            <el-button @click="editCancel">
-                取 消
-            </el-button>
-            <el-button
-                type="primary"
-                @click="editSure"
-            >
-                确 定
-            </el-button>
-        </template>
-    </el-dialog>
-    <el-dialog
         v-model="dialogDelete"
         title="删除"
         center
@@ -171,16 +111,12 @@ export default {
             hospname: '',
             status: ''
         });
-        const formDataEdit = ref({});
-        const dialogEdit = ref(false);
         const dialogDelete = ref(false);
         const deleteHospId = ref();
         const dataList = ref([]);
         const dataTotal = ref(0);
         return {
             formData,
-            formDataEdit,
-            dialogEdit,
             dialogDelete,
             deleteHospId,
             dataList,
@@ -240,9 +176,8 @@ export default {
             title: '编辑',
             type: 'primary',
             callback: (val, index) => {
-                const {id, hospname, contactsName, contactsPhone, apiUrl, status} = val;
-                this.formDataEdit = {id, hospname, contactsName, contactsPhone, apiUrl, status};
-                this.dialogEdit = true;
+                const {id} = val;
+                this.addHospInfo(id);
             }
         };
         let deleteFun = {
@@ -264,9 +199,8 @@ export default {
         this.eventHub.emit('search:table:list', 1);
     },
     methods: {
-        editCancel() {
-            this.dialogEdit = false;
-            this.formDataEdit = {};
+        addHospInfo(id) {
+            this.$router.push({path: '/hospSet/add', query: {id}});
         },
         getHospList(params = {}) {
             request({
@@ -280,20 +214,6 @@ export default {
                     this.dataList = res.data.records;
                     this.dataTotal = res.data.total;
                     // dataTotal.value = res.data.total;
-                }
-            });
-        },
-        editSure() {
-            request({
-                url: '/sytHospInfo/hospList/edit',
-                method: 'post',
-                params: this.formDataEdit
-            }).then(res => {
-                console.log('res', res);
-                if (res.code === 200) {
-                    this.dialogEdit = false;
-                    this.getHospList({...this.formData});
-                    this.$message.success('修改成功');
                 }
             });
         },
@@ -364,10 +284,14 @@ export default {
 </script>
 <style scoped lang="scss">
 .header{
-    margin: 20px 0 20px 20px;
-    span{
+    margin: 20px 20px 20px 20px;
+    display: flex;
+    justify-content: space-between;
+    .title{
         border-right:5px solid rgb(26, 156, 221);
         font-size:20px;
+        display: flex;
+        align-items: center;
     }
 }
 .content{

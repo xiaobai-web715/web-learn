@@ -4,7 +4,8 @@ export interface IRoute {
     path: string,
     name: string,
     title: string,
-    filePath?: string,
+    hidden: boolean,
+    filePath: string,
     children?: IRoute[],
     className?: string,
 }

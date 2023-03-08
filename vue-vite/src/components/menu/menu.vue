@@ -11,21 +11,23 @@
             :class="'baseStyle ' + props.className"
             @click.stop="() => {navOperate(children, props, index)}"
         >
-            <div class="title">
-                {{ props.title }}
-            </div>
-            <div v-if="Array.isArray(children) && children.length > 0">
-                <Menu
-                    :ref="(node) => {
-                        if (node) {
-                            menuDom[index] = node;
-                            canGetHeight[index] = false;
-                        }
-                    }"
-                    :menus="children"
-                    :can-get-height-fn="getChildInfo.bind(this, index)"
-                />
-            </div>
+            <template v-if="!props.hidden">
+                <div class="title">
+                    {{ props.title }}
+                </div>
+                <div v-if="Array.isArray(children) && children.length > 0">
+                    <Menu
+                        :ref="(node) => {
+                            if (node) {
+                                menuDom[index] = node;
+                                canGetHeight[index] = false;
+                            }
+                        }"
+                        :menus="children"
+                        :can-get-height-fn="getChildInfo.bind(this, index)"
+                    />
+                </div>
+            </template>
         </div>
     </div>
 </template>

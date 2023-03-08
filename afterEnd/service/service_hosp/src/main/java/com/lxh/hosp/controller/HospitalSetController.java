@@ -62,4 +62,10 @@ public class HospitalSetController {
             return Result.fail(result);
         }
     }
+    @PostMapping("get/info")
+    public Result getInfoHospitalInfo(@RequestBody hospSet hospInfo) {
+        hospSet info = hospitalSetService.getById(hospInfo.getId());
+        System.out.println(info);
+        return Result.success(info);
+    }
 }

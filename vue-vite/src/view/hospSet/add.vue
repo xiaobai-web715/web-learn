@@ -74,49 +74,77 @@
         </div>
     </div>
 </template>
-<script setup>
+<script>
 import {ref} from 'vue';
 import { ElForm, ElFormItem, ElInput, ElSelect, ElOption, ElButton, ElMessage } from 'element-plus';
 import {status} from './enum';
 import request from '@/http';
-const formData = ref({
-    hospname: '', // 医院名称
-    contactsName: '', // 医院联系人姓名
-    contactsPhone: '', // 医院联系人电话
-    status: '', // 医院是否可用
-    apiUrl: '', // 医院官网地址
-});
-const rules = {
-    hospname:[
-        {required:true,message:'请输入医院名称'}
-    ],
-    contactsName: [
-        {required:true,message: '请输入医院地址'}
-    ],
-    contactsPhone: [
-        {required:true,message: '请输入医院地址'}
-    ],
-    status: [
-        {required:true,message: '请输入医院地址'}
-    ]
-};
-const submit = () => {
-    request('/vueVite/admin/hosp/add', 'post', formData.value).then(res => {
-        if (res.code === 200) {
-            ElMessage.success('添加成功');
+export default {
+    setup() {
+        const formData = ref({
+            hospname: '', // 医院名称
+            contactsName: '', // 医院联系人姓名
+            contactsPhone: '', // 医院联系人电话
+            status: '', // 医院是否可用
+            apiUrl: '', // 医院官网地址
+        });
+        const id = ref();
+        const rules = {
+            hospname:[
+                {required:true,message:'请输入医院名称'}
+            ],
+            contactsName: [
+                {required:true,message: '请输入医院地址'}
+            ],
+            contactsPhone: [
+                {required:true,message: '请输入医院地址'}
+            ],
+            status: [
+                {required:true,message: '请输入医院地址'}
+            ]
+        };
+        return {
+            formData,
+            rules,
+            id,
+            status
+        };
+    },
+    mounted() {
+        const {id} = this.$route.query || {};
+        console.log('我是对应的id信息', this.$route.query);
+        if (id) {
+            this.id = id;
+            request({
+                url: '/sytHospInfo/hospList/get/info', 
+                method: 'post', 
+                params: {id}
+            }).then(res => {
+                console.log('res', res);
+                if (res.code === 200) {
+                    //接口暂时不返回对象的data与total
+                    this.formData = res.data;
+                    // dataTotal.value = res.data.total;
+                }
+            });
         }
-    });
-    request({
-        url: '/sytHospInfo/hospList/add',
-        method: 'post',
-        params: formData.value
-    }).then(res => {
-        if (res.code === 200) {
-            ElMessage.success('添加成功');
-        } else {
-            ElMessage.fail('添加失败');
+    },
+    methods: {
+        submit() {
+            request({
+                url: '/sytHospInfo/hospList/add',
+                method: 'post',
+                params: {...this.formData, id: this.id}
+            }).then(res => {
+                if (res.code === 200) {
+                    this.$message.success(`${this.id ? '编辑' : '添加'}成功`);
+                    this.$router.back();
+                } else {
+                    this.$message.fail(`${this.id ? '编辑' : '添加'}失败`);
+                }
+            });
         }
-    });
+    }
 };
 </script>
 <style scoped lang="scss">
