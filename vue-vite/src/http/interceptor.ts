@@ -27,7 +27,6 @@ service.interceptors.request.use(config => {
  * 响应拦截器
  */
 service.interceptors.response.use(response => {
-    console.log('response', response);
     if(response.status === 200) {
         return response.data;
     } else if(response.status === 403) {

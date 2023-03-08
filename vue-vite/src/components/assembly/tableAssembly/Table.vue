@@ -1,11 +1,11 @@
 <template>
     <el-table
-        :data="props.dataList"
+        :data="dataList"
         :header-cell-style="{'text-align':'center'}"
         :cell-style="{'text-align':'center'}"
     >
         <template
-            v-for="item in props.colums"
+            v-for="item in colums"
             :key="item.prop"
         >
             <el-table-column
@@ -46,75 +46,86 @@
         </template>
     </el-table>
     <el-pagination
-        v-if="props.havePagination"
+        v-if="havePagination"
         v-model:current-page="page"
         background
-        :total="props.dataTotal"
+        :total="dataTotal"
         :page-sizes="[10, 20, 30, 40]"
-        :page-size="props.pageSize"
+        :page-size="pageSize"
         layout="sizes, prev, pager, next"
         @size-change="sizeChange"
         @current-change="currentChange"
     />
 </template>
-<script setup>
+<script>
 import { ref } from 'vue';
-const props = defineProps({
-    dataList: {
-        type: Array,
-        required: true,
-    },
-    colums: {
-        type: Array,
-        required: true,
-    },
-    dataTotal: {
-        type: Number,
-        required: true,
-    },
-    pageSize: {
-        type: Number,
-        default: 10,
-    },
-    havePagination: {
-        type: Boolean,
-        default: true,
-    },
-    headerCenter: {
-        type: [Boolean , Object],
-        default(){
-            return true;
+export default {
+    props: {
+        dataList: {
+            type: Array,
+            required: true,
+        },
+        colums: {
+            type: Array,
+            required: true,
+        },
+        dataTotal: {
+            type: Number,
+            required: true,
+        },
+        pageSize: {
+            type: Number,
+            default: 10,
+        },
+        havePagination: {
+            type: Boolean,
+            default: true,
+        },
+        headerCenter: {
+            type: [Boolean , Object],
+            default(){
+                return true;
+            }
+        },
+        contentCenter: {
+            type: [Boolean , Object],
+            default(){
+                return true;
+            }
+        },
+        tableInfo: {
+            type: Function,
+            default: () => {}
         }
     },
-    contentCenter: {
-        type: [Boolean , Object],
-        default(){
-            return true;
-        }
+    setup() {
+        const page = ref(1);
+        const changePageSize = ref(10);
+        return {
+            page,
+            changePageSize
+        };
     },
-    tableInfo: {
-        type: Function,
-        default: () => {}
+    created() {
+        console.log('我是啥', this.eventHub);
+        this.eventHub.on('search:table:list', this.search);
+    },
+    methods: {
+        sizeChange(val) {
+            this.changePageSize = val;
+            this.tableInfo({page: this.page, pageSize: val});
+        },
+        currentChange(val) {
+            this.page = val;
+            this.tableInfo({page: val, pageSize: this.changePageSize});
+        },
+        search(val) {
+            console.log('我能否通过这种新的方式来触发', val);
+            this.page = 1;
+            this.tableInfo({page: val, pageSize: this.changePageSize});
+        }
     }
-});
-const pageSize = ref(1);
-const page = ref(1);
-const sizeChange = (val) => {
-    //每页展示的条数
-    pageSize.value = val;
-    props.tableInfo({page: page.value, pageSize: val});
 };
-const currentChange = (val) => {
-    //当前的页数
-    page.value = val;
-    props.tableInfo({page: val, pageSize: pageSize.value});
-};
-//暴露一个方法是搜索的时候会调用的 该方法会将page的页数重置为1
-const search = (val) => {
-    page.value = 1;
-    props.tableInfo({page: val, pageSize: pageSize.value});
-};
-defineExpose({search});
 </script>
 <style lang="scss">
 .columnStyle{

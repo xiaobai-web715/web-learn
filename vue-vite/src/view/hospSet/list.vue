@@ -28,7 +28,7 @@
                 <el-form-item label="医院是否可用">
                     <el-select
                         v-model="formData.status"
-                        placeholder="请选择医院等级"
+                        placeholder="请选择医院状态"
                         clearable
                     >
                         <el-option
@@ -58,8 +58,7 @@
             </el-form>
         </div>
         <div>
-            <Table
-                ref="tableHosp"
+            <TableList
                 :data-list="dataList"
                 :colums="colums"
                 :data-total="dataTotal"
@@ -156,179 +155,211 @@
         </template>
     </el-dialog>
 </template>
-<script setup>
+<script>
 import Table from '../../components/assembly/tableAssembly/Table.vue';
 import createTemplate from '@/utils/importInfos/importExcel';
-import { ElMessage } from 'element-plus';
-// import { ElForm, ElFormItem, ElInput, ElButton, ElDialog, ElSelect, ElOption, ElMessage } from 'element-plus';
 import request from '@/http/index';
 import {status} from './enum';
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import moment from 'moment';
-const formData = ref({
-    hospname: '',
-    // number: '',
-    status: ''
-});
-const formDataEdit = ref({});
-const tableHosp = ref();
-const dialogEdit = ref(false);
-const dialogDelete = ref(false);
-const deleteHospId = ref();
-const dataList = ref([]);
-const dataTotal = ref(0);
-const editCancel = () => {
-    dialogEdit.value = false;
-    formDataEdit.value = {};
-};
-const editSure = () => {
-    request({url: '/sytHospInfo/hospList/edit', method: 'post', params: formDataEdit.value}).then(res => {
-        console.log('res', res);
-        if(res.code === 200) {
-            ElMessage.success('修改成功');
-            dialogEdit.value = false;
-            getHospList({...formData.value});
-        }
-    });
-};
-const deleteCancel = () => {
-    dialogDelete.value = false;
-};
-const deleteSure = () => {
-    request({url: '/vueVite/admin/hosp/delete', method: 'post', params: {_id:deleteHospId.value}}).then(res => {
-        if (res.code === 200) {
-            ElMessage.success('删除成功');
-            dialogDelete.value = false;
-        }
-    });
-};
-const colums = [
-    {
-        title: '医院名称',
-        prop: 'hospname',
+export default {
+    components: {
+        TableList: Table,
     },
-    {
-        title: '医院联系人',
-        prop: 'contactsName',
+    setup() {
+        const formData = ref({
+            hospname: '',
+            status: ''
+        });
+        const formDataEdit = ref({});
+        const dialogEdit = ref(false);
+        const dialogDelete = ref(false);
+        const deleteHospId = ref();
+        const dataList = ref([]);
+        const dataTotal = ref(0);
+        return {
+            formData,
+            formDataEdit,
+            dialogEdit,
+            dialogDelete,
+            deleteHospId,
+            dataList,
+            dataTotal,
+            status
+        };
     },
-    {
-        title: '联系人电话',
-        prop: 'contactsPhone',
-    },
-    {
-        title: '医院官网',
-        prop: 'apiUrl',
-    },
-    {
-        title: '医院状态',
-        prop: 'status',
-        custom: (val, row) => {
-            if (val) return '可用';
-            else return '不可用';
-        }
-    },
-    {
-        title: '创建时间',
-        prop: 'createTime', //引入moment来生成时间
-        minWidth: 150,
-        custom: (val, row) => {
-            return moment(val).format('YYYY-MM-DD hh:mm:ss');
-        }
-    },
-    {
-        title: '更新时间',
-        prop: 'updateTime',
-        minWidth: 150,
-        custom: (val, row) => {
-            return moment(val).format('YYYY-MM-DD hh:mm:ss');
-        }
-    }
-];
-let o = {
-    title: '操作',
-    fixed: 'right',
-    buttons: [],
-};
-let editFun = {
-    title: '编辑',
-    type: 'primary',
-    callback: (val, index) => {
-        const {id, hospname, contactsName, contactsPhone, apiUrl, status} = val;
-        formDataEdit.value = {id, hospname, contactsName, contactsPhone, apiUrl, status};
-        dialogEdit.value = true;
-    }
-};
-let deleteFun = {
-    title: '删除',
-    type: 'danger',
-    callback: (val, index) => {
-        dialogDelete.value = true;
-        deleteHospId.value = val._id;
-    }
-};
-o.buttons.push(editFun, deleteFun);
-colums.push(o);
-const getHospList = (params = {}) => {
-    console.log('params', params);
-    request({url: '/sytHospInfo/hospList/query', method: 'post', params}).then(res => {
-        if (res.code === 200) {
-            //接口暂时不返回对象的data与total
-            dataList.value = res.data;
-            dataTotal.value = res.data?.length;
-            // dataTotal.value = res.data.total;
-        }
-    });
-};
-onMounted(() => {
-    tableHosp.value.search(1);
-});
-const search = () => {
-    tableHosp.value.search(1);
-};
-const tableState = (params) => {
-    console.log('params', params);
-    getHospList({...formData.value, ...params});
-};
-const importData = () => {
-    const columns = [
-        {
-            title: '医院名称',
-            dataIndex: 'hospname',
-            key: 'hospname'
-        },
-        {
-            title: '医院联系人',
-            dataIndex: 'contactsName',
-            key: 'contactsName'
-        },
-        {
-            title: '是否可用',
-            dataIndex: 'status',
-            key: 'status',
-            render: (info, index) => {
-                console.log('我是对应的信息', info);
-                if (info.status == 1) {
-                    return '可用';
-                } else {
-                    return '不可用';
+    data() {
+        const colums = [
+            {
+                title: '医院名称',
+                prop: 'hospname',
+            },
+            {
+                title: '医院联系人',
+                prop: 'contactsName',
+            },
+            {
+                title: '联系人电话',
+                prop: 'contactsPhone',
+            },
+            {
+                title: '医院官网',
+                prop: 'apiUrl',
+            },
+            {
+                title: '医院状态',
+                prop: 'status',
+                custom: (val, row) => {
+                    if (val) return '可用';
+                    else return '不可用';
                 }
-            } 
+            },
+            {
+                title: '创建时间',
+                prop: 'createTime', //引入moment来生成时间
+                minWidth: 150,
+                custom: (val, row) => {
+                    return moment(val).format('YYYY-MM-DD hh:mm:ss');
+                }
+            },
+            {
+                title: '更新时间',
+                prop: 'updateTime',
+                minWidth: 150,
+                custom: (val, row) => {
+                    return moment(val).format('YYYY-MM-DD hh:mm:ss');
+                }
+            }
+        ];
+        let o = {
+            title: '操作',
+            fixed: 'right',
+            buttons: [],
+        };
+        let editFun = {
+            title: '编辑',
+            type: 'primary',
+            callback: (val, index) => {
+                const {id, hospname, contactsName, contactsPhone, apiUrl, status} = val;
+                this.formDataEdit = {id, hospname, contactsName, contactsPhone, apiUrl, status};
+                this.dialogEdit = true;
+            }
+        };
+        let deleteFun = {
+            title: '删除',
+            type: 'danger',
+            callback: (val, index) => {
+                console.log('val', val);
+                this.dialogDelete = true;
+                this.deleteHospId = val.id;
+            }
+        };
+        o.buttons.push(editFun, deleteFun);
+        colums.push(o);
+        return {
+            colums
+        };
+    },
+    mounted() {
+        this.eventHub.emit('search:table:list', 1);
+    },
+    methods: {
+        editCancel() {
+            this.dialogEdit = false;
+            this.formDataEdit = {};
+        },
+        getHospList(params = {}) {
+            request({
+                url: '/sytHospInfo/hospList/query', 
+                method: 'post', 
+                params
+            }).then(res => {
+                console.log('res', res);
+                if (res.code === 200) {
+                    //接口暂时不返回对象的data与total
+                    this.dataList = res.data.records;
+                    this.dataTotal = res.data.total;
+                    // dataTotal.value = res.data.total;
+                }
+            });
+        },
+        editSure() {
+            request({
+                url: '/sytHospInfo/hospList/edit',
+                method: 'post',
+                params: this.formDataEdit
+            }).then(res => {
+                console.log('res', res);
+                if (res.code === 200) {
+                    this.dialogEdit = false;
+                    this.getHospList({...this.formData});
+                    this.$message.success('修改成功');
+                }
+            });
+        },
+        deleteCancel() {
+            this.dialogDelete = false;
+        },
+        deleteSure() {
+            request({
+                url: '/sytHospInfo/hospList/delete', 
+                method: 'post', 
+                params: {id: this.deleteHospId}
+            }).then(res => {
+                if (res.code === 200) {
+                    this.$message.success('删除成功');
+                    this.dialogDelete = false;
+                    this.eventHub.emit('search:table:list', 1);
+                }
+            });
+        },
+        search() {
+            this.eventHub.emit('search:table:list', 1);
+        },
+        tableState(params) {
+            this.getHospList({...this.formData, ...params});
+        },
+        importData() {
+            const columns = [
+                {
+                    title: '医院名称',
+                    dataIndex: 'hospname',
+                    key: 'hospname'
+                },
+                {
+                    title: '医院联系人',
+                    dataIndex: 'contactsName',
+                    key: 'contactsName'
+                },
+                {
+                    title: '是否可用',
+                    dataIndex: 'status',
+                    key: 'status',
+                    render: (info, index) => {
+                        console.log('我是对应的信息', info);
+                        if (info.status == 1) {
+                            return '可用';
+                        } else {
+                            return '不可用';
+                        }
+                    } 
+                }
+            ];
+            // 对获取的excel的数据进行导出
+            const arrUrl = createTemplate({
+                data: this.dataList,
+                columns,
+                excelListRows: 1
+            });
+            arrUrl.forEach(item => {
+                const a = document.createElement('a');
+                a.href = window.URL.createObjectURL(item);
+                a.download = '测试文件下载.xls';
+                a.style.display = 'none';
+                a.click();
+            });
         }
-    ];
-    // 对获取的excel的数据进行导出
-    const arrUrl = createTemplate({
-        data: dataList.value,
-        columns,
-        excelListRows: 1
-    });
-    arrUrl.forEach(item => {
-        const a = document.createElement('a');
-        a.href = window.URL.createObjectURL(item);
-        a.download = '测试文件下载.xls';
-        a.style.display = 'none';
-        a.click();
-    });
-    // console.log('arrUrl', arrUrl);
+    }
 };
 </script>
 <style scoped lang="scss">
