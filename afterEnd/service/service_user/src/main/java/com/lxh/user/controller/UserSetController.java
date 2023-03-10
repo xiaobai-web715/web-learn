@@ -5,6 +5,7 @@ import com.lxh.mybatis.entity.hospUser;
 import com.lxh.user.service.impl.UserSetService;
 import com.lxh.utils.result.Result;
 import com.lxh.utils.utils.print;
+import org.dromara.soul.client.springmvc.annotation.SoulSpringMvcClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/admin/hosp/user")
+@SoulSpringMvcClient(path = "/admin/hosp/user/**")
 public class UserSetController {
     @Autowired
     private UserSetService userSetService;

@@ -48,5 +48,37 @@
             <artifactId>common-util</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <!--    下面四个是官网的依赖    -->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-webflux</artifactId>-->
+<!--            <version>2.2.2.RELEASE</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-actuator</artifactId>-->
+<!--            <version>2.2.2.RELEASE</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash;soul gateway start&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.dromara</groupId>-->
+<!--            <artifactId>soul-spring-boot-starter-gateway</artifactId>-->
+<!--            <version>2.2.1</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash;soul data sync start use websocket&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.dromara</groupId>-->
+<!--            <artifactId>soul-spring-boot-starter-sync-data-websocket</artifactId>-->
+<!--            <version>2.2.1</version>-->
+<!--        </dependency>-->
+
+        <!--   博客上添加的依赖     -->
+        <dependency>
+            <groupId>org.dromara</groupId>
+            <artifactId>soul-spring-boot-starter-client-springmvc</artifactId>
+            <version>2.2.1</version>
+        </dependency>
     </dependencies>
 </project>
