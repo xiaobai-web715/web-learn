@@ -6,6 +6,16 @@ $color-9: #999;
 $border-50: 50% 50%;
 
 /*定位类*/
+@mixin pageLeftBottom {
+    bottom:0;
+    left: 0;
+    position: absolute;
+}
+@mixin pageLeftTop {
+    top:0;
+    left: 0;
+    position: absolute;
+}
 @mixin page-center{
     top: 50%;
     left: 50%;

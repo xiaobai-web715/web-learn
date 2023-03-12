@@ -1,4 +1,9 @@
 // @use './public/scss/page';
+@media (max-width: 600px) {
+    html {
+        font-size: 50px;
+    }
+}
 .page{
     .tabnv{
         position:fixed;
@@ -11,6 +16,7 @@
             line-height: 34px;
             padding-left:10px;
             background-image: linear-gradient(to right, #e4afcb 0%, #b8cbb8 0%, #b8cbb8 0%, #e2c58b 30%, #c2ce9c 64%, #7edbdc 100%);
+            font-size: 0.4rem;
         }
     }
     .content{

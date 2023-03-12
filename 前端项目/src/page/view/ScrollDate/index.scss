@@ -1,0 +1,91 @@
+.scrollDate{
+    position: fixed;
+    top:0;
+    left:0;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    .mask{
+        width: 100%;
+        height: 100%;
+        background-color: rgba($color: #000000, $alpha: 0.7);
+    }
+    .selectMiddle{
+        width: 100%;
+        @include topPricent(300, 375);
+        background-color: #FFF;
+        @include pageLeftBottom;
+        z-index: 2;
+        .selectMiddleContent{
+            @include pageLeftBottom;
+            width: 100%;
+            height: 100%;
+            .selectMiddleHeader{
+                width: 85%;
+                height: 0.6rem;
+                margin: 0 auto;
+                border-bottom: 0.02rem solid rgba(51, 51, 51, 0.5);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .cancel{
+                    font-size: 0.4rem;
+                    color: rgb(255, 0, 0);
+                }
+                .sure{
+                    font-size: 0.4rem;
+                    color: rgb(0, 0, 255);
+                }
+            }
+            .selectMiddleWrapper{
+                width: 85%;
+                @include topPricent(250, 375);
+                margin: 0 auto;
+                margin-top: 0.2rem;
+                position: relative;
+                .selectWrapper{
+                    @include page-center;
+                    width: 100%;
+                    height: 5rem;
+                    display: flex;
+                    justify-content: center;
+                    .selectMiddleUnits{
+                        overflow: auto;
+                        scroll-snap-type:y mandatory;
+                        width: 60%;
+                        border-top:1px solid transparent;
+                        .untils{
+                            width: 100%;
+                            display: flex;
+                            flex-direction: column;
+                            .valueWrapper{
+                                scroll-snap-align: start;
+                                font-size: 0.35rem;
+                                width: 100%;
+                                text-align: center;
+                                height: 1rem;
+                                line-height: 1rem;
+                                &:last-child{
+                                    margin-bottom: 2rem;
+                                }
+                                // &:first-child{
+                                //     padding-top: 2rem;
+                                // }
+                            }
+                        }
+                    }
+                    &::after{
+                        display: block;
+                        content: '';
+                        width: 100%;
+                        height:1rem;
+                        @include page-center;
+                        z-index: -1;
+                        background-image: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.1) 100%);
+                        box-shadow: 0 0.08rem 0.24rem rgba(0,0,0,0.12);
+                    }
+                }
+            }
+        }
+    }
+}

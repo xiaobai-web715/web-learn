@@ -18,6 +18,7 @@ import HOC from 'src/page/view/HOC/index';
 import ReactRender from 'src/page/view/ReactRender/index';
 import UploadFile from "src/page/view/uploadFile";
 import UpFile from 'src/page/view/upFile/upFile';
+import ScrollDate from 'src/page/view/ScrollDate/index';
 
 const store = configureStore({
     reducer,
@@ -49,6 +50,7 @@ const RouterIndex = () => {
                             <Route path="ReactRender" element={<ReactRender></ReactRender>}></Route>
                             <Route path="UploadFile" element={<UploadFile></UploadFile>}></Route>
                             <Route path="upFile" element={<UpFile></UpFile>}></Route>
+                            <Route path="scrollDate" element={<ScrollDate></ScrollDate>}></Route>
                         </Route>
                         <Route path="*" element={<div>当前页面不存在</div>}></Route>
                     </Route>

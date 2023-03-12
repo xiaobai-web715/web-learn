@@ -22,6 +22,7 @@ const App = () => {
                     <div onClick={goPage.bind(null, '/ReactRender')}>ReactRender</div>
                     <div onClick={goPage.bind(null, '/UploadFile')}>UploadFile</div>
                     <div onClick={goPage.bind(null, '/upFile')}>upFile</div>
+                    <div onClick={goPage.bind(null, '/scrollDate')}>日期选择器</div>
                 </div>
                 <div className={Css['content']}>
                     <Outlet/>
