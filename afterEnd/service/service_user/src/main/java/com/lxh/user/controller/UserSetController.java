@@ -5,7 +5,7 @@ import com.lxh.mybatis.entity.hospUser;
 import com.lxh.user.service.impl.UserSetService;
 import com.lxh.utils.result.Result;
 import com.lxh.utils.utils.print;
-import org.dromara.soul.client.springmvc.annotation.SoulSpringMvcClient;
+//import org.apache.shenyu.client.springcloud.annotation.ShenyuSpringCloudClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,8 +16,9 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
+//@ShenyuSpringCloudClient(path = "/admin/hosp/user/**")
 @RequestMapping("/admin/hosp/user")
-@SoulSpringMvcClient(path = "/admin/hosp/user/**")
+//@SoulSpringMvcClient(path = "/admin/hosp/user/**")
 public class UserSetController {
     @Autowired
     private UserSetService userSetService;
