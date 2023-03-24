@@ -5,8 +5,13 @@ import com.lxh.mybatis.entity.hospUser;
 import com.lxh.user.service.impl.UserSetService;
 import com.lxh.utils.result.Result;
 import com.lxh.utils.utils.print;
-//import org.apache.shenyu.client.springcloud.annotation.ShenyuSpringCloudClient;
+import org.apache.shenyu.client.apidocs.annotations.ApiDoc;
+import org.apache.shenyu.client.apidocs.annotations.ApiModule;
+import org.apache.shenyu.client.springcloud.annotation.ShenyuPostMapping;
+import org.apache.shenyu.client.springcloud.annotation.ShenyuRequestMapping;
+import org.apache.shenyu.client.springcloud.annotation.ShenyuSpringCloudClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,14 +21,18 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-//@ShenyuSpringCloudClient(path = "/admin/hosp/user/**")
+@ShenyuRequestMapping("/user")
 @RequestMapping("/admin/hosp/user")
+@RefreshScope
+@ApiModule(value = "user")
 //@SoulSpringMvcClient(path = "/admin/hosp/user/**")
 public class UserSetController {
     @Autowired
     private UserSetService userSetService;
 
     @PostMapping("login")
+    @ShenyuPostMapping("/login")
+    @ApiDoc(desc = "login")
     public Result login(@RequestBody hospUser userInfo) {
         String user = userInfo.getUser();
         String password = userInfo.getPassword();
@@ -47,7 +56,9 @@ public class UserSetController {
             return Result.noUser(null);
         }
     };
-    @PostMapping("register")
+//    @PostMapping("register")
+    @ShenyuPostMapping("/register")
+    @ApiDoc(desc = "register")
     public Result register(@RequestBody hospUser userInfo) {
         System.out.print(userInfo);
         Boolean result = userSetService.save(userInfo);
