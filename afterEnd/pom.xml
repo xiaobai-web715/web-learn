@@ -7,7 +7,7 @@
         <module>common/service-util</module>
         <module>common/common-util</module>
         <module>model</module>
-        <module>service</module>
+        <module>bi-admin</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
