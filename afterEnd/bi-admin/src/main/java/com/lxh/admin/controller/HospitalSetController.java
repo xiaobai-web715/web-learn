@@ -7,11 +7,8 @@ import com.lxh.admin.service.impl.HospitalSetService;
 import com.lxh.mybatis.entity.hospSet;
 
 import com.lxh.utils.result.Result;
-import org.apache.shenyu.client.apidocs.annotations.ApiDoc;
-import org.apache.shenyu.client.apidocs.annotations.ApiModule;
-import org.apache.shenyu.client.springcloud.annotation.ShenyuPostMapping;
-import org.apache.shenyu.client.springcloud.annotation.ShenyuRequestMapping;
 import org.apache.shenyu.client.springcloud.annotation.ShenyuSpringCloudClient;
+//import org.apache.shenyu.client.springmvc.annotation.ShenyuSpringMvcClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,17 +18,15 @@ import org.springframework.web.bind.annotation.*;
 import static com.baomidou.mybatisplus.core.toolkit.ObjectUtils.isNotNull;
 
 @RestController
-@RequestMapping("/admin/hosp/list")
-@ShenyuRequestMapping("/list")
-@ApiModule(value = "list")
+@RequestMapping("/hosp/list")
+@ShenyuSpringCloudClient(path = "/list")
 public class HospitalSetController {
     // 注入service进行调用
     @Autowired
     private HospitalSetService hospitalSetService;
 
-    @PostMapping("query")
-    @ShenyuPostMapping("/query")
-    @ApiDoc(desc = "query")
+    @PostMapping("/query")
+    @ShenyuSpringCloudClient(path = "/query")
     public Result findHospitalSet(@RequestBody pageClass hospInfo) {
         System.out.println(hospInfo);
         // 调用hospitalSetService的方法
@@ -44,14 +39,16 @@ public class HospitalSetController {
         System.out.println("``````");
         return Result.success(list);
     }
-    @PostMapping("edit")
+    @PostMapping("/edit")
+    @ShenyuSpringCloudClient(path = "/edit")
     public Result editHospitalInfo(@RequestBody hospSet hospInfo) {
         System.out.println(hospInfo);
         boolean result = hospitalSetService.updateById(hospInfo);
         System.out.println(result);
         return Result.success(result);
     }
-    @PostMapping("add")
+    @PostMapping("/add")
+    @ShenyuSpringCloudClient(path = "/add")
     public Result addHospitalInfo(@RequestBody hospSet hospInfo) {
 //        System.out.print(hospInfo);
         boolean result = hospitalSetService.save(hospInfo);
@@ -61,7 +58,8 @@ public class HospitalSetController {
             return Result.fail(result);
         }
     }
-    @PostMapping("delete")
+    @PostMapping("/delete")
+    @ShenyuSpringCloudClient(path = "/delete")
     public Result deleteHospitalInfo(@RequestBody hospSet hospInfo) {
         System.out.println(hospInfo);
         boolean result = hospitalSetService.removeById(hospInfo.getId());
@@ -71,7 +69,8 @@ public class HospitalSetController {
             return Result.fail(result);
         }
     }
-    @PostMapping("get/info")
+    @PostMapping("/get/info")
+    @ShenyuSpringCloudClient(path = "/get/info")
     public Result getInfoHospitalInfo(@RequestBody hospSet hospInfo) {
         hospSet info = hospitalSetService.getById(hospInfo.getId());
         System.out.println(info);

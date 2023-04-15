@@ -8,6 +8,7 @@ import com.lxh.utils.utils.print;
 import org.apache.shenyu.client.apidocs.annotations.ApiDoc;
 import org.apache.shenyu.client.apidocs.annotations.ApiModule;
 import org.apache.shenyu.client.springcloud.annotation.ShenyuSpringCloudClient;
+//import org.apache.shenyu.client.springmvc.annotation.ShenyuSpringMvcClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,15 +19,14 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/admin/hosp/user")
-@ShenyuSpringCloudClient
-@ApiModule(value = "user")
+@RequestMapping("/hosp/user")
+@ShenyuSpringCloudClient(path = "/user")
 public class UserSetController {
     @Autowired
     private UserSetService userSetService;
 
-    @PostMapping("login")
-    @ApiDoc(desc = "login")
+    @PostMapping("/login")
+    @ShenyuSpringCloudClient(path = "/login")
     public Result login(@RequestBody hospUser userInfo) {
         String user = userInfo.getUser();
         String password = userInfo.getPassword();
@@ -50,8 +50,8 @@ public class UserSetController {
             return Result.noUser(null);
         }
     };
-    @PostMapping("register")
-    @ApiDoc(desc = "register")
+    @PostMapping("/register")
+    @ShenyuSpringCloudClient(path = "/register")
     public Result register(@RequestBody hospUser userInfo) {
         System.out.print(userInfo);
         Boolean result = userSetService.save(userInfo);

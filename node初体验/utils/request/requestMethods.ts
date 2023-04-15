@@ -14,8 +14,8 @@ interface IParams {
 }
 const requestAdmin = async <U> (url: string, params: IParams, method: string = 'POST', option: U): Promise<any> => {
     const options = {
-        host: credentials.biServer.host,
-        port: credentials.biServer.port,
+        host: credentials.biAdmin.host,
+        port: credentials.biAdmin.port,
         path: url,
         method,
         headers: {
