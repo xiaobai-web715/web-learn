@@ -1,23 +1,33 @@
 <template>
-    <div>
-        <el-form :inline="true">
-            <el-form-item label="用户名">
-                <el-input v-model="registerInfo.user" />
+    <div class="registerPage">
+        <div class="registerTitle">
+            注册信息
+        </div>
+        <el-form
+            label-width="80px"
+        >
+            <el-form-item label="用户名:">
+                <el-input
+                    v-model="registerInfo.user"
+                    class="input-style"
+                />
             </el-form-item>
-            <el-form-item label="密码">
+            <el-form-item label="密码:">
                 <el-input
                     v-model="registerInfo.password"
                     type="password"
+                    class="input-style"
                 />
             </el-form-item>
-            <el-form-item label="确认密码">
+            <el-form-item label="确认密码:">
                 <el-input
                     v-model="registerInfo.againPassword"
                     type="password"
+                    class="input-style"
                 />
             </el-form-item>
         </el-form>
-        <div>
+        <div class="registerButton">
             <el-button
                 type="primary"
                 @click="registerUserInfo"
@@ -53,4 +63,20 @@ export default {
     }
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.registerPage{
+    @include fixedCenter;
+    .registerTitle{
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .input-style{
+        width: 200px;
+    }
+    .registerButton{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+</style>

@@ -1,8 +1,6 @@
 <template>
     <div class="header">
-        <div class="title">
-            医院设置列表
-        </div>
+        <TitleAss title="医院信息" />
         <el-button
             type="primary"
             @click="() => {addHospInfo()}"
@@ -96,8 +94,9 @@
     </el-dialog>
 </template>
 <script>
-import Table from '../../components/assembly/tableAssembly/Table.vue';
+import Table from '@/components/assembly/tableAssembly/Table.vue';
 import createTemplate from '@/utils/importInfos/importExcel';
+import Title from '@/components/assembly/pageTopTitle/Title.vue';
 import request from '@/http/index';
 import {status} from './enum';
 import { ref } from 'vue';
@@ -105,6 +104,7 @@ import moment from 'moment';
 export default {
     components: {
         TableList: Table,
+        TitleAss: Title
     },
     setup() {
         const formData = ref({
@@ -287,12 +287,6 @@ export default {
     margin: 20px 20px 20px 20px;
     display: flex;
     justify-content: space-between;
-    .title{
-        border-right:5px solid rgb(26, 156, 221);
-        font-size:20px;
-        display: flex;
-        align-items: center;
-    }
 }
 .content{
     margin-left: 30px;

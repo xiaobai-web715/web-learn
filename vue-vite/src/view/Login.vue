@@ -1,14 +1,23 @@
 <template>
-    <div>
-        <div>登录页面</div>
-        <div>
-            <form>
-                <input v-model="formData.user"><br>
-                <input
-                    v-model="formData.password"
-                    type="password"
-                >
-            </form>
+    <div class="loginPage">
+        <div class="useLogin">
+            用户登录
+        </div>
+        <form class="loginForm">
+            <label for="user">用户名:</label>
+            <input
+                id="user"
+                v-model="formData.user"
+                placeholder="手机号/邮箱"
+            ><br>
+            <label for="password">密码:</label>
+            <input
+                id="password"
+                v-model="formData.password"
+                type="password"
+            >
+        </form>
+        <div class="buttons">
             <button
                 @click="submit"
             >
@@ -68,3 +77,47 @@ export default {
     }
 };
 </script>
+<style lang="scss" scoped>
+.loginPage{
+    @include fixedCenter;
+    height: 250px;
+    .useLogin{
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .loginForm{
+        display: inline-block;
+        label{
+            margin-right: 10px;
+            width: 60px;
+            display: inline-block;
+            text-align: right;
+        }
+        input{
+            display: inline-block;
+            width: 200px;
+            height: 30px;
+            outline: none;
+            margin-bottom: 15px;
+        }
+    }
+    .buttons{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+        button{
+            display: block;
+            width: 60px;
+            height: 40px;
+            border: none;
+            border-radius: 10px;
+            &:nth-child(1) {
+                margin-right: 20px;
+                background-color: #5A88FB;
+                color: #FFF;
+            }
+        }
+    }
+}
+</style>

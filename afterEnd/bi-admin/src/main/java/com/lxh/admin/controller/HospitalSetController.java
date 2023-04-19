@@ -7,13 +7,18 @@ import com.lxh.admin.service.impl.HospitalSetService;
 import com.lxh.mybatis.entity.hospSet;
 
 import com.lxh.utils.result.Result;
+import com.lxh.utils.utils.print;
+import com.lxh.dao.HospitalSetShortInfo;
 import org.apache.shenyu.client.springcloud.annotation.ShenyuSpringCloudClient;
-//import org.apache.shenyu.client.springmvc.annotation.ShenyuSpringMvcClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import static com.baomidou.mybatisplus.core.toolkit.ObjectUtils.isNotNull;
 
@@ -75,5 +80,26 @@ public class HospitalSetController {
         hospSet info = hospitalSetService.getById(hospInfo.getId());
         System.out.println(info);
         return Result.success(info);
+    }
+    @PostMapping("/get/briefInfo")
+    @ShenyuSpringCloudClient(path = "/get/briefInfo")
+    public Result getBriefInfo(@RequestBody hospSet hospInfo) {
+        LambdaQueryWrapper<hospSet> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(StringUtils.isNotEmpty(hospInfo.getHospname()), hospSet::getHospname, hospInfo.getHospname());
+        List<hospSet> list = hospitalSetService.list(queryWrapper);
+        print.printArray(list);
+        // 先暂时遍历list获取每一条里面所需要的字段再组合成List
+        Iterator it = list.iterator();
+        List hospShort = new ArrayList<>();
+        while(it.hasNext()) {
+            hospSet info = (hospSet) it.next();
+//            System.out.println("info的开始");
+//            System.out.println(info);
+            Long id = info.getId();
+            String hospname = info.getHospname();
+            HospitalSetShortInfo target = new HospitalSetShortInfo().setId(id).setHospName(hospname);
+            hospShort.add(target);
+        }
+        return Result.success(hospShort);
     }
 }

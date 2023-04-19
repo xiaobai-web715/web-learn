@@ -6,9 +6,15 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+    <groupId>com.lxh</groupId>
     <artifactId>common</artifactId>
-<!--  说明下面有子类  -->
-    <packaging>pom</packaging>
     <name>Archetype - common</name>
+    <version>0.0.1-SNAPSHOT</version>
     <url>http://maven.apache.org</url>
+    <packaging>pom</packaging>
+    <modules>
+        <module>model-util</module>
+        <module>service-util</module>
+        <module>common-util</module>
+    </modules>
 </project>

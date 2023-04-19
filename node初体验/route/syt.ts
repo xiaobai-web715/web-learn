@@ -39,5 +39,13 @@ router.post('/hospList/get/info', (req, res) => {
         res.status(200).send(resp)
     })
 })
+router.post('/hospList/get/briefInfo', (req, res) => {
+    const params = req.body
+    const url: string = String(credentials.biAdmin.baseUrl) + '/list/get/briefInfo'
+    console.log('url', url)
+    requestAdmin(url, params).then(resp => {
+        res.status(200).send(resp)
+    })
+})
 export { }
 module.exports = router

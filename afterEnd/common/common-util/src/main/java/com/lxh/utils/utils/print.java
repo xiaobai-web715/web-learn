@@ -1,7 +1,6 @@
 package com.lxh.utils.utils;
 
 
-import java.util.Arrays;
 import java.util.List;
 
 public class print<T> {

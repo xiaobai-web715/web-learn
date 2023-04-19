@@ -5,6 +5,7 @@ import App from './App.vue';
 import {routerBeforeEach} from '@/router/route';
 import '@/assets/public.scss';
 import ElementPlus from 'element-plus';
+import ElementUI from 'element-ui';
 import mitt from 'mitt';
 import 'element-plus/dist/index.css';
 

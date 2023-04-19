@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <span>添加医院</span>
+        <TitleAss title="添加医院" />
     </div>
     <div class="content">
         <el-form
@@ -76,10 +76,13 @@
 </template>
 <script>
 import {ref} from 'vue';
-import { ElForm, ElFormItem, ElInput, ElSelect, ElOption, ElButton, ElMessage } from 'element-plus';
 import {status} from './enum';
-import request from '@/http';
+import request from '@/http/index';
+import Title from '@/components/assembly/pageTopTitle/Title.vue';
 export default {
+    components: {
+        TitleAss: Title
+    },
     setup() {
         const formData = ref({
             hospname: '', // 医院名称
@@ -150,10 +153,6 @@ export default {
 <style scoped lang="scss">
 .header{
     margin: 20px 0 20px 20px;
-    span{
-        border-right:5px solid rgb(26, 156, 221);
-        font-size:20px;
-    }
 }
 .el-input-style{
     width: 300px;
