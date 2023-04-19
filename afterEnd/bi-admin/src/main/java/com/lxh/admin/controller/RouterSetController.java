@@ -1,7 +1,8 @@
 package com.lxh.admin.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.lxh.admin.mapper.hospRouterMapper;
-import com.lxh.admin.service.RouterSetServiceImpl;
+import com.lxh.joint.Router;
 import com.lxh.mybatis.entity.hospRouter;
 import com.lxh.admin.service.impl.RouterSetService;
 import com.lxh.utils.result.Result;
@@ -24,16 +25,17 @@ public class RouterSetController {
     private hospRouterMapper hospRouterMapper;
     @PostMapping("/getUserRouter")
     @ShenyuSpringCloudClient(path = "/getUserRouter")
-    public Result getUserRouter() {
-        // 目前先暂时获取所有的路由列表
-        List<hospRouter> list = routerSetService.list();
-        try {
-            List<RouterSetServiceImpl> listTest = hospRouterMapper.getRouter();
-            System.out.println("-------");
-            print.printArray(listTest);
-        } catch (Error err) {
-            System.out.println(err);
-        }
+    public Result getUserRouter() throws JsonProcessingException {
+//        连表查询需要自定义sql语句, 从被ServiceImpl实现变为在Mapper当中自定义sql查询语句进行处理
+//        List<hospRouter> list = routerSetService.list();
+//        try {
+//            List<Router> listTest = hospRouterMapper.getRouter();
+//            System.out.println("-------");
+//            print.printArray(listTest);
+//        } catch (Error err) {
+//            System.out.println(err);
+//        }
+        List<Router> list = hospRouterMapper.getRouter();
         return Result.success(list);
     }
 }

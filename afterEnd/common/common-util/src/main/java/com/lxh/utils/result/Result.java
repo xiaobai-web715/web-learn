@@ -42,6 +42,8 @@ public class Result<T> {
     }
 
     public static <T> Result<T> build(T data, ResultCodeEnum resultCodeEnum) {
+        System.out.println("传入的数据");
+        System.out.println(data);
         Result<T> result = build(data);
         result.setCode(resultCodeEnum.getCode());
         result.setMessage(resultCodeEnum.getMessage());
