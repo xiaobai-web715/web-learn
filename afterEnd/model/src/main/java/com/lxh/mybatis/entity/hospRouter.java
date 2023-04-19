@@ -1,4 +1,5 @@
 package com.lxh.mybatis.entity;
+import com.baomidou.mybatisplus.annotation.TableField;
 
 public class hospRouter {
     @Override
@@ -78,6 +79,11 @@ public class hospRouter {
      *
      * @mbggenerated
      */
+    /**
+     * 连表查询测试
+     */
+    @TableField(exist = false)
+    private hospRouterRelation hospRouterRelation;
     public Long getId() {
         return id;
     }

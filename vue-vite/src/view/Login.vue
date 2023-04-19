@@ -8,7 +8,6 @@
             <input
                 id="user"
                 v-model="formData.user"
-                placeholder="手机号/邮箱"
             ><br>
             <label for="password">密码:</label>
             <input
