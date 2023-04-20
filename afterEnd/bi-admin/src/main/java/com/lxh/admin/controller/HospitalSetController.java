@@ -33,23 +33,23 @@ public class HospitalSetController {
     @PostMapping("/query")
     @ShenyuSpringCloudClient(path = "/query")
     public Result findHospitalSet(@RequestBody pageClass hospInfo) {
-        System.out.println(hospInfo);
+//        System.out.println(hospInfo);
         // 调用hospitalSetService的方法
         LambdaQueryWrapper<hospSet> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(isNotNull(hospInfo.getStatus()), hospSet::getStatus, hospInfo.getStatus());
         queryWrapper.like(StringUtils.isNotEmpty(hospInfo.getHospname()), hospSet::getHospname, hospInfo.getHospname());
         Page<hospSet> list = hospitalSetService.page(new Page<>(hospInfo.getPage(), hospInfo.getPageSize()), queryWrapper);
-        System.out.println("``````");
-        System.out.println(list);
-        System.out.println("``````");
+//        System.out.println("``````");
+//        System.out.println(list);
+//        System.out.println("``````");
         return Result.success(list);
     }
     @PostMapping("/edit")
     @ShenyuSpringCloudClient(path = "/edit")
     public Result editHospitalInfo(@RequestBody hospSet hospInfo) {
-        System.out.println(hospInfo);
+//        System.out.println(hospInfo);
         boolean result = hospitalSetService.updateById(hospInfo);
-        System.out.println(result);
+//        System.out.println(result);
         return Result.success(result);
     }
     @PostMapping("/add")
@@ -66,7 +66,7 @@ public class HospitalSetController {
     @PostMapping("/delete")
     @ShenyuSpringCloudClient(path = "/delete")
     public Result deleteHospitalInfo(@RequestBody hospSet hospInfo) {
-        System.out.println(hospInfo);
+//        System.out.println(hospInfo);
         boolean result = hospitalSetService.removeById(hospInfo.getId());
         if (result) {
             return Result.success(result);
@@ -78,7 +78,7 @@ public class HospitalSetController {
     @ShenyuSpringCloudClient(path = "/get/info")
     public Result getInfoHospitalInfo(@RequestBody hospSet hospInfo) {
         hospSet info = hospitalSetService.getById(hospInfo.getId());
-        System.out.println(info);
+//        System.out.println(info);
         return Result.success(info);
     }
     @PostMapping("/get/briefInfo")

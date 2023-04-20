@@ -1,4 +1,4 @@
-import { SET_AUTH, SET_ROUTE_TREE } from './actionsTypes';
+import { SET_AUTH, SET_ID, SET_ROUTE_TREE, SET_USER } from './actionsTypes';
 import { IState } from './state';
 import { Commit } from 'vuex';
 import { IRoute } from '@/typings/sever';
@@ -27,9 +27,20 @@ export default {
         // commit(SET_AUTH, true);
         return Promise.resolve(routeTree);
     },
-    async [SET_AUTH]({ commit, state }: { commit: Commit, state: IState }, playload: { token: Boolean }) {
+    async [SET_AUTH]({ commit, state }: { commit: Commit, state: IState }, playload: { token: string }) {
         if (playload.token) {
             commit(SET_AUTH, playload.token);
+        }
+    },
+    [SET_USER]({commit, state}: { commit: Commit, state: IState }, playload: { user: string }) {
+        console.log('第一步通过action发起dispatch');
+        if (playload.user) {
+            commit(SET_USER, playload.user);
+        }
+    },
+    [SET_ID]({commit, state}: { commit: Commit, state: IState }, playload: { id: string }) {
+        if (playload.id) {
+            commit(SET_ID, playload.id);
         }
     }
 };

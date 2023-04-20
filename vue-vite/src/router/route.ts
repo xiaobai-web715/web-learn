@@ -32,7 +32,7 @@ function generateRouter (routeTree: IRoute[]):RouteRecordRaw[] {
 export function routerBeforeEach(router: Router, store: Store<IState>) {
     router.beforeEach((to, from, next) => {
         console.log('router', store.state.routeTree);
-        let token = store.state.token;
+        let token = store.state.token || sessionStorage.getItem('token');
         if (!token) {
             // next()才是放行的意思如果这里不加入判断知识next('/login')那就是死循环router.beforeEach(('/login', from, next) => {})
             if (to.path === '/login' || to.path === '/register') {

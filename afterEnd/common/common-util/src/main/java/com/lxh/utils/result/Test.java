@@ -10,7 +10,7 @@ public class Test {
         }
         TestResult test = new TestResult();
         test.name = "刘兴华";
-        System.out.println(ResultCodeEnum.SUCCESS.getCode());
-        System.out.println(Result.success(test));
+//        System.out.println(ResultCodeEnum.SUCCESS.getCode());
+//        System.out.println(Result.success(test));
     }
 }

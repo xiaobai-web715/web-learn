@@ -34,7 +34,7 @@ import {useRouter} from 'vue-router';
 import {ref} from 'vue';
 import request from '@/http/index';
 import {useStore} from 'vuex';
-import {SET_AUTH} from '@/store/actionsTypes';
+import {SET_AUTH, SET_USER, SET_ID} from '@/store/actionsTypes';
 import {loginInfos} from './enums';
 export default {
     setup() {
@@ -57,10 +57,15 @@ export default {
                 method: 'post',
                 params: this.formData
             }).then(res => {
-                console.log('res', res, this.store);
+                console.log('res', res);
                 if (res.code === 200) {
-                    this.store.dispatch(SET_AUTH, {token: true});
-                    sessionStorage.setItem('token', true);
+                    const {token, username, id} = res.data;
+                    this.store.dispatch(SET_AUTH, {token: token});
+                    this.store.dispatch(SET_USER, {user: username});
+                    this.store.dispatch(SET_ID, {id: id});
+                    sessionStorage.setItem('token', token);
+                    sessionStorage.setItem('user', username);
+                    sessionStorage.setItem('id', id);
                     this.router.push('/');
                 } else {
                     const code = res.code;

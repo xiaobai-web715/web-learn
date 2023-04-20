@@ -1,5 +1,8 @@
 package com.lxh.mybatis.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 public class hospUser {
     @Override
     public String toString() {
@@ -15,6 +18,7 @@ public class hospUser {
      *
      * @mbggenerated
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /**
