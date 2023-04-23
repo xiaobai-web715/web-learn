@@ -21,6 +21,6 @@
   "vueCompilerOptions": {
     "experimentalCompatMode": 3 //配置支持的vue版本
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/**/*/*.jsx"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/**/*.jsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

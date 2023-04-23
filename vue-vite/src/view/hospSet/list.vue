@@ -197,13 +197,15 @@ export default {
     },
     mounted() {
         this.eventHub.emit('search:table:list', 1);
+        // 测试接口的多次请求能否合并成一个
+        Promise.all(new Array(6).fill(0).map(item => this.getHospList())).then(args => {console.log('args', args);});
     },
     methods: {
         addHospInfo(id) {
             this.$router.push({path: '/hospSet/add', query: {id}});
         },
         getHospList(params = {}) {
-            request({
+            return request({
                 url: '/sytHospInfo/hospList/query', 
                 method: 'post', 
                 params
@@ -215,6 +217,7 @@ export default {
                     this.dataTotal = res.data.total;
                     // dataTotal.value = res.data.total;
                 }
+                return res;
             });
         },
         deleteCancel() {

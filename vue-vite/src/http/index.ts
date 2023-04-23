@@ -1,5 +1,7 @@
 import { AxiosResponseHeaders} from 'axios';
 import service from './interceptor';
+import proxyEvent from './proxyEvent';
+import { AxiosPromise } from "axios";
 export interface requestI<T> {
     url: string,
     method: string,
@@ -15,13 +17,15 @@ const request = <T>(config: requestI<T>): Promise<any> => {
     if (method === 'post') {
         data = {data: params};
     }
+    const taskInfo = {url, method, params, headers}; // 根据请求的信息判断请求是不是同一个
+    const task = function (): AxiosPromise<any> {
+        return service( {url, ...data, method, headers});
+    };
     //这里还能使用判断来判断是不是mock请求
-    return service({
-        url,
-        ...data,
-        method,
-        headers,
-    });
+    return proxyEvent.proxy(
+        task, 
+        taskInfo
+    );
 };
 
 export default request;
