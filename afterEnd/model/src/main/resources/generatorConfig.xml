@@ -102,6 +102,6 @@
 <!--                属性: tableName:指定要生成的表名，可以使用SQL通配符匹配多个表。-->
 <!--            &ndash;&gt;-->
 <!--        </table>-->
-        <table tableName="hosp_router" domainObjectName="hospRouter"></table>
+        <table tableName="hosp_section_relation" domainObjectName="hospSectionRelation"></table>
     </context>
 </generatorConfiguration>
