@@ -10,3 +10,12 @@ export interface IRoute {
     children?: IRoute[],
     className?: string,
 }
+
+export interface ISection {
+    id: number,
+    sectionName: string,
+    ancestor: number,
+    distance: number,
+    descendant: number,
+    children?: ISection[],
+}
