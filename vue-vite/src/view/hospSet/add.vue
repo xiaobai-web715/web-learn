@@ -119,7 +119,7 @@ export default {
         if (id) {
             this.id = id;
             request({
-                url: '/sytHospInfo/hospList/get/info', 
+                url: '/admin/hospInfo/get/info', 
                 method: 'post', 
                 params: {id}
             }).then(res => {
@@ -135,7 +135,7 @@ export default {
     methods: {
         submit() {
             request({
-                url: '/sytHospInfo/hospList/add',
+                url: '/admin/hospInfo/add',
                 method: 'post',
                 params: {...this.formData, id: this.id}
             }).then(res => {

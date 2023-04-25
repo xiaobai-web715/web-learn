@@ -12,7 +12,7 @@ const Concurrency = () => {
         const data = {
             message: `任务数量：${num}，并发数量：${concurrency}，当前执行任务：${index + 1}`
         };
-        return  axios.post('/api/sytHospInfo/hospList/findAll', data);
+        return  axios.post('/api/admin/hospInfo/findAll', data);
     };
     const getTaskList = () => {
         return new Array(Number(num)).fill(0).map(item => {

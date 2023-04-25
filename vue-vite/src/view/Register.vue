@@ -52,7 +52,7 @@ export default {
     },
     methods: {
         registerUserInfo() {
-            request({url: '/sytUser/register', method: 'post', params: this.registerInfo}).then(res => {
+            request({url: '/admin/user/register', method: 'post', params: this.registerInfo}).then(res => {
                 console.log('注册结果', res);
                 if (res.code === 200) {
                     this.$message.success('用户注册成功');

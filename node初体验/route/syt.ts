@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { requestAdmin } = require('../utils/request/requestMethods')
 const { credentials } = require('../config/config')
-router.post('/hospList/query', (req, res) => {
+router.post('/query', (req, res) => {
     const params = req.body
     const baseUrl: string = credentials.biAdmin.baseUrl
     const url: string = baseUrl + '/list/query'
@@ -10,7 +10,7 @@ router.post('/hospList/query', (req, res) => {
         res.status(200).send(resp)
     })
 })
-router.post('/hospList/add', (req, res) => {
+router.post('/add', (req, res) => {
     const params = req.body
     const baseUrl: string = credentials.biAdmin.baseUrl
     let url: String = ''
@@ -23,7 +23,7 @@ router.post('/hospList/add', (req, res) => {
         res.status(200).send(resp)
     })
 })
-router.post('/hospList/delete', (req, res) => {
+router.post('/delete', (req, res) => {
     const params = req.body
     const baseUrl: string = credentials.biAdmin.baseUrl
     const url: string = baseUrl + '/list/delete'
@@ -31,7 +31,7 @@ router.post('/hospList/delete', (req, res) => {
         res.status(200).send(resp)
     })
 })
-router.post('/hospList/get/info', (req, res) => {
+router.post('/get/info', (req, res) => {
     const params = req.body
     const baseUrl: string = credentials.biAdmin.baseUrl
     const url: string = baseUrl + '/list/get/info'
@@ -39,7 +39,7 @@ router.post('/hospList/get/info', (req, res) => {
         res.status(200).send(resp)
     })
 })
-router.post('/hospList/get/briefInfo', (req, res) => {
+router.post('/get/briefInfo', (req, res) => {
     const params = req.body
     const url: string = String(credentials.biAdmin.baseUrl) + '/list/get/briefInfo'
     console.log('url', url)

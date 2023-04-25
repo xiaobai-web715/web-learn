@@ -16,7 +16,7 @@ export default {
              */
             return axios({
                 method: 'post',
-                url: '/sytRouter/getUserRouter',
+                url: '/admin/router/getUserRouter',
                 params: {}
             }).then(res => res.data);
         };

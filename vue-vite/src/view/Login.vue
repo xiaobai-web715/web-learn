@@ -53,7 +53,7 @@ export default {
     methods: {
         submit() {
             request({
-                url: '/sytUser/login',
+                url: '/admin/user/login',
                 method: 'post',
                 params: this.formData
             }).then(res => {

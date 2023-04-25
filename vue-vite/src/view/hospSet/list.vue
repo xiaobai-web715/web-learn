@@ -206,7 +206,7 @@ export default {
         },
         getHospList(params = {}) {
             return request({
-                url: '/sytHospInfo/hospList/query', 
+                url: '/admin/hospInfo/query', 
                 method: 'post', 
                 params
             }).then(res => {
@@ -225,7 +225,7 @@ export default {
         },
         deleteSure() {
             request({
-                url: '/sytHospInfo/hospList/delete', 
+                url: '/admin/hospInfo/delete', 
                 method: 'post', 
                 params: {id: this.deleteHospId}
             }).then(res => {

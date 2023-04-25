@@ -28,6 +28,7 @@ const vueVite = require('./route/vueVite.ts')
 const syt = require('./route/syt')
 const sytUser = require('./route/sytUser')
 const sytRouter = require('./route/sytRouter')
+const section = require('./route/section')
 
 const { getParams } = require('./utils/request/paramUtil')
 
@@ -84,9 +85,10 @@ app.use(UploadFile)
 app.use(touchByMiatask)
 app.use('/upFile', upFile)
 app.use('/vueVite', vueVite)
-app.use('/sytHospInfo', syt)
-app.use('/sytUser', sytUser)
-app.use('/sytRouter', sytRouter)
+app.use('/admin/hospInfo', syt)
+app.use('/admin/user', sytUser)
+app.use('/admin/router', sytRouter)
+app.use('/admin/section', section)
 // app.listen 仅仅使用http模块(如果要使用https则使用https.createServer)
 let server = null
 const port = process.env.PORT || 3001

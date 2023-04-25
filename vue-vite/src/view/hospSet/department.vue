@@ -48,7 +48,7 @@ export default {
     },
     mounted() {
         fetch({
-            url: '/sytHospInfo/hospList/get/briefInfo',
+            url: '/admin/hospInfo/get/briefInfo',
             method: 'post',
         }).then(res => {
             console.log('res', res);

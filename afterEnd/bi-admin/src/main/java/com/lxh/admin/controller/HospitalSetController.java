@@ -23,7 +23,7 @@ import java.util.List;
 import static com.baomidou.mybatisplus.core.toolkit.ObjectUtils.isNotNull;
 
 @RestController
-@RequestMapping("/hosp/list")
+@RequestMapping("/list")
 @ShenyuSpringCloudClient(path = "/list")
 public class HospitalSetController {
     // 注入service进行调用

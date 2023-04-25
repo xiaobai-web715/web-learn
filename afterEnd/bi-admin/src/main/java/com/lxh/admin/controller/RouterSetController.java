@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/hosp/router")
+@RequestMapping("/router")
 @ShenyuSpringCloudClient(path = "/router")
 public class RouterSetController {
     @Autowired
