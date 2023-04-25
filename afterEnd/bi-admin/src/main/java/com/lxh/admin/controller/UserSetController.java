@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/admin/hosp/user")
 @ShenyuSpringCloudClient(path = "/user")
 public class UserSetController {
     @Autowired

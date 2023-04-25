@@ -23,7 +23,7 @@ import java.util.List;
 import static com.baomidou.mybatisplus.core.toolkit.ObjectUtils.isNotNull;
 
 @RestController
-@RequestMapping("/list")
+@RequestMapping("/admin/hosp/list")
 @ShenyuSpringCloudClient(path = "/list")
 public class HospitalSetController {
     // 注入service进行调用
@@ -95,7 +95,7 @@ public class HospitalSetController {
             hospSet info = (hospSet) it.next();
 //            System.out.println("info的开始");
 //            System.out.println(info);
-            Long id = info.getId();
+            Integer id = info.getId();
             String hospname = info.getHospname();
             HospitalSetShortInfo target = new HospitalSetShortInfo().setId(id).setHospName(hospname);
             hospShort.add(target);

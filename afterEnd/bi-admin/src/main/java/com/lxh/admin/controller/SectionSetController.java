@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/section")
+@RequestMapping("/admin/hosp/section")
 @ShenyuSpringCloudClient(path = "/section")
 public class SectionSetController {
     @Autowired

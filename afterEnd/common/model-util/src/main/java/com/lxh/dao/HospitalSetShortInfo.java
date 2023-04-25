@@ -4,13 +4,13 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 public class HospitalSetShortInfo {
     @JsonSerialize(using = ToStringSerializer.class)
-    private Long id;
+    private Integer id;
     private String hospName;
-    public HospitalSetShortInfo setId(final Long id) {
+    public HospitalSetShortInfo setId(final Integer id) {
         this.id = id;
         return this;
     }
-    public Long getId() {
+    public Integer getId() {
         return this.id;
     }
     public String getHospName() {

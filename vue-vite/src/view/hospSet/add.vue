@@ -143,7 +143,7 @@ export default {
                     this.$message.success(`${this.id ? '编辑' : '添加'}成功`);
                     this.$router.back();
                 } else {
-                    this.$message.fail(`${this.id ? '编辑' : '添加'}失败`);
+                    this.$message.error(`${this.id ? '编辑' : '添加'}失败`);
                 }
             });
         }
