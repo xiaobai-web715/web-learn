@@ -1,12 +1,12 @@
 import md5 from 'md5';
 import EventEmitter from 'events';
-import { AxiosResponseHeaders} from 'axios'; 
+import { AxiosRequestHeaders} from 'axios'; 
 
 interface taskInfoI {
     url: string, 
     method: string, 
     params?: any, 
-    headers?: AxiosResponseHeaders
+    headers?: AxiosRequestHeaders
 }
 interface taskIdListsI {
     [key: string] : boolean
@@ -27,7 +27,7 @@ export default {
                 else resolve(result);
             });
             // 判断taskId有没有删除(没有删除说明taskId还存在, 事件还未被触发, 可以直接返回出去)
-            if (taskIdLists[taskId]) return;
+            if (taskIdLists[taskId]) return console.log('当前请求已经存在');
             taskIdLists[taskId] = true;
             task().then((result: Object) => {
                 delete taskIdLists[taskId];

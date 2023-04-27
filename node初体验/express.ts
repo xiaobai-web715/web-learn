@@ -53,7 +53,9 @@ app.engine('handlebars', engine({
 // }));
 app.set('view engine', 'handlebars')
 
-// express引入中间件(body-parser用来拦截请求,解析req.body属性,再将原有的body属性进行覆盖)
+// get请求是直接拼在url后面的,值都解析在query对象当中,应该不需要额外的中间件去处理数据
+
+// express引入中间件(body-parser用来拦截请求,解析请求体属性,再将原有的body属性进行覆盖)
 app.use(bodyParser.urlencoded({ extended: true })) // 解析 content-type: application/x-www-form-urlencoded格式请求所携带的参数
 app.use(bodyParser.json()) // 解析content-type: application/json格式请求携带的参数
 // app.use(bodyParser.text({extended: false}));

@@ -1,4 +1,4 @@
-import { AxiosResponseHeaders} from 'axios';
+import { AxiosRequestHeaders} from 'axios';
 import service from './interceptor';
 import proxyEvent from './proxyEvent';
 import { AxiosPromise } from "axios";
@@ -6,10 +6,10 @@ export interface requestI<T> {
     url: string,
     method: string,
     params?: T, //对象有哪些属性有时候并不确定, 可以使用泛型
-    headers?: AxiosResponseHeaders // ?表示当前是非必传
+    headers?: AxiosRequestHeaders // ?表示当前是非必传
 }
 const request = <T>(config: requestI<T>): Promise<any> => {
-    const {url, method, params, headers}: {url: string, method: string, params?: any, headers?: AxiosResponseHeaders} = config;
+    const {url, method, params, headers}: {url: string, method: string, params?: any, headers?: AxiosRequestHeaders} = config;
     let data = {};
     if (method === 'get') {
         data = {params};

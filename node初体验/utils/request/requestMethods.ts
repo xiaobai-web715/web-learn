@@ -1,13 +1,13 @@
 const http = require('http')
 const logger = require('../logger/index')
 const { credentials } = require('../../config/config')
+const { objToUrl } = require('../tool.ts')
 const path = require('path')
 const fs = require('fs')
 interface resp {
     data: number[]
     headers: object
 }
-
 // 目前使用泛型想从函数调用处来声明类型，但是会报非类型函数调用不能使用类型参数的警告（所以先使用这种方式来替代）
 interface IParams {
     message: string
@@ -17,10 +17,13 @@ const requestAdmin = async <U> (url: string, params: IParams, method: string = '
         host: credentials.biAdmin.host,
         port: credentials.biAdmin.port,
         path: url,
-        method,
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        method
+    }
+    if (method === 'POST') {
+        Object.assign(options, { headers: { 'Content-Type': 'application/json' } })
+    } else if (method === 'GET') {
+        url = url + String(objToUrl(params))
+        options.path = url
     }
     if (option) {
         Object.assign(options, option)
@@ -30,11 +33,9 @@ const requestAdmin = async <U> (url: string, params: IParams, method: string = '
         const req = http.request(options, (res) => {
             // options配置好请求的参数
             res.on('data', (chunk) => {
-                console.log('```````读取的二进制数据流``````````')
                 buffer.push(chunk)
             })
             res.on('end', () => {
-                console.log('```````二进制数据流读取结束``````````')
                 resolve({ data: Buffer.concat(buffer), headers: res.headers })
             })
         })
