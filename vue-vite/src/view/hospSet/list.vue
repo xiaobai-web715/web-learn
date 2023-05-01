@@ -97,6 +97,7 @@
 import Table from '@/components/assembly/tableAssembly/Table.vue';
 import createTemplate from '@/utils/importInfos/importExcel';
 import Title from '@/components/assembly/pageTopTitle/Title.vue';
+import { ElMessage } from 'element-plus';
 import request from '@/http/index';
 import {status} from './enum';
 import { ref } from 'vue';
@@ -230,7 +231,10 @@ export default {
                 params: {id: this.deleteHospId}
             }).then(res => {
                 if (res.code === 200) {
-                    this.$message.success('删除成功');
+                    ElMessage({
+                        message: '删除成功',
+                        type: 'success'
+                    });
                     this.dialogDelete = false;
                     this.eventHub.emit('search:table:list', 1);
                 }

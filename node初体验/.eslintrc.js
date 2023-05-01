@@ -26,6 +26,7 @@ module.exports = {
         'n/handle-callback-err': 'off',
         indent: 'off',
         'no-tabs': 'off',
-        '@typescript-eslint/indent': ['error', 4]
+        '@typescript-eslint/indent': ['error', 4],
+        '@typescript-eslint/prefer-nullish-coalescing': 'error'
     }
 }

@@ -78,6 +78,7 @@
 import {ref} from 'vue';
 import {status} from './enum';
 import request from '@/http/index';
+import { ElMessage } from 'element-plus';
 import Title from '@/components/assembly/pageTopTitle/Title.vue';
 export default {
     components: {
@@ -140,10 +141,16 @@ export default {
                 params: {...this.formData, id: this.id}
             }).then(res => {
                 if (res.code === 200) {
-                    this.$message.success(`${this.id ? '编辑' : '添加'}成功`);
+                    ElMessage({
+                        message: `${this.id ? '编辑' : '添加'}成功`,
+                        type: 'success'
+                    });
                     this.$router.back();
                 } else {
-                    this.$message.error(`${this.id ? '编辑' : '添加'}失败`);
+                    ElMessage({
+                        message: `${this.id ? '编辑' : '添加'}失败`,
+                        type: 'error'
+                    });
                 }
             });
         }

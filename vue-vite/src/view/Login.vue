@@ -36,6 +36,7 @@ import request from '@/http/index';
 import {useStore} from 'vuex';
 import {SET_AUTH, SET_USER, SET_ID} from '@/store/actionsTypes';
 import {loginInfos} from './enums';
+import { ElMessage } from 'element-plus';
 export default {
     setup() {
         const router = useRouter();
@@ -69,8 +70,11 @@ export default {
                     this.router.push('/');
                 } else {
                     const code = res.code;
-                    const message = loginInfos.find(item => item.code == code).message;
-                    this.$message.error(message);
+                    const message = loginInfos.find(item => item.code == code)?.message;
+                    ElMessage({
+                        message: message,
+                        type: 'error'
+                    });
                 }
             });
         },

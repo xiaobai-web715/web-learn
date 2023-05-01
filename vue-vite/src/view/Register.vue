@@ -41,6 +41,7 @@
 import {ref} from 'vue';
 import request from '@/http/index';
 import { useRouter } from 'vue-router';
+import { ElMessage } from 'element-plus';
 export default {
     setup() {
         const registerInfo = ref({});
@@ -55,7 +56,10 @@ export default {
             request({url: '/admin/user/register', method: 'post', params: this.registerInfo}).then(res => {
                 console.log('注册结果', res);
                 if (res.code === 200) {
-                    this.$message.success('用户注册成功');
+                    ElMessage({
+                        message: '用户注册成功',
+                        type: 'success'
+                    });
                     this.router.back();
                 }
             });

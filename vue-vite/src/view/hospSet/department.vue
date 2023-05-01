@@ -59,6 +59,7 @@ import fetch from '@/http/index';
 import { ref } from 'vue';
 import Title from '@/components/assembly/pageTopTitle/Title.vue';
 import {formatSectionTree} from '@/utils/structureTree';
+import { ElMessage } from 'element-plus';
 export default {
     components: {
         TitleAss: Title
@@ -119,6 +120,7 @@ export default {
     methods: {
         travelNodes(tmpRoot) {
             tmpRoot.checked = false;
+            tmpRoot.indeterminate = false; //该属性是当前节点是不是被模糊选中也就是当下的子节点有没有被全选中
             console.log('我是对应的节点', tmpRoot.childNodes.length);
             if (!Array.isArray(tmpRoot.childNodes) || tmpRoot.childNodes.length == 0) {
                 return ;
@@ -162,9 +164,15 @@ export default {
                         }
                     }).then(res => {
                         if (res.code == 200) {
-                            this.$message.success('修改成功');
+                            ElMessage({
+                                message: '修改成功',
+                                type: 'success'
+                            });
                         } else {
-                            this.$message.error('修改失败');
+                            ElMessage({
+                                message: '修改失败',
+                                type: 'error'
+                            });
                         }
                     });
                 } else {

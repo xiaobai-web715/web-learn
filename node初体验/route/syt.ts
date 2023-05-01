@@ -19,7 +19,7 @@ router.post('/add', (req, res) => {
     } else {
         url = baseUrl + '/list/add'
     }
-    requestAdmin(url, params).then(resp => {
+    requestAdmin(url, params, 'POST').then(resp => {
         res.status(200).send(resp)
     })
 })
@@ -27,7 +27,7 @@ router.post('/delete', (req, res) => {
     const params = req.body
     const baseUrl: string = credentials.biAdmin.baseUrl
     const url: string = baseUrl + '/list/delete'
-    requestAdmin(url, params).then(resp => {
+    requestAdmin(url, params, 'POST').then(resp => {
         res.status(200).send(resp)
     })
 })
@@ -35,15 +35,14 @@ router.post('/get/info', (req, res) => {
     const params = req.body
     const baseUrl: string = credentials.biAdmin.baseUrl
     const url: string = baseUrl + '/list/get/info'
-    requestAdmin(url, params).then(resp => {
+    requestAdmin(url, params, 'POST').then(resp => {
         res.status(200).send(resp)
     })
 })
 router.post('/get/briefInfo', (req, res) => {
     const params = req.body
     const url: string = String(credentials.biAdmin.baseUrl) + '/list/get/briefInfo'
-    console.log('url', url)
-    requestAdmin(url, params).then(resp => {
+    requestAdmin(url, params, 'POST').then(resp => {
         res.status(200).send(resp)
     })
 })
