@@ -1,6 +1,8 @@
 const http = require('http')
 const logger = require('../logger/index')
 const { credentials } = require('../../config/config')
+const HttpUtil = require('./httpUtil.ts')
+const FileBuffer = require('./filebuffer')
 const { objToUrl } = require('../tool.ts')
 const path = require('path')
 const fs = require('fs')
@@ -12,21 +14,24 @@ interface resp {
 interface IParams {
     message: string
 }
-const requestAdmin = async <U> (url: string, params: IParams, method: string = 'POST', option: U): Promise<any> => {
+const requestAdmin = async <U> (url: string, params: IParams, method: string = 'POST', optionBase: U): Promise<any> => {
     const options = {
         host: credentials.biAdmin.host,
         port: credentials.biAdmin.port,
         path: url,
-        method
+        method,
+        headers: {}
     }
-    if (method === 'POST') {
-        Object.assign(options, { headers: { 'Content-Type': 'application/json' } })
-    } else if (method === 'GET') {
-        url = url + String(objToUrl(params))
-        options.path = url
+    if (optionBase) {
+        Object.assign(options, optionBase)
     }
-    if (option) {
-        Object.assign(options, option)
+    if (!options.headers['Content-Type']) {
+        if (method === 'POST') {
+            Object.assign(options, { headers: { 'Content-Type': 'application/json' } })
+        } else if (method === 'GET') {
+            url = url + String(objToUrl(params))
+            options.path = url
+        }
     }
     return await new Promise((resolve, reject) => {
         const buffer = []
@@ -43,7 +48,23 @@ const requestAdmin = async <U> (url: string, params: IParams, method: string = '
         req.on('error', (err) => {
             console.log('err', err)
         })
-        req.write(JSON.stringify(params || {})) // 目前都是以JSON的格式进行传递的
+        // console.log('options.headers', options.headers)
+        let sendInfo = ''
+        if (options.headers['Content-Type'] === 'application/json') {
+            sendInfo = JSON.stringify(params)
+            req.write(sendInfo)
+        } else if (options.headers['Content-Type'] === 'multipart/form-data') {
+            const httpUtil = new HttpUtil()
+            Object.entries(params).forEach(([key, value]) => {
+                if (value instanceof FileBuffer) {
+                    req.write(httpUtil.structureFileContent(key, value))
+                    req.write(value.getBuffer())
+                } else {
+                    console.log('我不是File文件对象')
+                }
+            })
+        }
+        // req.write(JSON.stringify(params || {})) // 目前都是以JSON的格式进行传递的
         req.end()
     }).then(({ data, headers }: resp) => {
         if (headers['content-type'] === 'application/json') {

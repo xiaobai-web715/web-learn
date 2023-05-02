@@ -6,9 +6,8 @@ const { credentials } = require('../config/config')
 router.post('/getUserRouter', (req, res) => {
     const params = req.body
     const baseUrl: string = credentials.biAdmin.baseUrl
-    const { port } = credentials.biAdmin
     const url: string = baseUrl + '/router/getUserRouter'
-    requestAdmin(url, params, 'POST', { port }).then(resq => {
+    requestAdmin(url, params, 'POST').then(resq => {
         console.log('resq', resq)
         res.send(resq)
     })

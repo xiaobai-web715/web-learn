@@ -1,32 +1,32 @@
 const multer = require('multer')
-const { decode } = require('iconv-lite')
+// const { decode } = require('iconv-lite')
 const path = require('path')
 
 const allowExts = ['.txt', '.log', '.xls', '.xlsx', '.csv', '.doc', '.docx', '.ppt', '.jpg', '.png', '.gif', '.jpeg', '.bmp']
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-    // 用来确定上传文件存储在那个文件里面(这里就是一个绝对路径根据当前文件的位置的一个绝对路径)
+        // 用来确定上传文件存储在那个文件里面(这里就是一个绝对路径根据当前文件的位置的一个绝对路径)
         cb(null, path.join(__dirname, '..', '/tmp'))
     },
     filename: function (req, file, cb) {
-    // 用来确定存储进入文件家当中的文件名称
-    // const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    // cb(null, decode(file.originalname) + '-' + uniqueSuffix);
+        console.log('我是解析出来的文件信息', file)
         const { originalname } = file
         let filename = originalname
-        let ext = ''
-        const pos = originalname.lastIndexOf('.')
-        const name = originalname.substring(0, pos)
-        if (pos > -1) {
-            const originExt = originalname.substring(pos) || ''
-            if (allowExts.includes(originExt.toLowerCase())) ext = originExt
-        }
-        filename = decode(Buffer.from(name), 'ascii') + ext
+        // let ext = ''
+        // const pos = originalname.lastIndexOf('.')
+        // const name = originalname.substring(0, pos)
+        // if (pos > -1) {
+        //     const originExt = originalname.substring(pos) || ''
+        //     if (allowExts.includes(originExt.toLowerCase())) ext = originExt
+        // }
+        // filename = decode(Buffer.from(name), 'ascii') + ext
 
         cb(null, filename)
     }
 })
 const fileFilter = (req, file, cb) => {
+    // 处理上传文件中文乱码问题， 使用的iconv-lite并不能成功解决
+    file.originalname = Buffer.from(file.originalname, "latin1").toString("utf8");
     cb(null, true)
 }
 const upload = multer({

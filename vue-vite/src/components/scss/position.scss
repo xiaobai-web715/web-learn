@@ -4,6 +4,13 @@
     transform: translateY(-50%);
 }
 
+@mixin absoluteMiddleCenter{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 @mixin fixedCenter {
     position: fixed;
     top: 50%;
