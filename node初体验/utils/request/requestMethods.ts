@@ -18,6 +18,7 @@ const requestAdmin = async <U> (url: string, params: IParams, method: string = '
     const options = {
         host: credentials.biAdmin.host,
         port: credentials.biAdmin.port,
+        // port: 8888, Fiddler抓包的代理端口
         path: url,
         method,
         headers: {}
@@ -35,6 +36,12 @@ const requestAdmin = async <U> (url: string, params: IParams, method: string = '
     }
     return await new Promise((resolve, reject) => {
         const buffer = []
+        let httpUtil = null
+        if (options.headers['Content-Type'] === 'multipart/form-data') {
+            httpUtil = new HttpUtil()
+            // options.headers['Content-Length'] = 53324
+            options.headers['Content-Type'] = `multipart/form-data; boundary=${httpUtil.boundary}`
+        }
         const req = http.request(options, (res) => {
             // options配置好请求的参数
             res.on('data', (chunk) => {
@@ -48,24 +55,24 @@ const requestAdmin = async <U> (url: string, params: IParams, method: string = '
         req.on('error', (err) => {
             console.log('err', err)
         })
-        // console.log('options.headers', options.headers)
         let sendInfo = ''
         if (options.headers['Content-Type'] === 'application/json') {
             sendInfo = JSON.stringify(params)
             req.write(sendInfo)
-        } else if (options.headers['Content-Type'] === 'multipart/form-data') {
-            const httpUtil = new HttpUtil()
+        } else if (options.headers['Content-Type'].indexOf('multipart/form-data') > -1) {
             Object.entries(params).forEach(([key, value]) => {
                 if (value instanceof FileBuffer) {
                     req.write(httpUtil.structureFileContent(key, value))
-                    req.write(value.getBuffer())
                 } else {
-                    console.log('我不是File文件对象')
+                    req.write(httpUtil.structureContent(key, value))
                 }
             })
+            req.write(`\r\n--${httpUtil.boundary}--`)
         }
-        // req.write(JSON.stringify(params || {})) // 目前都是以JSON的格式进行传递的
         req.end()
+
+        // console.log('options.headers', options)
+        // req.write(JSON.stringify(params || {})) // 目前都是以JSON的格式进行传递的
     }).then(({ data, headers }: resp) => {
         if (headers['content-type'] === 'application/json') {
             const { message } = params

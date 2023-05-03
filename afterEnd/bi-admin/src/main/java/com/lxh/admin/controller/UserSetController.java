@@ -10,11 +10,12 @@ import com.lxh.utils.utils.print;
 import com.lxh.utils.token.GenerateToken;
 import org.apache.shenyu.client.springcloud.annotation.ShenyuSpringCloudClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedOutputStream;
 import java.util.List;
 import java.util.Objects;
 
@@ -64,5 +65,21 @@ public class UserSetController {
         } else {
             return Result.fail(null);
         }
+    }
+
+    @PostMapping("/uploadImage")
+    @ShenyuSpringCloudClient(path = "/uploadImage")
+    @ResponseBody
+    public Result setUserImage(HttpServletRequest request) {
+        MultipartHttpServletRequest params = ((MultipartHttpServletRequest) request);
+        List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
+        String name = params.getParameter("name");
+        System.out.println("name:"+name);
+        String id = params.getParameter("id");
+        System.out.println("id:"+id);
+        System.out.println("files length:"+files.size());
+        MultipartFile file = null;
+        BufferedOutputStream stream = null;
+        return Result.success(200);
     }
 }

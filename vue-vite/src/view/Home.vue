@@ -65,6 +65,12 @@ export default {
                     params: formData
                 }).then(res => {
                     console.log('res', res);
+                    if (res.code == 200) {
+                        ElMessage({
+                            message: '后端获取成功',
+                            type: 'success'
+                        });
+                    }
                 });
             } catch(err) {
                 ElMessage({
