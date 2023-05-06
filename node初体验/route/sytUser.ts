@@ -24,8 +24,7 @@ router.post('/register', (req, res) => {
 router.post('/userImage', fileUpload.any(), (req, res) => {
     const file = req.files[0]
     const params = {
-        name: file.filename,
-        id: 11,
+        filename: file.filename,
         file: new FileBuffer(file.filename, file.path)
     }
     const url = String(credentials.biAdmin.baseUrl) + '/user/uploadImage'

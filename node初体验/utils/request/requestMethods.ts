@@ -59,7 +59,7 @@ const requestAdmin = async <U> (url: string, params: IParams, method: string = '
         if (options.headers['Content-Type'] === 'application/json') {
             sendInfo = JSON.stringify(params)
             req.write(sendInfo)
-        } else if (options.headers['Content-Type'].indexOf('multipart/form-data') > -1) {
+        } else if (options.headers['Content-Type'] && options.headers['Content-Type'].indexOf('multipart/form-data') > -1) {
             Object.entries(params).forEach(([key, value]) => {
                 if (value instanceof FileBuffer) {
                     req.write(httpUtil.structureFileContent(key, value))

@@ -30,7 +30,7 @@ public class GenerateToken {
         claims.setClaim(CONTEXT_USER_ID, userToken.getId());
         claims.setExpirationTimeMinutesInTheFuture(expire == 0 ? 60*24 : expire);
         byte[] bs = toUTF8(JWT_PRIVATE_KEY);
-        System.out.printf("我的编码结果", bs);
+        System.out.println("我的编码结果" + bs);
         Key key =  new HmacKey(bs);
 
         JsonWebSignature jws = new JsonWebSignature();

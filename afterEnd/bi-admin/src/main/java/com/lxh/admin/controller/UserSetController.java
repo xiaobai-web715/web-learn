@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.lxh.dao.UserTokenInfo;
 import com.lxh.mybatis.entity.hospUser;
 import com.lxh.admin.service.impl.UserSetService;
+import com.lxh.utils.image.ImageUtil;
 import com.lxh.utils.result.Result;
 import com.lxh.utils.token.UserToken;
 import com.lxh.utils.utils.print;
@@ -73,13 +74,20 @@ public class UserSetController {
     public Result setUserImage(HttpServletRequest request) {
         MultipartHttpServletRequest params = ((MultipartHttpServletRequest) request);
         List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
-        String name = params.getParameter("name");
-        System.out.println("name:"+name);
-        String id = params.getParameter("id");
-        System.out.println("id:"+id);
-        System.out.println("files length:"+files.size());
-        MultipartFile file = null;
-        BufferedOutputStream stream = null;
+        String filename = params.getParameter("filename");
+//        System.out.println("filename:"+filename);
+//        System.out.println("files length:"+files.size());
+        for (int i = 0; i < files.size(); i++) {
+            MultipartFile file = files.get(i);
+//            获取文件后缀
+            String suffixName = ImageUtil.getImagePath(file);
+            System.out.println("文件后缀名" + suffixName);
+//            生成新文件名
+            String newFileName = ImageUtil.getNewFileName(suffixName);
+            System.out.println("新的文件名" + newFileName);
+//            保存文件
+//            File file = new File(ImageUtil.get)
+        }
         return Result.success(200);
     }
 }
