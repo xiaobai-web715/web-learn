@@ -31,6 +31,9 @@
         </el-form>
         <div class="setTitle">
             科室信息
+            <!-- <CascadeTree :options="parent" /> -->
+            <!-- <LazyCascader :options="parent" /> -->
+            <a-cascader v-model="value" />
             <div class="contentWrapper">
                 <div class="sectionTree">
                     <el-tree 
@@ -62,7 +65,7 @@ import {formatSectionTree} from '@/utils/structureTree';
 import { ElMessage } from 'element-plus';
 export default {
     components: {
-        TitleAss: Title
+        TitleAss: Title,
     },
     setup() {
         const hospList = ref([]);
@@ -79,18 +82,24 @@ export default {
                 }
             ]
         };
+        const parent = ref([]);
         return {
             hospList,
             formInfo,
             sectionList,
             sectionTree,
             rules,
-            hospHavePriv
+            hospHavePriv,
+            parent
         };
     },
     watch: {
         sectionList(newVal, oldVal) {
             newVal.forEach(item => item.label = item.sectionName);
+            const parent = newVal.filter(routeInfo => routeInfo.ancestor == routeInfo.descendant);
+            parent.forEach(item => item.value = item.id);
+            console.log('parent', parent);
+            this.parent = parent;
             const treeList = formatSectionTree(newVal);
             this.sectionTree = treeList;
         }
@@ -133,23 +142,25 @@ export default {
         },
         hospChange(val) {
             // el-tree的default-checked-keys的默认值发生变化并不会清空当前选中并重新赋值(所以要手动清除一下)
-            const rootNode = this.$refs.tree.getNode(this.sectionTree[0].id).parent;
-            console.log('rootNode', rootNode, this.sectionTree[0].id);
-            this.travelNodes(rootNode);
-            // 发起请求获取对应的医院科室信息
-            fetch({
-                url: '/admin/section/getHospSection',
-                method: 'get',
-                params: {
-                    hospId: Number(val)
-                },
-            }).then(res => {
-                console.log('res', res);
-                if (res.code == 200) {
-                    console.log('test', JSON.parse(res.data.sectionList));
-                    this.hospHavePriv = JSON.parse(res.data.sectionList);
-                }
-            });
+            if (this.sectionTree[0]?.id) {
+                const rootNode = this.$refs.tree.getNode(this.sectionTree[0].id).parent;
+                console.log('rootNode', rootNode, this.sectionTree[0].id);
+                this.travelNodes(rootNode);
+                // 发起请求获取对应的医院科室信息
+                fetch({
+                    url: '/admin/section/getHospSection',
+                    method: 'get',
+                    params: {
+                        hospId: Number(val)
+                    },
+                }).then(res => {
+                    console.log('res', res);
+                    if (res.code == 200) {
+                        console.log('test', JSON.parse(res.data.sectionList));
+                        this.hospHavePriv = JSON.parse(res.data.sectionList);
+                    }
+                });
+            }
         },
         submit() {
             this.$refs['formTarget'].validate((pass) => {
