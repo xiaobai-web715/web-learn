@@ -8,10 +8,10 @@
  * }
  */
 import axios from "axios";
-import {ElMessage} from 'element-plus';
+import { ElMessage } from 'element-plus';
 const service = axios.create({
     baseURL: '/api', //请求接口的时候会自动拼上
-    headers:{}, //可以定义请求的头部信息
+    headers: {}, //可以定义请求的头部信息
     timeout: 10000, //请求超时时间
 });
 
@@ -20,16 +20,19 @@ const service = axios.create({
  */
 service.interceptors.request.use(config => {
     // 这里面目前看来可以向请求头当中添加token,sig等后端需要的头部信息
-    // console.log('config', config);
+    if (config.url?.indexOf('127.0.0.1') > -1) {
+        config.baseURL = ''
+    }
+    console.log('config', config);
     return config;
 });
 /**
  * 响应拦截器
  */
 service.interceptors.response.use(response => {
-    if(response.status === 200) {
+    if (response.status === 200) {
         return response.data;
-    } else if(response.status === 403) {
+    } else if (response.status === 403) {
         // 可以提示当前账号没有相应的权限
     } else {
         // 这里就提示相应的返回信息

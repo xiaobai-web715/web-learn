@@ -5,6 +5,8 @@ import com.lxh.dao.UserTokenInfo;
 import com.lxh.mybatis.entity.hospUser;
 import com.lxh.admin.service.impl.UserSetService;
 import com.lxh.utils.image.ImageUtil;
+import com.lxh.utils.image.UpLoadFileState;
+import com.lxh.utils.image.UpLoadFileCodeEnum;
 import com.lxh.utils.result.Result;
 import com.lxh.utils.token.UserToken;
 import com.lxh.utils.utils.print;
@@ -17,6 +19,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedOutputStream;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -74,20 +79,38 @@ public class UserSetController {
     public Result setUserImage(HttpServletRequest request) {
         MultipartHttpServletRequest params = ((MultipartHttpServletRequest) request);
         List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
-        String filename = params.getParameter("filename");
+//        String filename = params.getParameter("filename");
 //        System.out.println("filename:"+filename);
-//        System.out.println("files length:"+files.size());
+        System.out.println("files length:"+files.size());
+        UpLoadFileState[] UpLoadFileStateList = new UpLoadFileState[files.size()];
         for (int i = 0; i < files.size(); i++) {
-            MultipartFile file = files.get(i);
+            UpLoadFileState fileUpInfo;
+            if (!files.isEmpty()) {
+                MultipartFile file = files.get(i);
 //            获取文件后缀
-            String suffixName = ImageUtil.getImagePath(file);
-            System.out.println("文件后缀名" + suffixName);
+                String suffixName = ImageUtil.getImagePath(file);
+                System.out.println("文件后缀名" + suffixName);
 //            生成新文件名
-            String newFileName = ImageUtil.getNewFileName(suffixName);
-            System.out.println("新的文件名" + newFileName);
+                String newFileName = ImageUtil.getNewFileName(suffixName);
+                System.out.println("新的文件名" + newFileName);
+//            获取文件保存路径
+                File fileDest = new File(ImageUtil.getNewImagePath(newFileName));
+                if (!fileDest.getParentFile().exists()) {
+                    // 检测上级文件是否存在，不存在新建文件夹
+                    fileDest.getParentFile().mkdirs();
+                }
 //            保存文件
-//            File file = new File(ImageUtil.get)
+                Boolean state = ImageUtil.saveImage(ImageUtil.getNewImagePath(newFileName), file);
+                if (state) {
+                    fileUpInfo = new UpLoadFileState().setUpLoadFileState(file.getOriginalFilename(), UpLoadFileCodeEnum.SUCCESS.getCode());
+                } else {
+                    fileUpInfo = new UpLoadFileState().setUpLoadFileState(file.getOriginalFilename(), UpLoadFileCodeEnum.FAIL.getCode());
+                }
+            } else {
+                fileUpInfo = new UpLoadFileState().setUpLoadFileState("", UpLoadFileCodeEnum.EMPTY.getCode());
+            }
+            Arrays.fill(UpLoadFileStateList, fileUpInfo);
         }
-        return Result.success(200);
+        return Result.success(UpLoadFileStateList);
     }
 }

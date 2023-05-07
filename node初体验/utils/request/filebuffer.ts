@@ -4,7 +4,7 @@ class FileBuffer {
     filepath: string
     buffer: number[]
     getBuffer: () => number[]
-    constructor (filename: string, filepath: string) {
+    constructor(filename: string, filepath: string) {
         this.filename = filename
         this.filepath = filepath
         this.buffer = null
@@ -19,4 +19,4 @@ FileBuffer.prototype.getBuffer = function (): number[] {
 
 module.exports = FileBuffer
 
-export {}
+export { }

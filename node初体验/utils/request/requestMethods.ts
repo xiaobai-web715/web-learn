@@ -14,7 +14,7 @@ interface resp {
 interface IParams {
     message: string
 }
-const requestAdmin = async <U> (url: string, params: IParams, method: string = 'POST', optionBase: U): Promise<any> => {
+const requestAdmin = async <U>(url: string, params: IParams, method: string = 'POST', optionBase: U): Promise<any> => {
     const options = {
         host: credentials.biAdmin.host,
         port: credentials.biAdmin.port,
@@ -61,6 +61,7 @@ const requestAdmin = async <U> (url: string, params: IParams, method: string = '
             req.write(sendInfo)
         } else if (options.headers['Content-Type'] && options.headers['Content-Type'].indexOf('multipart/form-data') > -1) {
             Object.entries(params).forEach(([key, value]) => {
+                console.log('key', key);
                 if (value instanceof FileBuffer) {
                     req.write(httpUtil.structureFileContent(key, value))
                 } else {
@@ -108,7 +109,7 @@ const requestAdmin = async <U> (url: string, params: IParams, method: string = '
         console.log('err', err)
     })
 }
-export {}
+export { }
 module.exports = {
     requestAdmin
 }
