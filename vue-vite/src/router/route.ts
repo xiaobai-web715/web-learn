@@ -12,7 +12,6 @@ function generateRouter (routeTree: IRoute[]):RouteRecordRaw[] {
             path: route.path,
             name: route.name,
             // component: () => import(`/* webpackChunkName: "${route.name}" */@/view${route.filePath}.vue`),
-            component: modules[`../view${route.filePath}.vue`],
             children: [],
             props: {
                 title: route.title,
@@ -21,6 +20,10 @@ function generateRouter (routeTree: IRoute[]):RouteRecordRaw[] {
                 hidden: route.filePath?.indexOf('add') > -1
             },
         };
+        if (route.filePath) {
+            Object.assign(_route, {component: modules[`../view${route.filePath}.vue`],});
+            // Object.assign(_route, {component: () => import(`../view${route.filePath}.vue`)});
+        }
         if(route.children) {
             _route.children = generateRouter(route.children);
         } 

@@ -22,9 +22,9 @@ export default {
     },
     computed: {
         ...mapState({
-            'routeList': state => state.routeTree.filter(item => item.path === '/')[0].children.filter(item => item.name !== 'home')
+            'routeList': state => ((state.routeTree.filter(item => item.path === '/')[0] || []).children || []).filter(item => item.path !== 'home')
         })
-    }
+    },
 };
 </script>
 <style scoped lang="scss">

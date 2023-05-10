@@ -33,7 +33,7 @@
             科室信息
             <!-- <CascadeTree :options="parent" /> -->
             <!-- <LazyCascader :options="parent" /> -->
-            <a-cascader v-model="value" />
+            <!-- <a-cascader v-model="value" /> -->
             <div class="contentWrapper">
                 <div class="sectionTree">
                     <el-tree 

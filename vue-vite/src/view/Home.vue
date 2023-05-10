@@ -3,15 +3,26 @@
         <TitleAss title="用户信息" />
         <div class="useInfo">
             <div class="useInfoLeft">
-                <input class="upImage" type="file" accept="image/*" @change="chooseImage">
+                <input
+                    class="upImage"
+                    type="file"
+                    accept="image/*"
+                    @change="chooseImage"
+                >
                 <template v-if="!imageInfo.imageUrl">
-                    <img src="./img/camera.jpeg" class="negative">
+                    <img
+                        src="./img/camera.jpeg"
+                        class="negative"
+                    >
                     <div class="imgChooseTip">
                         选择图片
                     </div>
                 </template>
                 <template v-else>
-                    <img :src="imageInfo.imageUrl" class="userImage">
+                    <img
+                        :src="imageInfo.imageUrl"
+                        class="userImage"
+                    >
                 </template>
             </div>
             <div class="useInfoRight" />

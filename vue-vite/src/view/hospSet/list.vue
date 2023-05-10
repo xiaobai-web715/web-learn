@@ -61,6 +61,12 @@
                         导出数据
                     </el-button>
                 </el-form-item>
+                <!-- <el-form-item>
+                    <el-button
+                        type="primary"
+                        @click="gotoHome"
+                    />
+                </el-form-item> -->
             </el-form>
         </div>
         <div>
@@ -202,6 +208,9 @@ export default {
         Promise.all(new Array(6).fill(0).map(item => this.getHospList())).then(args => {console.log('args', args);});
     },
     methods: {
+        // gotoHome() {
+        //     this.$router.push({name: 'home'});
+        // },
         addHospInfo(id) {
             this.$router.push({path: '/hospSet/add', query: {id}});
         },

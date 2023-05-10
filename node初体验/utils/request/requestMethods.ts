@@ -61,7 +61,6 @@ const requestAdmin = async <U>(url: string, params: IParams, method: string = 'P
             req.write(sendInfo)
         } else if (options.headers['Content-Type'] && options.headers['Content-Type'].indexOf('multipart/form-data') > -1) {
             Object.entries(params).forEach(([key, value]) => {
-                console.log('key', key);
                 if (value instanceof FileBuffer) {
                     req.write(httpUtil.structureFileContent(key, value))
                 } else {

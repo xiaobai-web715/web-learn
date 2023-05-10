@@ -6,10 +6,10 @@
         class="disapper"
     >
         <div
-            v-for="({children, props},index) in menus"
+            v-for="({children = [], props = {}, name},index) in menus"
             :key="index"
             :class="'baseStyle ' + props.className"
-            @click.stop="() => {navOperate(children, props, index)}"
+            @click.stop="() => {navOperate(children, name, index)}"
         >
             <template v-if="!props.hidden">
                 <div class="title menu_icon">
@@ -94,7 +94,6 @@ export default {
         }
     },
     mounted() {
-        console.log('menu的长度', this.menus.length , this.menus[0].children.length);
         // 这里的铺【判断逻辑修改一下（最底层的判断应该是我传入的menus列表中得每一个都没有children了）
         const result = this.menus.every(item => (item.children || []).length === 0);
         if (result) {
@@ -102,9 +101,10 @@ export default {
         }
     },
     methods: {
-        navOperate(childList, info, index) {
+        navOperate(childList, name, index) {
             if (!Array.isArray(childList) || childList.length === 0 ) {
-                this.$router.push(info.filePath);
+                // this.$router.push(info.filePath);
+                this.$router.push({name});
             } else {
                 const dom = this.menuDom[index].$refs['menuBox'];
                 if (this.menuOffState) {
