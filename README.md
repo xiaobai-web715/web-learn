@@ -122,3 +122,14 @@ vue3 对应的 el-ui 的引入方式变成了 el-plus,对应的 ui 组件的引�
 路由嵌套子路由 => 因为只是通过嵌套来实现分层级,父级路由并没有需要显示的内容,但仍然需要给与一个 component 以及文件来内嵌一个<router-view/>来使用
 
 动态加载路由的时候,需要使用 let modules = import.meta.glob('../\*_/_.vue');优先获取动态路由对应的页面,然后再给 component 赋值 modules[`../view${route.filePath}.vue`]对应的文件
+
+### 还需完成的想法
+
+token 如何定时失效(接口请求如何做到鉴权)
+keepAlive 何时进行缓存何时不进行缓存(来提升页面的初始加载)
+
+node 层高并发下日志文件的写入处理,以及日志文件库的使用
+node 对 form-data 格式的类型类型组装 body,服务端解析字节长度出现问题
+pm2 的使用
+
+BFF 层实验 微前端 qiankun 学习
