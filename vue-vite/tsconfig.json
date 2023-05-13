@@ -16,11 +16,12 @@
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
-    "allowJs": true, //允许script 不加lang='ts'
+    // "allowJs": true, //允许script 不加lang='ts'
+    // "allowSyntheticDefaultImports": true
   },
   "vueCompilerOptions": {
     "experimentalCompatMode": 3 //配置支持的vue版本
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/**/*.jsx"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/**/*.jsx", "vite.config.ts"],
+  // "references": [{ "path": "./tsconfig.node.json" }]
 }

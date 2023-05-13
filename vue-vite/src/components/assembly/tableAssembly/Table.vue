@@ -57,8 +57,9 @@
         @current-change="currentChange"
     />
 </template>
-<script>
+<script lang="ts">
 import { ref } from 'vue';
+declare const IDataList: () => []
 export default {
     props: {
         dataList: {

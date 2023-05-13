@@ -34,11 +34,6 @@ public class ImageUtil {
         try{
             // 保存文件（当前文件路径必须存在否则报错）
             byte[] bytes = file.getBytes();
-//            for (int i = 0; i < bytes.length; ++i) {
-//                if (bytes[i] < 0) {// 调整异常数据
-//                    bytes[i] += 256;
-//                }
-//            }
             System.out.println(bytes.length);
             BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(
                     new File(filePath)));//设置文件路径及名字

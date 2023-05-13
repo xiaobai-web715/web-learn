@@ -25,9 +25,9 @@ router.post('/userImage', fileUpload.any(), (req, res) => {
     const file = req.files[0]
     const params = {
         // filename: file.filename,
-        file: new FileBuffer(file.filename, file.path)
+        file: new FileBuffer(file)
     }
-    console.log('params', params.file.getBuffer().length);
+    console.log('params', params.file.getBuffer().length)
     const url = String(credentials.biAdmin.baseUrl) + '/user/uploadImage'
     requestAdmin(url, params, 'POST', { headers: { 'Content-Type': 'multipart/form-data' } }).then(resq => {
         console.log('请求文件的resq', resq)

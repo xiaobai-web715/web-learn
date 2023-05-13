@@ -6,11 +6,11 @@ module.exports = {
         // 'plugin:vue/recommended',
     ],
     parserOptions: {
-        "parser": "@typescript-eslint/parser",
+        // "parser": "@typescript-eslint/parser",
         "ecmaVersion": 2018, //代表兼容的es语法
         "sourceType": "module",
-        // "project": 'tsconfig.json',
-        // "tsconfigRootDir": __dirname
+        "project": ['tsconfig.json'],
+        "tsconfigRootDir": __dirname
     },
     rules:  {
         // 'vue/no-v-for-template-key-on-child': 'off',

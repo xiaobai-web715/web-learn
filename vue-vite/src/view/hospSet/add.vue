@@ -74,7 +74,7 @@
         </div>
     </div>
 </template>
-<script>
+<script lang="ts">
 import {ref} from 'vue';
 import {status} from './enum';
 import request from '@/http/index';

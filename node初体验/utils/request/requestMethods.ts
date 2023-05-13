@@ -1,3 +1,4 @@
+import IHttpUtil from './httpUtil'
 const http = require('http')
 const logger = require('../logger/index')
 const { credentials } = require('../../config/config')
@@ -36,7 +37,7 @@ const requestAdmin = async <U>(url: string, params: IParams, method: string = 'P
     }
     return await new Promise((resolve, reject) => {
         const buffer = []
-        let httpUtil = null
+        let httpUtil: IHttpUtil = null
         if (options.headers['Content-Type'] === 'multipart/form-data') {
             httpUtil = new HttpUtil()
             // options.headers['Content-Length'] = 53324
@@ -60,19 +61,23 @@ const requestAdmin = async <U>(url: string, params: IParams, method: string = 'P
             sendInfo = JSON.stringify(params)
             req.write(sendInfo)
         } else if (options.headers['Content-Type'] && options.headers['Content-Type'].indexOf('multipart/form-data') > -1) {
+            let writeContent: Array<string | Buffer> = []
             Object.entries(params).forEach(([key, value]) => {
                 if (value instanceof FileBuffer) {
-                    req.write(httpUtil.structureFileContent(key, value))
+                    writeContent = writeContent.concat(httpUtil.structureFileContent(key, value))
                 } else {
-                    req.write(httpUtil.structureContent(key, value))
+                    writeContent = writeContent.concat(httpUtil.structureContent(key, value))
                 }
             })
-            req.write(`\r\n--${httpUtil.boundary}--`)
+            const contentLength: number = httpUtil.contentLength + Buffer.byteLength(`--${httpUtil.boundary}--`)
+            req.setHeader('Content-Length', contentLength)
+            console.log('我是请求体的长度', contentLength)
+            writeContent.forEach(item => {
+                req.write(item)
+            })
+            req.write(`--${httpUtil.boundary}--`)
         }
         req.end()
-
-        // console.log('options.headers', options)
-        // req.write(JSON.stringify(params || {})) // 目前都是以JSON的格式进行传递的
     }).then(({ data, headers }: resp) => {
         if (headers['content-type'] === 'application/json') {
             const { message } = params

@@ -7,9 +7,11 @@
         />
     </header>
 </template>
-<script>
+<script lang="ts">
 import {mapState} from 'vuex';
 import MenuTable from '@/components/menu/menu.vue';
+import {IRouterRecordRaw} from '@/router/route';
+import {IState} from '@/store/state';
 export default {
     components: {
         MenuTable,
@@ -22,7 +24,7 @@ export default {
     },
     computed: {
         ...mapState({
-            'routeList': state => ((state.routeTree.filter(item => item.path === '/')[0] || []).children || []).filter(item => item.path !== 'home')
+            'routeList': (state: IState) => ((state.routeTree.filter((item : IRouterRecordRaw) => item.path === '/')[0] || []).children || []).filter((item : IRouterRecordRaw) => item.path !== 'home')
         })
     },
 };

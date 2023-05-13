@@ -9,6 +9,9 @@
         "module": "commonJs", //TypeScript文件中的module，采用何种方式实现
         // "strictNullChecks": true
     },
+    "types": [
+        "node"
+    ],
     "include": [
         "./"
     ],

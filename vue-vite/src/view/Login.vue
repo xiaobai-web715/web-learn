@@ -28,7 +28,7 @@
         </div>
     </div>
 </template>
-<script>
+<script lang="ts">
 // setup模式下可以在export default{}使用useRouter以及useStore生成全局变量,但组合式情况下不生效
 import {useRouter} from 'vue-router';
 import {ref} from 'vue';

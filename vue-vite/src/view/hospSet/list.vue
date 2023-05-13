@@ -99,7 +99,7 @@
         </template>
     </el-dialog>
 </template>
-<script>
+<script lang="ts">
 import Table from '@/components/assembly/tableAssembly/Table.vue';
 import createTemplate from '@/utils/importInfos/importExcel';
 import Title from '@/components/assembly/pageTopTitle/Title.vue';

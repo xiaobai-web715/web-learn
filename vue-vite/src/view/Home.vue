@@ -49,6 +49,7 @@ export default {
     },
     methods: {
         chooseImage(e) {
+            console.log('e', [e]);
             try {
                 const imageBuffer = e.target.files[0];
                 console.log('imageBuffer', imageBuffer);
@@ -58,6 +59,7 @@ export default {
                 const formData = new FormData();
                 // imageBuffer.baseName = encodeURI(imageBuffer.name);
                 formData.append('file', imageBuffer);
+                formData.append('uid', sessionStorage.getItem('id') || '');
                 // 用FormData构造的请求默认的content-type是multipart/form-data
                 // url: 'http://127.0.0.1:8201/admin/hosp/user/uploadImage', 跳过node层直接请求
                 fetch({

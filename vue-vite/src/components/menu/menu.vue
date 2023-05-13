@@ -6,7 +6,7 @@
         class="disapper"
     >
         <div
-            v-for="({children = [], props = {}, name},index) in menus"
+            v-for="({children, props, name},index) in menus"
             :key="index"
             :class="'baseStyle ' + props.className"
             @click.stop="() => {navOperate(children, name, index)}"
@@ -17,7 +17,7 @@
                         v-if="children.length > 0 && iconList[index]"
                         class="icon"
                     >
-                        <Icon :icon-name="iconList[index]" />
+                        <Icon :iconName="iconList[index]" />
                     </div>
                     {{ props.title }}
                     <div
@@ -26,13 +26,13 @@
                     >
                         <!-- <ArrowUp v-if="menuOpen" />
                         <ArrowDown v-else /> -->
-                        <Icon :icon-name="menuOpen ? 'ArrowUp' : 'ArrowDown'" />
+                        <Icon :iconName="menuOpen ? 'ArrowUp' : 'ArrowDown'" />
                     </div>
                 </div>
 
                 <div v-if="Array.isArray(children) && children.length > 0">
                     <Menu
-                        :ref="(node) => {
+                        :ref="(node: Element) => {
                             if (node) {
                                 menuDom[index] = node;
                                 canGetHeight[index] = false;
@@ -46,10 +46,13 @@
         </div>
     </div>
 </template>
-<script>
+<script lang="ts">
 import { useRouter } from 'vue-router';
-import Icon from '@/components/jsx/icon.jsx';
-// import { ElementPlus, ArrowUp, ArrowDown } from '@element-plus/icons-vue';
+// import {Vue} from 'vue-property-decorator';
+import Icon from '@/components/jsx/icon';
+import {IRouterRecordRaw} from '@/router/route';
+declare const IconList: () => string[]
+declare const Menus: () => IRouterRecordRaw[]
 const router = useRouter();
 export default {
     components: {
@@ -58,7 +61,7 @@ export default {
     props: {
         menus: {
             // 传入的菜单表
-            type: Array,
+            type: Menus,
             default: () => [],
         },
         canGetHeightFn: {
@@ -66,16 +69,18 @@ export default {
             default: () => {}
         },
         iconList: {
-            type: Array,
+            type: IconList,
             default: () => []
         }
     },
     data() {
         console.log('iconList', this.iconList);
+        const menuDom: Element[] = []
+        const canGetHeight: boolean[] = []
         return {
             router,
-            menuDom: [],
-            canGetHeight: [],
+            menuDom,
+            canGetHeight,
             menuHeight: [],
             menuOffState: true,
             menuOpen: false
@@ -85,7 +90,7 @@ export default {
         canGetHeight: {
             handler(newVal, oldVal) {
                 console.log('newVal', newVal);
-                const result = newVal.every(item => item);
+                const result = newVal.every((item:boolean) => item);
                 if (result) {
                     this.canGetHeightFn();
                 }
@@ -95,13 +100,13 @@ export default {
     },
     mounted() {
         // 这里的铺【判断逻辑修改一下（最底层的判断应该是我传入的menus列表中得每一个都没有children了）
-        const result = this.menus.every(item => (item.children || []).length === 0);
+        const result = this.menus.every((item:IRouterRecordRaw) => (item.children || []).length === 0);
         if (result) {
             this.canGetHeightFn();
         }
     },
     methods: {
-        navOperate(childList, name, index) {
+        navOperate(childList: IRouterRecordRaw[], name: string, index: number) {
             if (!Array.isArray(childList) || childList.length === 0 ) {
                 // this.$router.push(info.filePath);
                 this.$router.push({name});
@@ -126,7 +131,7 @@ export default {
                 this.menuOffState = !this.menuOffState;
             }
         },
-        getChildInfo(index) {
+        getChildInfo(index: number) {
             this.canGetHeight[index] = true;
             this.menuHeight[index] = this.menuDom[index].$refs['menuBox'].clientHeight;
             this.menuDom[index].$refs['menuBox'].style.height = 0; //能够获取高度的元素在获取高度之后进行关闭

@@ -5,10 +5,18 @@ import {RouteRecordRaw, Router} from 'vue-router';
 import {Store} from 'vuex';
 import {dynamicRouter} from '@/router/index';
 
+export interface IRouterRecordRaw{
+    path: string,
+    name: string,
+    children: IRouterRecordRaw[],
+    props: {title: string, filePath: string, className: string | undefined, hidden: boolean},
+    component?: () => Promise<unknown>
+}
+
 let modules = import.meta.glob('../**/*.vue');
-function generateRouter (routeTree: IRoute[]):RouteRecordRaw[] {
+function generateRouter (routeTree: IRoute[]):IRouterRecordRaw[] {
     let newRoutes = routeTree.map(route => {
-        let _route:RouteRecordRaw = {
+        let _route:IRouterRecordRaw = {
             path: route.path,
             name: route.name,
             // component: () => import(`/* webpackChunkName: "${route.name}" */@/view${route.filePath}.vue`),

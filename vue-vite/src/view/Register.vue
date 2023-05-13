@@ -37,14 +37,19 @@
         </div>
     </div>
 </template>
-<script>
+<script lang="ts">
 import {ref} from 'vue';
 import request from '@/http/index';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
+declare const IRegisterInfo: {
+    user: string,
+    password: string,
+    againPassword: string
+}
 export default {
     setup() {
-        const registerInfo = ref({});
+        const registerInfo = ref(IRegisterInfo);
         const router = useRouter();
         return {
             registerInfo,

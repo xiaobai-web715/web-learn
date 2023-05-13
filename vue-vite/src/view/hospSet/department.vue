@@ -57,7 +57,7 @@
         </div>
     </div>
 </template>
-<script>
+<script lang="ts">
 import fetch from '@/http/index';
 import { ref } from 'vue';
 import Title from '@/components/assembly/pageTopTitle/Title.vue';
