@@ -51,8 +51,8 @@ import { useRouter } from 'vue-router';
 // import {Vue} from 'vue-property-decorator';
 import Icon from '@/components/jsx/icon';
 import {IRouterRecordRaw} from '@/router/route';
-declare const IconList: () => string[]
-declare const Menus: () => IRouterRecordRaw[]
+// declare const IconList: () => string[]
+// declare const Menus: () => IRouterRecordRaw[]
 const router = useRouter();
 export default {
     components: {
@@ -61,7 +61,7 @@ export default {
     props: {
         menus: {
             // 传入的菜单表
-            type: Menus,
+            type: Array,
             default: () => [],
         },
         canGetHeightFn: {
@@ -69,7 +69,7 @@ export default {
             default: () => {}
         },
         iconList: {
-            type: IconList,
+            type: Array,
             default: () => []
         }
     },

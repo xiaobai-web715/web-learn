@@ -21,16 +21,28 @@ router.post('/register', (req, res) => {
         res.send(resq)
     })
 })
+router.post('/getUserInfo', (req, res) => {
+    const params = req.body
+    const baseUrl: string = credentials.biAdmin.baseUrl
+    const url: string = baseUrl + '/user/getUserInfo'
+    console.log('params...', params)
+    requestAdmin(url, params, 'POST').then(resq => {
+        console.log('req', resq)
+        res.send(resq)
+    })
+})
 router.post('/userImage', fileUpload.any(), (req, res) => {
     const file = req.files[0]
+    const otherParams = req.body
     const params = {
         // filename: file.filename,
-        file: new FileBuffer(file)
+        file: new FileBuffer(file),
+        uid: otherParams.uid
     }
-    console.log('params', params.file.getBuffer().length)
+    console.log('otherParams', otherParams)
     const url = String(credentials.biAdmin.baseUrl) + '/user/uploadImage'
     requestAdmin(url, params, 'POST', { headers: { 'Content-Type': 'multipart/form-data' } }).then(resq => {
-        console.log('请求文件的resq', resq)
+        // console.log('请求文件的resq', resq)
         res.send(resq)
     })
 })

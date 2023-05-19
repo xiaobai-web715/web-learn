@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.lxh.dao.UserTokenInfo;
 import com.lxh.mybatis.entity.hospUser;
 import com.lxh.admin.service.impl.UserSetService;
+import com.lxh.admin.mapper.hospUserInfoMapper;
+import com.lxh.mybatis.entity.hospUserInfo;
 import com.lxh.utils.image.ImageUtil;
 import com.lxh.utils.image.UpLoadFileState;
 import com.lxh.utils.image.UpLoadFileCodeEnum;
@@ -31,6 +33,8 @@ import java.util.Objects;
 public class UserSetController {
     @Autowired
     private UserSetService userSetService;
+    @Autowired
+    private hospUserInfoMapper useSetInfo;
 
     @PostMapping("/login")
     @ShenyuSpringCloudClient(path = "/login")
@@ -45,7 +49,7 @@ public class UserSetController {
             hospUser useInfoTarget = list.get(0);
             String userPassword = useInfoTarget.getPassword();
             String userName = useInfoTarget.getUser();
-            Long uid = useInfoTarget.getId();
+            int uid = useInfoTarget.getId();
             if (Objects.equals(password, userPassword)) {
 //                用户登录密码与数据库存储相同
                 UserToken userToken = new UserToken().setUserInfo(uid, userName);
@@ -72,6 +76,16 @@ public class UserSetController {
             return Result.fail(null);
         }
     }
+    @PostMapping("/getUserInfo")
+    @ShenyuSpringCloudClient(path = "/getUserInfo")
+//    这里前端部分最好改成xxxx的格式
+    public Result getUserInfo(@RequestParam("uid") int uid) {
+        hospUser info = userSetService.getById(uid);
+        hospUserInfo imageInfo = useSetInfo.selectById(uid);
+        System.out.println("info" + info);
+        System.out.println("imageInfo" + imageInfo);
+        return Result.success(11);
+    }
 
     @PostMapping("/uploadImage")
     @ShenyuSpringCloudClient(path = "/uploadImage")
@@ -79,8 +93,9 @@ public class UserSetController {
     public Result setUserImage(HttpServletRequest request) {
         MultipartHttpServletRequest params = ((MultipartHttpServletRequest) request);
         List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
-//        String filename = params.getParameter("filename");
-//        System.out.println("filename:"+filename);
+        String userId = params.getParameter("uid");
+        int uid = Integer.parseInt(userId.trim());
+        System.out.printf("uid" + uid);
         System.out.println("files length:"+files.size());
         UpLoadFileState[] UpLoadFileStateList = new UpLoadFileState[files.size()];
         for (int i = 0; i < files.size(); i++) {
@@ -95,6 +110,7 @@ public class UserSetController {
                 System.out.println("新的文件名" + newFileName);
 //            获取文件保存路径
                 File fileDest = new File(ImageUtil.getNewImagePath(newFileName));
+                System.out.println("fileDest" + fileDest.getPath());
                 if (!fileDest.getParentFile().exists()) {
                     // 检测上级文件是否存在，不存在新建文件夹
                     fileDest.getParentFile().mkdirs();
@@ -102,6 +118,11 @@ public class UserSetController {
 //            保存文件
                 Boolean state = ImageUtil.saveImage(ImageUtil.getNewImagePath(newFileName), file);
                 if (state) {
+                    hospUserInfo insertInfo = new hospUserInfo();
+                    insertInfo.setUid(uid);
+                    insertInfo.setHeaderImage(fileDest.getPath());
+                    System.out.println("insertInfo" + insertInfo);
+                    useSetInfo.insert(insertInfo);
                     fileUpInfo = new UpLoadFileState().setUpLoadFileState(file.getOriginalFilename(), UpLoadFileCodeEnum.SUCCESS.getCode());
                 } else {
                     fileUpInfo = new UpLoadFileState().setUpLoadFileState(file.getOriginalFilename(), UpLoadFileCodeEnum.FAIL.getCode());

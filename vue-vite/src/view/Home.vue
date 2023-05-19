@@ -38,6 +38,14 @@ export default {
     components: {
         TitleAss: Title
     },
+    mounted(){
+        const uid = window.sessionStorage.getItem('id');
+        fetch({
+            url: '/admin/user/getUserInfo',
+            method: 'post',
+            params: {uid: Number(uid)}
+        }).then(res => {console.log('res', res)})
+    },
     setup() {
         const imageInfo = ref({
             imageFile: null,

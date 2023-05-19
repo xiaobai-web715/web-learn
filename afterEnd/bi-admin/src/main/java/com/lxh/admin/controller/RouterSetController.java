@@ -1,23 +1,16 @@
 package com.lxh.admin.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.lxh.admin.mapper.hospRouterMapper;
 import com.lxh.joint.Router;
-import com.lxh.mybatis.entity.hospRouter;
 import com.lxh.admin.service.impl.RouterSetService;
+import com.lxh.admin.mapper.hospRouterMapper;
 import com.lxh.utils.result.Result;
-import com.lxh.utils.utils.print;
 import org.apache.shenyu.client.springcloud.annotation.ShenyuSpringCloudClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedOutputStream;
 import java.util.List;
 
 @RestController

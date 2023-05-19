@@ -42,14 +42,18 @@ import {ref} from 'vue';
 import request from '@/http/index';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
-declare const IRegisterInfo: {
+interface IRegisterInfo {
     user: string,
     password: string,
     againPassword: string
 }
 export default {
     setup() {
-        const registerInfo = ref(IRegisterInfo);
+        const registerInfo = ref<IRegisterInfo>({
+            user: '',
+            password: '',
+            againPassword: ''
+        });
         const router = useRouter();
         return {
             registerInfo,

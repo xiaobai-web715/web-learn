@@ -9,9 +9,9 @@ public class UserToken {
                 '}';
     }
 
-    private Long id;
+    private int id;
     private String username;
-    public UserToken setUserInfo(Long uid, String username) {
+    public UserToken setUserInfo(int uid, String username) {
         this.id = uid;
         this.username = username;
         return this;
@@ -19,7 +19,7 @@ public class UserToken {
     public String getUsername() {
         return username;
     }
-    public Long getId() {
+    public int getId() {
         return id;
     }
 }

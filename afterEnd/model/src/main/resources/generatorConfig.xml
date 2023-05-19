@@ -6,8 +6,8 @@
 <!--https://blog.csdn.net/isea533/article/details/42102297-->
 <generatorConfiguration>
     <!-- 数据库驱动:选择你的本地硬盘上面的数据库驱动包-->
-<!--    <classPathEntry  location="E:\MySQL\Connector-J-8.0\mysql-connector.jar"/>-->
-    <classPathEntry  location="D:\MySQL\Connector-J-8.0\mysql-connector-j-8.0.31.jar"/>
+    <classPathEntry  location="E:\MySQL\Connector-J-8.0\mysql-connector.jar"/>
+<!--    <classPathEntry  location="D:\MySQL\Connector-J-8.0\mysql-connector-j-8.0.31.jar"/>-->
     <context id="DB2Tables"  targetRuntime="MyBatis3" defaultModelType="flat">
         <!--<context>元素用于指定生成一组对象的环境。例如指定要连接的数据库，要生成对象的类型和要处理的数据库中的表。-->
         <!--必选属性id用来确定唯一的content元素-->
@@ -102,6 +102,6 @@
 <!--                属性: tableName:指定要生成的表名，可以使用SQL通配符匹配多个表。-->
 <!--            &ndash;&gt;-->
 <!--        </table>-->
-        <table tableName="hosp_priv" domainObjectName="hospPriv"></table>
+        <table tableName="hosp_router" domainObjectName="hospRouter"></table>
     </context>
 </generatorConfiguration>
