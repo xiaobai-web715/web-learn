@@ -26,7 +26,7 @@ router.post('/getUserInfo', (req, res) => {
     const baseUrl: string = credentials.biAdmin.baseUrl
     const url: string = baseUrl + '/user/getUserInfo'
     console.log('params...', params)
-    requestAdmin(url, params, 'POST').then(resq => {
+    requestAdmin(url, params, 'POSTUrlencoded').then(resq => {
         console.log('req', resq)
         res.send(resq)
     })
@@ -41,7 +41,7 @@ router.post('/userImage', fileUpload.any(), (req, res) => {
     }
     console.log('otherParams', otherParams)
     const url = String(credentials.biAdmin.baseUrl) + '/user/uploadImage'
-    requestAdmin(url, params, 'POST', { headers: { 'Content-Type': 'multipart/form-data' } }).then(resq => {
+    requestAdmin(url, params, 'POSTFormData').then(resq => {
         // console.log('请求文件的resq', resq)
         res.send(resq)
     })

@@ -4,8 +4,8 @@ interface IHttpUtil {
     contentLength: number
     constructor: () => void
     generateBoundary: () => string
-    structureFileContent: (key: string, buffer: IFileBuffer) => string
-    structureContent: (key: string, val: string) => string
+    structureFileContent: (key: string, buffer: IFileBuffer) => Array<string | Buffer[]>
+    structureContent: (key: string, val: any) => string[]
 }
 class HttpUtil {
     boundary: string

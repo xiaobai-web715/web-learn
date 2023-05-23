@@ -1,4 +1,5 @@
 import IHttpUtil from './httpUtil'
+import IFileBuffer from './filebuffer'
 const http = require('http')
 const logger = require('../logger/index')
 const { credentials } = require('../../config/config')
@@ -13,13 +14,71 @@ interface resp {
 }
 // 目前使用泛型想从函数调用处来声明类型，但是会报非类型函数调用不能使用类型参数的警告（所以先使用这种方式来替代）
 interface IParams {
-    message: string
+    [key: string]: string | number | IFileBuffer
+}
+interface IOptions {
+    path: string
+    host: number
+    port: number
+    method: string
+    headers: { [key: string]: any }
+}
+let httpUtil: IHttpUtil = null
+const structure = {
+    POST: (options) => {
+        options.headers['Content-Type'] = 'application/json'
+        return options
+    },
+    POSTFormData: (options) => {
+        httpUtil = new HttpUtil()
+        options.headers['Content-Type'] = `multipart/form-data; boundary=${httpUtil.boundary}`
+        options.method = 'POST'
+        return options
+    },
+    POSTUrlencoded: (options) => {
+        options.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        options.method = 'POST'
+        return options
+    },
+    GET: (options: IOptions, params) => {
+        options.path += String(objToUrl(params))
+        return options
+    }
+}
+const requestBody = {
+    POST: (req, params) => {
+        const sendInfo = JSON.stringify(params)
+        req.write(sendInfo)
+    },
+    POSTFormData: (req, params: IParams) => {
+        let writeContent: Array<string | Buffer[]> = []
+        Object.entries(params).forEach(([key, value]) => {
+            if (value instanceof FileBuffer) {
+                // 既然已经通过instanceof判断进入到改语句内部,那么就可以断言其为IFileBuffer了
+                writeContent = writeContent.concat(httpUtil.structureFileContent(key, value as IFileBuffer))
+            } else {
+                writeContent = writeContent.concat(httpUtil.structureContent(key, value))
+            }
+        })
+        const contentLength: number = httpUtil.contentLength + Buffer.byteLength(`--${httpUtil.boundary}--`)
+        req.setHeader('Content-Length', contentLength)
+        writeContent.forEach(item => {
+            req.write(item)
+        })
+        req.write(`--${httpUtil.boundary}--`)
+    },
+    POSTUrlencoded: (req, params) => {
+
+    },
+    GET: (req, params) => {
+
+    }
 }
 const requestAdmin = async <U>(url: string, params: IParams, method: string = 'POST', optionBase: U): Promise<any> => {
-    const options = {
+    const options: IOptions = {
         host: credentials.biAdmin.host,
         port: credentials.biAdmin.port,
-        // port: 8888, Fiddler抓包的代理端口
+        // port: 8888, // Fiddler抓包的代理端口
         path: url,
         method,
         headers: {}
@@ -27,23 +86,10 @@ const requestAdmin = async <U>(url: string, params: IParams, method: string = 'P
     if (optionBase) {
         Object.assign(options, optionBase)
     }
-    if (!options.headers['Content-Type']) {
-        if (method === 'POST') {
-            Object.assign(options, { headers: { 'Content-Type': 'application/json' } })
-        } else if (method === 'GET') {
-            url = url + String(objToUrl(params))
-            options.path = url
-        }
-    }
+    const finalOptions = structure[method](options, params) // 根据不同的method构造不同的headers
     return await new Promise((resolve, reject) => {
         const buffer = []
-        let httpUtil: IHttpUtil = null
-        if (options.headers['Content-Type'] === 'multipart/form-data') {
-            httpUtil = new HttpUtil()
-            // options.headers['Content-Length'] = 53324
-            options.headers['Content-Type'] = `multipart/form-data; boundary=${httpUtil.boundary}`
-        }
-        const req = http.request(options, (res) => {
+        const req = http.request(finalOptions, (res) => {
             // options配置好请求的参数
             res.on('data', (chunk) => {
                 buffer.push(chunk)
@@ -56,27 +102,7 @@ const requestAdmin = async <U>(url: string, params: IParams, method: string = 'P
         req.on('error', (err) => {
             console.log('err', err)
         })
-        let sendInfo = ''
-        if (options.headers['Content-Type'] === 'application/json') {
-            sendInfo = JSON.stringify(params)
-            req.write(sendInfo)
-        } else if (options.headers['Content-Type'] && options.headers['Content-Type'].indexOf('multipart/form-data') > -1) {
-            let writeContent: Array<string | Buffer> = []
-            Object.entries(params).forEach(([key, value]) => {
-                if (value instanceof FileBuffer) {
-                    writeContent = writeContent.concat(httpUtil.structureFileContent(key, value))
-                } else {
-                    writeContent = writeContent.concat(httpUtil.structureContent(key, value))
-                }
-            })
-            const contentLength: number = httpUtil.contentLength + Buffer.byteLength(`--${httpUtil.boundary}--`)
-            req.setHeader('Content-Length', contentLength)
-            console.log('我是请求体的长度', contentLength)
-            writeContent.forEach(item => {
-                req.write(item)
-            })
-            req.write(`--${httpUtil.boundary}--`)
-        }
+        requestBody[method](req, params)
         req.end()
     }).then(({ data, headers }: resp) => {
         if (headers['content-type'] === 'application/json') {
@@ -95,7 +121,7 @@ const requestAdmin = async <U>(url: string, params: IParams, method: string = 'P
                 // fs.appendFile(path.join(__dirname, '../..', 'logs/test.log'), JSON.stringify({ message: '卷心菜' }) + '\n', 'utf-8', (res) => {
                 //     console.log('写入完成')
                 // })
-                logger.info({ message: message + `process: ${process.pid}` })
+                // logger.info({ message: message + `process: ${process.pid}` })
                 // logger.log('error', 'hello', { message: 'world' })
             }
             return JSON.parse(data.toString())
