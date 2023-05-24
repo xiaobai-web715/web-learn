@@ -9,7 +9,7 @@
                     accept="image/*"
                     @change="chooseImage"
                 >
-                <template v-if="!imageInfo.imageUrl">
+                <template v-if="!imageUrl">
                     <img
                         src="./img/camera.jpeg"
                         class="negative"
@@ -20,7 +20,7 @@
                 </template>
                 <template v-else>
                     <img
-                        :src="imageInfo.imageUrl"
+                        :src="imageUrl"
                         class="userImage"
                     >
                 </template>
@@ -41,26 +41,33 @@ export default {
     mounted(){
         const uid = window.sessionStorage.getItem('id');
         fetch({
-            url: '/admin/user/getUserInfo',
+            url: '/admin/user/getUserImage',
             method: 'post',
-            params: {uid: Number(uid)}
-        }).then(res => {console.log('res', res)})
+            params: {uid: Number(uid)},
+            responseType: 'blob',
+        }).then(res => {
+            const url = URL.createObjectURL(res);
+            this.imageUrl = url
+            // console.log('url', url);
+        })
     },
     setup() {
         const imageInfo = ref({
             imageFile: null,
             imageUrl: ''
         });
+        const imageUrl = ref('')
         return {
-            imageInfo
+            imageInfo,
+            imageUrl
         };
     },
     methods: {
         chooseImage(e) {
-            console.log('e', [e]);
+            // console.log('e', [e]);
             try {
                 const imageBuffer = e.target.files[0];
-                console.log('imageBuffer', imageBuffer);
+                // console.log('imageBuffer', imageBuffer);
                 const url = URL.createObjectURL(imageBuffer);
                 this.imageInfo.imageFile = imageBuffer;
                 this.imageInfo.imageUrl = url;
@@ -75,7 +82,7 @@ export default {
                     method: 'post',
                     params: formData
                 }).then(res => {
-                    console.log('res', res);
+                    // console.log('res', res);
                     if (res.code == 200) {
                         ElMessage({
                             message: '后端获取成功',

@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedOutputStream;
-import java.io.File;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,7 +37,40 @@ public class UserSetController {
     private UserSetService userSetService;
     @Autowired
     private hospUserInfoMapper useSetInfo;
-
+    protected static String handlingFile(UpLoadFileState[] fileResultList, List<MultipartFile> files, int uid, hospUserInfoMapper useSetInfo) {
+        String filePath = "";
+        for (int i = 0; i < files.size(); i++) {
+            UpLoadFileState fileUpInfo;
+            if (!files.isEmpty()) {
+                MultipartFile file = files.get(i);
+//            获取文件后缀
+                String suffixName = ImageUtil.getImagePath(file);
+//                System.out.println("文件后缀名" + suffixName);
+//            生成新文件名
+                String newFileName = ImageUtil.getNewFileName(suffixName);
+//                System.out.println("新的文件名" + newFileName);
+//            获取文件保存路径
+                File fileDest = new File(ImageUtil.getNewImagePath(newFileName));
+                filePath = fileDest.getPath();
+//                System.out.println("fileDest" + fileDest.getPath());
+                if (!fileDest.getParentFile().exists()) {
+                    // 检测上级文件是否存在，不存在新建文件夹
+                    fileDest.getParentFile().mkdirs();
+                }
+//            保存文件
+                Boolean state = ImageUtil.saveImage(ImageUtil.getNewImagePath(newFileName), file);
+                if (state) {
+                    fileUpInfo = new UpLoadFileState().setUpLoadFileState(file.getOriginalFilename(), UpLoadFileCodeEnum.SUCCESS.getCode());
+                } else {
+                    fileUpInfo = new UpLoadFileState().setUpLoadFileState(file.getOriginalFilename(), UpLoadFileCodeEnum.FAIL.getCode());
+                }
+            } else {
+                fileUpInfo = new UpLoadFileState().setUpLoadFileState("", UpLoadFileCodeEnum.EMPTY.getCode());
+            }
+            Arrays.fill(fileResultList, fileUpInfo);
+        }
+        return filePath;
+    }
     @PostMapping("/login")
     @ShenyuSpringCloudClient(path = "/login")
     public Result login(@RequestBody hospUser userInfo){
@@ -76,15 +111,69 @@ public class UserSetController {
             return Result.fail(null);
         }
     }
-    @PostMapping("/getUserInfo")
-    @ShenyuSpringCloudClient(path = "/getUserInfo")
-//    这里前端部分最好改成xxxx的格式
-    public Result getUserInfo(@RequestParam("uid") int uid) {
-        hospUser info = userSetService.getById(uid);
-        hospUserInfo imageInfo = useSetInfo.selectById(uid);
-        System.out.println("info" + info);
-        System.out.println("imageInfo" + imageInfo);
-        return Result.success(11);
+    @PostMapping("/getUserImage")
+    @ShenyuSpringCloudClient(path = "/getUserImage")
+//    这里前端部分最好改成xxxx的格式(获取图片的二进制流)
+    public void getUserImage(@RequestParam("uid") int uid, HttpServletResponse response) {
+//        System.out.println("uid" +uid);
+        LambdaQueryWrapper<hospUserInfo> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(hospUserInfo::getUid, uid);
+        hospUserInfo imageInfo = useSetInfo.selectOne(wrapper);
+        String filePath = imageInfo.getHeaderImage();
+        if (filePath.contains("%")) {
+            try {
+                filePath = URLDecoder.decode(filePath, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        ServletOutputStream out = null;
+        FileInputStream in = null;
+        try {
+            in = new FileInputStream(new File(filePath));
+//            \\\\这样才是真正的匹配单反斜杠
+            String[] dir = filePath.split("\\\\");
+            String fileName = dir[dir.length - 1];
+            String[] array = fileName.split("\\.");
+            String fileType = array[array.length - 1];
+            // contains方法判断当前字符串当中是否含有子字符串
+            if ("jpg,jepg,gif,png".contains(fileType)) {
+                response.setContentType("image/" + fileType);
+            } else if ("pdf".contains(fileType)) {
+                // pdf类型
+                response.setContentType("application/pdf");
+            } else {
+                // 自动判断下载类型
+                response.setContentType("multipart/form-data");
+            }
+            out = response.getOutputStream();
+            // 读取字节流 (IO流体系:字节流、字符流 => 字符流仅能处理字符(txt文件), 字节流可以处理所有以bit为单位的文件)
+            int len = 0;
+            int totalBytes = 0;
+            byte[] buffer = new byte[1024 * 10];
+            while ((len = in.read(buffer)) != -1) {
+                totalBytes += len;
+                // FileInputStream.read(byte[] a) 将文件流中的字节缓冲到数组a当中,会返回长度,当流读取完成的时候会返回-1
+                out.write(buffer, 0, len);
+            }
+            System.out.println("我是文件的长度" + totalBytes);
+            // ??这里的content-type设置好像不起作用
+            response.setContentLength(totalBytes);
+            out.flush();
+            response.setStatus(200);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                assert out != null;
+                out.close();
+                in.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @PostMapping("/uploadImage")
@@ -95,43 +184,39 @@ public class UserSetController {
         List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
         String userId = params.getParameter("uid");
         int uid = Integer.parseInt(userId.trim());
-        System.out.printf("uid" + uid);
-        System.out.println("files length:"+files.size());
-        UpLoadFileState[] UpLoadFileStateList = new UpLoadFileState[files.size()];
-        for (int i = 0; i < files.size(); i++) {
-            UpLoadFileState fileUpInfo;
-            if (!files.isEmpty()) {
-                MultipartFile file = files.get(i);
-//            获取文件后缀
-                String suffixName = ImageUtil.getImagePath(file);
-                System.out.println("文件后缀名" + suffixName);
-//            生成新文件名
-                String newFileName = ImageUtil.getNewFileName(suffixName);
-                System.out.println("新的文件名" + newFileName);
-//            获取文件保存路径
-                File fileDest = new File(ImageUtil.getNewImagePath(newFileName));
-                System.out.println("fileDest" + fileDest.getPath());
-                if (!fileDest.getParentFile().exists()) {
-                    // 检测上级文件是否存在，不存在新建文件夹
-                    fileDest.getParentFile().mkdirs();
-                }
-//            保存文件
-                Boolean state = ImageUtil.saveImage(ImageUtil.getNewImagePath(newFileName), file);
-                if (state) {
-                    hospUserInfo insertInfo = new hospUserInfo();
-                    insertInfo.setUid(uid);
-                    insertInfo.setHeaderImage(fileDest.getPath());
-                    System.out.println("insertInfo" + insertInfo);
-                    useSetInfo.insert(insertInfo);
-                    fileUpInfo = new UpLoadFileState().setUpLoadFileState(file.getOriginalFilename(), UpLoadFileCodeEnum.SUCCESS.getCode());
-                } else {
-                    fileUpInfo = new UpLoadFileState().setUpLoadFileState(file.getOriginalFilename(), UpLoadFileCodeEnum.FAIL.getCode());
-                }
-            } else {
-                fileUpInfo = new UpLoadFileState().setUpLoadFileState("", UpLoadFileCodeEnum.EMPTY.getCode());
+        LambdaQueryWrapper<hospUserInfo> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(hospUserInfo::getUid, uid);
+        Boolean haveImage = useSetInfo.exists(queryWrapper);
+//        System.out.printf("uid" + uid);
+//        System.out.println("files length:"+files.size());
+        if (haveImage) {
+            System.out.println("当前用户已有头像存储");
+            hospUserInfo existsInfo = useSetInfo.selectOne(queryWrapper);
+            File file = new File(existsInfo.getHeaderImage());
+            if (file.isFile() && file.exists()) {
+                file.delete();
             }
-            Arrays.fill(UpLoadFileStateList, fileUpInfo);
+            UpLoadFileState[] UpLoadFileStateList = new UpLoadFileState[files.size()];
+            String filePath = handlingFile(UpLoadFileStateList, files, uid, useSetInfo);
+            hospUserInfo info = new hospUserInfo();
+            info.setUid(uid);
+            info.setHeaderImage(filePath);
+//            System.out.println("info" + info);
+            try {
+                int updateNum = useSetInfo.update(info, queryWrapper);
+                return Result.success(UpLoadFileStateList);
+            } catch(Error e) {
+                return Result.fail("更新失败");
+            }
+        } else {
+            UpLoadFileState[] UpLoadFileStateList = new UpLoadFileState[files.size()];
+            String filePath = handlingFile(UpLoadFileStateList, files, uid, useSetInfo);
+            hospUserInfo insertInfo = new hospUserInfo();
+            insertInfo.setUid(uid);
+            insertInfo.setHeaderImage(filePath);
+//            System.out.println("insertInfo" + insertInfo);
+            useSetInfo.insert(insertInfo);
+            return Result.success(UpLoadFileStateList);
         }
-        return Result.success(UpLoadFileStateList);
     }
 }

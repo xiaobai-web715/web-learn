@@ -68,7 +68,14 @@ const requestBody = {
         req.write(`--${httpUtil.boundary}--`)
     },
     POSTUrlencoded: (req, params) => {
-
+        const parameter = []
+        /**
+         * 如果除了拼接部分外有&符号需要进行编码, 如果有空格将空格转换成+号,如果有特殊符号,要将特殊符号转换成ASCII HEX值
+         */
+        Object.entries(params).forEach(([key, value]) => {
+            parameter.push(`${key}=${value}`)
+        })
+        req.write(parameter.join('&'))
     },
     GET: (req, params) => {
 
@@ -105,6 +112,7 @@ const requestAdmin = async <U>(url: string, params: IParams, method: string = 'P
         requestBody[method](req, params)
         req.end()
     }).then(({ data, headers }: resp) => {
+        // console.log('headers', headers['content-type'])
         if (headers['content-type'] === 'application/json') {
             const { message } = params
             if (message) {
@@ -134,6 +142,8 @@ const requestAdmin = async <U>(url: string, params: IParams, method: string = 'P
                 result[keyValue[0]] = keyValue[1]
             })
             return result
+        } else {
+            return { headers, data }
         }
     }).catch(err => {
         console.log('err', err)
