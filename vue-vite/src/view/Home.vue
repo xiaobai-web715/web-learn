@@ -9,7 +9,7 @@
                     accept="image/*"
                     @change="chooseImage"
                 >
-                <template v-if="!imageUrl">
+                <template v-if="!imageUrl && !imageInfo.imageUrl">
                     <img
                         src="./img/camera.jpeg"
                         class="negative"
@@ -48,31 +48,28 @@ export default {
         }).then(res => {
             const url = URL.createObjectURL(res);
             this.imageUrl = url
-            // console.log('url', url);
         })
     },
     setup() {
-        const imageInfo = ref({
+        const imageInfo = ref<{imageFile: File | null, imageUrl: string}>({
             imageFile: null,
             imageUrl: ''
         });
-        const imageUrl = ref('')
+        const imageUrl = ref<string>('')
         return {
             imageInfo,
             imageUrl
         };
     },
     methods: {
-        chooseImage(e) {
-            // console.log('e', [e]);
+        chooseImage(e: Event) {
             try {
-                const imageBuffer = e.target.files[0];
-                // console.log('imageBuffer', imageBuffer);
+                const dom = (<HTMLInputElement> e.target);
+                const imageBuffer = (<FileList> dom.files)[0];
                 const url = URL.createObjectURL(imageBuffer);
                 this.imageInfo.imageFile = imageBuffer;
                 this.imageInfo.imageUrl = url;
                 const formData = new FormData();
-                // imageBuffer.baseName = encodeURI(imageBuffer.name);
                 formData.append('file', imageBuffer);
                 formData.append('uid', sessionStorage.getItem('id') || '');
                 // 用FormData构造的请求默认的content-type是multipart/form-data
@@ -82,10 +79,9 @@ export default {
                     method: 'post',
                     params: formData
                 }).then(res => {
-                    // console.log('res', res);
                     if (res.code == 200) {
                         ElMessage({
-                            message: '后端获取成功',
+                            message: '上传成功',
                             type: 'success'
                         });
                     }

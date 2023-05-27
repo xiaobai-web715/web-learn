@@ -20,7 +20,7 @@ const service = axios.create({
  */
 service.interceptors.request.use(config => {
     // 这里面目前看来可以向请求头当中添加token,sig等后端需要的头部信息
-    if (config.url?.indexOf('127.0.0.1') > -1) {
+    if ((config?.url || '').indexOf('127.0.0.1') > -1) {
         config.baseURL = ''
     }
     console.log('config', config);

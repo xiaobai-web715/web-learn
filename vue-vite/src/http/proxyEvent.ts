@@ -1,6 +1,6 @@
 import md5 from 'md5';
 import EventEmitter from 'events';
-import { AxiosRequestHeaders} from 'axios'; 
+import { AxiosRequestHeaders, AxiosRequestConfig} from 'axios'; 
 
 interface taskInfoI {
     url: string, 
@@ -16,7 +16,7 @@ const eventQueue = new EventEmitter(); // 创建事件监听方式保证不同�
 const taskIdLists:taskIdListsI = {};
 // 重复请求处理,测试高重复请求只请求一次
 export default {
-    proxy (task: () => any, taskInfo: taskInfoI): Promise<any> {
+    proxy (task: () => any, taskInfo: AxiosRequestConfig): Promise<any> {
         // 对请求信息进行编译
         const taskId: string = md5(JSON.stringify(taskInfo));
         // console.log('String', taskId);

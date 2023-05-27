@@ -48,11 +48,13 @@
 </template>
 <script lang="ts">
 import { useRouter } from 'vue-router';
-// import {Vue} from 'vue-property-decorator';
 import Icon from '@/components/jsx/icon';
 import {IRouterRecordRaw} from '@/router/route';
-// declare const IconList: () => string[]
-// declare const Menus: () => IRouterRecordRaw[]
+interface PropsI {
+    menus: () => IRouterRecordRaw[] | [],
+    iconList: () => string[] | [],
+    canGetHeightFn: () => void
+}
 const router = useRouter();
 export default {
     components: {
@@ -62,17 +64,17 @@ export default {
         menus: {
             // 传入的菜单表
             type: Array,
-            default: () => [],
+            required: true
         },
         canGetHeightFn: {
             type: Function,
-            default: () => {}
+            required: true
         },
         iconList: {
             type: Array,
-            default: () => []
+            required: true
         }
-    },
+    } as PropsI,
     data() {
         console.log('iconList', this.iconList);
         const menuDom: Element[] = []
