@@ -46,8 +46,13 @@ export default {
             params: {uid: Number(uid)},
             responseType: 'blob',
         }).then(res => {
-            const url = URL.createObjectURL(res);
-            this.imageUrl = url
+            // console.log('res', res);
+            // 后端application/octet-stream返回流的形式目前不清楚如何携带code值,暂时以Blob转化后的size长度来判断
+            if (res.size) {
+                const url = URL.createObjectURL(res);
+                // console.log('url', url);
+                this.imageUrl = url
+            }
         })
     },
     setup() {

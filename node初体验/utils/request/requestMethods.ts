@@ -112,7 +112,7 @@ const requestAdmin = async <U>(url: string, params: IParams, method: string = 'P
         requestBody[method](req, params)
         req.end()
     }).then(({ data, headers }: resp) => {
-        // console.log('headers', headers['content-type'])
+        console.log('headers', headers, data.toString())
         if (headers['content-type'] === 'application/json') {
             const { message } = params
             if (message) {
@@ -143,6 +143,7 @@ const requestAdmin = async <U>(url: string, params: IParams, method: string = 'P
             })
             return result
         } else {
+            console.log('data.toString()', data.toString())
             return { headers, data }
         }
     }).catch(err => {

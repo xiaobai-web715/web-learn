@@ -1,11 +1,16 @@
 package com.lxh.utils.token;
 
+import com.lxh.admin.service.impl.UserSetService;
+import org.apache.commons.lang3.StringUtils;
 import org.jose4j.jws.AlgorithmIdentifiers;
 import org.jose4j.jws.JsonWebSignature;
 import org.jose4j.jwt.JwtClaims;
 import org.jose4j.keys.HmacKey;
 import org.jose4j.lang.JoseException;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.naming.AuthenticationException;
+import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.security.Key;
 
@@ -22,6 +27,13 @@ public class GenerateToken {
             System.out.printf("中文转utf8编码报错", e); // 打印异常信息
             return s.getBytes(); // 尝试使用用默认编码
         }
+    }
+    public static String getTokenByRequest(HttpServletRequest request) {
+        String token = request.getParameter("token");
+        if (token == null) {
+            token = request.getHeader("X-Access-Token");
+        }
+        return token;
     }
     public static String generateToken(UserToken userToken, int expire){
         JwtClaims claims = new JwtClaims();
@@ -45,5 +57,14 @@ public class GenerateToken {
             System.out.printf("token生成", e); // 打印异常信息
             return "";
         }
+    }
+    public static  boolean verifyToken(HttpServletRequest request, UserSetService userSetService) throws AuthenticationException {
+        String token = getTokenByRequest(request);
+        if (StringUtils.isBlank(token)) {
+            throw new AuthenticationException("token不存在");
+        }
+        Object jwtInfo = new JwtClaims().getClaimValue(CONTEXT_USER_NAME);
+        System.out.println(jwtInfo.toString());
+        return true;
     }
 }

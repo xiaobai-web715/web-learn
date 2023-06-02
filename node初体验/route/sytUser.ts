@@ -47,7 +47,7 @@ router.post('/userImage', fileUpload.any(), (req, res) => {
     console.log('otherParams', otherParams)
     const url = String(credentials.biAdmin.baseUrl) + '/user/uploadImage'
     requestAdmin(url, params, 'POSTFormData').then(resq => {
-        // console.log('请求文件的resq', resq)
+        console.log('请求文件的resq', resq)
         res.send(resq)
     })
 })

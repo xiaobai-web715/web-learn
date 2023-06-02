@@ -10,6 +10,7 @@ import com.lxh.utils.image.ImageUtil;
 import com.lxh.utils.image.UpLoadFileState;
 import com.lxh.utils.image.UpLoadFileCodeEnum;
 import com.lxh.utils.result.Result;
+import com.lxh.utils.result.ResultCodeEnum;
 import com.lxh.utils.token.UserToken;
 import com.lxh.utils.utils.print;
 import com.lxh.utils.token.GenerateToken;
@@ -74,6 +75,7 @@ public class UserSetController {
     @PostMapping("/login")
     @ShenyuSpringCloudClient(path = "/login")
     public Result login(@RequestBody hospUser userInfo){
+        String aroundAopTest = userSetService.aroundTest();
         String user = userInfo.getUser();
         String password = userInfo.getPassword();
         LambdaQueryWrapper<hospUser> queryWrapper = new LambdaQueryWrapper<>();
@@ -114,65 +116,72 @@ public class UserSetController {
     @PostMapping("/getUserImage")
     @ShenyuSpringCloudClient(path = "/getUserImage")
 //    这里前端部分最好改成xxxx的格式(获取图片的二进制流)
-    public void getUserImage(@RequestParam("uid") int uid, HttpServletResponse response) {
+    public void getUserImage(@RequestParam("uid") int uid, HttpServletResponse response) throws IOException {
 //        System.out.println("uid" +uid);
         LambdaQueryWrapper<hospUserInfo> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(hospUserInfo::getUid, uid);
-        hospUserInfo imageInfo = useSetInfo.selectOne(wrapper);
-        String filePath = imageInfo.getHeaderImage();
-        if (filePath.contains("%")) {
-            try {
-                filePath = URLDecoder.decode(filePath, "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                throw new RuntimeException(e);
+        Boolean userHaveImage = useSetInfo.exists(wrapper);
+//        System.out.println("用户的图片信息" + userHaveImage);
+        if (userHaveImage) {
+            hospUserInfo imageInfo = useSetInfo.selectOne(wrapper);
+            String filePath = imageInfo.getHeaderImage();
+            if (filePath.contains("%")) {
+                try {
+                    filePath = URLDecoder.decode(filePath, "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    throw new RuntimeException(e);
+                }
             }
-        }
-        ServletOutputStream out = null;
-        FileInputStream in = null;
-        try {
-            in = new FileInputStream(new File(filePath));
+            ServletOutputStream out = null;
+            FileInputStream in = null;
+            try {
+                in = new FileInputStream(new File(filePath));
 //            \\\\这样才是真正的匹配单反斜杠
-            String[] dir = filePath.split("\\\\");
-            String fileName = dir[dir.length - 1];
-            String[] array = fileName.split("\\.");
-            String fileType = array[array.length - 1];
-            // contains方法判断当前字符串当中是否含有子字符串
-            if ("jpg,jepg,gif,png".contains(fileType)) {
-                response.setContentType("image/" + fileType);
-            } else if ("pdf".contains(fileType)) {
-                // pdf类型
-                response.setContentType("application/pdf");
-            } else {
-                // 自动判断下载类型
-                response.setContentType("multipart/form-data");
-            }
-            out = response.getOutputStream();
-            // 读取字节流 (IO流体系:字节流、字符流 => 字符流仅能处理字符(txt文件), 字节流可以处理所有以bit为单位的文件)
-            int len = 0;
-            int totalBytes = 0;
-            byte[] buffer = new byte[1024 * 10];
-            while ((len = in.read(buffer)) != -1) {
-                totalBytes += len;
-                // FileInputStream.read(byte[] a) 将文件流中的字节缓冲到数组a当中,会返回长度,当流读取完成的时候会返回-1
-                out.write(buffer, 0, len);
-            }
-            System.out.println("我是文件的长度" + totalBytes);
-            // ??这里的content-type设置好像不起作用
-            response.setContentLength(totalBytes);
-            out.flush();
-            response.setStatus(200);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                assert out != null;
-                out.close();
-                in.close();
+                String[] dir = filePath.split("\\\\");
+                String fileName = dir[dir.length - 1];
+                String[] array = fileName.split("\\.");
+                String fileType = array[array.length - 1];
+                // contains方法判断当前字符串当中是否含有子字符串
+                if ("jpg,jepg,gif,png".contains(fileType)) {
+                    response.setContentType("image/" + fileType);
+                } else if ("pdf".contains(fileType)) {
+                    // pdf类型
+                    response.setContentType("application/pdf");
+                } else {
+                    // 自动判断下载类型
+                    response.setContentType("multipart/form-data");
+                }
+                out = response.getOutputStream();
+                // 读取字节流 (IO流体系:字节流、字符流 => 字符流仅能处理字符(txt文件), 字节流可以处理所有以bit为单位的文件)
+                int len = 0;
+                int totalBytes = 0;
+                byte[] buffer = new byte[1024 * 10];
+                while ((len = in.read(buffer)) != -1) {
+                    totalBytes += len;
+                    // FileInputStream.read(byte[] a) 将文件流中的字节缓冲到数组a当中,会返回长度,当流读取完成的时候会返回-1
+                    out.write(buffer, 0, len);
+                }
+                System.out.println("我是文件的长度" + totalBytes);
+                // ??这里的content-type设置好像不起作用
+                response.setContentLength(totalBytes);
+                out.flush();
+                response.setStatus(ResultCodeEnum.SUCCESS.getCode());
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
             } catch (IOException e) {
                 throw new RuntimeException(e);
+            } finally {
+                try {
+                    assert out != null;
+                    out.close();
+                    in.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
+        } else {
+            response.getOutputStream().close();
+            response.setStatus(ResultCodeEnum.PASSWORDERROR.getCode());
         }
     }
 
