@@ -10,13 +10,18 @@ export interface requestI<T> {
     responseType?: string
 }
 const request = <T>(config: AxiosRequestConfig<T>): Promise<any> => {
-    const {url, method, params, headers, responseType}: AxiosRequestConfig = config;
+    const {url, method, params, headers = {}, responseType}: AxiosRequestConfig = config;
     let data = {};
     if (method === 'get') {
         data = {params};
     }
     if (method === 'post') {
         data = {data: params};
+    }
+    const token = sessionStorage.getItem('token')
+    if (token) {
+        Object.assign(headers, {"X-Access-Token": token}) 
+        Object.assign(data, {token})
     }
     const taskInfo = {url, method, params, headers}; // 根据请求的信息判断请求是不是同一个
     const task = function (): AxiosPromise<any> {

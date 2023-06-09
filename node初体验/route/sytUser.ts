@@ -17,7 +17,7 @@ router.post('/register', (req, res) => {
     const params = req.body
     const baseUrl: string = credentials.biAdmin.baseUrl
     const url: string = baseUrl + '/user/register'
-    requestAdmin(url, params, 'POST').then(resq => {
+    requestAdmin(url, params, 'POST', req).then(resq => {
         res.send(resq)
     })
 })
@@ -26,8 +26,7 @@ router.post('/getUserImage', (req, res) => {
     const params = req.body
     const baseUrl: string = credentials.biAdmin.baseUrl
     const url: string = baseUrl + '/user/getUserImage'
-    console.log('params...', params)
-    requestAdmin(url, params, 'POSTUrlencoded').then(({ headers, data }) => {
+    requestAdmin(url, params, 'POSTUrlencoded', req).then(({ headers, data }) => {
         // console.log('headers', headers, data)
         // ??当这里将响应的头部信息写入后会报一个content-length的错误
         // Object.entries(headers).forEach(([k, v]) => {
@@ -44,10 +43,8 @@ router.post('/userImage', fileUpload.any(), (req, res) => {
         file: new FileBuffer(file),
         uid: otherParams.uid
     }
-    console.log('otherParams', otherParams)
     const url = String(credentials.biAdmin.baseUrl) + '/user/uploadImage'
-    requestAdmin(url, params, 'POSTFormData').then(resq => {
-        console.log('请求文件的resq', resq)
+    requestAdmin(url, params, 'POSTFormData', req).then(resq => {
         res.send(resq)
     })
 })

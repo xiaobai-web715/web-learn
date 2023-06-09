@@ -6,5 +6,5 @@ import com.lxh.mybatis.entity.hospUser;
 import java.util.List;
 
 public interface UserSetService extends IService<hospUser> {
-    public String aroundTest();
+    public Boolean aroundTest(UserSetService userSetService);
 }

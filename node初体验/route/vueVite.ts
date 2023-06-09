@@ -1,4 +1,5 @@
-import express, { Request, Response } from 'express'
+import { Response, Request } from 'express'
+const express = require('express')
 const client = require('../mongodb/mongodb')
 const { findData, addOne, paging, update, deleteOne, noIncreaseAddOne } = require('../mongodb/utils')
 const router = express.Router()

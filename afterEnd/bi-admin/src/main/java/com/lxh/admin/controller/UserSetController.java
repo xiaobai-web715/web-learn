@@ -75,7 +75,6 @@ public class UserSetController {
     @PostMapping("/login")
     @ShenyuSpringCloudClient(path = "/login")
     public Result login(@RequestBody hospUser userInfo){
-        String aroundAopTest = userSetService.aroundTest();
         String user = userInfo.getUser();
         String password = userInfo.getPassword();
         LambdaQueryWrapper<hospUser> queryWrapper = new LambdaQueryWrapper<>();
@@ -86,6 +85,7 @@ public class UserSetController {
             hospUser useInfoTarget = list.get(0);
             String userPassword = useInfoTarget.getPassword();
             String userName = useInfoTarget.getUser();
+            System.out.println("用户登录信息" + userName.toString());
             int uid = useInfoTarget.getId();
             if (Objects.equals(password, userPassword)) {
 //                用户登录密码与数据库存储相同
@@ -117,7 +117,8 @@ public class UserSetController {
     @ShenyuSpringCloudClient(path = "/getUserImage")
 //    这里前端部分最好改成xxxx的格式(获取图片的二进制流)
     public void getUserImage(@RequestParam("uid") int uid, HttpServletResponse response) throws IOException {
-//        System.out.println("uid" +uid);
+        Boolean aroundAopTest = userSetService.aroundTest(userSetService);
+        System.out.println(aroundAopTest);
         LambdaQueryWrapper<hospUserInfo> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(hospUserInfo::getUid, uid);
         Boolean userHaveImage = useSetInfo.exists(wrapper);

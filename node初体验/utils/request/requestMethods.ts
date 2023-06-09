@@ -81,7 +81,7 @@ const requestBody = {
 
     }
 }
-const requestAdmin = async <U>(url: string, params: IParams, method: string = 'POST', optionBase: U): Promise<any> => {
+const requestAdmin = async (url: string, params: IParams, method: string = 'POST', req: Request): Promise<any> => {
     const options: IOptions = {
         host: credentials.biAdmin.host,
         port: credentials.biAdmin.port,
@@ -90,8 +90,8 @@ const requestAdmin = async <U>(url: string, params: IParams, method: string = 'P
         method,
         headers: {}
     }
-    if (optionBase) {
-        Object.assign(options, optionBase)
+    if (req) {
+        options.headers['X-Access-Token'] = req.headers['x-access-token']
     }
     const finalOptions = structure[method](options, params) // 根据不同的method构造不同的headers
     return await new Promise((resolve, reject) => {
