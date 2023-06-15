@@ -2,6 +2,15 @@
 
 ## javascript
 
+## react18
+
+```bash
+  1.原前端项目改变, 修改webpack配置接入微服务中
+```
+
+存在的问题:
+react18 版本推荐的 createRoot(api)替代 ReactDOM,在 qiankun 加载微服务的时候不能成功挂载资源文件
+
 ### 测试用法的 demo
 
     http_createServer与http_request 模拟服务端以application/json或application/x-www-form-urlencoded格式发送对应格式数据并在客户端获取二进制数据流进行解析
@@ -56,6 +65,8 @@ npm install prettier eslint-config-prettier eslint-plugin-prettier --dev 创建.
     //这一行不用加好像是prettier高版本有兼容了    'prettier/@typescript-eslint',  // 使用 ESLint -config-prettier 禁用来自@typescript-eslint/ ESLint 与 prettier 冲突的 ESLint 规则
     'plugin:prettier/recommended',
     //没有设置成功保存的时候自动格式化代码,所以把上面这一行也注释掉了(不开启prettier)
+
+在项目中需要向window中添加一个自定义属性, 可以在该目录下或者上级目录(上级目录还未测试), 定义一个(interface Window)来添加变量声明 => 现在的问题是你的.d.ts文件一旦关闭,编译还是会报错
 
 可能遇到的问题：
   1.找不到index.js文件(原因:因为index.js变成了jsx文件，但是不能直接导入index.tsx => 去webapck的配置里面的resolve选项里面添加一个属性,extensions: [".js", ".json", ".ts", ".tsx"]告诉导入的文件按照这几个后缀来寻找)
@@ -114,6 +125,12 @@ npm install pm2 进程管理器 => 用来对前端的项目进程进行控制
 
 md5 与 events 库引入合并处理重复请求
 
+## hello-qianku 项目
+
+```bash
+  1.原hello-vue替换作为微服务主应用, qiankun依赖安装, 注册子应用配置信息
+```
+
 ### 细节问题
 
 vue3 对应的 el-ui 的引入方式变成了 el-plus,对应的 ui 组件的引入与写法不同
@@ -123,9 +140,19 @@ vue3 对应的 el-ui 的引入方式变成了 el-plus,对应的 ui 组件的引�
 
 动态加载路由的时候,需要使用 let modules = import.meta.glob('../\*_/_.vue');优先获取动态路由对应的页面,然后再给 component 赋值 modules[`../view${route.filePath}.vue`]对应的文件
 
+## afterEnd 项目
+
+```bash
+  1.springboot项目连接数据库,响应请求
+```
+
+还需完成的问题:
+aop 切面实现(不生效, 如何用 aop 编程模式校验 token)
+
 ### 还需完成的想法
 
 token 如何定时失效(接口请求如何做到鉴权)
+server 端如何定制化捕获异常统一返回响应
 keepAlive 何时进行缓存何时不进行缓存(来提升页面的初始加载)
 
 node 层高并发下日志文件的写入处理,以及日志文件库的使用

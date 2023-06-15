@@ -5,10 +5,21 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.junit.platform.commons.util.StringUtils;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
+import javax.naming.AuthenticationException;
+import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
+import com.lxh.annotation.ServiceTokenRequired;
+
+@Aspect
 public class GenerateToken {
 //    全局静态变量(不带public就是内部静态变量)
     public static final String CONTEXT_USER_NAME = "usename";
@@ -57,16 +68,36 @@ public class GenerateToken {
             throw new RuntimeException(e);
         }
     }
-    public static Boolean verifyToken(String token) {
-        byte[] bs = toUTF8(JWT_PRIVATE_KEY);
-        JWTVerifier verifier = JWT.require(Algorithm.HMAC256(bs))
-                .withIssuer("lxh")
-                .build();
-        DecodedJWT jwt = verifier.verify(token);
-        System.out.println("jwt内容" + jwt.getIssuer());
-        System.out.println(CONTEXT_USER_NAME + ":"  + jwt.getClaim(CONTEXT_USER_NAME).asString());
-        System.out.println(CONTEXT_USER_ID + ":" + jwt.getClaim(CONTEXT_USER_ID).asString());
-        System.out.println("过期时间:" + jwt.getExpiresAt());
-        return true;
+    public static JWTVerifier getToken() throws AuthenticationException {
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = (HttpServletRequest) requestAttributes.resolveReference(RequestAttributes.REFERENCE_REQUEST);
+        String token = request.getParameter("token");
+        if (token == null) {
+            token = request.getHeader("X-Access-Token");
+        }
+        System.out.println("我的token是" + token);
+        if (StringUtils.isBlank(token)) {
+            throw new AuthenticationException("token不存在");
+        }
+        JWTVerifier verifer = GenerateToken.verifyToken(token);
+        return verifer;
+    }
+    // @Before：标注当前方法作为前置通知 @annotation：指定用注解进行切面 com.lxh.annotation.ServiceTokenRequired:注解的全路径名称
+    @Before("@annotation(com.lxh.annotation.ServiceTokenRequired)")
+    public static JWTVerifier verifyToken(String token) {
+        JWTVerifier verifier = null;
+        if (token.length() > 0) {
+            byte[] bs = toUTF8(JWT_PRIVATE_KEY);
+            verifier = JWT.require(Algorithm.HMAC256(bs))
+                    .withIssuer("lxh")
+                    .build();
+            DecodedJWT jwt = verifier.verify(token);
+            System.out.println("jwt内容" + jwt.getIssuer());
+            System.out.println(CONTEXT_USER_NAME + ":"  + jwt.getClaim(CONTEXT_USER_NAME).asString());
+            System.out.println(CONTEXT_USER_ID + ":" + jwt.getClaim(CONTEXT_USER_ID).asInt());
+            System.out.println("过期时间:" + jwt.getExpiresAt());
+        }
+        System.out.println(ServiceTokenRequired.class);
+        return verifier;
     }
 }

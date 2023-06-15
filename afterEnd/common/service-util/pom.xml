@@ -11,7 +11,6 @@
     <name>Archetype - service-util</name>
     <url>http://maven.apache.org</url>
     <artifactId>service-util</artifactId>
-
     <properties>
         <maven.compiler.source>19</maven.compiler.source>
         <maven.compiler.target>19</maven.compiler.target>

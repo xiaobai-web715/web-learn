@@ -1,5 +1,6 @@
 package com.lxh.admin.controller;
 
+import com.auth0.jwt.JWTVerifier;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.lxh.dao.UserTokenInfo;
 import com.lxh.mybatis.entity.hospUser;
@@ -117,7 +118,7 @@ public class UserSetController {
     @ShenyuSpringCloudClient(path = "/getUserImage")
 //    这里前端部分最好改成xxxx的格式(获取图片的二进制流)
     public void getUserImage(@RequestParam("uid") int uid, HttpServletResponse response) throws IOException {
-        Boolean aroundAopTest = userSetService.aroundTest(userSetService);
+        String aroundAopTest = userSetService.aroundTest();
         System.out.println(aroundAopTest);
         LambdaQueryWrapper<hospUserInfo> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(hospUserInfo::getUid, uid);

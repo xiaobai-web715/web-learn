@@ -3,8 +3,10 @@ package com.lxh.admin;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+//@ComponentScan("com.lxh.utils")
 @EnableDiscoveryClient
 public class BiAdminApplication {
 
