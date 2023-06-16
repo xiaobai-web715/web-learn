@@ -58,9 +58,8 @@
     />
 </template>
 <script lang="ts">
-import { ref } from 'vue';
-declare const IDataList: () => []
-export default {
+import { defineComponent, ref } from 'vue';
+export default defineComponent({
     props: {
         dataList: {
             type: Array,
@@ -108,7 +107,11 @@ export default {
         };
     },
     created() {
-        console.log('我是啥', this.eventHub);
+        console.log('我是Table的created生命周期');
+        this.eventHub.on('search:table:list', this.search);
+    },
+    activated() {
+        console.log('我是Table的activated生命周期');
         this.eventHub.on('search:table:list', this.search);
     },
     methods: {
@@ -121,12 +124,11 @@ export default {
             this.tableInfo({page: val, pageSize: this.changePageSize});
         },
         search(val) {
-            console.log('我能否通过这种新的方式来触发', val);
             this.page = 1;
             this.tableInfo({page: val, pageSize: this.changePageSize});
         }
     }
-};
+});
 </script>
 <style lang="scss">
 .columnStyle{

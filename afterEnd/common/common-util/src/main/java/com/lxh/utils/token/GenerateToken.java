@@ -79,12 +79,16 @@ public class GenerateToken {
         if (StringUtils.isBlank(token)) {
             throw new AuthenticationException("token不存在");
         }
-        JWTVerifier verifer = GenerateToken.verifyToken(token);
-        return verifer;
+//        JWTVerifier verifer = GenerateToken.verifyToken(token);
+//        return verifer;
+        return null;
     }
     // @Before：标注当前方法作为前置通知 @annotation：指定用注解进行切面 com.lxh.annotation.ServiceTokenRequired:注解的全路径名称
-    @Before("@annotation(com.lxh.annotation.ServiceTokenRequired)")
-    public static JWTVerifier verifyToken(String token) {
+    // execution([权限修饰符] [返回值类型] [简单类名/全类名] [方法名] ([参数列表])) *代表匹配所有
+//    @Before("execution(public * com.lxh.admin.controller.*.*(…))")
+    @Before("execution(* *(...))")
+    public JWTVerifier verifyToken(String token) {
+        System.out.println("我是前置操作的切面");
         JWTVerifier verifier = null;
         if (token.length() > 0) {
             byte[] bs = toUTF8(JWT_PRIVATE_KEY);

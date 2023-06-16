@@ -1,21 +1,20 @@
 module.exports = {
     root: true,
-    parser:  'vue-eslint-parser',
+    parser:  'vue-eslint-parser', //解析vue
+    plugins: ['@typescript-eslint'],
     extends: [
         'plugin:vue/vue3-recommended',
         // 'plugin:vue/recommended',
     ],
     parserOptions: {
-        // "parser": "@typescript-eslint/parser",
+        "parser": "@typescript-eslint/parser", // 解析ts
         "ecmaVersion": 2018, //代表兼容的es语法
         "sourceType": "module",
-        "project": ['tsconfig.json'],
+        "project": ['tsconfig.json'], // eslint规则
+        "extraFileExtensions": ['.vue'], //解决Parsing error: "parserOptions.project" has been set for @typescript-eslint/parser.The file does not match your project config: src\components\assembly\tableAssembly\Table.vue.The extension for the file (.vue) is non-standard. You should add "parserOptions.extraFileExtensions" to your config.
         "tsconfigRootDir": __dirname
     },
     rules:  {
-        // 'vue/no-v-for-template-key-on-child': 'off',
-        // 'vue/no-v-for-template-key': 'off',
-        // vue/singleline-html-element-content-newline当dom内部有子元素的时候提示换行
         "vue/singleline-html-element-content-newline": ["error", {
             "ignoreWhenNoAttributes": true, //当元素没有属性的时候允许其在一行展示
         }],

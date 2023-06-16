@@ -10,3 +10,7 @@ declare module 'format' {
   import format from 'format';
   export default format;
 }
+
+// declare module 'mitt'
+
+declare module "element-plus"

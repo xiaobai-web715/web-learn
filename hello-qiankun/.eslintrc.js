@@ -6,10 +6,11 @@ module.exports = {
         'plugin:vue/vue3-recommended',
     ],
     parserOptions: {
-        // "parser": "@typescript-eslint/parser",
+        "parser": "@typescript-eslint/parser",
         "ecmaVersion": 2018, //代表兼容的es语法
         "sourceType": "module",
         "project": ['tsconfig.json'],
+        "extraFileExtensions": ['.vue'],
         "tsconfigRootDir": __dirname
     },
     rules:  {

@@ -7,7 +7,7 @@
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "nodenext",
     "strict": true,
     "jsx": "preserve",
     "sourceMap": true,
@@ -18,7 +18,16 @@
     "skipLibCheck": true,
   },
   "vueCompilerOptions": {
-    "experimentalCompatMode": 3 //配置支持的vue版本
+    // "experimentalCompatMode": 3 //配置支持的vue版本
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/**/*.jsx", "vite.config.ts"],
+  "include": [
+    "src/**/*.ts", 
+    "src/**/*.d.ts", 
+    "src/**/*.tsx", 
+    "src/**/*.vue", 
+    "src/**/*.jsx",
+    "src/**/*.js",
+    ".eslintrc.js", 
+    "vue.config.ts"
+  ],
 }

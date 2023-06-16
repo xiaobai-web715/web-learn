@@ -32,10 +32,10 @@
 // setup模式下可以在export default{}使用useRouter以及useStore生成全局变量,但组合式情况下不生效
 import {useRouter} from 'vue-router';
 import {ref} from 'vue';
-import request from '@/http/index';
+import request from '@/http/index.js';
 import {useStore} from 'vuex';
-import {SET_AUTH, SET_USER, SET_ID} from '@/store/actionsTypes';
-import {loginInfos} from './enums';
+import {SET_AUTH, SET_USER, SET_ID} from '@/store/actionsTypes.js';
+import {loginInfos} from './enums.js';
 import { ElMessage } from 'element-plus';
 export default {
     setup() {

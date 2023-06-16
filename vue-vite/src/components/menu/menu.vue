@@ -50,11 +50,6 @@
 import { useRouter } from 'vue-router';
 import Icon from '@/components/jsx/icon';
 import {IRouterRecordRaw} from '@/router/route';
-interface PropsI {
-    menus: () => IRouterRecordRaw[] | [],
-    iconList: () => string[] | [],
-    canGetHeightFn: () => void
-}
 const router = useRouter();
 export default {
     components: {
@@ -74,7 +69,7 @@ export default {
             type: Array,
             required: true
         }
-    } as PropsI,
+    },
     data() {
         console.log('iconList', this.iconList);
         const menuDom: Element[] = []

@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserSetServiceImpl extends ServiceImpl<hospUserMapper, hospUser> implements UserSetService {
     // 引入自定义注解执行切面
-    @Override
-    @ServiceTokenRequired
-    public String aroundTest() {
-        System.out.println("before测试-serviceimpl层");
-        return "before测试end";
-    }
+//    @Override
+//    @ServiceTokenRequired
+//    public String aroundTest() {
+//        System.out.println("before测试-serviceimpl层");
+//        return "before测试end";
+//    }
 }

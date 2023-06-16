@@ -71,6 +71,7 @@
         </div>
         <div>
             <TableList
+                :key="reskey"
                 :data-list="dataList"
                 :colums="colums"
                 :data-total="dataTotal"
@@ -153,6 +154,7 @@ export default {
                 title: '医院状态',
                 prop: 'status',
                 custom: (val, row) => {
+                    console.log('val...', row);
                     if (val) return '可用';
                     else return '不可用';
                 }
@@ -199,10 +201,19 @@ export default {
         o.buttons.push(editFun, deleteFun);
         colums.push(o);
         return {
-            colums
+            colums,
+            reskey: 0
         };
     },
+    activated() {
+        console.log('我是list的activated生命周期');
+        this.reskey = this.reskey + 1;
+        this.eventHub.emit('search:table:list', 1);
+        // 测试接口的多次请求能否合并成一个
+        Promise.all(new Array(6).fill(0).map(item => this.getHospList())).then(args => {console.log('args', args);});
+    },
     mounted() {
+        console.log('我是list的mounted生命周期');
         this.eventHub.emit('search:table:list', 1);
         // 测试接口的多次请求能否合并成一个
         Promise.all(new Array(6).fill(0).map(item => this.getHospList())).then(args => {console.log('args', args);});

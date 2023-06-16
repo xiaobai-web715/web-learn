@@ -1,8 +1,8 @@
 import { createApp } from 'vue';
-import store from './store';
-import router from './router';
+import store from './store/index.js';
+import router from './router/index.js';
 import App from './App.vue';
-import {routerBeforeEach} from '@/router/route';
+import {routerBeforeEach} from '@/router/route.js';
 import '@/assets/public.scss';
 import ElementPlus from 'element-plus';
 import * as Antd from 'ant-design-vue';
