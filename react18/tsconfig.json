@@ -103,16 +103,16 @@
   "compilerOptions": {
     "target": "ES2016", // 指定 ECMAScript 版本
     //下面这两行加入后解决了以src/typings/utils文件时 ts校验显示找不到这个文件路径的问题
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
-      "src": ["./src/"]
+      "src/*": ["src/*"]
     },
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ], // 要包含在编译中的依赖库文件列表
-    "allowJs": true, // 允许编译 JavaScript 文件
+    // "allowJs": true, // 允许编译 JavaScript 文件
     // "allowJs": false,
     "skipLibCheck": true, // 跳过所有声明文件的类型检查
     "esModuleInterop": true, // 禁用命名空间引用 (import * as fs from "fs") 启用 CJS/AMD/UMD 风格引用 (import fs from "fs")
@@ -137,6 +137,8 @@
   "include": [
     "src/**/*.tsx", // *** TypeScript文件应该进行类型检查 ***
     "src/**/*.ts",
+    "src/**/*.js",
+    ".eslintrc.js"
   ],
   "exclude": ["node_modules", "dist"] // *** 不进行类型检查的文件 ***
 }
