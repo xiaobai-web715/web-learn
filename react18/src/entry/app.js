@@ -7,9 +7,10 @@ import './index.scss';
 
 function render(props) {
     console.log('props', props);
-    const { container } = props;
+    const { container,  onGlobalStateChange} = props;
     // const root = createRoot(container ? container.querySelector('#root') : document.querySelector('#root'));
     // root.render(<RouterIndex />);
+    // console.log('onGlobalStateChange', onGlobalStateChange.path)
     ReactDOM.render(
         <RouterIndex></RouterIndex>,
         container ? container.querySelector('#root') : document.querySelector('#root')

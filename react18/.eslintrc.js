@@ -14,8 +14,8 @@ module.exports = {
         ecmaFeatures: {
             jsx: true, // 允许对JSX进行解析
         },
-        // project: ['tsconfig.json'],
-        // "tsconfigRootDir": __dirname
+        project: ['tsconfig.json'],
+        "tsconfigRootDir": __dirname
     },
     rules: {
         // 自定义规则
@@ -29,4 +29,5 @@ module.exports = {
             version: 'detect', // 告诉 eslint-plugin-react 自动检测 React 的版本
         },
     },
+    exclude: ["node_modules"]
 };

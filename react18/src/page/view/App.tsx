@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate , Outlet} from 'react-router-dom';
 const Css = require('./App.scss');
 
 const App = () => {
+    console.log('我是微前端');
+    const [router, setRouter] = useState<string>('')
     const navigate = useNavigate();
     const goPage = (url: string) => {
         navigate('/app-react/app' + url);
+        if(window.__POWERED_BY_QIANKUN__){
+            setRouter('/app-react/app' + url)
+        }
     };
+    useEffect(() => {console.log('我执行了几次')}, [])
+    useEffect(() => {
+        console.log('router', router)
+        if (router) {
+            if (window.__POWERED_BY_QIANKUN__) {
+                window.history.pushState(null, '', router)
+            } else {
+                navigate(router);
+            }
+        }
+    }, [router])
     return(
         <React.Fragment>
             <div className={Css['page']}>
