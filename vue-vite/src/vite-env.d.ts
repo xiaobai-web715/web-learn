@@ -11,6 +11,10 @@ declare module 'format' {
   export default format;
 }
 
+declare interface Window {
+  __POWERED_BY_QIANKUN__: String
+}
+
 // declare module 'mitt'
 
 declare module "element-plus"

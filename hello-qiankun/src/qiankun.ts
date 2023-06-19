@@ -1,13 +1,16 @@
-import { registerMicroApps, start, setDefaultMountApp } from "qiankun";
+import { registerMicroApps, setDefaultMountApp } from "qiankun";
 registerMicroApps([
     {
         name: 'reactApp',
         entry: '//localhost:3000',
         container: '#yourContainer',
         activeRule: '/app-react'
+    },
+    {
+        name: 'vueApp',
+        entry: '//localhost:5173',
+        container: '#yourContainer',
+        activeRule: '/hospSet'
     }
 ]);
 setDefaultMountApp('/app-react');
-//启动qiankun
-start();
-console.log('我是乾坤启动...');

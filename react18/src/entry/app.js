@@ -11,6 +11,7 @@ function render(props) {
     // const root = createRoot(container ? container.querySelector('#root') : document.querySelector('#root'));
     // root.render(<RouterIndex />);
     // console.log('onGlobalStateChange', onGlobalStateChange.path)
+    console.log('container', container);
     ReactDOM.render(
         <RouterIndex></RouterIndex>,
         container ? container.querySelector('#root') : document.querySelector('#root')
