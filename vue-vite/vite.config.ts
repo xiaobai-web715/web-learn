@@ -1,11 +1,24 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
-import { resolve } from 'path';
+import { resolve, join } from 'path';
+import qiankun from 'vite-plugin-qiankun';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue({}), vueJsx({})],
+  plugins: [
+    vue({}), 
+    vueJsx({}), 
+    qiankun('vueApp', {useDevMode: true})
+  ],
+  // publicDir: '/',
+  // build: {
+  //   lib: {
+  //     entry: './src/main.ts',
+  //     formats: ['umd'],
+  //   },
+  //   outDir: join(__dirname, '..', 'dist'), //这里要使用绝对路径
+  // },
   resolve: {
     alias:{
       "@" : resolve(__dirname, 'src')
@@ -19,7 +32,10 @@ export default defineConfig({
         changeOrigin: true, //换源,
         rewrite: (path) => path.replace(/^\/api/,''),
       }
-    }
+    },
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+  },
   },
   css: {
     preprocessorOptions: {

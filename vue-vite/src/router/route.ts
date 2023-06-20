@@ -4,6 +4,9 @@ import { IRoute } from "@/typings/sever";
 import {RouteRecordRaw, Router} from 'vue-router';
 import {Store} from 'vuex';
 import {dynamicRouter} from '@/router/index';
+import {
+    qiankunWindow
+} from 'vite-plugin-qiankun/dist/helper.js';
 
 export interface IRouterRecordRaw{
     path: string,
@@ -42,11 +45,11 @@ function generateRouter (routeTree: IRoute[]):IRouterRecordRaw[] {
 
 export function routerBeforeEach(router: Router, store: Store<IState>) {
     router.beforeEach((to, from, next) => {
-        console.log('router', store.state.routeTree);
+        console.log('router', store.state.routeTree, to.path.indexOf('/login') > -1, qiankunWindow);
         let token = store.state.token || sessionStorage.getItem('token');
         if (!token) {
             // next()才是放行的意思如果这里不加入判断知识next('/login')那就是死循环router.beforeEach(('/login', from, next) => {})
-            if (to.path === '/login' || to.path === '/register') {
+            if (to.path.indexOf('/login') > -1 || to.path.indexOf('/register') > -1) {
                 next();
             } else {
                 next('/login');

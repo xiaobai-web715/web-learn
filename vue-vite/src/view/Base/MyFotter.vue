@@ -6,7 +6,7 @@
 <style scoped lang="scss">
     .my-footer {
         z-index:2;
-        position: fixed;
+        position: absolute;
         bottom: 0;
         left: 0;
         width: 100%;

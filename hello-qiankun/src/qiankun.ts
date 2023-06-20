@@ -10,7 +10,6 @@ registerMicroApps([
         name: 'vueApp',
         entry: '//localhost:5173',
         container: '#yourContainer',
-        activeRule: '/hospSet'
+        activeRule: '/app-vue-vite'
     }
 ]);
-setDefaultMountApp('/app-react');

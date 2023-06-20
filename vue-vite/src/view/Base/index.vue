@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="box">
         <MyHeaderVue />
         <MyFotterVue />
         <div class="pageContent">
@@ -27,17 +27,21 @@
   import MySideBarVue from './MySideBar.vue';
 </script>
 <style scoped lang="scss">
-.pageContent{
-  margin-top:60px;
-  display:flex;
-  justify-content: flex-start;
-  min-height: 100vh;
-  .fixed{
-    flex-grow: 0;
-    flex-shrink: 0;
-  }
-  .page{
-    flex-grow: 1;
+.box{
+  position: relative;
+  .pageContent{
+    border-top:1px solid transparent;
+    padding-top:60px;
+    display:flex;
+    justify-content: flex-start;
+    min-height: 100vh;
+    .fixed{
+      flex-grow: 0;
+      flex-shrink: 0;
+    }
+    .page{
+      flex-grow: 1;
+    }
   }
 }
 </style>

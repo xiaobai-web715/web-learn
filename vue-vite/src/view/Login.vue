@@ -53,6 +53,7 @@ export default {
     },
     methods: {
         submit() {
+            console.log('windows信息', window.location);
             request({
                 url: '/admin/user/login',
                 method: 'post',

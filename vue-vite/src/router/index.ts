@@ -3,6 +3,9 @@ import Home from '../view/Home.vue';
 import Base from '../view/Base/index.vue';
 import Login from '../view/Login.vue';
 import Register from '@/view/Register.vue';
+import {
+    qiankunWindow
+} from 'vite-plugin-qiankun/dist/helper.js';
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/login',
@@ -32,6 +35,6 @@ export const dynamicRouter: Array<RouteRecordRaw> = [
 ];
 
 export default createRouter({
-    history: createWebHistory(),
+    history: createWebHistory(qiankunWindow.__POWERED_BY_QIANKUN__ ? 'app-vue-vite' : '/'),
     routes,
 });

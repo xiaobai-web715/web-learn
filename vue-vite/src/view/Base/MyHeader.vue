@@ -6,7 +6,7 @@
 <style scoped lang="scss">
     .my-header {
         z-index:2;
-        position: fixed;
+        position: absolute;
         top: 0;
         left: 0;
         width: 100%;
