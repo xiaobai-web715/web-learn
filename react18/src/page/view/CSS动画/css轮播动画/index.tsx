@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import { ICssProps, IList } from 'src/typings/utils';
 import Css from './index.scss';
 
 const Index: React.FC<ICssProps> = (props) => {

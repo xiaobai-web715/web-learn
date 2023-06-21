@@ -17,7 +17,7 @@
                         v-if="children.length > 0 && iconList[index]"
                         class="icon"
                     >
-                        <Icon :iconName="iconList[index]" />
+                        <Icon :icon-name="iconList[index]" />
                     </div>
                     {{ props.title }}
                     <div
@@ -26,7 +26,7 @@
                     >
                         <!-- <ArrowUp v-if="menuOpen" />
                         <ArrowDown v-else /> -->
-                        <Icon :iconName="menuOpen ? 'ArrowUp' : 'ArrowDown'" />
+                        <Icon :icon-name="menuOpen ? 'ArrowUp' : 'ArrowDown'" />
                     </div>
                 </div>
 
@@ -47,11 +47,12 @@
     </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
-import Icon from '@/components/jsx/icon';
-import {IRouterRecordRaw} from '@/router/route';
+import Icon from '@/components/jsx/icon.jsx';
+import {IRouterRecordRaw} from '@/router/route.js';
 const router = useRouter();
-export default {
+export default defineComponent({
     components: {
         Icon
     },
@@ -72,8 +73,8 @@ export default {
     },
     data() {
         console.log('iconList', this.iconList);
-        const menuDom: Element[] = []
-        const canGetHeight: boolean[] = []
+        const menuDom: Element[] = [];
+        const canGetHeight: boolean[] = [];
         return {
             router,
             menuDom,
@@ -88,7 +89,7 @@ export default {
             handler(newVal, oldVal) {
                 console.log('newVal', newVal);
                 const result = newVal.every((item:boolean) => item);
-                if (result) {
+                if (result && this.canGetHeightFn) {
                     this.canGetHeightFn();
                 }
             },
@@ -134,7 +135,7 @@ export default {
             this.menuDom[index].$refs['menuBox'].style.height = 0; //能够获取高度的元素在获取高度之后进行关闭
         }
     }
-};
+});
 </script>
 <style lang="scss" scoped>
     .disapper{

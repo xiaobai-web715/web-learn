@@ -36,6 +36,13 @@ type GAFieldsObject = {
   nonInteraction?: boolean;
 };
 
+interface messageI {
+  [key: string] : messageI | string | number
+}
+type webViewBridgeI =  {
+  [key: string]: (<T>(message: messageI, callback?: T) => void) // 声明一个属性接收为一个方法
+                                                                // 如果这里所有的属性都是非必传的话,会有一个ts的报错警告
+}
 interface Window {
   ga: (
     command: 'send',
@@ -44,9 +51,18 @@ interface Window {
   ) => void,
   reloadAuthorized: () => void,
   __POWERED_BY_QIANKUN__: string,
-  WebViewBridgeNativeEmulator: object
+  WebViewBridgeNativeEmulator: {[key: string]: any},
+  webViewBridge: object
 };
 
 declare let ga: () => void;
 
 declare const REACT_APP_ENV: 'test' | 'dev' | 'pre' | false;
+
+interface IList {
+  url: string;
+  title: string;
+}
+interface ICssProps {
+  list: Array<IList>;
+}

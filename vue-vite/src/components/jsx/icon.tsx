@@ -1,19 +1,18 @@
 import { h } from "vue";
 import * as icons from "@element-plus/icons-vue";
 import './icon.scss';
-const Icon = ({iconName}:{iconName: string}) => {
-    console.log(icons, iconName);
+const Icon = (props) => {
     return (
-        iconName ? (
+        props['icon-name'] ? (
             <div class="icon-style custom">
                 {
-                    h(icons[iconName])
+                    h(icons[props['icon-name']])
                 }
             </div>
         ) : ''
-    )
-}
-export default Icon
+    );
+};
+export default Icon;
 // export default {
 //     name: 'Icon',
 //     iconName: String,

@@ -112,7 +112,7 @@
       "dom.iterable",
       "esnext"
     ], // 要包含在编译中的依赖库文件列表
-    // "allowJs": true, // 允许编译 JavaScript 文件
+    "allowJs": true, // 允许编译 JavaScript 文件
     // "allowJs": false,
     "skipLibCheck": true, // 跳过所有声明文件的类型检查
     "esModuleInterop": true, // 禁用命名空间引用 (import * as fs from "fs") 启用 CJS/AMD/UMD 风格引用 (import fs from "fs")
@@ -132,7 +132,8 @@
     "experimentalDecorators": true, // 启用对ES装饰器的实验性支持
     "incremental": true, // 通过从以前的编译中读取/写入信息到磁盘上的文件来启用增量编译
     "noFallthroughCasesInSwitch": true ,
-    "outDir": "./",
+    "outDir": "build",
+    "noImplicitAny": false, //定义的数据如果没有显式的定义类型, 那隐式具有any类型即可
   },
   "include": [
     "src/**/*.tsx", // *** TypeScript文件应该进行类型检查 ***
@@ -140,5 +141,6 @@
     "src/**/*.js",
     ".eslintrc.js"
   ],
-  "exclude": ["node_modules", "dist"] // *** 不进行类型检查的文件 ***
+  "exclude": ["node_modules", "dist", "build/**/*"] // *** 不进行类型检查的文件 ***
 }
+// 135行 143 "build/**/*"解决无法写入文件.eslintrc.js文件,因为它会覆盖输入文件

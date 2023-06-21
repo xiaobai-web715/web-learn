@@ -1,8 +1,7 @@
 import React from 'react';
 import Css from './index.scss';
-import AdaptationTroll from '../js轮播动画/index';
+import AdaptationTroll from '../js轮播动画/index.js';
 import CssIndex from '../css轮播动画/index';
-import { IList } from 'src/typings/utils';
 
 const Index = () => {
     const list: Array<IList> = [
