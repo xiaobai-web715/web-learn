@@ -2,6 +2,7 @@ package com.lxh.admin.controller;
 
 import com.auth0.jwt.JWTVerifier;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.lxh.annotation.ServiceTokenRequired;
 import com.lxh.dao.UserTokenInfo;
 import com.lxh.mybatis.entity.hospUser;
 import com.lxh.admin.service.impl.UserSetService;
@@ -19,6 +20,7 @@ import org.apache.shenyu.client.springcloud.annotation.ShenyuSpringCloudClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -36,6 +38,7 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/admin/hosp/user")
 @ShenyuSpringCloudClient(path = "/user")
+@Controller
 public class UserSetController {
     @Autowired
     private UserSetService userSetService;
@@ -75,6 +78,7 @@ public class UserSetController {
         }
         return filePath;
     }
+
     @PostMapping("/login")
     @ShenyuSpringCloudClient(path = "/login")
     public Result login(@RequestBody hospUser userInfo){
@@ -104,6 +108,7 @@ public class UserSetController {
             return Result.noUser(null);
         }
     };
+
     @PostMapping("/register")
     @ShenyuSpringCloudClient(path = "/register")
     public Result register(@RequestBody hospUser userInfo) {
@@ -116,14 +121,16 @@ public class UserSetController {
             return Result.fail(null);
         }
     }
+
     @PostMapping("/getUserImage")
     @ShenyuSpringCloudClient(path = "/getUserImage")
+    @ServiceTokenRequired
 //    这里前端部分最好改成xxxx的格式(获取图片的二进制流)
     public void getUserImage(@RequestParam("uid") int uid, HttpServletResponse response) throws IOException {
-        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        UserSetService useSretService = (UserSetService) context.getBean("UserSetService");
-        String info = useSretService.aroundTest();
-        System.out.println(info);
+//        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+//        UserSetService useSretService = (UserSetService) context.getBean("UserSetService");
+//        String info = useSretService.aroundTest();
+//        System.out.println(info);
         LambdaQueryWrapper<hospUserInfo> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(hospUserInfo::getUid, uid);
         Boolean userHaveImage = useSetInfo.exists(wrapper);

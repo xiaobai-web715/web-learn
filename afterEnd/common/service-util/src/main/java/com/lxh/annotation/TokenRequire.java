@@ -13,6 +13,7 @@ public class TokenRequire {
     public void tokenRequire() {}
     @Around("tokenRequire()")
     public Boolean checkToken(ProceedingJoinPoint joinPonint) {
+        System.out.println("环绕切面");
         return true;
     };
 }
