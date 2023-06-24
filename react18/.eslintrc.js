@@ -29,5 +29,4 @@ module.exports = {
             version: 'detect', // 告诉 eslint-plugin-react 自动检测 React 的版本
         },
     },
-    exclude: ["node_modules"]
 };

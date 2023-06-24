@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <!--目标类交给IOC容器, 目前目标类已经是IOC控制了-->
+<!--    <bean id="UserSetService" class="com.lxh.admin.service.impl.UserSetService"></bean>-->
+<!--通知类交给IOC容器-->
+    <bean id="GenerateToken" class="com.lxh.utils.token.GenerateToken"></bean>
+<!--AOP配置-->
+    <aop:config>
+    <!--配置切面-->
+        <aop:aspect ref="GenerateToken">
+            <aop:before method="getToken" pointcut="execution(* *(...))"></aop:before>
+        </aop:aspect>
+    </aop:config>
+</beans>

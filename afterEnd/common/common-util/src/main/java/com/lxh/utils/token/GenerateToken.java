@@ -19,7 +19,8 @@ import java.util.Date;
 
 import com.lxh.annotation.ServiceTokenRequired;
 
-@Aspect
+//@Aspect
+//@Component
 public class GenerateToken {
 //    全局静态变量(不带public就是内部静态变量)
     public static final String CONTEXT_USER_NAME = "usename";
@@ -86,7 +87,7 @@ public class GenerateToken {
     // @Before：标注当前方法作为前置通知 @annotation：指定用注解进行切面 com.lxh.annotation.ServiceTokenRequired:注解的全路径名称
     // execution([权限修饰符] [返回值类型] [简单类名/全类名] [方法名] ([参数列表])) *代表匹配所有
 //    @Before("execution(public * com.lxh.admin.controller.*.*(…))")
-    @Before("execution(* *(...))")
+//    @Before("execution(* *(...))")
     public JWTVerifier verifyToken(String token) {
         System.out.println("我是前置操作的切面");
         JWTVerifier verifier = null;
