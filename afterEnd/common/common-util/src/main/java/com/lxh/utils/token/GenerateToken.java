@@ -19,8 +19,8 @@ import java.util.Date;
 
 import com.lxh.annotation.ServiceTokenRequired;
 
-//@Aspect
-//@Component
+@Aspect
+@Component
 public class GenerateToken {
 //    全局静态变量(不带public就是内部静态变量)
     public static final String CONTEXT_USER_NAME = "usename";
@@ -88,21 +88,21 @@ public class GenerateToken {
     // execution([权限修饰符] [返回值类型] [简单类名/全类名] [方法名] ([参数列表])) *代表匹配所有
 //    @Before("execution(public * com.lxh.admin.controller.*.*(…))")
 //    @Before("execution(* *(...))")
-    public JWTVerifier verifyToken(String token) {
+    public JWTVerifier verifyToken() {
         System.out.println("我是前置操作的切面");
         JWTVerifier verifier = null;
-        if (token.length() > 0) {
-            byte[] bs = toUTF8(JWT_PRIVATE_KEY);
-            verifier = JWT.require(Algorithm.HMAC256(bs))
-                    .withIssuer("lxh")
-                    .build();
-            DecodedJWT jwt = verifier.verify(token);
-            System.out.println("jwt内容" + jwt.getIssuer());
-            System.out.println(CONTEXT_USER_NAME + ":"  + jwt.getClaim(CONTEXT_USER_NAME).asString());
-            System.out.println(CONTEXT_USER_ID + ":" + jwt.getClaim(CONTEXT_USER_ID).asInt());
-            System.out.println("过期时间:" + jwt.getExpiresAt());
-        }
-        System.out.println(ServiceTokenRequired.class);
+//        if (token.length() > 0) {
+//            byte[] bs = toUTF8(JWT_PRIVATE_KEY);
+//            verifier = JWT.require(Algorithm.HMAC256(bs))
+//                    .withIssuer("lxh")
+//                    .build();
+//            DecodedJWT jwt = verifier.verify(token);
+//            System.out.println("jwt内容" + jwt.getIssuer());
+//            System.out.println(CONTEXT_USER_NAME + ":"  + jwt.getClaim(CONTEXT_USER_NAME).asString());
+//            System.out.println(CONTEXT_USER_ID + ":" + jwt.getClaim(CONTEXT_USER_ID).asInt());
+//            System.out.println("过期时间:" + jwt.getExpiresAt());
+//        }
+//        System.out.println(ServiceTokenRequired.class);
         return verifier;
     }
 }

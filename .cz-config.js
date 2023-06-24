@@ -78,7 +78,7 @@ module.exports = {
     },
 
     // 默认长度72
-    subjectLimit: 72,
+    subjectLimit: 100,
   
     scopes: [],
   

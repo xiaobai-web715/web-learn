@@ -8,14 +8,14 @@
 		http://www.springframework.org/schema/aop/spring-aop.xsd">
     <aop:aspectj-autoproxy proxy-target-class="true"/>
     <!--目标类交给IOC容器, 目前目标类已经是IOC控制了-->
-<!--    <bean id="UserSetService" class="com.lxh.admin.service.impl.UserSetService"></bean>-->
+    <bean name="UserSetService" class="com.lxh.admin.service.UserSetServiceImpl"></bean>
 <!--通知类交给IOC容器-->
-    <bean id="GenerateToken" class="com.lxh.utils.token.GenerateToken"></bean>
+    <bean name="GenerateToken" class="com.lxh.utils.token.GenerateToken"></bean>
 <!--AOP配置-->
     <aop:config>
     <!--配置切面-->
         <aop:aspect ref="GenerateToken">
-            <aop:before method="getToken" pointcut="execution(* *(...))"></aop:before>
+            <aop:before method="verifyToken" pointcut="execution(* com.lxh.admin.service.UserSetServiceImpl.aroundTest())"/>
         </aop:aspect>
     </aop:config>
 </beans>

@@ -17,6 +17,8 @@ import com.lxh.utils.utils.print;
 import com.lxh.utils.token.GenerateToken;
 import org.apache.shenyu.client.springcloud.annotation.ShenyuSpringCloudClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -118,8 +120,10 @@ public class UserSetController {
     @ShenyuSpringCloudClient(path = "/getUserImage")
 //    这里前端部分最好改成xxxx的格式(获取图片的二进制流)
     public void getUserImage(@RequestParam("uid") int uid, HttpServletResponse response) throws IOException {
-//        String aroundAopTest = userSetService.aroundTest();
-//        System.out.println(aroundAopTest);
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        UserSetService useSretService = (UserSetService) context.getBean("UserSetService");
+        String info = useSretService.aroundTest();
+        System.out.println(info);
         LambdaQueryWrapper<hospUserInfo> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(hospUserInfo::getUid, uid);
         Boolean userHaveImage = useSetInfo.exists(wrapper);
