@@ -1,6 +1,7 @@
 package com.lxh.admin.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.lxh.annotation.ServiceTokenRequired;
 import com.lxh.joint.Router;
 import com.lxh.admin.service.impl.RouterSetService;
 import com.lxh.admin.mapper.hospRouterMapper;
@@ -23,6 +24,7 @@ public class RouterSetController {
     private hospRouterMapper hospRouterMapper;
     @PostMapping("/getUserRouter")
     @ShenyuSpringCloudClient(path = "/getUserRouter")
+    @ServiceTokenRequired
     public Result getUserRouter() throws JsonProcessingException {
 //        连表查询需要自定义sql语句, 从被ServiceImpl实现变为在Mapper当中自定义sql查询语句进行处理
 //        List<hospRouter> list = routerSetService.list();

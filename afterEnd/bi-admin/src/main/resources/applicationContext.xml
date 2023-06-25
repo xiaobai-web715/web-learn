@@ -6,7 +6,7 @@
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/aop
 		http://www.springframework.org/schema/aop/spring-aop.xsd">
-    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <aop:aspectj-autoproxy expose-proxy="true"/>
     <!--目标类交给IOC容器, 目前目标类已经是IOC控制了-->
     <bean name="UserSetService" class="com.lxh.admin.service.UserSetServiceImpl"></bean>
 <!--通知类交给IOC容器-->
@@ -15,7 +15,7 @@
     <aop:config>
     <!--配置切面-->
         <aop:aspect ref="GenerateToken">
-            <aop:before method="verifyToken" pointcut="execution(* com.lxh.admin.service.UserSetServiceImpl.aroundTest())"/>
+            <aop:after method="verifyToken" pointcut="execution(* com.lxh.admin.service.UserSetServiceImpl.aroundTest())"/>
         </aop:aspect>
     </aop:config>
 </beans>
