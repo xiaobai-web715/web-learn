@@ -1,4 +1,4 @@
-package com.lxh.annotation;
+package com.lxh.admin.config;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

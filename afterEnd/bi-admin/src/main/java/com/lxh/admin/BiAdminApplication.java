@@ -11,7 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-//@EnableAspectJAutoProxy
+//@ComponentScan("com.lxh.admin.*")
 public class BiAdminApplication {
     public static void main(String[] args) {
         SpringApplication.run(BiAdminApplication.class, args);

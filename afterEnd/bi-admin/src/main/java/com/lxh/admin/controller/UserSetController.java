@@ -2,7 +2,7 @@ package com.lxh.admin.controller;
 
 import com.auth0.jwt.JWTVerifier;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.lxh.annotation.ServiceTokenRequired;
+import com.lxh.admin.config.ServiceTokenRequired;
 import com.lxh.dao.UserTokenInfo;
 import com.lxh.mybatis.entity.hospUser;
 import com.lxh.admin.service.impl.UserSetService;
@@ -36,13 +36,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+@Controller
 @RestController
 @RequestMapping("/admin/hosp/user")
 @ShenyuSpringCloudClient(path = "/user")
 //@Lazy
 public class UserSetController {
     @Autowired
-//    @Lazy
+    @Lazy
     private UserSetService userSetService;
     @Autowired
     private hospUserInfoMapper useSetInfo;
@@ -129,11 +130,7 @@ public class UserSetController {
     @ServiceTokenRequired
 //    这里前端部分最好改成xxxx的格式(获取图片的二进制流)
     public void getUserImage(@RequestParam("uid") int uid, HttpServletResponse response) throws IOException {
-//        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-//        UserSetService useSretService = (UserSetService) context.getBean("UserSetService");
-//        String info = useSretService.aroundTest();
-        String info = userSetService.aroundTest();
-        System.out.println(info);
+        System.out.println("我是执行函数");
         LambdaQueryWrapper<hospUserInfo> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(hospUserInfo::getUid, uid);
         Boolean userHaveImage = useSetInfo.exists(wrapper);
@@ -177,7 +174,7 @@ public class UserSetController {
                     // FileInputStream.read(byte[] a) 将文件流中的字节缓冲到数组a当中,会返回长度,当流读取完成的时候会返回-1
                     out.write(buffer, 0, len);
                 }
-                System.out.println("我是文件的长度" + totalBytes);
+//                System.out.println("我是文件的长度" + totalBytes);
                 // ??这里的content-type设置好像不起作用
                 response.setContentLength(totalBytes);
                 out.flush();

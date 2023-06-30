@@ -1,19 +1,23 @@
 package com.lxh.annotation;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 @Aspect //设置当前类为切面类
-@Order(0) //设置order=0,执行时机优先于AbstractRoutingDataSource.determineCurrentLookupKey
+@Component
 public class TokenRequire {
     @Pointcut("@annotation(com.lxh.annotation.ServiceTokenRequired)")
     public void tokenRequire() {}
-    @Around("tokenRequire()")
-    public Boolean checkToken(ProceedingJoinPoint joinPonint) {
-        System.out.println("环绕切面");
+    @After("tokenRequire()")
+    public Boolean checkToken(JoinPoint joinPonint) {
+        System.out.println("绕后切面不同包");
         return true;
     };
 }

@@ -7,6 +7,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.junit.platform.commons.util.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
@@ -22,6 +23,8 @@ import com.lxh.annotation.ServiceTokenRequired;
 @Aspect
 @Component
 public class GenerateToken {
+    @Pointcut("@annotation(com.lxh.annotation.ServiceTokenRequired)")
+    public void annoationPoint() {}
 //    全局静态变量(不带public就是内部静态变量)
     public static final String CONTEXT_USER_NAME = "usename";
     public static final String CONTEXT_USER_ID = "uid";
@@ -86,9 +89,9 @@ public class GenerateToken {
     }
     // @Before：标注当前方法作为前置通知 @annotation：指定用注解进行切面 com.lxh.annotation.ServiceTokenRequired:注解的全路径名称
     // execution([权限修饰符] [返回值类型] [简单类名/全类名] [方法名] ([参数列表])) *代表匹配所有
-    @Before(value = "execution(@com.lxh.annotation.ServiceTokenRequired * * (..))")
+    @Before(value = "annoationPoint()")
     public JWTVerifier verifyToken() {
-        System.out.println("我是前置操作的切面");
+        System.out.println("前置操作切面不同包");
         JWTVerifier verifier = null;
 //        if (token.length() > 0) {
 //            byte[] bs = toUTF8(JWT_PRIVATE_KEY);
