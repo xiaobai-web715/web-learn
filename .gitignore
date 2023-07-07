@@ -6,4 +6,7 @@
 /react18/node_modules
 /javascript/node_modules
 /javascript/files
+/vue-vite/node_modules
+/vue-vite/dist
+/vue-vite/dist.rar
 /node_modules

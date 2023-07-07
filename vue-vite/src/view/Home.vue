@@ -55,7 +55,7 @@ export default {
       url: "/admin/user/getUserImage",
       method: "post",
       params: { uid: Number(uid) },
-      responseType: "blob",
+
     }).then((res) => {
       // console.log('res', res);
       // 后端application/octet-stream返回流的形式目前不清楚如何携带code值,暂时以Blob转化后的size长度来判断

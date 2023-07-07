@@ -26,13 +26,18 @@ router.post('/getUserImage', (req, res) => {
     const params = req.body
     const baseUrl: string = credentials.biAdmin.baseUrl
     const url: string = baseUrl + '/user/getUserImage'
-    requestAdmin(url, params, 'POSTUrlencoded', req).then(({ headers, data }) => {
+    requestAdmin(url, params, 'POSTUrlencoded', req).then((resp) => {
         // console.log('headers', headers, data)
         // ??当这里将响应的头部信息写入后会报一个content-length的错误
         // Object.entries(headers).forEach(([k, v]) => {
         //     res.header(k, v)
         // })
-        res.send(data)
+        const { headers, data } = resp
+        if (headers) {
+            res.send(data)
+        } else {
+            res.send(resp)
+        }
     })
 })
 router.post('/userImage', fileUpload.any(), (req, res) => {

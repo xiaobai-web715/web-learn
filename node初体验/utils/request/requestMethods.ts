@@ -112,7 +112,6 @@ const requestAdmin = async (url: string, params: IParams, method: string = 'POST
         requestBody[method](req, params)
         req.end()
     }).then(({ data, headers }: resp) => {
-        console.log('headers', headers, data.toString())
         if (headers['content-type'] === 'application/json') {
             const { message } = params
             if (message) {

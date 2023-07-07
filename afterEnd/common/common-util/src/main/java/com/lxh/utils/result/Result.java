@@ -65,4 +65,7 @@ public class Result<T> {
     public static <T> Result<T> noUser(T data) {
         return build(data, ResultCodeEnum.NOUSER);
     }
+    public static <T> Result<T> tokenExpire(T data) {
+        return build(data, ResultCodeEnum.USER_NOT_LOGGED_IN);
+    }
 }

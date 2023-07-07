@@ -35,6 +35,6 @@ export const dynamicRouter: Array<RouteRecordRaw> = [
 ];
 
 export default createRouter({
-    history: createWebHistory(qiankunWindow.__POWERED_BY_QIANKUN__ ? 'app-vue-vite' : '/'),
+    history: createWebHistory(qiankunWindow.__POWERED_BY_QIANKUN__ ? 'app-vue-vite' : 'vite'),
     routes,
 });

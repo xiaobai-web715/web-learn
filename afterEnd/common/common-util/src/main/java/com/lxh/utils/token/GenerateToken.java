@@ -57,7 +57,8 @@ public class GenerateToken {
 
 
         try{
-            Date expiresAt = new Date(System.currentTimeMillis() + 24L * 60L * 3600L * 1000L);
+            Date expiresAt = new Date(System.currentTimeMillis() - 24L * 60L * 60L * 1000L);
+            System.out.println("我是token的有效期" + expiresAt);
             byte[] bs = toUTF8(JWT_PRIVATE_KEY);
             String token = JWT.create()
                     .withIssuer("lxh")
@@ -72,7 +73,7 @@ public class GenerateToken {
             throw new RuntimeException(e);
         }
     }
-    public static JWTVerifier getToken() throws AuthenticationException {
+    public static String getToken(){
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = (HttpServletRequest) requestAttributes.resolveReference(RequestAttributes.REFERENCE_REQUEST);
         String token = request.getParameter("token");
@@ -80,31 +81,25 @@ public class GenerateToken {
             token = request.getHeader("X-Access-Token");
         }
         System.out.println("我的token是" + token);
-        if (StringUtils.isBlank(token)) {
-            throw new AuthenticationException("token不存在");
-        }
-//        JWTVerifier verifer = GenerateToken.verifyToken(token);
-//        return verifer;
-        return null;
+        return token;
     }
-    // @Before：标注当前方法作为前置通知 @annotation：指定用注解进行切面 com.lxh.annotation.ServiceTokenRequired:注解的全路径名称
-    // execution([权限修饰符] [返回值类型] [简单类名/全类名] [方法名] ([参数列表])) *代表匹配所有
-    @Before(value = "annoationPoint()")
-    public JWTVerifier verifyToken() {
-        System.out.println("前置操作切面不同包");
-        JWTVerifier verifier = null;
-//        if (token.length() > 0) {
-//            byte[] bs = toUTF8(JWT_PRIVATE_KEY);
-//            verifier = JWT.require(Algorithm.HMAC256(bs))
-//                    .withIssuer("lxh")
-//                    .build();
-//            DecodedJWT jwt = verifier.verify(token);
-//            System.out.println("jwt内容" + jwt.getIssuer());
-//            System.out.println(CONTEXT_USER_NAME + ":"  + jwt.getClaim(CONTEXT_USER_NAME).asString());
-//            System.out.println(CONTEXT_USER_ID + ":" + jwt.getClaim(CONTEXT_USER_ID).asInt());
-//            System.out.println("过期时间:" + jwt.getExpiresAt());
-//        }
-//        System.out.println(ServiceTokenRequired.class);
-        return verifier;
+    public static DecodedJWT verifyToken(String token){
+        DecodedJWT jwt = null;
+        if (token.length() > 0) {
+            byte[] bs = toUTF8(JWT_PRIVATE_KEY);
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(bs))
+                    .withIssuer("lxh")
+                    .build();
+            try {
+                jwt = verifier.verify(token);
+//                System.out.println("jwt内容" + jwt.getIssuer());
+//                System.out.println(CONTEXT_USER_NAME + ":"  + jwt.getClaim(CONTEXT_USER_NAME).asString());
+//                System.out.println(CONTEXT_USER_ID + ":" + jwt.getClaim(CONTEXT_USER_ID).asInt());
+//                System.out.println("过期时间:" + jwt.getExpiresAt());
+            } catch (Throwable e) {
+                System.out.println("我是报错信息" + e.toString());
+            }
+        }
+        return jwt;
     }
 }

@@ -130,7 +130,6 @@ public class UserSetController {
     @ServiceTokenRequired
 //    这里前端部分最好改成xxxx的格式(获取图片的二进制流)
     public void getUserImage(@RequestParam("uid") int uid, HttpServletResponse response) throws IOException {
-        System.out.println("我是执行函数");
         LambdaQueryWrapper<hospUserInfo> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(hospUserInfo::getUid, uid);
         Boolean userHaveImage = useSetInfo.exists(wrapper);
@@ -149,6 +148,7 @@ public class UserSetController {
             FileInputStream in = null;
             try {
                 in = new FileInputStream(new File(filePath));
+                out = response.getOutputStream();
 //            \\\\这样才是真正的匹配单反斜杠
                 String[] dir = filePath.split("\\\\");
                 String fileName = dir[dir.length - 1];
@@ -164,7 +164,6 @@ public class UserSetController {
                     // 自动判断下载类型
                     response.setContentType("multipart/form-data");
                 }
-                out = response.getOutputStream();
                 // 读取字节流 (IO流体系:字节流、字符流 => 字符流仅能处理字符(txt文件), 字节流可以处理所有以bit为单位的文件)
                 int len = 0;
                 int totalBytes = 0;
@@ -174,7 +173,6 @@ public class UserSetController {
                     // FileInputStream.read(byte[] a) 将文件流中的字节缓冲到数组a当中,会返回长度,当流读取完成的时候会返回-1
                     out.write(buffer, 0, len);
                 }
-//                System.out.println("我是文件的长度" + totalBytes);
                 // ??这里的content-type设置好像不起作用
                 response.setContentLength(totalBytes);
                 out.flush();
@@ -184,16 +182,21 @@ public class UserSetController {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } finally {
-                try {
-                    assert out != null;
+//                try {
+//                    System.out.println("断言的值" + (out != null));
+//                    assert out != null : "此对象是null"; // 断言终止后续代码执行不起作用
+//                    out.close();
+//                    in.close();
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                }
+                if (out != null) {
                     out.close();
                     in.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
                 }
             }
         } else {
-            response.getOutputStream().close();
+//            response.getOutputStream().close();
             response.setStatus(ResultCodeEnum.PASSWORDERROR.getCode());
         }
     }

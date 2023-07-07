@@ -11,14 +11,9 @@ export default defineConfig({
     vueJsx({}), 
     qiankun('vueApp', {useDevMode: true})
   ],
-  // publicDir: '/',
-  // build: {
-  //   lib: {
-  //     entry: './src/main.ts',
-  //     formats: ['umd'],
-  //   },
-  //   outDir: join(__dirname, '..', 'dist'), //这里要使用绝对路径
-  // },
+  // 静态资源服务文件夹
+  publicDir: 'public',
+  base: './',
   resolve: {
     alias:{
       "@" : resolve(__dirname, 'src')
@@ -45,4 +40,12 @@ export default defineConfig({
       }
     }
   },
+  // 打包配置
+  build: {
+    target: 'modules',
+    outDir: 'dist',
+    assetsDir: 'assets',
+    cssCodeSplit: true,
+    sourcemap: false,
+  }
 });

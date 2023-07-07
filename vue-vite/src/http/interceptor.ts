@@ -9,6 +9,8 @@
  */
 import axios from "axios";
 import { ElMessage } from 'element-plus';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const service = axios.create({
     baseURL: '/api', //请求接口的时候会自动拼上
     headers: {}, //可以定义请求的头部信息
@@ -21,7 +23,7 @@ const service = axios.create({
 service.interceptors.request.use(config => {
     // 这里面目前看来可以向请求头当中添加token,sig等后端需要的头部信息
     if ((config?.url || '').indexOf('127.0.0.1') > -1) {
-        config.baseURL = ''
+        config.baseURL = '';
     }
     console.log('config', config);
     return config;
@@ -30,12 +32,20 @@ service.interceptors.request.use(config => {
  * 响应拦截器
  */
 service.interceptors.response.use(response => {
-    if (response.status === 200) {
-        return response.data;
-    } else if (response.status === 403) {
-        // 可以提示当前账号没有相应的权限
+    // if (response.status === 200) {
+    //     return response.data;
+    // } else if (response.status === 403) {
+    //     // 可以提示当前账号没有相应的权限
+    // } else {
+    //     // 这里就提示相应的返回信息
+    // }
+    const {status, data} = response;
+    if (data.code == 20001) {
+        console.log('router', router);
+        sessionStorage.removeItem('token');
+        router.replace('/login');
     } else {
-        // 这里就提示相应的返回信息
+        return response.data;
     }
 }, () => {
     // 请求超时会执行的函数
