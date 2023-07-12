@@ -1,20 +1,15 @@
 <template>
     <router-view />
 </template>
-<script setup lang="ts">
+<script lang="ts">
+import { useRouter } from 'vue-router';
+import eventBus from "@/utils/eventBus/index.js";
+export default {
+    mounted() {
+        console.log('axiosProps', '写入');
+        eventBus.$emit('axiosProps', useRouter());
+    }
+};
 </script>
 <style lang="scss">
-// .pageContent{
-//   margin-top:60px;
-//   display:flex;
-//   justify-content: flex-start;
-//   min-height: 100vh;
-//   .fixed{
-//     flex-grow: 0;
-//     flex-shrink: 0;
-//   }
-//   .page{
-//     flex-grow: 1;
-//   }
-// }
 </style>

@@ -1,17 +1,14 @@
 const mysql = require('mysql')
 
-let connection
-try {
-    connection = mysql.createConnection({
-        host: '192.168.220.192',
-        user: 'lxh',
-        password: '5551340xinghua',
-        database: 'lxh'
-    })
-    connection.connect()
-} catch (err) {
-    console.log('数据库没有连接成功')
-}
+const connection = mysql.createConnection({
+    host: '192.168.220.192',
+    user: 'lxh',
+    password: '5551340xinghua',
+    database: 'lxh'
+})
+connection.connect((err) => {
+    console.log('数据库连接报错', err)
+})
 
 const query = (select, callback): void => {
     if (connection) {

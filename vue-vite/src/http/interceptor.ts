@@ -9,8 +9,12 @@
  */
 import axios from "axios";
 import { ElMessage } from 'element-plus';
-import { useRouter } from 'vue-router';
-const router = useRouter();
+import eventBus from "@/utils/eventBus/index.js";
+let Router = null;
+eventBus.$on((router) => {
+    console.log('axiosProps', router);
+    Router = router;
+}, 'axiosProps');
 const service = axios.create({
     baseURL: '/api', //请求接口的时候会自动拼上
     headers: {}, //可以定义请求的头部信息
@@ -40,13 +44,25 @@ service.interceptors.response.use(response => {
     //     // 这里就提示相应的返回信息
     // }
     const {status, data} = response;
-    if (data.code == 20001) {
-        console.log('router', router);
-        sessionStorage.removeItem('token');
-        router.replace('/login');
-    } else {
-        return response.data;
+    if (data instanceof Blob) {
+        const { type } = data;
+        if (type == "application/json") {
+            // 将blob转换成json数据
+            const reader = new FileReader();
+            reader.readAsText(data, "utf-8");
+            reader.onload = () => {
+                const msg = JSON.parse(reader.result as string);
+                if (msg.code == '20001') {
+                    sessionStorage.removeItem('token');
+                    if (Router) {
+                        Router.replace('/login');
+                    }
+                    ElMessage.info('登录超时');
+                }
+            };
+        }
     }
+    return response.data;
 }, () => {
     // 请求超时会执行的函数
     ElMessage.info('网络异常，请稍后再试！');

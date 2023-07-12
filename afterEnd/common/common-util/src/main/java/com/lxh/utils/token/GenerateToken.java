@@ -57,7 +57,7 @@ public class GenerateToken {
 
 
         try{
-            Date expiresAt = new Date(System.currentTimeMillis() - 24L * 60L * 60L * 1000L);
+            Date expiresAt = new Date(System.currentTimeMillis() + 24L * 60L * 60L * 1000L);
             System.out.println("我是token的有效期" + expiresAt);
             byte[] bs = toUTF8(JWT_PRIVATE_KEY);
             String token = JWT.create()

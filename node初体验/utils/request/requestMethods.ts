@@ -142,7 +142,7 @@ const requestAdmin = async (url: string, params: IParams, method: string = 'POST
             })
             return result
         } else {
-            console.log('data.toString()', data.toString())
+            // console.log('data.toString()', data.toString())
             return { headers, data }
         }
     }).catch(err => {
