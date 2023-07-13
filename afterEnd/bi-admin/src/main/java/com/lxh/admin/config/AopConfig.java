@@ -34,12 +34,16 @@ public class AopConfig {
         String token = GenerateToken.getToken();
         DecodedJWT jwt = null;
         Result result = null;
-        try {
-            jwt = GenerateToken.verifyToken(token);
-            Date validityPeriod = jwt.getExpiresAt();
-//            Date nowTime = new Date(System.currentTimeMillis());
-        } catch (Throwable e) {
+        if (token == null) {
             result = Result.tokenExpire(null);
+        } else {
+            try {
+                jwt = GenerateToken.verifyToken(token);
+                Date validityPeriod = jwt.getExpiresAt();
+//            Date nowTime = new Date(System.currentTimeMillis());
+            } catch (Throwable e) {
+                result = Result.tokenExpire(null);
+            }
         }
         if (result != null) {
             // 对异常进行抛出

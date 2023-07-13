@@ -1,4 +1,4 @@
-package com.lxh.admin.controller;
+package com.lxh.dao;
 
 import com.lxh.mybatis.entity.hospSet;
 

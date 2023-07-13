@@ -19,6 +19,7 @@ const request = <T>(config: AxiosRequestConfig<T>): Promise<any> => {
         data = {data: params};
     }
     const token = sessionStorage.getItem('token');
+    console.log('token', token);
     if (token) {
         Object.assign(headers, {"X-Access-Token": token}); 
         Object.assign(data, {token});

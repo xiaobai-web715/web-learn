@@ -7,7 +7,7 @@ router.post('/getUserRouter', (req, res) => {
     const params = req.body
     const baseUrl: string = credentials.biAdmin.baseUrl
     const url: string = baseUrl + '/router/getUserRouter'
-    requestAdmin(url, params, 'POST').then(resq => {
+    requestAdmin(url, params, 'POST', req).then(resq => {
         console.log('resq', resq)
         res.send(resq)
     })

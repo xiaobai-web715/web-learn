@@ -3,7 +3,9 @@ package com.lxh.admin.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lxh.admin.config.ServiceTokenRequired;
 import com.lxh.admin.service.impl.HospitalSetService;
+import com.lxh.dao.pageClass;
 import com.lxh.mybatis.entity.hospSet;
 
 import com.lxh.utils.result.Result;
@@ -20,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.baomidou.mybatisplus.core.toolkit.ObjectUtils.isNotNull;
-
 @RestController
 @RequestMapping("/admin/hosp/list")
 @ShenyuSpringCloudClient(path = "/list")
@@ -32,11 +32,12 @@ public class HospitalSetController {
 
     @PostMapping("/query")
     @ShenyuSpringCloudClient(path = "/query")
+    @ServiceTokenRequired
     public Result findHospitalSet(@RequestBody pageClass hospInfo) {
 //        System.out.println(hospInfo);
         // 调用hospitalSetService的方法
         LambdaQueryWrapper<hospSet> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(isNotNull(hospInfo.getStatus()), hospSet::getStatus, hospInfo.getStatus());
+        queryWrapper.eq(hospInfo.getStatus() != null, hospSet::getStatus, hospInfo.getStatus());
         queryWrapper.like(StringUtils.isNotEmpty(hospInfo.getHospname()), hospSet::getHospname, hospInfo.getHospname());
         Page<hospSet> list = hospitalSetService.page(new Page<>(hospInfo.getPage(), hospInfo.getPageSize()), queryWrapper);
 //        System.out.println("``````");
@@ -46,6 +47,7 @@ public class HospitalSetController {
     }
     @PostMapping("/edit")
     @ShenyuSpringCloudClient(path = "/edit")
+    @ServiceTokenRequired
     public Result editHospitalInfo(@RequestBody hospSet hospInfo) {
 //        System.out.println(hospInfo);
         boolean result = hospitalSetService.updateById(hospInfo);
@@ -54,6 +56,7 @@ public class HospitalSetController {
     }
     @PostMapping("/add")
     @ShenyuSpringCloudClient(path = "/add")
+    @ServiceTokenRequired
     public Result addHospitalInfo(@RequestBody hospSet hospInfo) {
 //        System.out.print(hospInfo);
         boolean result = hospitalSetService.save(hospInfo);
@@ -65,6 +68,7 @@ public class HospitalSetController {
     }
     @PostMapping("/delete")
     @ShenyuSpringCloudClient(path = "/delete")
+    @ServiceTokenRequired
     public Result deleteHospitalInfo(@RequestBody hospSet hospInfo) {
 //        System.out.println(hospInfo);
         boolean result = hospitalSetService.removeById(hospInfo.getId());
@@ -76,6 +80,7 @@ public class HospitalSetController {
     }
     @PostMapping("/get/info")
     @ShenyuSpringCloudClient(path = "/get/info")
+    @ServiceTokenRequired
     public Result getInfoHospitalInfo(@RequestBody hospSet hospInfo) {
         hospSet info = hospitalSetService.getById(hospInfo.getId());
 //        System.out.println(info);
@@ -83,6 +88,7 @@ public class HospitalSetController {
     }
     @PostMapping("/get/briefInfo")
     @ShenyuSpringCloudClient(path = "/get/briefInfo")
+    @ServiceTokenRequired
     public Result getBriefInfo(@RequestBody hospSet hospInfo) {
         LambdaQueryWrapper<hospSet> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.like(StringUtils.isNotEmpty(hospInfo.getHospname()), hospSet::getHospname, hospInfo.getHospname());

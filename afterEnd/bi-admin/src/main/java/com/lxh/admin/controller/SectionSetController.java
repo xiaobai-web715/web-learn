@@ -2,6 +2,7 @@ package com.lxh.admin.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.lxh.admin.config.ServiceTokenRequired;
 import com.lxh.admin.mapper.hospSectionMapper;
 import com.lxh.admin.service.impl.HospPrivSetService;
 import com.lxh.joint.Section;
@@ -27,6 +28,7 @@ public class SectionSetController {
 
     @GetMapping("/query")
     @ShenyuSpringCloudClient(path = "/query")
+    @ServiceTokenRequired
     public Result getSectionList() {
         try{
             List<Section> list = jointSectionSetService.getSection();
@@ -38,6 +40,7 @@ public class SectionSetController {
 
     @GetMapping("/get/hospSection")
     @ShenyuSpringCloudClient(path = "/get/hospSection")
+    @ServiceTokenRequired
     public Result getHospSection(Integer hospId) {
         System.out.println(hospId);
         LambdaQueryWrapper<hospPriv> queryWrapper = new LambdaQueryWrapper<>();
@@ -53,6 +56,7 @@ public class SectionSetController {
 
     @PostMapping("/set/hospSection")
     @ShenyuSpringCloudClient(path = "/set/hospSection")
+    @ServiceTokenRequired
     public Result setHospSection(@RequestBody hospPriv info) {
         LambdaQueryWrapper<hospPriv> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(isNotNull(info.getHospId()), hospPriv::getHospId, info.getHospId());

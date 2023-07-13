@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
-import com.lxh.annotation.ServiceTokenRequired;
 
 @Aspect
 @Component
@@ -57,8 +56,8 @@ public class GenerateToken {
 
 
         try{
-            Date expiresAt = new Date(System.currentTimeMillis() + 24L * 60L * 60L * 1000L);
-            System.out.println("我是token的有效期" + expiresAt);
+            Date expiresAt = new Date(System.currentTimeMillis() + 1L * 60L * 60L * 1000L);
+//            System.out.println("我是token的有效期" + expiresAt);
             byte[] bs = toUTF8(JWT_PRIVATE_KEY);
             String token = JWT.create()
                     .withIssuer("lxh")
@@ -80,7 +79,7 @@ public class GenerateToken {
         if (token == null) {
             token = request.getHeader("X-Access-Token");
         }
-        System.out.println("我的token是" + token);
+//        System.out.println("我的token是" + token);
         return token;
     }
     public static DecodedJWT verifyToken(String token){

@@ -114,6 +114,7 @@ public class UserSetController {
 
     @PostMapping("/register")
     @ShenyuSpringCloudClient(path = "/register")
+    @ServiceTokenRequired
     public Result register(@RequestBody hospUser userInfo) {
 //        System.out.print(userInfo);
         Boolean result = userSetService.save(userInfo);
@@ -204,6 +205,7 @@ public class UserSetController {
     @PostMapping("/uploadImage")
     @ShenyuSpringCloudClient(path = "/uploadImage")
     @ResponseBody
+    @ServiceTokenRequired
     public Result setUserImage(HttpServletRequest request) {
         MultipartHttpServletRequest params = ((MultipartHttpServletRequest) request);
         List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");

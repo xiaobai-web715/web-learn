@@ -57,9 +57,17 @@ service.interceptors.response.use(response => {
                     if (Router) {
                         Router.replace('/login');
                     }
-                    ElMessage.info('登录超时');
+                    return ElMessage.info('登录超时');
                 }
             };
+        }
+    } else {
+        if (data.code == '20001') {
+            sessionStorage.removeItem('token');
+            if (Router) {
+                Router.replace('/login');
+            }
+            return ElMessage.info('登录超时');
         }
     }
     return response.data;
