@@ -1,6 +1,6 @@
-const express = require('express')
+import express = require('express')
+import db = require('../mysql/index')
 const router = express.Router()
-const db = require('../mysql/index')
 router.post('/getAppVersion', (req, res) => {
     const params = req.body
     const { name, version } = params
@@ -16,5 +16,4 @@ router.post('/getAppVersion', (req, res) => {
         }
     })
 })
-module.exports = router
-export {}
+export = router

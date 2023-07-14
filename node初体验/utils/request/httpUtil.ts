@@ -1,12 +1,4 @@
 import IFileBuffer from './filebuffer'
-interface IHttpUtil {
-    boundary: string
-    contentLength: number
-    constructor: () => void
-    generateBoundary: () => string
-    structureFileContent: (key: string, buffer: IFileBuffer) => Array<string | Buffer[]>
-    structureContent: (key: string, val: any) => string[]
-}
 class HttpUtil {
     boundary: string
     contentLength: number
@@ -51,5 +43,4 @@ class HttpUtil {
 //     return content
 // }
 
-module.exports = HttpUtil
-export default IHttpUtil
+export = HttpUtil

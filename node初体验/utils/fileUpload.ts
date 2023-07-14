@@ -1,6 +1,6 @@
-const multer = require('multer')
+import multer = require('multer')
 // const { decode } = require('iconv-lite')
-const path = require('path')
+import path = require('path')
 
 // const allowExts = ['.txt', '.log', '.xls', '.xlsx', '.csv', '.doc', '.docx', '.ppt', '.jpg', '.png', '.gif', '.jpeg', '.bmp']
 const storage = multer.diskStorage({
@@ -35,6 +35,6 @@ const upload = multer({
     // limits, //上传数据的限制
     // preservePath, //保留文件的完整路径而不是base name
 })
-module.exports = upload
+// module.exports = upload
 
-export default {}
+export = upload

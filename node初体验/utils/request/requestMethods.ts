@@ -1,29 +1,15 @@
 import IHttpUtil from './httpUtil'
-import IFileBuffer from './filebuffer'
-const http = require('http')
-const logger = require('../logger/index')
-const { credentials } = require('../../config/config')
-const HttpUtil = require('./httpUtil.ts')
-const FileBuffer = require('./filebuffer')
-const { objToUrl } = require('../tool.ts')
-const path = require('path')
-const fs = require('fs')
-interface resp {
-    data: number[]
-    headers: object
-}
-// 目前使用泛型想从函数调用处来声明类型，但是会报非类型函数调用不能使用类型参数的警告（所以先使用这种方式来替代）
-interface IParams {
-    [key: string]: string | number | IFileBuffer
-}
-interface IOptions {
-    path: string
-    host: number
-    port: number
-    method: string
-    headers: { [key: string]: any }
-}
-let httpUtil: IHttpUtil = null
+import http = require('http')
+// import logger = require('../logger/index')
+import HttpUtil = require('./httpUtil')
+import FileBuffer = require('./filebuffer')
+import tool = require('../tool')
+import path = require('path')
+import fs = require('fs')
+import config = require('../../config/config')
+const { credentials } = config
+const { objToUrl } = tool
+let httpUtil: IHttpUtil | null = null
 const structure = {
     POST: (options) => {
         options.headers['Content-Type'] = 'application/json'
@@ -51,24 +37,24 @@ const requestBody = {
         req.write(sendInfo)
     },
     POSTFormData: (req, params: IParams) => {
-        let writeContent: Array<string | Buffer[]> = []
+        let writeContent: Array<Array<string | Buffer>> = []
         Object.entries(params).forEach(([key, value]) => {
             if (value instanceof FileBuffer) {
                 // 既然已经通过instanceof判断进入到改语句内部,那么就可以断言其为IFileBuffer了
-                writeContent = writeContent.concat(httpUtil.structureFileContent(key, value as IFileBuffer))
+                writeContent = writeContent.concat((httpUtil as IHttpUtil).structureFileContent(key, value as IFileBuffer))
             } else {
-                writeContent = writeContent.concat(httpUtil.structureContent(key, value))
+                writeContent = writeContent.concat((httpUtil as IHttpUtil).structureContent(key, value as string))
             }
         })
-        const contentLength: number = httpUtil.contentLength + Buffer.byteLength(`--${httpUtil.boundary}--`)
+        const contentLength: number = (httpUtil as IHttpUtil).contentLength + Buffer.byteLength(`--${(httpUtil as IHttpUtil).boundary}--`)
         req.setHeader('Content-Length', contentLength)
         writeContent.forEach(item => {
             req.write(item)
         })
-        req.write(`--${httpUtil.boundary}--`)
+        req.write(`--${(httpUtil as IHttpUtil).boundary}--`)
     },
     POSTUrlencoded: (req, params) => {
-        const parameter = []
+        const parameter: string[] = []
         /**
          * 如果除了拼接部分外有&符号需要进行编码, 如果有空格将空格转换成+号,如果有特殊符号,要将特殊符号转换成ASCII HEX值
          */
@@ -81,7 +67,7 @@ const requestBody = {
 
     }
 }
-const requestAdmin = async (url: string, params: IParams, method: string = 'POST', req: Request): Promise<any> => {
+const requestAdmin = async (url: string, params: IParams, method: string = 'POST', req?): Promise<any> => {
     const options: IOptions = {
         host: credentials.biAdmin.host,
         port: credentials.biAdmin.port,
@@ -95,7 +81,7 @@ const requestAdmin = async (url: string, params: IParams, method: string = 'POST
     }
     const finalOptions = structure[method](options, params) // 根据不同的method构造不同的headers
     return await new Promise((resolve, reject) => {
-        const buffer = []
+        const buffer: Uint8Array[] = []
         const req = http.request(finalOptions, (res) => {
             // options配置好请求的参数
             res.on('data', (chunk) => {
@@ -149,7 +135,6 @@ const requestAdmin = async (url: string, params: IParams, method: string = 'POST
         console.log('err', err)
     })
 }
-export { }
-module.exports = {
+export = {
     requestAdmin
 }

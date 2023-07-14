@@ -1,4 +1,4 @@
-const mysql = require('mysql')
+import mysql = require('mysql')
 
 const connection = mysql.createConnection({
     host: '192.168.220.192',
@@ -18,8 +18,6 @@ const query = (select, callback): void => {
     }
 }
 
-module.exports = {
+export = {
     query
 }
-
-export {}

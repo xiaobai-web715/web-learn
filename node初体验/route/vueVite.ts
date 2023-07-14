@@ -1,11 +1,12 @@
 import { Response, Request } from 'express'
-const express = require('express')
-const client = require('../mongodb/mongodb')
-const { findData, addOne, paging, update, deleteOne, noIncreaseAddOne } = require('../mongodb/utils')
+import express = require('express')
+import client = require('../mongodb/mongodb')
+import mongodb = require('../mongodb/utils')
+const { findData, addOne, paging, update, deleteOne, noIncreaseAddOne } = mongodb
 const router = express.Router()
 router.post('/user_router_list', (req: Request, res: Response) => {
-    findData(client, {}, 'Vue', 'vueRouter').then(resp => {
-        if (resp.length > 0) {
+    findData(client, {}, 'Vue', 'vueRouter').then((resp) => {
+        if ((resp as any[]).length > 0) {
             res.status(200).send({
                 code: 200,
                 data: resp
@@ -16,6 +17,12 @@ router.post('/user_router_list', (req: Request, res: Response) => {
                 data: 'no data'
             })
         }
+    }).catch((err) => {
+        res.status(200).send({
+            code: 404,
+            data: null,
+            msg: 'mongodb error'
+        })
     })
 })
 router.post('/userToken', (req: Request, res: Response) => {
@@ -39,7 +46,7 @@ router.post('/userToken', (req: Request, res: Response) => {
 
 router.post('/admin/hosp/hospitalList', (req: Request, res: Response) => {
     const params = req.body
-    paging(client, params, 'Vue', 'hospList').then(([list, total]) => {
+    paging(client, params, 'Vue', 'hospList').then(([list, total]: any[]) => {
         res.status(200).send({
             code: 200,
             data: {
@@ -111,6 +118,5 @@ router.post('/admin/hosp/delete', (req: Request, res: Response) => {
         })
     })
 })
-module.exports = router
 
-export {}
+export = router

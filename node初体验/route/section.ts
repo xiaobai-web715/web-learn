@@ -1,20 +1,25 @@
-const express = require('express')
+import express = require('express')
+import requestMethods = require('../utils/request/requestMethods')
+import config = require('../config/config')
 const router = express.Router()
-const { requestAdmin } = require('../utils/request/requestMethods')
-const { credentials } = require('../config/config')
+const { requestAdmin } = requestMethods
+const { credentials } = config
 router.get('/sectionList', (req, res, next) => {
     const params = req.query
     const url = String(credentials.biAdmin.baseUrl) + '/section/query'
-    requestAdmin(url, params, 'GET', req).then(resq => {
+    requestAdmin(url, params as IParams, 'GET', req).then(resq => {
         res.status(200).send(resq)
+    }).catch((err) => {
+        res.status(404).send(err)
     })
 })
 router.get('/getHospSection', (req, res, next) => {
     const params = req.query
     const url = String(credentials.biAdmin.baseUrl) + '/section/get/hospSection'
-    requestAdmin(url, params, 'GET', req).then(resq => {
-        console.log('resq', resq)
+    requestAdmin(url, params as IParams, 'GET', req).then(resq => {
         res.status(200).send(resq)
+    }).catch((err) => {
+        res.status(404).send(err)
     })
 })
 router.post('/setHospSection', (req, res, next) => {
@@ -22,7 +27,8 @@ router.post('/setHospSection', (req, res, next) => {
     const url = String(credentials.biAdmin.baseUrl) + '/section/set/hospSection'
     requestAdmin(url, params, 'POST', req).then(resq => {
         res.status(200).send(resq)
+    }).catch((err) => {
+        res.status(404).send(err)
     })
 })
-module.exports = router
-export {}
+export = router

@@ -1,7 +1,4 @@
-interface IParams {
-    message: string
-}
-export const objToUrl = (params: IParams): String => {
+const objToUrl = (params: IParams): String => {
     let searchInfo = '?'
     const keys = Object.keys(params)
     keys.forEach((key, index) => {
@@ -9,3 +6,5 @@ export const objToUrl = (params: IParams): String => {
     })
     return searchInfo
 }
+
+export = { objToUrl }

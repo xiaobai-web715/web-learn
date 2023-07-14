@@ -1,11 +1,7 @@
-interface IFindTodo {
-    taskId: number
-    value: string
-}
 // 创建路由模块
-const express = require('express')
+import express = require('express')
+import client = require('../mongodb/mongodb')
 const router = express.Router()
-const client = require('../mongodb/mongodb')
 // const { findData } = require('../mongodb/utils')  //用require导入泛型函数会ts的错误=> 未类型化的函数调用可能不接受类型参数
 const findData = async <T>(client, options, dbName, dbTable): Promise<T> => {
     return await new Promise((resolve, reject) => {
@@ -86,6 +82,4 @@ router.post('/deleteList', (res, req) => {
     })
 })
 
-export {}
-
-module.exports = router
+export = router

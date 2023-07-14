@@ -1,39 +1,43 @@
-const express = require('express')
-const bodyParser = require('body-parser')
+import express = require('express')
+import bodyParser = require('body-parser')
 // const expressHandlebars = require('express-handlebars'); //引入服务端html模板框架 => 这样的引入有错误expressHandlebars is not founction
-const { engine } = require('express-handlebars')
+import handlebars = require('express-handlebars')
 // const history = require('connect-history-api-fallback')
-const cookieParser = require('cookie-parser')
-const expressSession = require('express-session')
-const morgan = require('morgan')
-const fs = require('fs')
-const path = require('path')
+import cookieParser = require('cookie-parser')
+import expressSession = require('express-session')
+import morgan = require('morgan')
+import fs = require('fs')
+import path = require('path')
 // node实现多进程
 // const cluster = require('cluster')
 // const numCPUs = require('os').cpus().length
 
-const pm2 = require('pm2')
-const { promisify } = require('util')
+import pm2 = require('pm2')
+import util = require('util')
+import config = require('./config/config')
+import todoList = require('./route/todoList')
+import test = require('./route/test')
+import post = require('./route/posts')
+import hoc = require('./route/HOC')
+import UploadFile = require('./route/uploadFile')
+import touchByMiatask = require('./route/touchByMiatask')
+import upFile = require('./route/upFile')
+import vueVite = require('./route/vueVite')
+import syt = require('./route/syt')
+import sytUser = require('./route/sytUser')
+import sytRouter = require('./route/sytRouter')
+import section = require('./route/section')
+import paramUtil = require('./utils/request/paramUtil')
 
-const { credentials } = require('./config/config')
+import severRendering = require('./utils/handlers')
+const { engine } = handlebars
+const { promisify } = util
+
+const { credentials } = config
 
 const app = express()
-const todoList = require('./route/todoList')
-const test = require('./route/test')
-const post = require('./route/posts')
-const hoc = require('./route/HOC')
-const UploadFile = require('./route/uploadFile')
-const touchByMiatask = require('./route/touchByMiatask')
-const upFile = require('./route/upFile')
-const vueVite = require('./route/vueVite.ts')
-const syt = require('./route/syt')
-const sytUser = require('./route/sytUser')
-const sytRouter = require('./route/sytRouter')
-const section = require('./route/section')
 
-const { getParams } = require('./utils/request/paramUtil')
-
-const severRendering = require('./utils/handlers') // 服务端渲染路由
+const { getParams } = paramUtil // 服务端渲染路由
 
 switch (app.get('env')) {
     case 'development':
@@ -95,7 +99,7 @@ app.use('/admin/router', sytRouter)
 app.use('/admin/section', section)
 // app.listen 仅仅使用http模块(如果要使用https则使用https.createServer)
 let server = null
-const port = process.env.PORT || 3001
+const port = process.env.PORT ? process.env.PORT : 3001
 
 // 对于node来说，当require.main === module的时候说明是node直接运行的该文件
 // 不等的时候说明该文件是导入的

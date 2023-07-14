@@ -1,15 +1,8 @@
-const fs = require('fs')
-interface IFileBuffer {
-    filename: string
-    filepath: string
-    buffer: Buffer
-    mimetype: string
-    getBuffer: () => Buffer
-}
+import fs = require('fs')
 class FileBuffer {
     filename: string
     filepath: string
-    buffer: Buffer
+    buffer: Buffer | null
     mimetype: string
     constructor (file) {
         this.filename = file.filename
@@ -32,6 +25,4 @@ class FileBuffer {
 //     return this.buffer
 // }
 
-module.exports = FileBuffer
-
-export default IFileBuffer
+export = FileBuffer

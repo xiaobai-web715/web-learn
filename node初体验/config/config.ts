@@ -1,4 +1,3 @@
-const env = process.env.NODE_ENV || 'development'
-const credentials = require(`../credentials.${env}.json`)
-module.exports = { credentials }
-export default {}
+import credentials = require(`../credentials.${process.env.NODE_ENV ? process.env.NODE_ENV : 'development'}.json`)
+// module.exports = { credentials }
+export = { credentials }

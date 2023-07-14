@@ -1,19 +1,23 @@
-const express = require('express')
+import express = require('express')
+import requestMethods = require('../utils/request/requestMethods')
+import config = require('../config/config')
 const router = express.Router()
-const { requestAdmin } = require('../utils/request/requestMethods')
-const { credentials } = require('../config/config')
+const { requestAdmin } = requestMethods
+const { credentials } = config
 router.post('/query', (req, res) => {
     const params = req.body
     const baseUrl: string = credentials.biAdmin.baseUrl
     const url: string = baseUrl + '/list/query'
     requestAdmin(url, params, 'POST', req).then(resp => {
         res.status(200).send(resp)
+    }).catch((err) => {
+        res.status(404).send(err)
     })
 })
 router.post('/add', (req, res) => {
     const params = req.body
     const baseUrl: string = credentials.biAdmin.baseUrl
-    let url: String = ''
+    let url: string = ''
     if (params.id) {
         url = baseUrl + '/list/edit'
     } else {
@@ -21,6 +25,8 @@ router.post('/add', (req, res) => {
     }
     requestAdmin(url, params, 'POST', req).then(resp => {
         res.status(200).send(resp)
+    }).catch((err) => {
+        res.status(404).send(err)
     })
 })
 router.post('/delete', (req, res) => {
@@ -29,6 +35,8 @@ router.post('/delete', (req, res) => {
     const url: string = baseUrl + '/list/delete'
     requestAdmin(url, params, 'POST', req).then(resp => {
         res.status(200).send(resp)
+    }).catch((err) => {
+        res.status(404).send(err)
     })
 })
 router.post('/get/info', (req, res) => {
@@ -37,6 +45,8 @@ router.post('/get/info', (req, res) => {
     const url: string = baseUrl + '/list/get/info'
     requestAdmin(url, params, 'POST', req).then(resp => {
         res.status(200).send(resp)
+    }).catch((err) => {
+        res.status(404).send(err)
     })
 })
 router.post('/get/briefInfo', (req, res) => {
@@ -44,7 +54,9 @@ router.post('/get/briefInfo', (req, res) => {
     const url: string = String(credentials.biAdmin.baseUrl) + '/list/get/briefInfo'
     requestAdmin(url, params, 'POST', req).then(resp => {
         res.status(200).send(resp)
+    }).catch((err) => {
+        res.status(404).send(err)
     })
 })
-export { }
-module.exports = router
+export = router
+// module.exports = router

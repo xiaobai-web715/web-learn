@@ -1,9 +1,11 @@
-const express = require('express')
+import express = require('express')
+import requestMethods = require('../utils/request/requestMethods')
+import config = require('../config/config')
+import fileUpload = require('../utils/fileUpload')
+import FileBuffer = require('../utils/request/filebuffer')
 const router = express.Router()
-const fileUpload = require('../utils/fileUpload')
-const FileBuffer = require('../utils/request/filebuffer')
-const { requestAdmin } = require('../utils/request/requestMethods')
-const { credentials } = require('../config/config')
+const { requestAdmin } = requestMethods
+const { credentials } = config
 
 router.post('/login', (req, res) => {
     const params = req.body
@@ -11,6 +13,8 @@ router.post('/login', (req, res) => {
     const url: string = baseUrl + '/user/login'
     requestAdmin(url, params, 'POST').then(resq => {
         res.send(resq)
+    }).catch((err) => {
+        res.status(404).send(err)
     })
 })
 router.post('/register', (req, res) => {
@@ -19,6 +23,8 @@ router.post('/register', (req, res) => {
     const url: string = baseUrl + '/user/register'
     requestAdmin(url, params, 'POST', req).then(resq => {
         res.send(resq)
+    }).catch((err) => {
+        res.status(404).send(err)
     })
 })
 router.post('/getUserImage', (req, res) => {
@@ -38,6 +44,8 @@ router.post('/getUserImage', (req, res) => {
         } else {
             res.send(resp)
         }
+    }).catch((err) => {
+        res.status(404).send(err)
     })
 })
 router.post('/userImage', fileUpload.any(), (req, res) => {
@@ -49,9 +57,10 @@ router.post('/userImage', fileUpload.any(), (req, res) => {
         uid: otherParams.uid
     }
     const url = String(credentials.biAdmin.baseUrl) + '/user/uploadImage'
-    requestAdmin(url, params, 'POSTFormData', req).then(resq => {
+    requestAdmin(url, params as IParams, 'POSTFormData', req).then(resq => {
         res.send(resq)
+    }).catch((err) => {
+        res.status(404).send(err)
     })
 })
-export { }
-module.exports = router
+export = router

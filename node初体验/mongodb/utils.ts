@@ -94,7 +94,7 @@ const update = async (client, options, dbName, dbTable): Promise<any> => {
         })
     })
 }
-module.exports = {
+export = {
     findData,
     noIncreaseAddOne,
     addOne,
