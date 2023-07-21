@@ -14,7 +14,7 @@ import path = require('path')
 
 import pm2 = require('pm2')
 import util = require('util')
-import config = require('./config/config')
+import credentials = require('./config/config')
 import todoList = require('./route/todoList')
 import test = require('./route/test')
 import post = require('./route/posts')
@@ -30,10 +30,9 @@ import section = require('./route/section')
 import paramUtil = require('./utils/request/paramUtil')
 
 import severRendering = require('./utils/handlers')
+import { Server } from 'http'
 const { engine } = handlebars
 const { promisify } = util
-
-const { credentials } = config
 
 const app = express()
 
@@ -98,7 +97,7 @@ app.use('/admin/user', sytUser)
 app.use('/admin/router', sytRouter)
 app.use('/admin/section', section)
 // app.listen 仅仅使用http模块(如果要使用https则使用https.createServer)
-let server = null
+let server: Server | null = null
 const port = process.env.PORT ? process.env.PORT : 3001
 
 // 对于node来说，当require.main === module的时候说明是node直接运行的该文件
@@ -145,7 +144,7 @@ if (require.main === module) {
                     // console.log('pm2的busApi获取的信息:', JSON.stringify(raw), processId)
                     pm2.sendDataToProcessId(processId, raw, () => { })
                 })
-                process.send({ topic: 'test', data: 'Hello, Billion Bottle!' })
+                process.send!({ topic: 'test', data: 'Hello, Billion Bottle!' })
                 return true
             } catch (err) {
                 // return err //这样返回的话好像不会进入到catch里面
@@ -154,7 +153,7 @@ if (require.main === module) {
         })().catch(err => console.error(err))
     } else {
         server = app.listen(3001, () => {
-            process.send('Hello, Father。')
+            process.send!('Hello, Father。')
             console.log(`Express ${process.pid} started in ${app.get('env')} on http://localhost:${port}; press Ctrl-C to terminate`)
         })
     }
@@ -166,7 +165,7 @@ if (require.main === module) {
 }
 
 app.get('/', (req, res) => {
-    const params = getParams(req)
+    const params = getParams({ body: req.body, query: req.query })
     console.log('params', params)
     res.send(JSON.stringify({ firstName: 'liu', lastName: 'xinghua' }))
     console.log('当前进程的PID', process.pid) // 目前不清楚在别的应用程序中这个进程的PID如何获取
@@ -195,7 +194,7 @@ app.use(severRendering.severError)
 //  => 这个就相当于发布订阅模式(在此处发布,其余地方订阅后这里去执行)
 process.on('SIGTEMR', () => {
     console.log(`pid: ${process.pid}收到消息`)
-    server.close(() => {
+    server!.close(() => {
         console.log('响应成功,退出nodejs程序')
     })
 })

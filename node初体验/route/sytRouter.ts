@@ -1,9 +1,8 @@
 import express = require('express')
 import requestMethods = require('../utils/request/requestMethods')
-import config = require('../config/config')
+import credentials = require('../config/config')
 const router = express.Router()
 const { requestAdmin } = requestMethods
-const { credentials } = config
 router.post('/getUserRouter', (req, res) => {
     const params = req.body
     const baseUrl: string = credentials.biAdmin.baseUrl

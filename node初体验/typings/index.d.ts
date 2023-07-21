@@ -1,4 +1,8 @@
-declare module Express{
+// import { Server } from 'http'
+
+// declare let server: Server | null // 声明区局的变量
+
+declare module Express{ // 模块化
     interface Request {
         files?: any[][any]
     }
@@ -13,7 +17,7 @@ interface IFileBuffer {
 }
 
 interface IParams {
-    [key: string]: string | number | IFileBuffer
+    [key: string]: undefined | string | string[] | IParams | IParams[] | IFileBuffer
 }
 
 interface IFindTodo {

@@ -1,9 +1,8 @@
 import express = require('express')
 import requestMethods = require('../utils/request/requestMethods')
-import config = require('../config/config')
+import credentials = require('../config/config')
 const router = express.Router()
 const { requestAdmin } = requestMethods
-const { credentials } = config
 router.get('/sectionList', (req, res, next) => {
     const params = req.query
     const url = String(credentials.biAdmin.baseUrl) + '/section/query'

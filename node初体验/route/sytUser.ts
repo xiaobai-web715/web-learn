@@ -1,11 +1,10 @@
 import express = require('express')
 import requestMethods = require('../utils/request/requestMethods')
-import config = require('../config/config')
+import credentials = require('../config/config')
 import fileUpload = require('../utils/fileUpload')
 import FileBuffer = require('../utils/request/filebuffer')
 const router = express.Router()
 const { requestAdmin } = requestMethods
-const { credentials } = config
 
 router.post('/login', (req, res) => {
     const params = req.body
