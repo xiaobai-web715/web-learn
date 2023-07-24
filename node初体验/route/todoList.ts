@@ -2,7 +2,6 @@
 import express = require('express')
 import client = require('../mongodb/mongodb')
 const router = express.Router()
-// const { findData } = require('../mongodb/utils')  //用require导入泛型函数会ts的错误=> 未类型化的函数调用可能不接受类型参数
 const findData = async <T>(client, options, dbName, dbTable): Promise<T> => {
     return await new Promise((resolve, reject) => {
         client.db(dbName).collection(dbTable).find(options).toArray((err, res) => {
@@ -13,7 +12,7 @@ const findData = async <T>(client, options, dbName, dbTable): Promise<T> => {
 }
 
 router.get('/todoList', (req, res) => {
-    findData <IFindTodo[]>(client, {}, 'todoList', 'raskList').then(result => {
+    findData <ITask[]>(client, {}, 'todoList', 'raskList').then(result => {
     /**
    * 设置cookie
    */

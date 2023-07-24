@@ -54,10 +54,10 @@ const deleteOne = async (client, options, dbName, dbTable): Promise<void> => {
 }
 
 // 分页查询
-const paging = async (client, options, dbName, dbTable): Promise<object> => {
+const paging = async (client, options, dbName, dbTable): Promise<unknown[]> => {
     // 不传page与pageSize就是默认10条默认第一页
     const skip = ((options.page ? options.page : 1) - 1) * (options.pageSize ? options.pageSize : 10)
-    const promiseArr = []
+    const promiseArr: Array<Promise<unknown>> = []
     const search = ['name', 'nature']
     const params = {}
     search.forEach(item => {

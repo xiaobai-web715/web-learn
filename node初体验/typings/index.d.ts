@@ -20,7 +20,7 @@ interface IParams {
     [key: string]: undefined | string | string[] | IParams | IParams[] | IFileBuffer
 }
 
-interface IFindTodo {
+interface ITask {
     taskId: number
     value: string
 }

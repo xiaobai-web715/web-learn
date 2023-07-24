@@ -4,7 +4,7 @@
   "description": "",
   "main": "express.js",
   "scripts": {
-    "start": "set NODE_ENV=development&&ts-node-dev ./express.ts",
+    "start": "set NODE_ENV=development&&ts-node-dev --files ./express.ts",
     "test": "jest",
     "lint": "eslint express.ts utils",
     "pm2": "set NODE_ENV=development&& pm2 start ecosystem.config.js --env dev"
