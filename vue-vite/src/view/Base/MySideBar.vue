@@ -10,7 +10,7 @@
 <script lang="ts">
 import {mapState} from 'vuex';
 import MenuTable from '@/components/menu/menu.vue';
-import {IRouterRecordRaw} from '@/router/route';
+import {IRouterRecordRaw} from '@/router/route.ts';
 import {IState} from '@/store/state';
 export default {
     components: {

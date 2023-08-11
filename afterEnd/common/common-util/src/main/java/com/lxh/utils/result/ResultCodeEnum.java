@@ -25,6 +25,7 @@ public enum ResultCodeEnum {
 
     /* 数据错误：50001-599999 */
     RESULE_DATA_NONE(50001, "数据未找到"),
+    RESULE_IMAGE_NONE(50004, "获取图片失败"),
     DATA_IS_WRONG(50002, "数据有误"),
     DATA_ALREADY_EXISTED(50003, "数据已存在"),
 

@@ -17,7 +17,8 @@ import java.io.IOException;
 public class getResultError {
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(value = {resultError.class})
-    public Result resultErrorServletRequest(resultError ex, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        return Result.tokenExpire(null);
+    public resultError resultErrorServletRequest(resultError ex, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("全局异常捕获" + ex);
+        return ex;
     }
 }

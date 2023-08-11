@@ -11,7 +11,7 @@ module.exports = {
         "ecmaVersion": 2018, //代表兼容的es语法
         "sourceType": "module",
         "project": ['tsconfig.json'], // eslint规则
-        "extraFileExtensions": ['.vue'], //解决Parsing error: "parserOptions.project" has been set for @typescript-eslint/parser.The file does not match your project config: src\components\assembly\tableAssembly\Table.vue.The extension for the file (.vue) is non-standard. You should add "parserOptions.extraFileExtensions" to your config.
+        //"extraFileExtensions": ['.vue'], //解决Parsing error: "parserOptions.project" has been set for @typescript-eslint/parser.The file does not match your project config: src\components\assembly\tableAssembly\Table.vue.The extension for the file (.vue) is non-standard. You should add "parserOptions.extraFileExtensions" to your config.
         "tsconfigRootDir": __dirname
     },
     rules:  {
@@ -20,6 +20,7 @@ module.exports = {
         }],
         "semi": 2,
         "vue/html-indent": ["warn", 4], //html缩进的规则 默认2个空格
+        "vue/script-indent": ["warn", 4],
         "vue/multi-word-component-names": 'off',
         'vue/no-template-shadow':'off',
     },

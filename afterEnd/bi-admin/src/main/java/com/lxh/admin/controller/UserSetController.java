@@ -2,6 +2,7 @@ package com.lxh.admin.controller;
 
 import com.auth0.jwt.JWTVerifier;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.lxh.admin.abnormal.resultError;
 import com.lxh.admin.config.ServiceTokenRequired;
 import com.lxh.dao.UserTokenInfo;
 import com.lxh.mybatis.entity.hospUser;
@@ -30,11 +31,11 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URL;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+
+import static com.lxh.utils.image.ImageUtil.pictureTemplatesCut;
 
 @Controller
 @RestController
@@ -244,6 +245,24 @@ public class UserSetController {
 //            System.out.println("insertInfo" + insertInfo);
             useSetInfo.insert(insertInfo);
             return Result.success(UpLoadFileStateList);
+        }
+    }
+    @PostMapping("/slidingLogin")
+    @ShenyuSpringCloudClient("/slidingLogin")
+    public void getSlidingLogin() {
+        hospUserInfo randInfo = useSetInfo.getRandInfo();
+        System.out.println("randInfo" + randInfo);
+        File image = new File(randInfo.getHeaderImage());
+        Result result = null;
+        try{
+            FileInputStream fileInputStream = new FileInputStream(image);
+            pictureTemplatesCut(fileInputStream);
+        } catch(IOException fileNotFound) {
+            result = Result.notFoundImage(null);
+        }
+
+        if (result != null) {
+            throw new resultError(result.getCode(), result.getMessage());
         }
     }
 }

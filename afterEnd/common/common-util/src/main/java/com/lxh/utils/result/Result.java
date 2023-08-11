@@ -68,4 +68,7 @@ public class Result<T> {
     public static <T> Result<T> tokenExpire(T data) {
         return build(data, ResultCodeEnum.USER_NOT_LOGGED_IN);
     }
+    public static <T> Result<T> notFoundImage(T data) {
+        return build(data, ResultCodeEnum.RESULE_IMAGE_NONE);
+    }
 }
