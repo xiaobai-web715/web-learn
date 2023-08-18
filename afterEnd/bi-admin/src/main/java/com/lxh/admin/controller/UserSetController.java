@@ -27,9 +27,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -249,14 +251,22 @@ public class UserSetController {
     }
     @PostMapping("/slidingLogin")
     @ShenyuSpringCloudClient("/slidingLogin")
-    public void getSlidingLogin() {
+    public Result<String> getSlidingLogin() {
         hospUserInfo randInfo = useSetInfo.getRandInfo();
         System.out.println("randInfo" + randInfo);
         File image = new File(randInfo.getHeaderImage());
+        String base64OriImage = "";
         Result result = null;
         try{
             FileInputStream fileInputStream = new FileInputStream(image);
-            pictureTemplatesCut(fileInputStream);
+            Map<String, BufferedImage> imageMap = pictureTemplatesCut(fileInputStream);
+            BufferedImage oriImage = imageMap.get("oriImage");
+            BufferedImage newImage = imageMap.get("newImage");
+            ByteArrayOutputStream oriOutputStream = new ByteArrayOutputStream();
+            ByteArrayOutputStream newOutputStream = new ByteArrayOutputStream();
+            ImageIO.write(oriImage, "png", oriOutputStream);
+            ImageIO.write(newImage, "png", newOutputStream);
+            base64OriImage = "oriImage&" + Base64.getEncoder().encodeToString(oriOutputStream.toByteArray()) + "#" + "newImage&" + Base64.getEncoder().encodeToString(newOutputStream.toByteArray());
         } catch(IOException fileNotFound) {
             result = Result.notFoundImage(null);
         }
@@ -264,5 +274,6 @@ public class UserSetController {
         if (result != null) {
             throw new resultError(result.getCode(), result.getMessage());
         }
+        return Result.success(base64OriImage);
     }
 }

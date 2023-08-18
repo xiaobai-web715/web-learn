@@ -26,6 +26,10 @@
                 注册
             </button>
         </div>
+        <div class="testModel">
+            <div v-if="testSlidingModule.oriImageUrl" class="oriImage" :style="{backgroundImage: `url(${testSlidingModule.oriImageUrl})`}"></div>
+            <div v-if="testSlidingModule.newImageUrl" class="newImage" :style="{backgroundImage: `url(${testSlidingModule.newImageUrl})`}"></div>
+        </div>
     </div>
 </template>
 <script lang="ts">
@@ -37,6 +41,7 @@ import {useStore} from 'vuex';
 import {SET_AUTH, SET_USER, SET_ID} from '@/store/actionsTypes.js';
 import {loginInfos} from './enums.js';
 import { ElMessage } from 'element-plus';
+import {getBase64ToBLob} from '@/utils/baseToBolb.js'
 export default {
     setup() {
         const router = useRouter();
@@ -45,15 +50,42 @@ export default {
             user:'',
             password:'',
         });
+        const testSlidingModule = ref({
+            oriImageUrl: '',
+            newImageUrl: ''
+        });
         return {
             formData,
             router,
-            store
+            store,
+            testSlidingModule
         };
+    },
+    mounted() {
+        request({
+            url: '/admin/user/getLoginVer',
+            method: 'post'
+        }).then(res => {
+            console.log('res...', res);
+            if (res && res.code == 200) {
+                const base64InfoList = res.data.split('#');
+                const imageObj = {};
+                base64InfoList.forEach(item => {
+                    const [name, value] = item.split('&')
+                    imageObj[name] = value;
+                })
+                const oriImageUrlBlob = getBase64ToBLob(imageObj['oriImage'], 'image/png')
+                const oriImageUrl = URL.createObjectURL(oriImageUrlBlob)
+                const newImageUrlBlob = getBase64ToBLob(imageObj['newImage'], 'image/png')
+                const newImageUrl = URL.createObjectURL(newImageUrlBlob)
+                this.testSlidingModule.oriImageUrl = oriImageUrl;
+                this.testSlidingModule.newImageUrl = newImageUrl;
+                console.log('oriImageUrl', oriImageUrl, this.testSlidingModule);
+            }
+        })
     },
     methods: {
         submit() {
-            console.log('windows信息', window.location);
             request({
                 url: '/admin/user/login',
                 method: 'post',
@@ -126,6 +158,20 @@ export default {
                 background-color: #5A88FB;
                 color: #FFF;
             }
+        }
+    }
+    .testModel{
+        .oriImage{
+            width: 300px;
+            height: 150px;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+        .newImage{
+            width: 48px;
+            height: 40px;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
         }
     }
 }

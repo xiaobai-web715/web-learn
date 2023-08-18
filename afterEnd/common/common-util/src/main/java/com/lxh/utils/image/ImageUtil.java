@@ -143,13 +143,14 @@ public class ImageUtil {
             for (int j = blockDataYStart; j < blockDataYEnd; j++){
                 int num = blockData[i][j];
                 if (num == 2) {
-                    System.out.println("我是成功的数据" + i + "x" + j + "x" + blockDataXStart + "x" + blockDataYStart);
+//                    System.out.println("我是成功的数据" + i + "x" + j + "x" + blockDataXStart + "x" + blockDataYStart);
                     newImage.setRGB(i - blockDataXStart, j - blockDataYStart, oriImage.getRGB(i, j));
                     oriImage.setRGB(i, j, Color.gray.getRGB());
-                } else {
-                    System.out.println("我是报错的数据" + i + "x" + j + "x" + blockDataXStart + "x" + blockDataYStart);
-                    newImage.setRGB(i - blockDataXStart, j - blockDataYStart, Color.gray.getRGB());
                 }
+//                else {
+//                    System.out.println("我是报错的数据" + i + "x" + j + "x" + blockDataXStart + "x" + blockDataYStart);
+//                    newImage.setRGB(i - blockDataXStart, j - blockDataYStart, Color.gray.getRGB());
+//                }
             }
         }
         map.put("oriImage", oriImage);
@@ -162,7 +163,7 @@ public class ImageUtil {
 //        }
         return map;
     }
-    public static void pictureTemplatesCut(InputStream targeFile) throws IOException {
+    public static Map<String, BufferedImage> pictureTemplatesCut(InputStream targeFile) throws IOException {
         try {
             BufferedImage originalImage = ImageIO.read(targeFile);
             // 创建新的bufferImage对象并设置宽高
@@ -180,25 +181,25 @@ public class ImageUtil {
 
             // int heightRandom = 1;
             int heightRandom = random.nextInt(sourceHeight - 3 * TAM_HEIGHT ) + TAM_HEIGHT;
-            System.out.println("原图大小: " + sourceWidth + "x" + sourceHeight + "抠图坐标: " + widthRandom + "x" + heightRandom);
+//            System.out.println("原图大小: " + sourceWidth + "x" + sourceHeight + "抠图坐标: " + widthRandom + "x" + heightRandom);
             //获取抠图区域
             int [][] blockData = getBlockData(sourceImage, widthRandom, heightRandom);
-            for (int i = 0; i < blockData.length; i++) {
-                String result = "";
-                for (int j = 0; j < blockData[i].length; j ++) {
-                    result += blockData[i][j];
-                }
-                System.out.println(result);
-            }
+//            for (int i = 0; i < blockData.length; i++) {
+//                String result = "";
+//                for (int j = 0; j < blockData[i].length; j ++) {
+//                    result += blockData[i][j];
+//                }
+//                System.out.println(result);
+//            }
             // 新建一个和裁剪区域一样大小的图像(裁剪区域要预留左右,上下分别一个圆半径的扩展)
             BufferedImage newImage = new BufferedImage(TAM_WIDTH + 2 * RADIUS, TAM_HEIGHT + 2 *RADIUS, BufferedImage.TYPE_INT_RGB);
             //获取画笔
             Graphics2D graphics = newImage.createGraphics();
             // 如果需要生成RGB格式，需要做如下配置,Transparency 设置透明
             newImage = graphics.getDeviceConfiguration().createCompatibleImage(TAM_WIDTH + 2 * RADIUS, TAM_HEIGHT + 2 *RADIUS, Transparency.TRANSLUCENT);
-            System.out.println("我是抠图的宽高:" + newImage.getWidth() + "x" + newImage.getHeight());
+//            System.out.println("我是抠图的宽高:" + newImage.getWidth() + "x" + newImage.getHeight());
             // 新建的图像根据模板颜色赋值,源图生成遮罩
-            createLayer(sourceImage, newImage, blockData ,widthRandom, heightRandom);
+            return createLayer(sourceImage, newImage, blockData ,widthRandom, heightRandom);
         } catch(IOException ex) {
             throw ex;
         }

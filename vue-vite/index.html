@@ -8,6 +8,22 @@
   </head>
   <body>
     <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <script type="module" src="/src/main.ts">
+    </script>
+	<script>
+		(function(win, export_obj) {
+			win['LogAnalyticsObject'] = export_obj;
+			if (!win[export_obj]) {
+				function _collect() {
+					_collect.q.push(arguments);
+				}
+				_collect.q = _collect.q || [];
+				win[export_obj] = _collect;                
+			}
+			win[export_obj].l = +new Date();
+			console.log(export_obj, win[export_obj])
+		})(window, 'collectEvent');
+	</script>
+	<script async src="https://lf3-data.volccdn.com/obj/data-static/log-sdk/collect/5.0/collect-rangers-v5.1.6.js"></script>
   </body>
 </html>

@@ -62,4 +62,14 @@ router.post('/userImage', fileUpload.any(), (req, res) => {
         res.status(404).send(err)
     })
 })
+router.post('/getLoginVer', (req, res) => {
+    const params = req.body
+    const url = String(credentials.biAdmin.baseUrl) + '/user/slidingLogin'
+    requestAdmin(url, params as IParams, 'POST').then(resq => {
+        console.log('resq', resq)
+        res.send(resq)
+    }).catch((err) => {
+        res.status(404).send(err)
+    })
+})
 export = router
