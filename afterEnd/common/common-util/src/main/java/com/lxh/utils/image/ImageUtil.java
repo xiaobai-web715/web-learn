@@ -1,5 +1,6 @@
 package com.lxh.utils.image;
 
+import com.lxh.dao.CreateLayerInfo;
 import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import javax.imageio.ImageIO;
@@ -133,7 +134,7 @@ public class ImageUtil {
      * @param x 横坐标(裁剪起点)
      * @param y 纵坐标(裁剪起点)
      */
-    public static Map<String, BufferedImage> createLayer(BufferedImage oriImage, BufferedImage newImage, int[][] blockData, int x, int y) {
+    public static CreateLayerInfo createLayer(BufferedImage oriImage, BufferedImage newImage, int[][] blockData, int x, int y) {
         Map<String, BufferedImage> map = new HashMap<String, BufferedImage>();
         int blockDataXStart = x - RADIUS;
         int blockDataXEnd = x + TAM_WIDTH + RADIUS;
@@ -161,9 +162,9 @@ public class ImageUtil {
 //        } catch (Exception e) {
 //            System.out.println("e" + e);
 //        }
-        return map;
+        return new CreateLayerInfo().setImageMap(map).setX(x).setY(y);
     }
-    public static Map<String, BufferedImage> pictureTemplatesCut(InputStream targeFile) throws IOException {
+    public static CreateLayerInfo pictureTemplatesCut(InputStream targeFile) throws IOException {
         try {
             BufferedImage originalImage = ImageIO.read(targeFile);
             // 创建新的bufferImage对象并设置宽高
@@ -199,7 +200,12 @@ public class ImageUtil {
             newImage = graphics.getDeviceConfiguration().createCompatibleImage(TAM_WIDTH + 2 * RADIUS, TAM_HEIGHT + 2 *RADIUS, Transparency.TRANSLUCENT);
 //            System.out.println("我是抠图的宽高:" + newImage.getWidth() + "x" + newImage.getHeight());
             // 新建的图像根据模板颜色赋值,源图生成遮罩
-            return createLayer(sourceImage, newImage, blockData ,widthRandom, heightRandom);
+            return createLayer(sourceImage, newImage, blockData ,widthRandom, heightRandom)
+                    .setBaseMapWidth(SKET_WIDTH)
+                    .setBaseMapHeight(SKET_HEIGHT)
+                    .setCropMapWidth(TAM_WIDTH)
+                    .setCropMapHeight(TAM_HEIGHT)
+                    .setRadius(RADIUS);
         } catch(IOException ex) {
             throw ex;
         }

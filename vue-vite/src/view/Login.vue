@@ -27,8 +27,9 @@
             </button>
         </div>
         <div class="testModel">
-            <div v-if="testSlidingModule.oriImageUrl" class="oriImage" :style="{backgroundImage: `url(${testSlidingModule.oriImageUrl})`}"></div>
-            <div v-if="testSlidingModule.newImageUrl" class="newImage" :style="{backgroundImage: `url(${testSlidingModule.newImageUrl})`}"></div>
+            <div v-if="testSlidingModule.oriImageUrl" class="oriImage" :style="{backgroundImage: `url(${testSlidingModule.oriImageUrl})`}">
+                <div v-if="testSlidingModule.newImageUrl" class="newImage" :style="{backgroundImage: `url(${testSlidingModule.newImageUrl})`}"></div>
+            </div>
         </div>
     </div>
 </template>
@@ -166,12 +167,14 @@ export default {
             height: 150px;
             background-size: 100% 100%;
             background-repeat: no-repeat;
+            position: relative;
         }
         .newImage{
-            width: 48px;
-            height: 40px;
+            width: 56px;
+            height: 56px;
             background-size: 100% 100%;
             background-repeat: no-repeat;
+            position: absolute;
         }
     }
 }

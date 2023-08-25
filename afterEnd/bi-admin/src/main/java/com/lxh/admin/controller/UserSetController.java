@@ -4,7 +4,9 @@ import com.auth0.jwt.JWTVerifier;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.lxh.admin.abnormal.resultError;
 import com.lxh.admin.config.ServiceTokenRequired;
+import com.lxh.dao.ImageInfo;
 import com.lxh.dao.UserTokenInfo;
+import com.lxh.dao.CreateLayerInfo;
 import com.lxh.mybatis.entity.hospUser;
 import com.lxh.admin.service.impl.UserSetService;
 import com.lxh.admin.mapper.hospUserInfoMapper;
@@ -256,10 +258,12 @@ public class UserSetController {
         System.out.println("randInfo" + randInfo);
         File image = new File(randInfo.getHeaderImage());
         String base64OriImage = "";
+        ImageInfo oriImageObj;
         Result result = null;
         try{
             FileInputStream fileInputStream = new FileInputStream(image);
-            Map<String, BufferedImage> imageMap = pictureTemplatesCut(fileInputStream);
+            CreateLayerInfo createLayer = pictureTemplatesCut(fileInputStream);
+            Map<String, BufferedImage> imageMap = createLayer.getImageMap();
             BufferedImage oriImage = imageMap.get("oriImage");
             BufferedImage newImage = imageMap.get("newImage");
             ByteArrayOutputStream oriOutputStream = new ByteArrayOutputStream();
@@ -267,6 +271,7 @@ public class UserSetController {
             ImageIO.write(oriImage, "png", oriOutputStream);
             ImageIO.write(newImage, "png", newOutputStream);
             base64OriImage = "oriImage&" + Base64.getEncoder().encodeToString(oriOutputStream.toByteArray()) + "#" + "newImage&" + Base64.getEncoder().encodeToString(newOutputStream.toByteArray());
+//            oriImageObj = new ImageInfo().setInfo(createLayer.getBaseMapWidth(), createLayer.getBaseMapHeight());
         } catch(IOException fileNotFound) {
             result = Result.notFoundImage(null);
         }

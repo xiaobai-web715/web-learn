@@ -3,6 +3,8 @@ package com.lxh.admin.controller;
 import com.lxh.admin.BiAdminApplication;
 import com.lxh.admin.abnormal.resultError;
 import com.lxh.admin.mapper.hospUserInfoMapper;
+import com.lxh.dao.CreateLayerInfo;
+import com.lxh.dao.ImageInfo;
 import com.lxh.mybatis.entity.hospUserInfo;
 import com.lxh.utils.result.Result;
 import org.apache.logging.log4j.util.Base64Util;
@@ -33,18 +35,20 @@ class UserSetControllerTest {
         hospUserInfo randInfo = useSetInfo.getRandInfo();
         System.out.println("randInfo" + randInfo);
         File image = new File(randInfo.getHeaderImage());
+        String base64OriImage = "";
+        ImageInfo oriImageObj;
         Result result = null;
         try{
             FileInputStream fileInputStream = new FileInputStream(image);
-            Map<String, BufferedImage> imageMap = pictureTemplatesCut(fileInputStream);
+            CreateLayerInfo createLayer = pictureTemplatesCut(fileInputStream);
+            Map<String, BufferedImage> imageMap = createLayer.getImageMap();
             BufferedImage oriImage = imageMap.get("oriImage");
             BufferedImage newImage = imageMap.get("newImage");
             ByteArrayOutputStream oriOutputStream = new ByteArrayOutputStream();
             ByteArrayOutputStream newOutputStream = new ByteArrayOutputStream();
             ImageIO.write(oriImage, "png", oriOutputStream);
             ImageIO.write(newImage, "png", newOutputStream);
-            String base64OriImage = "oriImage&" + Base64.getEncoder().encodeToString(oriOutputStream.toByteArray()) + "#" + "newImage&" + Base64.getEncoder().encodeToString(newOutputStream.toByteArray());
-            System.out.println("base64OriImage:" + base64OriImage);
+            base64OriImage = "oriImage&" + Base64.getEncoder().encodeToString(oriOutputStream.toByteArray()) + "#" + "newImage&" + Base64.getEncoder().encodeToString(newOutputStream.toByteArray());
         } catch(IOException fileNotFound) {
             result = Result.notFoundImage(null);
         }
