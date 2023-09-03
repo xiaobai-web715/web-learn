@@ -4,25 +4,25 @@ const Css = require('./App.scss');
 
 const App = () => {
     console.log('我是微前端');
-    const [router, setRouter] = useState<string>('')
+    const [router, setRouter] = useState<string>('');
     const navigate = useNavigate();
     const goPage = (url: string) => {
         navigate('/app-react/app' + url);
         if(window.__POWERED_BY_QIANKUN__){
-            setRouter('/app-react/app' + url)
+            setRouter('/app-react/app' + url);
         }
     };
-    useEffect(() => {console.log('我执行了几次')}, [])
+    useEffect(() => {console.log('我执行了几次');}, []);
     useEffect(() => {
-        console.log('router', router)
+        console.log('router', router);
         if (router) {
             if (window.__POWERED_BY_QIANKUN__) {
-                window.history.pushState(null, '', router)
+                window.history.pushState(null, '', router);
             } else {
                 navigate(router);
             }
         }
-    }, [router])
+    }, [router]);
     return(
         <React.Fragment>
             <div className={Css['page']}>
@@ -39,6 +39,7 @@ const App = () => {
                     <div onClick={goPage.bind(null, '/UploadFile')}>UploadFile</div>
                     <div onClick={goPage.bind(null, '/upFile')}>upFile</div>
                     <div onClick={goPage.bind(null, '/scrollDate')}>日期选择器</div>
+                    <div onClick={() => goPage('/screenShot')}>数据可视化</div>
                 </div>
                 <div className={Css['content']}>
                     <Outlet/>

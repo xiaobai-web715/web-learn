@@ -135,12 +135,16 @@
     "outDir": "build",
     "noImplicitAny": false, //定义的数据如果没有显式的定义类型, 那隐式具有any类型即可
   },
+  "typeRoots": [
+    "./typings"
+  ],
   "include": [
     "src/**/*.tsx", // *** TypeScript文件应该进行类型检查 ***
     "src/**/*.ts",
     "src/**/*.js",
-    ".eslintrc.js"
+    "src/**/*.jsx",
+    "./**/*.d.ts"
   ],
-  "exclude": ["node_modules", "dist", "build/**/*"] // *** 不进行类型检查的文件 ***
+  "exclude": ["node_modules", "dist", "build/**/*", ".eslintrc.js",] // *** 不进行类型检查的文件 ***
 }
 // 135行 143 "build/**/*"解决无法写入文件.eslintrc.js文件,因为它会覆盖输入文件

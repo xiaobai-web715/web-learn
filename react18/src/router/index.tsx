@@ -19,6 +19,7 @@ import ReactRender from 'src/page/view/ReactRender/index';
 import UploadFile from "src/page/view/uploadFile";
 import UpFile from 'src/page/view/upFile/upFile';
 import ScrollDate from 'src/page/view/ScrollDate/index';
+import ScreenShot from 'src/page/view/screenshot/index';
 
 const store = configureStore({
     reducer,
@@ -48,6 +49,7 @@ function RouterIndex() {
                                 <Route path="UploadFile" element={<UploadFile></UploadFile>}></Route>
                                 <Route path="upFile" element={<UpFile></UpFile>}></Route>
                                 <Route path="scrollDate" element={<ScrollDate></ScrollDate>}></Route>
+                                <Route path="screenShot" element={<ScreenShot></ScreenShot>}></Route>
                             </Route>
                         </Route>
                         <Route path="*" element={<div>当前页面不存在</div>}></Route>

@@ -23,6 +23,7 @@ module.exports = {
         semi: 2,
         "@typescript-eslint/no-var-requires": 'off', //允许通过require进行导入
         "react/display-name": 'off', //高级组件返回的的不需要重新定义组件名字
+        "indent": ['error', 4, {SwitchCase: 1}]
     },
     settings: {
         react: {
