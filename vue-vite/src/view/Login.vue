@@ -26,9 +26,14 @@
                 注册
             </button>
         </div>
-        <div class="testModel">
-            <div v-if="testSlidingModule.oriImageUrl" class="oriImage" :style="{backgroundImage: `url(${testSlidingModule.oriImageUrl})`}">
-                <div v-if="testSlidingModule.newImageUrl" class="newImage" :style="{backgroundImage: `url(${testSlidingModule.newImageUrl})`}"></div>
+        <div class="scrollModel">
+            <div class="testModel">
+                <div v-if="testSlidingModule.oriImageUrl" class="oriImage" :style="{backgroundImage: `url(${testSlidingModule.oriImageUrl})`, width: `${oriImageInfo?.width}px`, height: `${oriImageInfo?.height}px`}">
+                    <div v-if="testSlidingModule.newImageUrl" class="newImage" :style="{backgroundImage: `url(${testSlidingModule.newImageUrl})`, width: `${newImageInfo?.width + 2 * newImageInfo?.radius}px`, height: `${newImageInfo?.height + 2 * newImageInfo?.radius}px`, top: `${topPercent * 100}%`, left: `${moveDistance}px`}"></div>
+                </div>
+                <div class="scrollContent">
+                    <div class="scroll" ref="scrollDom" :style="{left: moveDistance + 'px'}"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -51,15 +56,33 @@ export default {
             user:'',
             password:'',
         });
+        const downPageX = ref(0);
         const testSlidingModule = ref({
             oriImageUrl: '',
             newImageUrl: ''
         });
+        const newImageInfo = ref({
+            width: 0,
+            height: 0,
+            radius: 0,
+        });
+        const oriImageInfo = ref({
+            width: 0,
+            height: 0,
+            radius: 0,
+        });
+        const topPercent = ref(0)
+        const moveDistance = ref(0);
         return {
             formData,
             router,
             store,
-            testSlidingModule
+            testSlidingModule,
+            newImageInfo,
+            oriImageInfo,
+            topPercent,
+            moveDistance,
+            downPageX
         };
     },
     mounted() {
@@ -67,9 +90,9 @@ export default {
             url: '/admin/user/getLoginVer',
             method: 'post'
         }).then(res => {
-            console.log('res...', res);
             if (res && res.code == 200) {
-                const base64InfoList = res.data.split('#');
+                const {baseImage, newImage, oriImage, y} = res.data;
+                const base64InfoList = baseImage.split('#');
                 const imageObj = {};
                 base64InfoList.forEach(item => {
                     const [name, value] = item.split('&')
@@ -81,9 +104,20 @@ export default {
                 const newImageUrl = URL.createObjectURL(newImageUrlBlob)
                 this.testSlidingModule.oriImageUrl = oriImageUrl;
                 this.testSlidingModule.newImageUrl = newImageUrl;
-                console.log('oriImageUrl', oriImageUrl, this.testSlidingModule);
+                this.newImageInfo = newImage;
+                this.oriImageInfo = oriImage;
+                const canvasHeight = oriImage.height;
+                const canvasWidth = oriImage.width;
+                const topPercent = (y - newImage.radius) / canvasHeight;
+                const leftPercent = newImage.radius / canvasWidth;
+                this.leftPercent = leftPercent;
+                this.topPercent = topPercent;
+                console.log('oriImageUrl', oriImageUrl, this.testSlidingModule, topPercent);
             }
         })
+        console.log('this.$refs[]', this.$refs['scrollDom']);
+        this.$refs['scrollDom'].addEventListener('mousedown', this.mouseDown.bind(this))
+        this.$refs['scrollDom'].addEventListener('mouseup', this.mouseUp.bind(this))
     },
     methods: {
         submit() {
@@ -115,6 +149,31 @@ export default {
         register() {
             console.log('触发注册功能');
             this.router.push('/register');
+        },
+        mouseMove(e) {
+            const currentPageX = e.pageX; //鼠标移动时的pageX
+            const moveDistance = currentPageX - this.downPageX;
+            this.moveDistance = moveDistance
+            console.log('我是鼠标移动事件', e, this.downPageX)
+        },
+        mouseDown(e) {
+            console.log('鼠标按下事件', e);
+            const downPageX = e.pageX; //鼠标按下时的pageX
+            this.downPageX = downPageX;
+            //对鼠标移动事件进行绑定
+            e.target.addEventListener('mousemove', this.mouseMove)
+        },
+        mouseUp(e) {
+            console.log('鼠标弹起事件', e);
+            e.target.removeEventListener('mousemove', this.mouseMove)
+            //触发接口调用传递x轴移动的距离
+            request({
+                url: '/admin/user/slide/distance',
+                method: 'post',
+                params: {
+                    x: this.moveDistance
+                }
+            })
         }
     }
 };
@@ -161,20 +220,32 @@ export default {
             }
         }
     }
-    .testModel{
-        .oriImage{
-            width: 300px;
-            height: 150px;
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-            position: relative;
+    .scrollModel{
+        .testModel{
+            .oriImage{
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                position: relative;
+            }
+            .newImage{
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                position: absolute;
+            }
         }
-        .newImage{
-            width: 56px;
-            height: 56px;
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-            position: absolute;
+        .scrollContent{
+            width: 100%;
+            height: 25px;
+            background-color: #eee;
+            position: relative;
+            .scroll{
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 40px;
+                height: 100%;
+                background-color: #5A88FB;
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.lxh.admin.abnormal.resultError;
 import com.lxh.admin.config.ServiceTokenRequired;
+import com.lxh.dao.BaseImageInfo;
 import com.lxh.dao.ImageInfo;
 import com.lxh.dao.UserTokenInfo;
 import com.lxh.dao.CreateLayerInfo;
@@ -222,7 +223,7 @@ public class UserSetController {
 //        System.out.printf("uid" + uid);
 //        System.out.println("files length:"+files.size());
         if (haveImage) {
-            System.out.println("当前用户已有头像存储");
+//            System.out.println("当前用户已有头像存储");
             hospUserInfo existsInfo = useSetInfo.selectOne(queryWrapper);
             File file = new File(existsInfo.getHeaderImage());
             if (file.isFile() && file.exists()) {
@@ -253,12 +254,14 @@ public class UserSetController {
     }
     @PostMapping("/slidingLogin")
     @ShenyuSpringCloudClient("/slidingLogin")
-    public Result<String> getSlidingLogin() {
+    public Result<BaseImageInfo> getSlidingLogin() {
         hospUserInfo randInfo = useSetInfo.getRandInfo();
         System.out.println("randInfo" + randInfo);
         File image = new File(randInfo.getHeaderImage());
         String base64OriImage = "";
-        ImageInfo oriImageObj;
+        ImageInfo oriImageObj = null;
+        ImageInfo newImageObj = null;
+        int y = 0;
         Result result = null;
         try{
             FileInputStream fileInputStream = new FileInputStream(image);
@@ -266,12 +269,14 @@ public class UserSetController {
             Map<String, BufferedImage> imageMap = createLayer.getImageMap();
             BufferedImage oriImage = imageMap.get("oriImage");
             BufferedImage newImage = imageMap.get("newImage");
+            y = createLayer.getY();
             ByteArrayOutputStream oriOutputStream = new ByteArrayOutputStream();
             ByteArrayOutputStream newOutputStream = new ByteArrayOutputStream();
             ImageIO.write(oriImage, "png", oriOutputStream);
             ImageIO.write(newImage, "png", newOutputStream);
             base64OriImage = "oriImage&" + Base64.getEncoder().encodeToString(oriOutputStream.toByteArray()) + "#" + "newImage&" + Base64.getEncoder().encodeToString(newOutputStream.toByteArray());
-//            oriImageObj = new ImageInfo().setInfo(createLayer.getBaseMapWidth(), createLayer.getBaseMapHeight());
+            oriImageObj = new ImageInfo().setWidth(createLayer.getBaseMapWidth()).setHeight(createLayer.getBaseMapHeight());
+            newImageObj = new ImageInfo().setWidth(createLayer.getCropMapWidth()).setHeight(createLayer.getCropMapHeight()).setRadius(createLayer.getRadius());
         } catch(IOException fileNotFound) {
             result = Result.notFoundImage(null);
         }
@@ -279,6 +284,14 @@ public class UserSetController {
         if (result != null) {
             throw new resultError(result.getCode(), result.getMessage());
         }
-        return Result.success(base64OriImage);
+        BaseImageInfo returnContent = new BaseImageInfo().setBaseImageInfo(base64OriImage, oriImageObj, newImageObj, y);
+        return Result.success(returnContent);
+    }
+
+    @PostMapping("/slide/distance")
+    @ShenyuSpringCloudClient("/slide/distance")
+    public Result checkSlide(@RequestParam("x") int x) {
+        System.out.println("前端页面横向移动的距离:" + x);
+        return Result.success(null);
     }
 }

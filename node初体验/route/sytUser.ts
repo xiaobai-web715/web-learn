@@ -72,4 +72,13 @@ router.post('/getLoginVer', (req, res) => {
         res.status(404).send(err)
     })
 })
+router.post('/slide/distance', (req, res) => {
+    const params = req.body
+    const url = String(credentials.biAdmin.baseUrl) + '/user/slide/distance'
+    requestAdmin(url, params as IParams, 'POSTUrlencoded').then(resq => {
+        console.log('resq', resq)
+    }).catch((err) => {
+        console.log('err', err)
+    })
+})
 export = router

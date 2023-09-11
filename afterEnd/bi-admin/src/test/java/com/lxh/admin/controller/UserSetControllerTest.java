@@ -3,6 +3,7 @@ package com.lxh.admin.controller;
 import com.lxh.admin.BiAdminApplication;
 import com.lxh.admin.abnormal.resultError;
 import com.lxh.admin.mapper.hospUserInfoMapper;
+import com.lxh.dao.BaseImageInfo;
 import com.lxh.dao.CreateLayerInfo;
 import com.lxh.dao.ImageInfo;
 import com.lxh.mybatis.entity.hospUserInfo;
@@ -31,12 +32,14 @@ class UserSetControllerTest {
     private hospUserInfoMapper useSetInfo;
 
     @Test
-    void getSlidingLogin() {
+    Result<BaseImageInfo> getSlidingLogin() {
         hospUserInfo randInfo = useSetInfo.getRandInfo();
         System.out.println("randInfo" + randInfo);
         File image = new File(randInfo.getHeaderImage());
         String base64OriImage = "";
-        ImageInfo oriImageObj;
+        ImageInfo oriImageObj = null;
+        ImageInfo newImageObj = null;
+        int y = 0;
         Result result = null;
         try{
             FileInputStream fileInputStream = new FileInputStream(image);
@@ -44,11 +47,14 @@ class UserSetControllerTest {
             Map<String, BufferedImage> imageMap = createLayer.getImageMap();
             BufferedImage oriImage = imageMap.get("oriImage");
             BufferedImage newImage = imageMap.get("newImage");
+            y = createLayer.getY();
             ByteArrayOutputStream oriOutputStream = new ByteArrayOutputStream();
             ByteArrayOutputStream newOutputStream = new ByteArrayOutputStream();
             ImageIO.write(oriImage, "png", oriOutputStream);
             ImageIO.write(newImage, "png", newOutputStream);
             base64OriImage = "oriImage&" + Base64.getEncoder().encodeToString(oriOutputStream.toByteArray()) + "#" + "newImage&" + Base64.getEncoder().encodeToString(newOutputStream.toByteArray());
+            oriImageObj = new ImageInfo().setWidth(createLayer.getBaseMapWidth()).setHeight(createLayer.getBaseMapHeight());
+            newImageObj = new ImageInfo().setWidth(createLayer.getCropMapWidth()).setHeight(createLayer.getCropMapHeight()).setRadius(createLayer.getRadius());
         } catch(IOException fileNotFound) {
             result = Result.notFoundImage(null);
         }
@@ -56,5 +62,7 @@ class UserSetControllerTest {
         if (result != null) {
             throw new resultError(result.getCode(), result.getMessage());
         }
+        BaseImageInfo returnContent = new BaseImageInfo().setBaseImageInfo(base64OriImage, oriImageObj, newImageObj, y);
+        return Result.success(returnContent);
     }
 }

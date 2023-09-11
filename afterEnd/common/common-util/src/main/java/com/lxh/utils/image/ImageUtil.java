@@ -37,7 +37,7 @@ public class ImageUtil {
         return date + UUID.randomUUID() + suffixName;
     }
     public static String getNewImagePath(String name) {
-        System.out.println("文件夹" + SAVE_IMAGE_PATH + nowDate + '/' + name);
+//        System.out.println("文件夹" + SAVE_IMAGE_PATH + nowDate + '/' + name);
         return SAVE_IMAGE_PATH + nowDate + '/' + name;
     }
     public static Boolean saveImage(String filePath, MultipartFile file) {
@@ -99,7 +99,7 @@ public class ImageUtil {
                 pitY2 = y + TAM_HEIGHT / 2;
                 break;
         }
-        System.out.println("我是抠图起点的坐标:" + x + "x" + "y" + " 我是两个凹陷圆的中心点坐标:" + "(" + pitX1 + "," + pitY1 + ")" + ","  + "(" + pitX2 + "," + pitY2 + ")");
+//        System.out.println("我是抠图起点的坐标:" + x + "x" + "y" + " 我是两个凹陷圆的中心点坐标:" + "(" + pitX1 + "," + pitY1 + ")" + ","  + "(" + pitX2 + "," + pitY2 + ")");
         for (int i = 0; i < ORI_WIDTH; i++) {
             for(int j = 0; j < ORI_HEIGHT; j++) {
                 if (i >= x && j >= y && i <= x + TAM_WIDTH && j <= y + TAM_HEIGHT) {
