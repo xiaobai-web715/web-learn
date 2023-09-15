@@ -23,5 +23,6 @@ module.exports = {
         "vue/script-indent": ["warn", 4],
         "vue/multi-word-component-names": 'off',
         'vue/no-template-shadow':'off',
+        // "typescript-eslint/no-var-requires": "off",
     },
 };

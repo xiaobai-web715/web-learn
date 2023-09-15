@@ -7,6 +7,7 @@ import com.lxh.dao.BaseImageInfo;
 import com.lxh.dao.CreateLayerInfo;
 import com.lxh.dao.ImageInfo;
 import com.lxh.mybatis.entity.hospUserInfo;
+import com.lxh.utils.ipHash.LoadBalancer;
 import com.lxh.utils.result.Result;
 import org.apache.logging.log4j.util.Base64Util;
 import org.junit.jupiter.api.Test;
@@ -19,8 +20,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.Buffer;
-import java.util.Base64;
-import java.util.Map;
+import java.util.*;
 
 import static com.lxh.utils.image.ImageUtil.pictureTemplatesCut;
 
@@ -64,5 +64,11 @@ class UserSetControllerTest {
         }
         BaseImageInfo returnContent = new BaseImageInfo().setBaseImageInfo(base64OriImage, oriImageObj, newImageObj, y);
         return Result.success(returnContent);
+    }
+
+    @Test
+    void testHASHIP() {
+        List<String> ipList = Arrays.asList("192.168.0.102", "192.168.2.102");
+        TreeMap<Integer, String> mapHash = new LoadBalancer(ipList).getMapHash();
     }
 }

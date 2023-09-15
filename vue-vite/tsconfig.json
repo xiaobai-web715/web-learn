@@ -7,12 +7,13 @@
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "moduleResolution": "nodenext",
+    "moduleResolution": "node",
     "strict": false, // js,ts混用时设为false
     "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "noEmit": true,
     "allowSyntheticDefaultImports": true, // Allow 'import x from y' when a module doesn't have a default export.
     "lib": ["ESNext", "DOM"], // lib引入dom用于ts校验是使用typescript下定义的dom的.d.ts的类型文件
     "skipLibCheck": true,
@@ -21,17 +22,19 @@
   //   "enable": true,
   //   "include": ["element-plus"]
   // },
+  "typeRoots": [
+    "./src/typings"
+],
   "vueCompilerOptions": {
   },
   "include": [
-    "src/**/*.ts", 
-    "src/**/*.d.ts", 
-    "src/**/*.tsx", 
-    "src/**/*.vue", 
-    "src/**/*.jsx", 
-    ".eslintrc.cjs",
+    "./**/*.ts", 
+    "./**/*.d.ts", 
+    "./**/*.tsx", 
+    "./**/*.vue", 
+    "./**/*.jsx", 
     "vite.config.ts", 
     "auto-imports.d.ts"
   ],
-  "exclude": [ "node_modules"],
+  "exclude": [ "node_modules", ".eslintrc.cjs",],
 }

@@ -10,8 +10,7 @@
 <script lang="ts">
 import {mapState} from 'vuex';
 import MenuTable from '@/components/menu/menu.vue';
-import {IRouterRecordRaw} from '@/router/route.ts';
-import {IState} from '@/store/state';
+import {IRouterRecordRaw} from '@/router/route';
 export default {
     components: {
         MenuTable,
@@ -72,4 +71,4 @@ export default {
         background-color: rgba(84, 92, 100, 0.8);
         height: 100%;
     }
-</style>
+</style>@/store/state/state

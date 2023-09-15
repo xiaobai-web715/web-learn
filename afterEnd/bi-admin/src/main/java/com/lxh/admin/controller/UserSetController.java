@@ -254,7 +254,9 @@ public class UserSetController {
     }
     @PostMapping("/slidingLogin")
     @ShenyuSpringCloudClient("/slidingLogin")
-    public Result<BaseImageInfo> getSlidingLogin() {
+    public Result<BaseImageInfo> getSlidingLogin(HttpServletRequest request) {
+        String clientIp = request.getRemoteAddr();
+        System.out.println("主机ip地址:" + clientIp);
         hospUserInfo randInfo = useSetInfo.getRandInfo();
         System.out.println("randInfo" + randInfo);
         File image = new File(randInfo.getHeaderImage());
@@ -262,6 +264,7 @@ public class UserSetController {
         ImageInfo oriImageObj = null;
         ImageInfo newImageObj = null;
         int y = 0;
+        int x = 0;
         Result result = null;
         try{
             FileInputStream fileInputStream = new FileInputStream(image);
@@ -270,6 +273,7 @@ public class UserSetController {
             BufferedImage oriImage = imageMap.get("oriImage");
             BufferedImage newImage = imageMap.get("newImage");
             y = createLayer.getY();
+            x = createLayer.getX();
             ByteArrayOutputStream oriOutputStream = new ByteArrayOutputStream();
             ByteArrayOutputStream newOutputStream = new ByteArrayOutputStream();
             ImageIO.write(oriImage, "png", oriOutputStream);

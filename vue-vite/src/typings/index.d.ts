@@ -1,4 +1,4 @@
-export interface IRoute {
+interface IRoute {
     id: number,
     path: string,
     name: string,
@@ -11,11 +11,21 @@ export interface IRoute {
     className?: string,
 }
 
-export interface ISection {
+interface ISection {
     id: number,
     sectionName: string,
     ancestor: number,
     distance: number,
     descendant: number,
     children?: ISection[],
+}
+
+// interface IState {
+//     token: string,
+//     user: string,
+//     id: string,
+//     routeTree: IRoute[],
+// }
+interface IState {
+    [key: string]: any
 }

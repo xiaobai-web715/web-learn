@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
+import { fileURLToPath, URL } from "url";
 import { resolve, join } from 'path';
 import qiankun from 'vite-plugin-qiankun';
 
@@ -16,8 +17,9 @@ export default defineConfig({
   base: './',
   resolve: {
     alias:{
-      "@" : resolve(__dirname, 'src')
+      // "@" : resolve(__dirname, 'src')
       // "@/*" : resolve(__dirname, 'src/*')
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
     }
   },
   server: {

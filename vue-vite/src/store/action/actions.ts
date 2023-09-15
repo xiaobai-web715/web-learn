@@ -1,7 +1,5 @@
-import { SET_AUTH, SET_ID, SET_ROUTE_TREE, SET_USER } from './actionsTypes';
-import { IState } from './state';
+import { SET_AUTH, SET_ID, SET_ROUTE_TREE, SET_USER } from '../actionsTypes';
 import { Commit } from 'vuex';
-import { IRoute } from '@/typings/sever';
 import { formatRouteTree } from '@/utils/structureTree';
 import axios from '@/http/index';
 export default {

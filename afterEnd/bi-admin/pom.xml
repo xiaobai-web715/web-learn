@@ -124,6 +124,16 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--   redis依赖     -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <!--   Spring Cache简化redis的操作     -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

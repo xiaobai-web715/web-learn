@@ -44,7 +44,7 @@ import {useRouter} from 'vue-router';
 import {ref} from 'vue';
 import request from '@/http/index.js';
 import {useStore} from 'vuex';
-import {SET_AUTH, SET_USER, SET_ID} from '@/store/actionsTypes.js';
+import {SET_AUTH, SET_USER, SET_ID, GET_IP} from '@/store/actionsTypes';
 import {loginInfos} from './enums.js';
 import { ElMessage } from 'element-plus';
 import {getBase64ToBLob} from '@/utils/baseToBolb.js'
@@ -86,6 +86,9 @@ export default {
         };
     },
     mounted() {
+        this.store.dispatch(GET_IP).then(res => {
+            console.log('我是本机的ip信息', res);
+        })
         request({
             url: '/admin/user/getLoginVer',
             method: 'post'

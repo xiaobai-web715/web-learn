@@ -1,7 +1,7 @@
 import { createStore } from "vuex";
-import state, {IState} from './state';
-import actions from './actions';
-import mutations from './mutations';
+import state from '@/store/state/index';
+import actions from '@/store/action/index';
+import mutations from '@/store/mutations/index';
 export default createStore<IState>({
     state,
     actions,
