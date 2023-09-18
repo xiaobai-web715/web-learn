@@ -16,7 +16,7 @@ import pm2 = require('pm2')
 import util = require('util')
 import credentials = require('./config/config')
 import todoList = require('./route/todoList')
-import test = require('./route/test')
+// import test = require('./route/test')
 import post = require('./route/posts')
 import hoc = require('./route/HOC')
 import UploadFile = require('./route/uploadFile')
@@ -85,7 +85,7 @@ app.use('/static', express.static('public')) // express提供的方式来请求�
     注册路由模块
 */
 app.use('/todo', todoList) // 请求/api/todo的请求会到这个模块当中去请求资源
-app.use('/test', test)
+// app.use('/test', test)
 app.use('/fakeApi', post)
 app.use(hoc)
 app.use(UploadFile)

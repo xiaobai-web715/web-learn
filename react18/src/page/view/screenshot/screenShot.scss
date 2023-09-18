@@ -1,22 +1,29 @@
 .screenShot{
     width: 375px;
     .dateData{
-        width: 80%;
+        width: 210px;
         height: 150px;
         margin: 0 auto;
         border: 1px solid orange;
-        border-radius: 25px;
+        // border-radius: 25px;
         overflow-x: scroll;
         position: relative;
         &::-webkit-scrollbar{
             display: none;
         }
         .dataBox{
-            width: 150%;
             height: 100%;
             position: absolute;
             top: 0;
             left: 0;
+            display: flex;
+            flex-wrap: nowrap;
+            .data{
+                .dayOfWeek{
+                    width: 30px;
+                    font-size: 10px;
+                }
+            }
         }
     }
 }

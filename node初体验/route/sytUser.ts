@@ -65,7 +65,7 @@ router.post('/userImage', fileUpload.any(), (req, res) => {
 router.post('/getLoginVer', (req, res) => {
     const params = req.body
     const url = String(credentials.biAdmin.baseUrl) + '/user/slidingLogin'
-    requestAdmin(url, params as IParams, 'POST').then(resq => {
+    requestAdmin(url, params as IParams, 'POSTUrlencoded').then(resq => {
         console.log('resq', resq)
         res.send(resq)
     }).catch((err) => {

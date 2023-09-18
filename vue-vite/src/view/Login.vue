@@ -91,7 +91,8 @@ export default {
         })
         request({
             url: '/admin/user/getLoginVer',
-            method: 'post'
+            method: 'post',
+            params: {userName: '你说啥名字好呢'}
         }).then(res => {
             if (res && res.code == 200) {
                 const {baseImage, newImage, oriImage, y} = res.data;
