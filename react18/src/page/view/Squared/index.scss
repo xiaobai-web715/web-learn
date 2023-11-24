@@ -1,0 +1,51 @@
+.banner{
+    width: 300px;
+    height: 300px;
+    border: 8px solid rgba(226, 69, 43, 1);
+    margin: auto;
+    position: relative;
+    .content {
+        width: 300px;
+        height: 300px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-content: space-between;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(250, 146, 104, 1);
+        .box{
+            height: 90px;
+            width: 90px;
+            background-size: cover;
+            background-image: url('./image/bg_s@2x.png');
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            position: relative;
+            &.box1,&.box2,&.box3,&.box4,&.box5,&.box6,&.box7{
+                width: 65px;
+                height: 41px;
+                background-image:url('./image/img_ticket@2x.png');
+                margin: 0 auto;
+            }
+            .mask{
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.60);
+                z-index: 2;
+            }
+        }
+        .btn{
+            height: 95px;
+            width: 95px;
+            background-image: url('./image/button_go_normal@2x.png');
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+    }
+}
