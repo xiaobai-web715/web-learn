@@ -5,6 +5,7 @@
     "test-concurrent": "ts-node-dev ./concurrencyTest.ts"
   },
   "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.12.0",
     "@typescript-eslint/parser": "^5.45.0",
     "axios": "^1.2.0",
     "chalk": "^4.0.0",
