@@ -12,4 +12,4 @@ const main = async (): Promise<any> => {
     console.log('target', target);
 }
 main();
-export {}
+export { }
