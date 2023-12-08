@@ -8,8 +8,9 @@
         "target": "es6",
         "sourceMap": true, // 方便调试和定位代码位置.
         "esModuleInterop": true, //允许在commonjs中使用export
-        "moduleResolution": "node", //告诉ts文件改以何种方式来寻找依赖模块
+        "moduleResolution": "Node", //告诉ts文件改以何种方式来寻找依赖模块
         "module": "CommonJs", //TypeScript文件中的module，采用何种方式实现
+        "lib": ["DOM"]
     },
     "include": [
         "./"

@@ -12,10 +12,10 @@ const findData = async <T>(client, options, dbName, dbTable): Promise<T> => {
 }
 
 router.get('/todoList', (req, res) => {
-    findData <ITask[]>(client, {}, 'todoList', 'raskList').then(result => {
-    /**
-   * 设置cookie
-   */
+    findData<ITask[]>(client, {}, 'todoList', 'raskList').then(result => {
+        /**
+       * 设置cookie
+       */
         res.cookie('monster', 'nom mon')
         res.send(JSON.stringify({
             list: result
@@ -58,8 +58,8 @@ router.post('/addList', (res, req) => {
 
 const deleteOne = async (client, options, dbName, dbTable): Promise<void> => {
     return await new Promise((resolve, reject) => {
-    // deleteOne只删除数据库当中查询到的第一条数据
-    // deleteMany删除数据库当中查询到的所有数据
+        // deleteOne只删除数据库当中查询到的第一条数据
+        // deleteMany删除数据库当中查询到的所有数据
         client.db(dbName).collection(dbTable).deleteOne(options, (err, res) => {
             if (err) reject(err)
             resolve()
@@ -79,6 +79,16 @@ router.post('/deleteList', (res, req) => {
             message: err
         })
     })
+})
+
+router.get('/getXHRInfo', (res, req) => {
+    const params = res.body
+    console.log('params', params)
+    setTimeout(() => {
+        req.send({
+            message: '123'
+        })
+    }, 1000)
 })
 
 export = router
