@@ -3,28 +3,39 @@ const quickSort = (arr: number[]): number[] => {
     const startTime = new Date().valueOf();
     let i = 0;
     let j = arr.length - 1;
-    debugger
     const sort = (arr: number[], left: number, right: number) => {
+        const startVal = left; //添加此处值的目的记录(划分两个区间)
+        const endVal = right;
+        if (left > right) return;
         const baseVal = arr[right]; //以j的值为基准
         while (left < right) {
             while (left < right && arr[left] <= baseVal) {
                 left++
             }
-            arr[left] = arr[right];
-            right--;
+            // 能走到这一步有两种方式, 方式一就是满足交换条件, 方式二就是left 已经增加到和right一样了
+            if (left < right) {
+                const median = arr[left];
+                arr[left] = arr[right];
+                arr[right] = median;
+                right--;
+            }
             while (left < right && arr[right] >= baseVal) {
                 right--
             }
-            arr[right] = arr[left];
-            left++
+            if (left < right) {
+                const median = arr[right];
+                arr[right] = arr[left];
+                arr[left] = median;
+                left++
+            }
         }
-        console.log('基准值', left, right, baseVal)
-        sort(arr, 0, left - 1)
-        sort(arr, left + 1, right)
+        // console.log('基准值', left, right, baseVal)
+        sort(arr, startVal, left - 1)
+        sort(arr, left + 1, endVal)
     }
     sort(arr, i, j)
     const endTime = new Date().valueOf();
     console.log('花费时间', endTime - startTime)
     return arr;
 }
-console.log(quickSort([3, 2, 4, 6, 8, 9]))
+console.log(quickSort([11, 2, 8, 3, 6, 9, 15, 0]))

@@ -166,3 +166,8 @@ pm2 的使用
 BFF 层实验 微前端 qiankun 学习
 
 ## 20230616 ts 校验重构(test 分支)
+
+## ts-config 和 debugger 的方式
+
+https://blog.csdn.net/DarkerSP/article/details/130124267
+https://blog.csdn.net/china_coding/article/details/128991512
