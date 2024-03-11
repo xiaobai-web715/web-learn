@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 
-let currentFn = null;
-const ChangeCount = memo((props) => {
+let currentFn;
+const ChangeCount = memo((props: {setCountFn: Function}) => {
   console.log("我因为函数的变化而执行了");
   const { setCountFn } = props;
   if (currentFn === null) {
@@ -11,5 +11,7 @@ const ChangeCount = memo((props) => {
   }
   return <button onClick={setCountFn}>{"点击增加计数"}</button>;
 });
+
+ChangeCount.displayName = 'ChangeCount';
 
 export default ChangeCount;

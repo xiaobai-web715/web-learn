@@ -130,7 +130,7 @@ module.exports = {
         // contentBase: './index.html',
         //contentBase: "./", //本地服务器所加载的页面所在的目录
         hot: true,
-        port: 3000,
+        port: 3025,
         watchContentBase: false,
         liveReload: false,
         disableHostCheck: true,
