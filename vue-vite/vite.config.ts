@@ -48,6 +48,9 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     cssCodeSplit: true,
-    sourcemap: false,
+    sourcemap: true,
+    rollupOptions: {
+      external: ['vue'],
+    },
   }
 });

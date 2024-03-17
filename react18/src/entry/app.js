@@ -2,6 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client'; //createRoot 在应用启动的时候没有问题,但是在qiankun加载微服务的时候,会导致RouterIndex不执行(网上有个解释说createRoot的改动之一是没有必要把container[容器组件]传递给render了)
 import ReactDOM from 'react-dom';
 import RouterIndex from 'src/router/index.tsx';
+import "src/components/event/index";
 import '../../utils/webViewBridge.ts';
 import './index.scss';
 
