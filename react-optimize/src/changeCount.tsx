@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 
 let currentFn;
-const ChangeCount = memo((props: {setCountFn: Function}) => {
+const ChangeCount = memo((props: {setCountFn: () => void}) => {
   console.log("我因为函数的变化而执行了");
   const { setCountFn } = props;
   if (currentFn === null) {

@@ -37,12 +37,19 @@ const TableJSX = () => {
       return 100;
     }
   };
+  const VNode = () => {
+    return {
+      bodyCell: (columns) => bodyCell(columns)
+    };
+  };
   return (
     <a-table
       columns={columns}
       dataSource={dataSource}
-      v-slots={{ bodyCell }}
-    ></a-table>
+      // v-slots={VNode()}
+    >
+      <slot name="bodyCell"></slot>
+    </a-table>
   );
 };
 export default TableJSX;

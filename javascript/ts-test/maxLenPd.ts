@@ -255,40 +255,105 @@
 
 // console.log(fourSum([1,-2,-5,-4,-3,3,3,5], -11))
 
-Function.prototype.myBind = function (context = window, ...args) {
-    // 1.判断当前调用myApply方法的是不是函数
-    if (typeof this !== 'function') {
-        throw Error("apply方法仅能被函数调用")
+// Function.prototype.myBind = function (context = window, ...args) {
+//     // 1.判断当前调用myApply方法的是不是函数
+//     if (typeof this !== 'function') {
+//         throw Error("apply方法仅能被函数调用")
+//     }
+//     // 2.判断this指向的修改，默认将window作为兜底属性
+//     if (!context) {
+//         context = window
+//     }
+//     // 3.创建一个symbol用来在context上存储this
+//     const symbolThis = Symbol()
+//     context[symbolThis] = this;
+
+//     // 4. 返回一个函数等待调用
+//     return function resultFunction (...otherArgs) {
+//         // 4.1 合并前后两次的参数
+//         const resultArgs = args.concat(otherArgs)
+//         // 4.2调用context[symbolThis]触发this指向的修改，并执行返回结果
+//         const result = context[symbolThis](...resultArgs)
+
+//         // 4.3删除添加上的属性
+//         delete context[symbolThis]
+//         return result;
+//     }
+// }
+
+
+// function greet(greeting, punctuation) {
+//     console.log(greeting + ' ' + this.name + punctuation);
+// }
+
+// const person = {
+//     name: 'John'
+// };
+
+// const greetJohn = greet.myBind(person, 'Hello');
+// greetJohn('!'); // 输出: Hello John!
+
+
+
+// function nextPermutation(nums: number[]): number[] {
+//     // 字典序更大的排列能够产生的规则
+//     // nums[i] < nums[i + 1]存在
+
+//     // 当存在字典序更大的排列时如何产生正确的顺序
+//     const len = nums.length;
+//     let satisfy = null;
+//     wrapper : for (let k = len - 2; k >= 0; k--) {
+//         if (nums[k] < nums[k + 1]) {
+//             satisfy = k;
+//             break wrapper;
+//         }
+//     }
+//     if (typeof satisfy == 'number') {
+//         // 此时要从右往左找到第一个大于nums[i]的值进行交换
+//         let startPoint = len - 1;
+//         find : while (startPoint >= 0) {
+//             if (nums[startPoint] > nums[satisfy]) {
+//                 let minVal = nums[satisfy];
+//                 nums[satisfy] = nums[startPoint];
+//                 nums[startPoint] = minVal;
+//                 break find;
+//             } else {
+//                 startPoint--;
+//             }
+//         }
+//         const sortArray = nums.slice(satisfy + 1);
+//         console.log("我是要排序的数组", sortArray);
+//         sortArray.sort((a, b) => a - b)
+//         nums.splice(satisfy + 1, len - 1 - satisfy, ...sortArray)
+//         // 交换完成之后要对i后面的内容进行一个从小到大的排序
+//     } else {
+//         nums.sort((a, b) => a - b)
+//     }
+//     return nums
+// };
+
+
+// console.log(nextPermutation([1,1,5]))
+
+
+function generateParenthesis(n: number): string[] {
+    const result: string[] = [];
+    const writeBraces = (left: number, right: number, value: string) => {
+        if (left == 0 && right == 0) {
+            result.push(value)
+            return;
+        }
+
+        if (left > 0) {
+            writeBraces(left -1, right, value + "(")
+            // 左侧执行完成之后如何退出并且执行右边
+        }
+        if (right > 0 && left < right) {
+            writeBraces(left, right - 1, value + ")")
+        }
     }
-    // 2.判断this指向的修改，默认将window作为兜底属性
-    if (!context) {
-        context = window
-    }
-    // 3.创建一个symbol用来在context上存储this
-    const symbolThis = Symbol()
-    context[symbolThis] = this;
 
-    // 4. 返回一个函数等待调用
-    return function resultFunction (...otherArgs) {
-        // 4.1 合并前后两次的参数
-        const resultArgs = args.concat(otherArgs)
-        // 4.2调用context[symbolThis]触发this指向的修改，并执行返回结果
-        const result = context[symbolThis](...resultArgs)
-
-        // 4.3删除添加上的属性
-        delete context[symbolThis]
-        return result;
-    }
-}
-
-
-function greet(greeting, punctuation) {
-    console.log(greeting + ' ' + this.name + punctuation);
-}
-
-const person = {
-    name: 'John'
+    writeBraces(n, n, '')
+    return result;
 };
-
-const greetJohn = greet.myBind(person, 'Hello');
-greetJohn('!'); // 输出: Hello John!
+console.log(generateParenthesis(3))
