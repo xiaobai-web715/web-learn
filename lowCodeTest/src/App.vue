@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
 import {ref, watch} from "vue"
-import {Input, Tabs, Descriptions} from "./test/index.tsx"
+import {Input, Tabs, Descriptions, TabsPane, DescriptionItem} from "./test/index.tsx"
 import Render from "./test/render.tsx" 
-import { onMounted } from 'vue';
 import { reactive } from 'vue';
 const inputValue = ref("呀哈哈");
 const InputRef = ref(
@@ -21,7 +20,6 @@ const TabsRef = ref(new Tabs())
 watch(inputValue, (newValue) => {
   console.log("我是新的value", newValue, InputRef.value)
 })
-const activeKey = ref(1)
 const pageEleIns = reactive({})
 setTimeout(() => {
   console.log("pageEleIns", pageEleIns)
@@ -32,11 +30,11 @@ const pageConfig = {
       Components: Tabs,
       vid: "tabs",
       config: {
-        activeKey,
+        activeKey: '2',
       },
       children: [
         {
-          Components: 'a-tab-pane',
+          Components: TabsPane,
           config: {
             key: "1",
             tab: "采购信息",
@@ -49,7 +47,6 @@ const pageConfig = {
                 title: "退款详情",
                 bordered: true,
                 loadData: async(store) => {
-                  console.log("我是整个页面的store", store)
                   return {
                       code: '1000000000',
                       state: '1',
@@ -60,28 +57,48 @@ const pageConfig = {
               },
               children: [
                 {
-                  Components: "a-descriptions-item",
+                  Components: DescriptionItem,
                   config: {
-                    label: "取货单号"
-                  }
-                },
-                {
-                  Components: "a-descriptions-item",
-                  config: {
-                    label: "状态"
+                    label: "取货单号",
                   },
                   children: [
                     (store) => {
-                      const Descriptions = store?.['Descriptions']?.config.data;
-                      console.log("Descriptions", Descriptions)
+                      const data = store?.['Descriptions']?.config?.data;
+                      return data?.value?.code;
+                    }
+                  ]
+                },
+                {
+                  Components: DescriptionItem,
+                  config: {
+                    label: "状态",
+                  },
+                  children: [
+                    (store) => {
+                      const data = store?.['Descriptions']?.config?.data;
                       const state = {
                           '0': '关闭',
                           '1': '开放',
                       }
-                      // return state[data.value.state] || '未知';
+                      return state[data?.value?.state] || '未知';
                     }
                   ]
                 }
+              ]
+            }
+          ]
+        },
+        {
+          Components: TabsPane,
+          config: {
+            key: "2",
+            tab: "出货信息",
+          },
+          children: [
+            {
+              Components: "div",
+              children: [
+                () => "呀哈哈"
               ]
             }
           ]
@@ -118,7 +135,7 @@ const pageConfig = {
   </div>
   <HelloWorld msg="Vite + Vue" />
   <InputRef :test="12" />
-  <TabsRef>
+  <!-- <TabsRef>
     <a-tab-pane
       key="1"
       tab="Tab 1"
@@ -146,7 +163,7 @@ const pageConfig = {
         :style="{ opacity: 0.5 }"
       />
     </template>
-  </TabsRef>
+  </TabsRef> -->
   <Render
     :config="pageConfig"
     :store="pageEleIns"
