@@ -7,7 +7,13 @@ const isFun = (func) => {
 }
 function createElementContent(allocation) {
     if (typeof allocation === "function") {
-        return allocation(this);
+        const result =  allocation(this); // 函数执行有可能返回的还是一个对象
+        if (typeof result === "object") {
+            console.log("我是返回的对象内容", result)
+            return createElementContent.call(this, result)
+        } else {
+            return result
+        }
     } else {
         const {Components, config, children, vid} = allocation;
         if (Components) {
@@ -40,7 +46,7 @@ function createElementContent(allocation) {
                 )
             }
         } else {
-            return (children ?? []).map(config => createElementContent.call(this, config)) || ''
+            return Array.isArray(children) ? children.map(config => createElementContent.call(this, config)) : allocation
         }
     }
 }

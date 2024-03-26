@@ -3,6 +3,7 @@ import HelloWorld from './components/HelloWorld.vue'
 import {ref, watch} from "vue"
 import {Input, Tabs, Descriptions, TabsPane, DescriptionItem} from "./test/index.tsx"
 import Render from "./test/render.tsx" 
+import TestSecond from "./test-second/index.vue"
 import { reactive } from 'vue';
 const inputValue = ref("呀哈哈");
 const InputRef = ref(
@@ -17,6 +18,7 @@ const InputRef = ref(
   )
 )
 const TabsRef = ref(new Tabs())
+console.log("TabsRef", TabsRef.value)
 watch(inputValue, (newValue) => {
   console.log("我是新的value", newValue, InputRef.value)
 })
@@ -28,7 +30,7 @@ const pageConfig = {
   children: [
     {
       Components: Tabs,
-      vid: "tabs",
+      vid: "tabs-1",
       config: {
         activeKey: '2',
       },
@@ -42,7 +44,7 @@ const pageConfig = {
           children: [
             {
               Components: Descriptions,
-              vid: "Descriptions",
+              vid: "Description",
               config: {
                 title: "退款详情",
                 bordered: true,
@@ -63,7 +65,7 @@ const pageConfig = {
                   },
                   children: [
                     (store) => {
-                      const data = store?.['Descriptions']?.config?.data;
+                      const data = store?.['Description']?.config?.data;
                       return data?.value?.code;
                     }
                   ]
@@ -75,12 +77,36 @@ const pageConfig = {
                   },
                   children: [
                     (store) => {
-                      const data = store?.['Descriptions']?.config?.data;
+                      const data = store?.['Description']?.config?.data;
                       const state = {
                           '0': '关闭',
                           '1': '开放',
                       }
                       return state[data?.value?.state] || '未知';
+                    }
+                  ]
+                },
+                {
+                  Components: DescriptionItem,
+                  config: {
+                    label: "销售单号",
+                  },
+                  children: [
+                    (store) => {
+                      const data = store?.['Description']?.config?.data;
+                      return data?.value?.scode
+                    }
+                  ]
+                },
+                {
+                  Components: DescriptionItem,
+                  config: {
+                    label: "子订单",
+                  },
+                  children: [
+                    (store) => {
+                      const data = store?.['Description']?.config?.data;
+                      return data?.value?.ccode
                     }
                   ]
                 }
@@ -96,11 +122,257 @@ const pageConfig = {
           },
           children: [
             {
-              Components: "div",
+              Components: Descriptions,
+              vid: "Description-2",
+              config: {
+                title: "退款详情2",
+                bordered: true,
+                loadData: async(store) => {
+                  return {
+                      code: '1000000000',
+                      state: '1',
+                      scode: '1234123421',
+                      ccode: '3214321432'
+                  }
+                }
+              },
               children: [
-                () => "呀哈哈"
+              {
+                  Components: DescriptionItem,
+                  config: {
+                    label: "取货单号",
+                  },
+                  children: [
+                    (store) => {
+                      const data = store?.['Description-2']?.config?.data;
+                      return data?.value?.code;
+                    }
+                  ]
+                },
+                {
+                  Components: DescriptionItem,
+                  config: {
+                    label: "状态",
+                  },
+                  children: [
+                    (store) => {
+                      const data = store?.['Description-2']?.config?.data;
+                      const state = {
+                          '0': '关闭',
+                          '1': '开放',
+                      }
+                      const result =  state[data?.value?.state] || '未知';
+                      if (result === "开放") {
+                        return {
+                          Components: 'a',
+                          config: {
+                            href: "http://www.baidu.com"
+                          },
+                          children: [
+                            result,
+                          ]
+                        }
+                      } else {
+                        return result;
+                      }
+                    }
+                  ]
+                },
+                {
+                  Components: DescriptionItem,
+                  config: {
+                    label: "销售单号",
+                  },
+                  children: [
+                    (store) => {
+                      const data = store?.['Description-2']?.config?.data;
+                      return data?.value?.scode
+                    }
+                  ]
+                },
+                {
+                  Components: DescriptionItem,
+                  config: {
+                    label: "子订单",
+                  },
+                  children: [
+                    (store) => {
+                      const data = store?.['Description-2']?.config?.data;
+                      return data?.value?.ccode
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+      Components: Tabs,
+      vid: "tabs-1",
+      config: {
+        activeKey: '2',
+      },
+      children: [
+        {
+          Components: TabsPane,
+          config: {
+            key: "1",
+            tab: "采购信息",
+          },
+          children: [
+            {
+              Components: Descriptions,
+              vid: "Description-3",
+              config: {
+                title: "退款详情3",
+                bordered: true,
+                size: "middle",
+                loadData: async(store) => {
+                  return {
+                      code: '1000000000',
+                      state: '1',
+                      scode: '1234123421',
+                      ccode: '3214321432'
+                  }
+                }
+              },
+              children: [
+                {
+                  Components: DescriptionItem,
+                  config: {
+                    label: "取货单号",
+                  },
+                  children: [
+                    (store) => {
+                      const data = store?.['Description-3']?.config?.data;
+                      return data?.value?.code;
+                    }
+                  ]
+                },
+                {
+                  Components: DescriptionItem,
+                  config: {
+                    label: "状态",
+                  },
+                  children: [
+                    (store) => {
+                      const data = store?.['Description-3']?.config?.data;
+                      const state = {
+                          '0': '关闭',
+                          '1': '开放',
+                      }
+                      return state[data?.value?.state] || '未知';
+                    }
+                  ]
+                },
+                {
+                  Components: DescriptionItem,
+                  config: {
+                    label: "销售单号",
+                  },
+                  children: [
+                    (store) => {
+                      const data = store?.['Description-3']?.config?.data;
+                      return data?.value?.scode
+                    }
+                  ]
+                },
+                {
+                  Components: DescriptionItem,
+                  config: {
+                    label: "子订单",
+                  },
+                  children: [
+                    (store) => {
+                      const data = store?.['Description-3']?.config?.data;
+                      return data?.value?.ccode
+                    }
+                  ]
+                }
               ]
             }
+          ]
+        },
+        {
+          Components: TabsPane,
+          config: {
+            key: "2",
+            tab: "出货信息",
+          },
+          children: [
+            {
+              Components: Descriptions,
+              vid: "Description-2",
+              config: {
+                title: "退款详情4",
+                size: "small",
+                bordered: true,
+                loadData: async(store) => {
+                  return {
+                      code: '1000000000',
+                      state: '1',
+                      scode: '1234123421',
+                      ccode: '3214321432'
+                  }
+                }
+              },
+              children: [
+              {
+                  Components: DescriptionItem,
+                  config: {
+                    label: "取货单号",
+                  },
+                  children: [
+                    (store) => {
+                      const data = store?.['Description-2']?.config?.data;
+                      return data?.value?.code;
+                    }
+                  ]
+                },
+                {
+                  Components: DescriptionItem,
+                  config: {
+                    label: "状态",
+                  },
+                  children: [
+                    (store) => {
+                      const data = store?.['Description-2']?.config?.data;
+                      const state = {
+                          '0': '关闭',
+                          '1': '开放',
+                      }
+                      return state[data?.value?.state] || '未知';
+                    }
+                  ]
+                },
+                {
+                  Components: DescriptionItem,
+                  config: {
+                    label: "销售单号",
+                  },
+                  children: [
+                    (store) => {
+                      const data = store?.['Description-2']?.config?.data;
+                      return data?.value?.scode
+                    }
+                  ]
+                },
+                {
+                  Components: DescriptionItem,
+                  config: {
+                    label: "子订单",
+                  },
+                  children: [
+                    (store) => {
+                      const data = store?.['Description-2']?.config?.data;
+                      return data?.value?.ccode
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
           ]
         }
       ]
@@ -135,7 +407,7 @@ const pageConfig = {
   </div>
   <HelloWorld msg="Vite + Vue" />
   <InputRef :test="12" />
-  <!-- <TabsRef>
+  <TabsRef>
     <a-tab-pane
       key="1"
       tab="Tab 1"
@@ -163,11 +435,12 @@ const pageConfig = {
         :style="{ opacity: 0.5 }"
       />
     </template>
-  </TabsRef> -->
+  </TabsRef>
   <Render
     :config="pageConfig"
     :store="pageEleIns"
   />
+  <TestSecond />
 </template>
 
 <style scoped>
