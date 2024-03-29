@@ -12,4 +12,13 @@ export default defineConfig({
   //   plugins: ['@vue/babel-plugin-jsx'],
   // })
   ],
+  server: {
+    proxy: {
+      '/api': {
+        target: "http://localhost:3001",
+        changeOrigin: true, //换源,
+        rewrite: (path) => path.replace(/^\/api/,''),
+      }
+    },
+  }
 })

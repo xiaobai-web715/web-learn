@@ -27,6 +27,7 @@ import syt = require('./route/syt')
 import sytUser = require('./route/sytUser')
 import sytRouter = require('./route/sytRouter')
 import section = require('./route/section')
+import lowMockData = require('./route/lowMockData')
 import paramUtil = require('./utils/request/paramUtil')
 
 import severRendering = require('./utils/handlers')
@@ -96,6 +97,7 @@ app.use('/admin/hospInfo', syt)
 app.use('/admin/user', sytUser)
 app.use('/admin/router', sytRouter)
 app.use('/admin/section', section)
+app.use('/lowMock/getInfo', lowMockData)
 // app.listen 仅仅使用http模块(如果要使用https则使用https.createServer)
 let server: Server | null = null
 const port = process.env.PORT ? process.env.PORT : 3001

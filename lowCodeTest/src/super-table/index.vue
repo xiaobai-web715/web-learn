@@ -242,7 +242,7 @@
 
 <script setup lang="ts">
 import cloneDeep from "lodash-es/cloneDeep"
-import Sortable from "sortablejs"
+// import Sortable from "sortablejs"
 import { Container, Draggable } from "vue3-smooth-dnd"
 import { useToggle, useFullscreen, useEventListener } from "@vueuse/core"
 import { useAttrs, useSlots, unref, watch, ref, toRef, computed, reactive, defineComponent, onMounted } from "vue"

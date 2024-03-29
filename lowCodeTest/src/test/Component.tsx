@@ -1,9 +1,11 @@
 import {ref} from "vue"
+import BaseClass from "./BaseClass"
 // 对原子组件进行封装
-function withSomeData(WrapperComponent) {
-    return class MyComponent {
+function withSomeData(WrapperComponent, expendClass = BaseClass) {
+    return class MyComponent extends expendClass{
         config: Record<string, any>
         constructor(props = {}) {
+            super()
             this.config = {} // config需要变成响应式(但这里变成响应式导致页面刷新过多，所以要变一下方式)
             this.config['data'] = ref(null);
             Object.entries(props).forEach(([key, value]) => {
@@ -28,7 +30,8 @@ function withSomeData(WrapperComponent) {
         }
         render(props) {
             this.getData(props.$attrs.store)
-            return <WrapperComponent {...this.config} slots={props.$slots}></WrapperComponent>
+            console.log("WrapperComponent", this.config.dataSource)
+            return <WrapperComponent {...this.config} instance={this} slots={props.$slots}></WrapperComponent>
         }
     }
 }

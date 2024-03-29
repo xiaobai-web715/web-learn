@@ -14,7 +14,7 @@ const Index = defineComponent({
     setup(props) {
         const activeKey = ref<string>('');
         onMounted(() => {
-            activeKey.value = props.activeKey as string
+            activeKey.value = props.activeKey;
         })
         return () => {
             return (

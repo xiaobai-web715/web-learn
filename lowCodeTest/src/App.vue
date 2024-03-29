@@ -406,6 +406,9 @@ const pageConfig = {
     </a>
   </div>
   <HelloWorld msg="Vite + Vue" />
+  <router-link :to="{name: 'Table'}">
+    去表格
+  </router-link>
   <InputRef :test="12" />
   <TabsRef>
     <a-tab-pane
