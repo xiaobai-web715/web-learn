@@ -1,17 +1,19 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import UnoCSS from "unocss/vite"
+import { fileURLToPath, URL } from "url";
 import vueJsx from "@vitejs/plugin-vue-jsx"
-import { babel } from '@rollup/plugin-babel';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), vueJsx(), 
-  //   babel({
-  //   babelHelpers: 'bundled',
-  //   extensions: ['.js', '.jsx', '.vue'],
-  //   plugins: ['@vue/babel-plugin-jsx'],
-  // })
-  ],
+  plugins: [vue(), vueJsx(), UnoCSS()],
+  resolve: {
+    alias:{
+      // "@" : resolve(__dirname, 'src')
+      // "@/*" : resolve(__dirname, 'src/*')
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    }
+  },
   server: {
     proxy: {
       '/api': {

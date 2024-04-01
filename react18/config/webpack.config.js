@@ -43,7 +43,7 @@ module.exports = {
         path: path.join(__dirname, '..', 'dist'), //这里要使用绝对路径
         filename: '[name].js',
         library: `${name}-[name]`,
-        libraryTarget: 'umd',
+        libraryTarget: "umd",
         jsonpFunction: `webpackJsonp_${name}`
     },
     module: {

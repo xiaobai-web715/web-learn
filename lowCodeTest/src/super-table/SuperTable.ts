@@ -1,7 +1,5 @@
-import { Component } from 'vue';
 import { TableType, DataItem } from './tableType';
 import { defaultPagination } from './defaultConfig';
-import { after } from 'node:test';
 export default abstract class SuperTable {
 
     config: TableType = {}

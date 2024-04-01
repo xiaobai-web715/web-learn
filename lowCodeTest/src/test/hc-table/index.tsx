@@ -1,7 +1,8 @@
-import withSomeData from "../Component.tsx"
+import withSomeData from "@/test/Component.tsx"
 import {defineComponent, reactive, watch} from "vue"
-import SuperTable from "./SuperTable.ts"
+import SuperTable from "./superTable.ts"
 const Index = defineComponent({
+    name: "HcTable",
     props: {
         instance: {
             type: Object,
@@ -42,4 +43,4 @@ const Index = defineComponent({
     }
 })
 
-export default withSomeData(Index, SuperTable)
+export default withSomeData<SuperTable>(Index, SuperTable)

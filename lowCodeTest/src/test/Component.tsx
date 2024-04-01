@@ -1,8 +1,12 @@
 import {ref} from "vue"
 import BaseClass from "./BaseClass"
-// 对原子组件进行封装
-function withSomeData(WrapperComponent, expendClass = BaseClass) {
-    return class MyComponent extends expendClass{
+
+interface ExpendClass <T> {
+    prototype: T,
+}
+function withSomeData<T>(WrapperComponent, expendClass?: ExpendClass<T>) {
+    const BaseComponet = expendClass || BaseClass;
+    return class MyComponent extends BaseComponet {
         config: Record<string, any>
         constructor(props = {}) {
             super()

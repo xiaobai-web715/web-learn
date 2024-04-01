@@ -4,10 +4,12 @@ const router = express.Router()
 router.get('/table', (req, res, next) => {
     const params = req.query
     let origData = data.tableData
-    Object.entries(params).forEach(([key, value], index) => {
+    Object.entries(params).forEach(([key, value]: [key: string, value: any], index) => {
         if (key === 'gender') {
-            const targetGender = (value as string).split(',')
-            origData = origData.filter(item => { console.log('targetGender', targetGender, item.gender); return targetGender.includes(item.gender) })
+            if (value.length > 0) {
+                const targetGender = value.split(',')
+                origData = origData.filter(item => { return targetGender.includes(item.gender) })
+            }
         }
     })
     return res.status(200).send({

@@ -1,4 +1,4 @@
-import { TableType, DataItem } from './tableType';
+import { TableType } from './tableType';
 export default abstract class SuperTable {
     config: TableType = {}
     

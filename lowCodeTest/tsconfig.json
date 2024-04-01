@@ -32,6 +32,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "src/**/*.d.ts", "src/test/hc-table/index.jsx", "src/test/hc-table/index.jsx", "src/test/hc-table/index.jsx"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "src/**/*.d.ts", "src/**/**/*.tsx", "src/**/**/*.ts", "**.config.ts", ".eslintrc.cjs"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

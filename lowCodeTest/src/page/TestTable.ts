@@ -2,8 +2,8 @@ import {Table} from "../test/index"
 import Axios from "axios"
 
 export default class TestTable extends Table {
-    constructor(props) {
-        super(props)
+    constructor() {
+        super()
     }
     _requestPromise() { // @TODO
         return Axios.get("/api/test", {
