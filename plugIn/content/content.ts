@@ -1,10 +1,9 @@
 const article = document.querySelector("article");
-console.log("article", article)
 // `document.querySelector` may return null if the selector doesn't match anything.
 if (article) {
   const text = article.textContent;
   const wordMatchRegExp = /[^\s]+/g; // Regular expression
-  const words = text.matchAll(wordMatchRegExp);
+  const words = (text as String).matchAll(wordMatchRegExp);
   // matchAll returns an iterator, convert to array to get word count
   const wordCount = [...words].length;
   const readingTime = Math.round(wordCount / 200);
@@ -18,5 +17,5 @@ if (article) {
   // Support for article docs with date
   const date = article.querySelector("time")?.parentNode;
 
-  (date ?? heading).insertAdjacentElement("afterend", badge);
+  (date instanceof Element ? (date ?? heading) : heading)?.insertAdjacentElement("afterend", badge);
 }
