@@ -7,20 +7,41 @@ import copy from 'rollup-plugin-copy';
 import html from '@rollup/plugin-html';
 import babel from '@rollup/plugin-babel';
 import replace from '@rollup/plugin-replace';
+import serve from 'rollup-plugin-serve';
+import livereload from 'rollup-plugin-livereload';
+import { terser } from 'rollup-plugin-terser';
 import path from 'path';
 import fs from 'fs';
 import url from 'url';
 import * as sass from 'sass'
-
+// 当使用rollup命令 带有-w参数启动命令的时候,rollup会监听input的文件改动进行重新编译
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
-
+const isDevelopment = process.env.NODE_ENV === 'development'
+const createHotUpdate = () => {
+  return [
+    isDevelopment && serve({
+      open: true,
+      contentBase: 'dist',
+      host: 'localhost',
+      port: 3000
+    }),
+    isDevelopment && livereload('dist'), //监听dist文件的改动
+    !isDevelopment && terser(),
+  ]
+}
 const background = {
   input: 'background/service-worker.ts',
   output: {
     file: 'dist/background/background.js',
     format: 'esm'
   },
-  plugins: [typescript()]
+  plugins: [
+    typescript(),
+    ...createHotUpdate()
+  ],
+  watch: {
+    clearScreen: false
+  }
 };
 
 const content_2 = {
@@ -29,7 +50,13 @@ const content_2 = {
     file: 'dist/content/content-2.js',
     format: 'esm'
   },
-  plugins: [typescript()]
+  plugins: [
+    typescript(),
+    ...createHotUpdate()
+  ],
+  watch: {
+    clearScreen: false
+  }
 }
 
 const content_1 = {
@@ -38,7 +65,13 @@ const content_1 = {
     file: 'dist/content/content-1.js',
     format: 'esm'
   },
-  plugins: [typescript()]
+  plugins: [
+    typescript(),
+    ...createHotUpdate()
+  ],
+  watch: {
+    clearScreen: false
+  }
 }
 
 const popup = {
@@ -53,6 +86,7 @@ const popup = {
       exclude: 'node_modules/**', // 排除 node_modules 目录
       presets: ['@babel/preset-react'], // 使用 React 预设
     }),
+    ...createHotUpdate(),
     replace({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
       preventAssignment: true, // 阻止替换变量后的赋值操作
@@ -100,6 +134,9 @@ const popup = {
       fileName: 'popup.html'
     }),
   ],
+  watch: {
+    clearScreen: false
+  }
 }
 
 export default [background, content_1, content_2, popup]

@@ -1,5 +1,3 @@
-console.log("sw-tips.js")
-
 const updateTip = async () => {
     const response = await fetch('https://extension-tips.glitch.me/tips.json');
     const tips = await response.json();

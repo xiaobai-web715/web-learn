@@ -9,7 +9,6 @@ const EasyFunc = () => {
           "https://developer.chrome.com/docs/extensions/*",
         ]
       }).then(tabInfos => {
-        console.log("我是获取的所有的内容", tabInfos)
         setTabs(tabInfos)
       });
     }, [])
@@ -43,7 +42,7 @@ const EasyFunc = () => {
         const tabIds: number[] = tabs.map(({ id }) => id) as number[];
         if (tabIds.length) {
           const group = await chrome.tabs.group({ tabIds });
-          await chrome.tabGroups.update(group, { title: "DOCS" });
+          await chrome.tabGroups.update(group, { title: "DOCS", collapsed: true });
         }
       }
     }

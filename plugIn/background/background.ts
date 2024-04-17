@@ -8,7 +8,6 @@ const extensions = 'https://developer.chrome.com/docs/extensions'
 const webstore = 'https://developer.chrome.com/docs/webstore'
 
 chrome.action.onClicked.addListener(async (tab: chrome.tabs.Tab) => {
-  console.log("tab", tab)
   if (tab && tab.url && (tab.url.startsWith(extensions) || tab.url.startsWith(webstore))) {
     // Retrieve the action badge to check if the extension is 'ON' or 'OFF'
     const prevState = await chrome.action.getBadgeText({ tabId: tab.id });
