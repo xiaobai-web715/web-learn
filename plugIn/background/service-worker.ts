@@ -1,2 +1,4 @@
-import './sw-omnibox.js';
-import './sw-tips.js';
+import './sw-omnibox';
+import './sw-tips';
+
+import './getTargetElement'

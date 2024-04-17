@@ -26,6 +26,10 @@
       "matches": [
         "https://developer.chrome.com/docs/extensions/reference/*"
       ]
+    },
+    {
+      "js": ["content/getPageDomPath.js"],
+      "matches": ["<all_urls>"]
     }
   ],
   "background": {
@@ -40,8 +44,7 @@
     "tabGroups"
   ],
   "host_permissions": [
-    "https://extension-tips.glitch.me/",
-    "https://developer.chrome.com/*"
+    "<all_urls>"
   ],
   "action": {
     "default_popup": "panel/popup.html",
@@ -58,6 +61,13 @@
           "default": "Ctrl+B",
           "mac": "Command+B"
         }
+    },
+    "trigger-action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "触发确认当前元素为目标元素"
     }
   }
 }

@@ -10,6 +10,7 @@ import replace from '@rollup/plugin-replace';
 import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
+import alias from '@rollup/plugin-alias';
 import path from 'path';
 import fs from 'fs';
 import url from 'url';
@@ -37,7 +38,12 @@ const background = {
   },
   plugins: [
     typescript(),
-    ...createHotUpdate()
+    ...createHotUpdate(),
+    alias({
+      entries: [
+        { find: '@', replacement: '.' } // 与tsconfig.json中的配置相匹配
+      ]
+    })
   ],
   watch: {
     clearScreen: false
@@ -63,6 +69,21 @@ const content_1 = {
   input: 'content/content.ts',
   output: {
     file: 'dist/content/content-1.js',
+    format: 'esm'
+  },
+  plugins: [
+    typescript(),
+    ...createHotUpdate()
+  ],
+  watch: {
+    clearScreen: false
+  }
+}
+
+const content_3 = {
+  input: 'content/getPageDomPath/index.ts',
+  output: {
+    file: 'dist/content/getPageDomPath.js',
     format: 'esm'
   },
   plugins: [
@@ -139,4 +160,4 @@ const popup = {
   }
 }
 
-export default [background, content_1, content_2, popup]
+export default [background, content_1, content_2, content_3 ,popup]
