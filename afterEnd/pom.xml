@@ -41,9 +41,18 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <!--maven本地仓库中已经下载了当前模块,但是仍然报错,有可能是maven的配置路径不对，去settings里面配置一下路径即可-->
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <!--下方配置主应用的入口-->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version> <!-- 使用合适的版本号 -->
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>com.lxh.admin</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
         </plugins>
     </build>
