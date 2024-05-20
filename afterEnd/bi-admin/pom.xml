@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>syt</artifactId>
         <groupId>com.lxh</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.lxh</groupId>
     <artifactId>admin</artifactId>
     <name>Archetype - admin</name>
     <version>0.0.1-SNAPSHOT</version>
@@ -66,21 +65,23 @@
         <!-- shenyu-spring-boot-starter-client-springcloud相比于shenyu-spring-boot-starter-client这个依赖增加了对Spring Cloud特性的支持，例如服务发现（例如使用Eureka、Consul、Nacos等） -->
         <dependency>
             <groupId>org.apache.shenyu</groupId>
-            <artifactId>shenyu-spring-boot-starter-client-springcloud</artifactId>
-            <version>2.5.1</version>
+            <artifactId>shenyu-spring-boot-starter-client-springmvc</artifactId>
+            <version>2.6.1</version>
         </dependency>
 
         <!--    nacos配置     -->
+        <!--    Nacos Discovery    -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-            <version>2021.0.4.0</version>
+            <!--     原来使用2021.0.4.0会报错连接不上nacos       -->
+            <version>2021.0.1.0</version>
         </dependency>
-
+        <!--    Nacos Config     -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-            <version>2021.0.4.0</version>
+            <version>2021.0.1.0</version>
         </dependency>
 
         <dependency>
@@ -88,6 +89,12 @@
             <artifactId>spring-cloud-commons</artifactId>
             <version>2.2.0.RELEASE</version>
         </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-bootstrap</artifactId>-->
+<!--            <version>4.1.2</version>-->
+<!--        </dependency>-->
 
 
 <!--    引入面向切面依赖    -->
@@ -151,6 +158,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.7.5</version>
             </plugin>
         </plugins>
     </build>

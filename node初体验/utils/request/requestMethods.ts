@@ -69,7 +69,7 @@ const requestBody = {
 const requestAdmin = async (url: string, params: IParams, method: string = 'POST', req?): Promise<any> => {
     const options: IOptions = {
         host: credentials.biAdmin.host,
-        port: credentials.biAdmin.port,
+        port: credentials.biAdmin.soulPort,
         // port: 8888, // Fiddler抓包的代理端口
         path: url,
         method,

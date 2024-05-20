@@ -20,7 +20,9 @@ import com.lxh.utils.result.ResultCodeEnum;
 import com.lxh.utils.token.UserToken;
 import com.lxh.utils.utils.print;
 import com.lxh.utils.token.GenerateToken;
-import org.apache.shenyu.client.springcloud.annotation.ShenyuSpringCloudClient;
+import org.apache.shenyu.client.apidocs.annotations.ApiDoc;
+import org.apache.shenyu.client.apidocs.annotations.ApiModule;
+import org.apache.shenyu.client.springmvc.annotation.ShenyuSpringMvcClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Lazy;
@@ -44,8 +46,10 @@ import static com.lxh.utils.image.ImageUtil.pictureTemplatesCut;
 
 @Controller
 @RestController
-@RequestMapping("/admin/hosp/user")
-@ShenyuSpringCloudClient(path = "/user")
+// shenyu网关进行匹配的时候匹配的是不含上下文路径的请求部分,原本的/admin/hosp/user => /user
+@RequestMapping("/user")
+@ShenyuSpringMvcClient("/user/**")
+@ApiModule("/user")
 //@Lazy
 public class UserSetController {
     @Autowired
@@ -89,7 +93,7 @@ public class UserSetController {
     }
 
     @PostMapping("/login")
-    @ShenyuSpringCloudClient(path = "/login")
+    @ApiDoc(desc = "login")
     public Result login(@RequestBody hospUser userInfo){
         String user = userInfo.getUser();
         String password = userInfo.getPassword();
@@ -119,7 +123,7 @@ public class UserSetController {
     };
 
     @PostMapping("/register")
-    @ShenyuSpringCloudClient(path = "/register")
+    @ApiDoc(desc = "register")
     @ServiceTokenRequired
     public Result register(@RequestBody hospUser userInfo) {
 //        System.out.print(userInfo);
@@ -133,7 +137,7 @@ public class UserSetController {
     }
 
     @PostMapping("/getUserImage")
-    @ShenyuSpringCloudClient(path = "/getUserImage")
+    @ApiDoc(desc = "getUserImage")
     @ServiceTokenRequired
 //    这里前端部分最好改成xxxx的格式(获取图片的二进制流)
     public void getUserImage(@RequestParam("uid") int uid, HttpServletResponse response) throws IOException {
@@ -209,7 +213,7 @@ public class UserSetController {
     }
 
     @PostMapping("/uploadImage")
-    @ShenyuSpringCloudClient(path = "/uploadImage")
+    @ApiDoc(desc = "uploadImage")
     @ResponseBody
     @ServiceTokenRequired
     public Result setUserImage(HttpServletRequest request) {
@@ -253,7 +257,7 @@ public class UserSetController {
         }
     }
     @PostMapping("/slidingLogin")
-    @ShenyuSpringCloudClient("/slidingLogin")
+    @ApiDoc(desc = "slidingLogin")
     public Result<BaseImageInfo> getSlidingLogin(@RequestParam("userName2") String useName, HttpServletRequest request) {
         String clientIp = request.getRemoteAddr();
         System.out.println("用户名称" +  useName);
@@ -294,7 +298,7 @@ public class UserSetController {
     }
 
     @PostMapping("/slide/distance")
-    @ShenyuSpringCloudClient("/slide/distance")
+    @ApiDoc(desc = "slide/distance")
     public Result checkSlide(@RequestParam("x") int x) {
         System.out.println("前端页面横向移动的距离:" + x);
         return Result.success(null);

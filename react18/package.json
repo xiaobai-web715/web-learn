@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --open --config ./config/webpack.config.js",
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server --open --config ./config/webpack.config.js",
     "lint": "eslint src",
     "build": "./config/webpack.config.js"
   },
@@ -44,6 +44,7 @@
     "@typescript-eslint/eslint-plugin": "^5.37.0",
     "@typescript-eslint/parser": "^5.37.0",
     "babel-loader": "^8.2.5",
+    "cross-env": "^7.0.3",
     "eslint": "^8.23.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
