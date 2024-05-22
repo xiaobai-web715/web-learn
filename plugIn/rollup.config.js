@@ -1,7 +1,7 @@
 import typescript from "@rollup/plugin-typescript";
 import scss from "rollup-plugin-scss";
 import image from "@rollup/plugin-image";
-import resolve from "@rollup/plugin-node-resolve";
+import resolve from "@rollup/plugin-node-resolve"; // roolup在打包的时候默认与ES原生比较像，不能支持裸模块的导入。需要借助这个插件实现对于裸模块的打包构建
 import commonjs from "@rollup/plugin-commonjs";
 import copy from "rollup-plugin-copy";
 import html from "@rollup/plugin-html";
@@ -29,7 +29,7 @@ const createHotUpdate = () => {
       }),
     isDevelopment && livereload("dist"), //监听dist文件的改动
     !isDevelopment && terser(),
-  ];
+  ].filter(Boolean);
 };
 const background = {
   input: "background/service-worker.ts",
@@ -62,7 +62,7 @@ const content_2 = {
     file: "dist/content/content-2.js",
     format: "esm",
   },
-  plugins: [typescript(), ...createHotUpdate()],
+  plugins: [typescript()],
   watch: {
     clearScreen: false,
   },
@@ -74,7 +74,7 @@ const content_1 = {
     file: "dist/content/content-1.js",
     format: "esm",
   },
-  plugins: [typescript(), ...createHotUpdate()],
+  plugins: [typescript()],
   watch: {
     clearScreen: false,
   },
@@ -86,7 +86,7 @@ const content_3 = {
     file: "dist/content/getPageDomPath.js",
     format: "esm",
   },
-  plugins: [typescript(), ...createHotUpdate()],
+  plugins: [typescript()],
   watch: {
     clearScreen: false,
   },
@@ -104,7 +104,6 @@ const popup = {
       exclude: "node_modules/**", // 排除 node_modules 目录
       presets: ["@babel/preset-react"], // 使用 React 预设
     }),
-    ...createHotUpdate(),
     replace({
       "process.env.NODE_ENV": JSON.stringify(
         process.env.NODE_ENV || "development"

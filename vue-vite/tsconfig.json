@@ -17,6 +17,9 @@
     "allowSyntheticDefaultImports": true, // Allow 'import x from y' when a module doesn't have a default export.
     "lib": ["ESNext", "DOM"], // lib引入dom用于ts校验是使用typescript下定义的dom的.d.ts的类型文件
     "skipLibCheck": true,
+    "types": [
+      "vite/client" //ts不会将静态资源导入视为有效的模块的校验问题
+    ]
   },
   // "typeAcquisition": { //是否自动引入库定义的.d.ts类型文件
   //   "enable": true,

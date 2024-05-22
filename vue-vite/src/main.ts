@@ -15,7 +15,7 @@ import {
     QiankunProps,
 } from 'vite-plugin-qiankun/dist/helper.js';
 
-
+const test = import.meta.env.BASE_URL;
 let instance: AppI<Element> | null = null;
 function render (props) {
     const { container } = props;
