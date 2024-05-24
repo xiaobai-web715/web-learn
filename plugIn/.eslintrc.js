@@ -28,6 +28,14 @@ module.exports = {
         "project": ['tsconfig.json'], // eslint规则
         //"extraFileExtensions": ['.vue'], //解决Parsing error: "parserOptions.project" has been set for @typescript-eslint/parser.The file does not match your project config: src\components\assembly\tableAssembly\Table.vue.The extension for the file (.vue) is non-standard. You should add "parserOptions.extraFileExtensions" to your config.
         "tsconfigRootDir": __dirname,
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "settings": {
+            "react": {
+              "version": "detect" // 自动检测React版本
+            }
+        },
     },
     "plugins": [
         "@typescript-eslint",

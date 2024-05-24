@@ -44,7 +44,6 @@ const background = {
       browser: true, // 告诉插件需要适配浏览器环境
     }),
     commonjs(),
-    ...createHotUpdate(),
     alias({
       entries: [
         { find: "@", replacement: "." }, // 与tsconfig.json中的配置相匹配
@@ -92,6 +91,35 @@ const content_3 = {
   },
 };
 
+const assemblyTem = (target, htmlName) => {
+  return ({ attributes, files, meta, publicPath, title }) => {
+    // 读取现有的 HTML 文件内容
+    const htmlPath = path.resolve(__dirname, `${target}/public`, `${htmlName}.html`);
+    // console.log("文件路径", htmlPath, publicPath)
+    let htmlTemplate = fs.readFileSync(htmlPath, { encoding: "utf8" });
+    // console.log("我是script的值", htmlTemplate)
+    // 生成 script 标签
+    const scripts = (files.js || [])
+      .map(({ fileName }) => {
+        // console.log("我是文件名称", fileName)
+        return `<script src="${publicPath}${fileName}"></script>`;
+      })
+      .join("\n");
+    const cssLinks = (files.css || [])
+      .map(
+        (file) =>
+          `<link rel="stylesheet" href="${publicPath}${file.fileName}">`
+      )
+      .join("\n");
+
+    // 将 script 标签插入到现有的 HTML 中
+    // 假设你的 HTML 中有一个特殊的占位符，比如 <!-- inject:js -->
+    htmlTemplate = htmlTemplate.replace("<!-- inject:js -->", scripts);
+    htmlTemplate = htmlTemplate.replace("<!-- inject:css -->", cssLinks);
+    return htmlTemplate;
+  }
+}
+
 const popup = {
   input: "popup/src/index.tsx",
   output: {
@@ -102,13 +130,14 @@ const popup = {
     typescript(),
     babel({
       exclude: "node_modules/**", // 排除 node_modules 目录
-      presets: ["@babel/preset-react"], // 使用 React 预设
+      babelHelpers: 'bundled', // 使用 'bundled' 模式
+      // presets: ["@babel/preset-react"], // 使用 React 预设 => 可以在这里写转译所需要的预设，也可以使用,babelrc文件进行配置
     }),
     replace({
       "process.env.NODE_ENV": JSON.stringify(
         process.env.NODE_ENV || "development"
       ),
-      preventAssignment: true, // 阻止替换变量后的赋值操作
+      preventAssignment: true, // 插件会避免替换看起来像是赋值操作的代码片段。
     }),
     resolve(), // 解析 node_modules 中的模块
     commonjs(), // 转换 CommonJS 模块为 ES6
@@ -125,32 +154,7 @@ const popup = {
     }),
     html({
       publicPath: "./",
-      template: ({ attributes, files, meta, publicPath, title }) => {
-        // 读取现有的 HTML 文件内容
-        const htmlPath = path.resolve(__dirname, "popup/public", "popup.html");
-        // console.log("文件路径", htmlPath, publicPath)
-        let htmlTemplate = fs.readFileSync(htmlPath, { encoding: "utf8" });
-        // console.log("我是script的值", htmlTemplate)
-        // 生成 script 标签
-        const scripts = (files.js || [])
-          .map(({ fileName }) => {
-            // console.log("我是文件名称", fileName)
-            return `<script src="${publicPath}${fileName}"></script>`;
-          })
-          .join("\n");
-        const cssLinks = (files.css || [])
-          .map(
-            (file) =>
-              `<link rel="stylesheet" href="${publicPath}${file.fileName}">`
-          )
-          .join("\n");
-
-        // 将 script 标签插入到现有的 HTML 中
-        // 假设你的 HTML 中有一个特殊的占位符，比如 <!-- inject:js -->
-        htmlTemplate = htmlTemplate.replace("<!-- inject:js -->", scripts);
-        htmlTemplate = htmlTemplate.replace("<!-- inject:css -->", cssLinks);
-        return htmlTemplate;
-      },
+      template: assemblyTem('popup', 'popup'),
       // 自定义输出的 HTML 文件名，如果需要的话
       fileName: "popup.html",
     }),
@@ -160,4 +164,37 @@ const popup = {
   },
 };
 
-export default [background, content_1, content_2, content_3, popup];
+const view = {
+  input: 'view/main.tsx',
+  output: {
+    file: 'dist/view/index.js',
+    format: 'iife',
+    globals: {
+      react: "React",
+      'react-dom': "ReactDOM"
+    }
+  },
+  plugins: [
+    resolve(), // 处理裸模块
+    commonjs(),
+    typescript(),
+    html({ 
+      publicPath: "./",
+      template: assemblyTem('view', 'app'),
+      // 自定义输出的 HTML 文件名，如果需要的话
+      fileName: "view.html",
+    }),
+    babel({
+      exclude: 'node_modules/**', // 排除 node_modules 下的文件
+      babelHelpers: 'bundled' // 使用 'bundled' 模式
+    }),
+    replace({
+      'process.env.NODE_ENV': JSON.stringify('production'),
+      preventAssignment: true,
+    }),
+    terser() // 压缩代码
+  ],
+  external: ['react', 'react-dom'] // 指定外部依赖
+}
+
+export default [background, content_1, content_2, content_3, popup, view];
