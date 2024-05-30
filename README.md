@@ -171,3 +171,9 @@ BFF 层实验 微前端 qiankun 学习
 
 https://blog.csdn.net/DarkerSP/article/details/130124267
 https://blog.csdn.net/china_coding/article/details/128991512
+
+## plugin
+
+### 启动命令配置
+npm run all 命令可以控制多个命令并行或者串行(并行就在npm run all 后面加上 --parallel)
+ts-node运行 ts文件报错，使用ts-node的ESM加载器执行ts文件

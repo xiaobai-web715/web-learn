@@ -9,15 +9,18 @@ import babel from "@rollup/plugin-babel";
 import replace from "@rollup/plugin-replace";
 import serve from "rollup-plugin-serve";
 import livereload from "rollup-plugin-livereload";
-import { terser } from "rollup-plugin-terser";
+import terser from "@rollup/plugin-terser";
 import alias from "@rollup/plugin-alias";
 import path from "path";
 import fs from "fs";
 import url from "url";
 import * as sass from "sass";
+import { promisify } from 'util'
 // 当使用rollup命令 带有-w参数启动命令的时候,rollup会监听input的文件改动进行重新编译
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const isDevelopment = process.env.NODE_ENV === "development";
+const writeFile = promisify(fs.writeFile)
+const readFile = promisify(fs.readFile)
 const createHotUpdate = () => {
   return [
     isDevelopment &&
@@ -31,6 +34,39 @@ const createHotUpdate = () => {
     !isDevelopment && terser(),
   ].filter(Boolean);
 };
+
+const mainfestChange = () => {
+  return {
+    async buildStart() {
+      const version = await readFile('version.txt', {encoding: 'utf8'})
+      // __dirname 是当前文件所在目录的路径
+      const manifestPath = path.resolve(__dirname, 'manifest.json')
+      const manifestContent = await readFile(manifestPath, {encoding: 'utf8'})
+      // console.log("我是获取的版本信息", version)
+      try {
+        const parserManifestContent = JSON.parse(manifestContent)
+        parserManifestContent.description = version || ''
+        // JSON.stringify 第二个参数是替换的功能（数组或者函数）第三个参数是每个级别缩进的空格（美化功能）
+        await writeFile(manifestPath, JSON.stringify(parserManifestContent, null, 2), {encoding: 'utf8'})
+      } catch (err) {
+        console.log("解析mainfest.json中的json串配置失败")
+        await Promise.resolve()
+      }
+    }
+  }
+}
+const manifest = {
+  input: 'manifest/index.ts',
+  output: {
+    file: "dist/manifest/index.js",
+    format: "esm",
+    sourcemap: "inline", // 可选，如果你想生成source map
+  },
+  plugins: [
+    mainfestChange()
+  ]
+}
+
 const background = {
   input: "background/service-worker.ts",
   output: {
@@ -197,4 +233,4 @@ const view = {
   external: ['react', 'react-dom'] // 指定外部依赖
 }
 
-export default [background, content_1, content_2, content_3, popup, view];
+export default [manifest, background, content_1, content_2, content_3, popup, view];

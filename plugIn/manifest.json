@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Hello Extensions",
-  "description": "Base Level Extension",
+  "description": "1.0.0",
   "minimum_chrome_version": "102",
   "omnibox": {
     "keyword": "api"
@@ -15,27 +15,39 @@
   },
   "content_scripts": [
     {
-      "js": ["content/content-1.js"],
+      "js": [
+        "content/content-1.js"
+      ],
       "matches": [
         "https://developer.chrome.com/docs/extensions/*",
         "https://developer.chrome.com/docs/webstore/*"
       ]
     },
     {
-      "js": ["content/content-2.js"],
+      "js": [
+        "content/content-2.js"
+      ],
       "matches": [
         "https://developer.chrome.com/docs/extensions/reference/*"
       ]
     },
     {
-      "js": ["content/getPageDomPath.js"],
-      "matches": ["<all_urls>"]
+      "js": [
+        "content/getPageDomPath.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["content/style.css"],
-      "matches": ["<all_urls>"]
+      "resources": [
+        "content/style.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ],
   "background": {
@@ -43,9 +55,9 @@
     "type": "module"
   },
   "permissions": [
-    "activeTab", 
-    "scripting", 
-    "storage", 
+    "activeTab",
+    "scripting",
+    "storage",
     "alarms",
     "tabGroups"
   ],
@@ -63,10 +75,10 @@
   },
   "commands": {
     "_execute_action": {
-        "suggested_key": {
-          "default": "Ctrl+B",
-          "mac": "Command+B"
-        }
+      "suggested_key": {
+        "default": "Ctrl+B",
+        "mac": "Command+B"
+      }
     },
     "trigger-action": {
       "suggested_key": {
