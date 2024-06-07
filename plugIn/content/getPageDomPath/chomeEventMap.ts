@@ -1,6 +1,6 @@
-import {Info} from './index'
 import { getEleStruc } from '@/utils/domOptions';
-const canModifyDomStyle = (message: any, sender: chrome.runtime.MessageSender, sendResponse: ((response?: any) => void), needInfo: Info) => {
+import MessageBusInfo from './messageBusInfo';
+const canModifyDomStyle = (message: any, sender: chrome.runtime.MessageSender, sendResponse: ((response?: any) => void), needInfo: MessageBusInfo) => {
     if (needInfo && needInfo.dom) {
         needInfo.dom.classList.add('hit');
         const targetDomPath = getEleStruc(needInfo.dom as HTMLElement)

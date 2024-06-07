@@ -1,6 +1,12 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
+import { Provider } from "react-redux";
+import store from "@/view/store"
 import App from './app'
 
 const root = createRoot(document.querySelector<Element>('#app') as Element)
-root.render(<App/>)
+root.render(
+    <Provider store={store}>
+        <App/>
+    </Provider>
+)

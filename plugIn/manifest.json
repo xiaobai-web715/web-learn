@@ -43,7 +43,8 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "content/style.css"
+        "content/style.css",
+        "view/view.html"
       ],
       "matches": [
         "<all_urls>"

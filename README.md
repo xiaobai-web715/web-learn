@@ -176,4 +176,5 @@ https://blog.csdn.net/china_coding/article/details/128991512
 
 ### 启动命令配置
 npm run all 命令可以控制多个命令并行或者串行(并行就在npm run all 后面加上 --parallel)
+    npm-run-all -s clean version -p rollup:watch gulp:watch(-s 后面的是串行执行 -p后面的是并行执行 => 为啥并行，因为处于监听模式下不会被认为完成，也就不会继续执行下面的命令)
 ts-node运行 ts文件报错，使用ts-node的ESM加载器执行ts文件

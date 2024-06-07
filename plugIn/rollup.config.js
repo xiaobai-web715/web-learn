@@ -9,6 +9,7 @@ import babel from "@rollup/plugin-babel";
 import replace from "@rollup/plugin-replace";
 import serve from "rollup-plugin-serve";
 import livereload from "rollup-plugin-livereload";
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import terser from "@rollup/plugin-terser";
 import alias from "@rollup/plugin-alias";
 import path from "path";
@@ -121,7 +122,19 @@ const content_3 = {
     file: "dist/content/getPageDomPath.js",
     format: "esm",
   },
-  plugins: [typescript()],
+  plugins: [
+    typescript(),
+    resolve(
+      {
+        browser: true, // 告诉插件需要适配浏览器环境
+        alias: {
+          // 映射node:crypto 这个依赖到我们自己的一个模块当中
+          "node:crypto": "./resolveAlias.ts"
+        }
+      }
+    ), // 解析 node_modules 中的裸模块
+    commonjs(), // 转换 CommonJS 模块为 ES6
+  ],
   watch: {
     clearScreen: false,
   },
@@ -205,15 +218,22 @@ const view = {
   output: {
     file: 'dist/view/index.js',
     format: 'iife',
-    globals: {
-      react: "React",
-      'react-dom': "ReactDOM"
-    }
+    // globals: {
+    //   react: "React",
+    //   'react-dom': "ReactDOM"
+    // }
   },
   plugins: [
-    resolve(), // 处理裸模块
+    peerDepsExternal(), // 说是防止重复引入不同版本的库
+    resolve({
+      browser: true, // 告诉插件需要适配浏览器环境
+    }), // 处理裸模块
     commonjs(),
     typescript(),
+    scss({
+      fileName: "index.css",
+      sass,
+    }),
     html({ 
       publicPath: "./",
       template: assemblyTem('view', 'app'),
@@ -228,9 +248,21 @@ const view = {
       'process.env.NODE_ENV': JSON.stringify('production'),
       preventAssignment: true,
     }),
-    terser() // 压缩代码
+    terser(), // 压缩代码
+    alias({
+      entries: [
+        { find: "@", replacement: "." }, // 与tsconfig.json中的配置相匹配
+      ],
+    }),
   ],
-  external: ['react', 'react-dom'] // 指定外部依赖
+  onwarn: function (warning, warn) {
+    // 检查警告信息，忽略特定警告
+    if (warning.message && (warning.message.includes('"use client"') || warning.message.includes('this'))) {
+      return;
+    }
+    warn(warning)
+  },
+  // external: ['react', 'react-dom'] // 避免将 React 和 ReactDOM 打包进来(这里加上之后 运行编译后的文件会报错react这个库不存在)
 }
 
 export default [manifest, background, content_1, content_2, content_3, popup, view];
