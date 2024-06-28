@@ -17,6 +17,7 @@ import fs from "fs";
 import url from "url";
 import * as sass from "sass";
 import { promisify } from 'util'
+import { defineConfig } from 'rollup';
 // 当使用rollup命令 带有-w参数启动命令的时候,rollup会监听input的文件改动进行重新编译
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const isDevelopment = process.env.NODE_ENV === "development";
@@ -213,56 +214,57 @@ const popup = {
   },
 };
 
-const view = {
-  input: 'view/main.tsx',
-  output: {
-    file: 'dist/view/index.js',
-    format: 'iife',
-    // globals: {
-    //   react: "React",
-    //   'react-dom': "ReactDOM"
-    // }
-  },
-  plugins: [
-    peerDepsExternal(), // 说是防止重复引入不同版本的库
-    resolve({
-      browser: true, // 告诉插件需要适配浏览器环境
-    }), // 处理裸模块
-    commonjs(),
-    typescript(),
-    scss({
-      fileName: "index.css",
-      sass,
-    }),
-    html({ 
-      publicPath: "./",
-      template: assemblyTem('view', 'app'),
-      // 自定义输出的 HTML 文件名，如果需要的话
-      fileName: "view.html",
-    }),
-    babel({
-      exclude: 'node_modules/**', // 排除 node_modules 下的文件
-      babelHelpers: 'bundled' // 使用 'bundled' 模式
-    }),
-    replace({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-      preventAssignment: true,
-    }),
-    terser(), // 压缩代码
-    alias({
-      entries: [
-        { find: "@", replacement: "." }, // 与tsconfig.json中的配置相匹配
-      ],
-    }),
-  ],
-  onwarn: function (warning, warn) {
-    // 检查警告信息，忽略特定警告
-    if (warning.message && (warning.message.includes('"use client"') || warning.message.includes('this'))) {
-      return;
-    }
-    warn(warning)
-  },
-  // external: ['react', 'react-dom'] // 避免将 React 和 ReactDOM 打包进来(这里加上之后 运行编译后的文件会报错react这个库不存在)
-}
+// rollup 打包图片资源不方便，改为借助webpack对react项目进行打包
+// const view = defineConfig({
+//   input: 'view/main.tsx',
+//   output: {
+//     file: 'dist/view/index.js',
+//     format: 'iife',
+//     // globals: {
+//     //   react: "React",
+//     //   'react-dom': "ReactDOM"
+//     // }
+//   },
+//   plugins: [
+//     peerDepsExternal(), // 说是防止重复引入不同版本的库
+//     resolve({
+//       browser: true, // 告诉插件需要适配浏览器环境
+//     }), // 处理裸模块
+//     commonjs(),
+//     typescript(),
+//     scss({
+//       fileName: "index.css",
+//       sass,
+//     }),
+//     html({ 
+//       publicPath: "./",
+//       template: assemblyTem('view', 'app'),
+//       // 自定义输出的 HTML 文件名，如果需要的话
+//       fileName: "view.html",
+//     }),
+//     babel({
+//       exclude: 'node_modules/**', // 排除 node_modules 下的文件
+//       babelHelpers: 'bundled' // 使用 'bundled' 模式
+//     }),
+//     replace({
+//       'process.env.NODE_ENV': JSON.stringify('production'),
+//       preventAssignment: true,
+//     }),
+//     terser(), // 压缩代码
+//     alias({
+//       entries: [
+//         { find: "@", replacement: "." }, // 与tsconfig.json中的配置相匹配
+//       ],
+//     }),
+//   ],
+//   onwarn: function (warning, warn) {
+//     // 检查警告信息，忽略特定警告
+//     if (warning.message && (warning.message.includes('"use client"') || warning.message.includes('this'))) {
+//       return;
+//     }
+//     warn(warning)
+//   },
+//   // external: ['react', 'react-dom'] // 避免将 React 和 ReactDOM 打包进来(这里加上之后 运行编译后的文件会报错react这个库不存在)
+// })
 
-export default [manifest, background, content_1, content_2, content_3, popup, view];
+export default [manifest, background, content_1, content_2, content_3, popup];

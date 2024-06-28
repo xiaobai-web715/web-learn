@@ -1,9 +1,9 @@
 import gulp from 'gulp'
-import sass from 'gulp-sass'
-import DartSass from 'sass'
+import gulpSass from 'gulp-sass'
+import * as sass from 'sass'
 import rename from 'gulp-rename';
 
-const sassCompiler = sass(DartSass)
+const sassCompiler = gulpSass(sass)
 
 export function styles() {
     return gulp.src('content/*.scss')
