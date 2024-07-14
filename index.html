@@ -1,0 +1,38 @@
+<!--
+ * @Author: ***
+ * @Date: 2024-07-14 14:24:00
+ * @LastEditTime: 2024-07-14 16:05:03
+ * @LastEditors: ***
+ * @Description: 
+ * @FilePath: \web-learn\index.html
+ * 加油搞起来
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>测试video</title>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  </head>
+  <body>
+    <div>
+      <input type="file" id="fileInput" accept="video/*" />
+      <br />
+      <a href="https://www.baidu.com">点击我不会跳转</a>
+      <br />
+      <video controls style="height: 1280px"></video>
+      <div class="placeholder"></div>
+      <video controls style="height: 1280px"></video>
+    </div>
+    <script src="./index.js"></script>
+  </body>
+  <style>
+    .placeholder {
+      width: 100%;
+      height: 100vh;
+      background-color: red;
+    }
+  </style>
+</html>
