@@ -21,6 +21,7 @@ import UpFile from 'src/page/view/upFile/upFile';
 import ScrollDate from 'src/page/view/ScrollDate/index';
 import ScreenShot from 'src/page/view/screenshot/index';
 import Squared from 'src/page/view/Squared/index';
+import CssProperty from 'src/page/view/CssProperty/index';
 
 const store = configureStore({
     reducer,
@@ -55,6 +56,7 @@ function RouterIndex() {
                                 <Route path="scrollDate" element={<ScrollDate></ScrollDate>}></Route>
                                 <Route path="screenShot" element={<ScreenShot></ScreenShot>}></Route>
                                 <Route path="squared" element={<Squared></Squared>}></Route>
+                                <Route path="css_property" element={<CssProperty></CssProperty>}></Route>
                             </Route>
                         </Route>
                         <Route path="*" element={<div>当前页面不存在</div>}></Route>
