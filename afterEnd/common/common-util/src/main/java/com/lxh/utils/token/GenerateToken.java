@@ -5,6 +5,8 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -17,6 +19,8 @@ import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Aspect
@@ -53,8 +57,21 @@ public class GenerateToken {
 //        jws.setPayload(claims.toJson()); // 载荷, 存放的是Claims声明信息。载荷其实就是自定义的数据，一般存储用户Id，过期时间等信息。
 //        jws.setKey((Key) secretKey); // 这里设置key会在getCompactSerialization中调用sing方法被使用(这里key.length * 8的长度要满足超过一个最小值)
 //        jws.setDoKeyValidation(true); // 这里设置成false会在getgetCompactSerialization()生成token的时候不去管setKey传进去的key
-
-
+        byte[] newBs = toUTF8(JWT_PRIVATE_KEY);
+        // 1.定义header部分
+        Map headerMap = new HashMap();
+        headerMap.put("alg", SignatureAlgorithm.HS256.getValue());
+        headerMap.put("typ", "JWT");
+        // 2.定义payload部分
+        Date newWExpiresAt = new Date(System.currentTimeMillis() + 1L * 60L * 60L * 1000L);
+        Map payloadMap =  new HashMap();
+        payloadMap.put(CONTEXT_USER_NAME, userToken.getUsername());
+        payloadMap.put(CONTEXT_USER_ID, userToken.getId());
+        payloadMap.put("exp",newWExpiresAt);
+        // 3.生成token
+        String jwtToken = Jwts.builder().setHeaderParams(headerMap).setClaims(payloadMap).signWith(SignatureAlgorithm.HS256, newBs).compact();
+        System.out.print("new jswt:" + jwtToken);
+//        return jwtToken;
         try{
             Date expiresAt = new Date(System.currentTimeMillis() + 1L * 60L * 60L * 1000L);
 //            System.out.println("我是token的有效期" + expiresAt);

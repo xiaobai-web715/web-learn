@@ -41,6 +41,7 @@ const App = () => {
                     <div onClick={goPage.bind(null, '/scrollDate')}>日期选择器</div>
                     <div onClick={() => goPage('/screenShot')}>数据可视化</div>
                     <div onClick={() => goPage('/squared')}>九宫格抽奖</div>
+                    <div onClick={() => goPage('/css_property')}>@property</div>
                 </div>
                 <div className={Css['content']}>
                     <Outlet/>

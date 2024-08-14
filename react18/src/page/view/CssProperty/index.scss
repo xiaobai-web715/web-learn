@@ -1,0 +1,78 @@
+@keyframes adjust-pos {
+    from {
+        --scroll-position: 0;
+        --scroll-position-delayed: 0
+    }
+    to {
+        --scroll-position: 100;
+        --scroll-position-delayed: 100
+    }
+}
+// 要使得scroll-position能够像普通的过度属性一样能够自动过渡，需要借助property将这个变量变成注册成一个合法的css的变量
+@property --scroll-position {
+    syntax: "<number>"; //这段代码标识--scroll-position是一个number类型的数据，是一个合法的，可以进行过渡的类型
+    inherits: true;
+    initial-value: 0;
+}
+@property --scroll-position-delayed {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+@property --scroll-velocity {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+body {
+    transition: --scroll-position-delayed 1s liner; // 设置--scroll-position-delayed的变化需要0.15s的时间
+    --scroll-velocity: calc(var(--scroll-position) - var(--scroll-position-delayed))
+}
+:root{
+    animation: adjust-pos linear 3s both; // animation 的 animation-fill-mode属性 指定 both作为值，动画开始之前会保留一个开始帧，动画结束之后会保留一个结束帧
+    animation-timeline: scroll(); // scroll() 一个实验性的属性,会把动画的效果和链接元素的滚动进行绑定，scroll(#elementId) 像这样指定一个具体的元素进行链接，如果不填写链接元素，那么链接的元素将根据浏览器的默认实现进行元素的绑定链接
+}
+.debug {
+    height: 200vh;
+    .propertyBox{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: max-content;
+        background-color: #eee;
+        border: 1px solid #07b9e2;
+        padding: 25px;
+    }
+    // 当debug出现的时候 重置scroll-position变量值为--scroll-position
+    counter-reset: scroll-position calc(var(--scroll-position) * 1) scroll-position-delayed calc(var(--scroll-position-delayed) * 1) scroll-velocity calc(var(--scroll-velocity) * 1); // counter-reset属性值如果要用来定义多个css变量的话 需要空格分隔进行定义，如果写了两个counter-reset那么后面的会覆盖前面的（在这里也就是scroll-position-delayed会覆盖scroo-position）
+}
+[data-id="--scroll-position"]::after {
+    // 设置自定义属性data-id的值为--scroll-position的内容是 text文本 + scroll-position的变量值
+    content: "--scroll-position：" counter(scroll-position)
+}
+[data-id="--scroll-position-delayed"]::after {
+    content: "--scroll-position-delayed：" counter(scroll-position-delayed)
+}
+[data-id="--scroll-velocity"]::after {
+    content: "--scroll-velocity：" counter(scroll-velocity)
+}
+
+
+.modal{
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: #07b9e2;
+    position: fixed;
+    right: 0;
+    bottom: 20px;
+    transform: translateX(100%);
+    transition: .2s;
+}
+
+@container style(--scroll-velocity: 0) {
+    .modal {
+        transform: translateX(-100%);
+    }
+}
