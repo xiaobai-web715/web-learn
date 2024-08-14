@@ -1,7 +1,17 @@
-import {createRouter, RouteRecordRaw, createWebHistory} from 'vue-router';
+/*
+ * @Author: ***
+ * @Date: 2023-11-30 20:56:05
+ * @LastEditTime: 2024-08-14 09:07:02
+ * @LastEditors: ***
+ * @Description: 
+ * @FilePath: \web-learn\vue-vite\src\router\index.ts
+ * 加油搞起来
+ */
+import { createRouter, RouteRecordRaw, createWebHistory } from 'vue-router';
 import Home from '../view/Home.vue';
 import Base from '../view/Base/index.vue';
 import Login from '../view/Login.vue';
+import testVXTable from '../view/testVXTable.vue';
 import Register from '@/view/Register.vue';
 import {
     qiankunWindow
@@ -16,12 +26,17 @@ const routes: Array<RouteRecordRaw> = [
         path: '/register',
         name: '/register',
         component: Register
+    },
+    {
+        path: '/test-vx_table',
+        name: '/test-vx_table',
+        component: testVXTable
     }
 ];
 
 export const dynamicRouter: Array<RouteRecordRaw> = [
     {
-        path: '/', 
+        path: '/',
         redirect: '/home',
         component: Base,
         children: [

@@ -1,8 +1,17 @@
+/*
+ * @Author: ***
+ * @Date: 2024-06-23 11:26:22
+ * @LastEditTime: 2024-08-14 08:58:49
+ * @LastEditors: ***
+ * @Description: 
+ * @FilePath: \web-learn\vue-vite\src\main.ts
+ * 加油搞起来
+ */
 import { createApp, App as AppI } from 'vue';
 import store from './store/index.js';
 import router from './router/index.js';
 import App from './App.vue';
-import {routerBeforeEach} from '@/router/route.js';
+import { routerBeforeEach } from '@/router/route.js';
 import '@/assets/public.scss';
 import ElementPlus from 'element-plus';
 import * as Antd from 'ant-design-vue';
@@ -14,17 +23,19 @@ import {
     qiankunWindow,
     QiankunProps,
 } from 'vite-plugin-qiankun/dist/helper.js';
+import VxeTable from 'vxe-table';
+import 'vxe-table/lib/style.css';
 
 const test = import.meta.env.BASE_URL;
 let instance: AppI<Element> | null = null;
-function render (props) {
+function render(props) {
     const { container } = props;
     const eventHub = mitt();
     routerBeforeEach(router, store); //动态权限路由管理
     instance = createApp(App);
     console.log('instance', instance, props);
     instance.config.globalProperties.eventHub = eventHub;
-    instance.use(store).use(router).use(ElementPlus).use(Antd).mount(
+    instance.use(store).use(router).use(ElementPlus).use(Antd).use(VxeTable).mount(
         container ? container.querySelector('#app') : '#app'
     );
 }
@@ -62,5 +73,5 @@ if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
         update(props) {
             console.log('[vue] props from main update', props);
         },
-      });
+    });
 }
