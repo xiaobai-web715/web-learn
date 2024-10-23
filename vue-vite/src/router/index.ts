@@ -13,6 +13,7 @@ import Base from '../view/Base/index.vue';
 import Login from '../view/Login.vue';
 import testVXTable from '../view/testVXTable.vue';
 import Register from '@/view/Register.vue';
+import nestingTable from '@/view/nestingTable.vue';
 import {
     qiankunWindow
 } from 'vite-plugin-qiankun/dist/helper.js';
@@ -24,13 +25,18 @@ const routes: Array<RouteRecordRaw> = [
     },
     {
         path: '/register',
-        name: '/register',
+        name: 'register',
         component: Register
     },
     {
         path: '/test-vx_table',
-        name: '/test-vx_table',
+        name: 'test-vx_table',
         component: testVXTable
+    },
+    {
+        path: '/nestingTable',
+        name: 'nestingTable',
+        component: nestingTable
     }
 ];
 

@@ -45,7 +45,7 @@ function generateRouter(routeTree: IRoute[]): IRouterRecordRaw[] {
 
 export function routerBeforeEach(router: Router, store: Store<IState>) {
     router.beforeEach((to, from, next) => {
-        if (window.location.href.indexOf('127.0.0.1') > 0) {
+        if (window.location.href.indexOf('127.0.0.1') > 0 || window.location.href.indexOf('localhost')) {
             next();
         } else {
             console.log('router', store.state.routeTree, to.path.indexOf('/login') > -1, qiankunWindow);
