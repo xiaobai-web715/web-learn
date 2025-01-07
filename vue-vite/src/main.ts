@@ -15,7 +15,6 @@ import { routerBeforeEach } from '@/router/route.js';
 import '@/assets/public.scss';
 import ElementPlus from 'element-plus';
 import * as Antd from 'ant-design-vue';
-import ElementUI from 'element-ui';
 import mitt from 'mitt';
 import 'element-plus/dist/index.css';
 import {
