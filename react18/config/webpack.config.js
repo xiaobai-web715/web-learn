@@ -3,7 +3,7 @@ const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
 const process = require('process');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const appSrc = path.resolve(process.cwd(), 'src');
+const appSrc = path.resolve(__dirname, '..', 'src');
 const setting = require('../src/setting');
 const name = setting.name;
 const modules = ['app', 'test'];
@@ -30,10 +30,10 @@ console.log('====开始打包====', 1234);
 const config = {
     mode: 'development',
     entry: modules.reduce((entry, module) => {
-        entry[module] = path.resolve(process.cwd(), `src/entry/${module}.js`);
+        entry[module] = path.resolve(__dirname, '..', `src/entry/${module}.js`);
         return entry;
     }, {}),
-    devtool: 'inline-source-map',
+    devtool: 'eval-source-map',
     output: {
         publicPath: '/',
         path: path.join(__dirname, '..', 'dist'),
@@ -41,6 +41,14 @@ const config = {
         library: `${name}-[name]`,
         libraryTarget: 'umd',
         chunkLoadingGlobal: `webpackJsonp_${name}`,
+    },
+    optimization: {
+        moduleIds: 'named',
+        chunkIds: 'named',
+    },
+    stats: {
+        loggingDebug: ['webpack-dev-server'],
+        errorDetails: true,
     },
     module: {
         rules: [
@@ -69,7 +77,7 @@ const config = {
                         loader: 'postcss-loader',
                         options: {
                             postcssOptions: {
-                                config: path.resolve(process.cwd(), 'postcss.config.js'),
+                                config: path.resolve(__dirname, '..', 'postcss.config.js'),
                             },
                         },
                     },
@@ -105,8 +113,8 @@ const config = {
     plugins: appHtml,
     resolve: {
         alias: {
-            '@': path.resolve(process.cwd(), 'src'),
-            src: path.resolve(process.cwd(), 'src'),
+            '@': appSrc,
+            src: appSrc,
         },
         extensions: ['.js', '.json', '.ts', '.tsx', '.jsx'],
     },
@@ -127,7 +135,7 @@ const config = {
         port: 3025,
         static: {
             // 监听静态文件目录
-            directory: path.join(__dirname, '../public'),
+            directory: path.join(__dirname, '..', 'public'),
             watch: true,
         },
         liveReload: false,
@@ -135,10 +143,19 @@ const config = {
         compress: true,
     },
 };
-const devServerOptions = config.devServer || {};
-debugger;
 const compiler = webpack(config);
+const devServerOptions = config.devServer || {};
 const server = new WebpackDevServer(devServerOptions, compiler);
+server
+    .start()
+    .then(() => {
+        console.log('Dev server is running...');
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+
+// debugger;
 // compiler.run((err, stats) => {
 //     if (err || stats.hasErrors()) {
 //         console.error(
@@ -151,7 +168,6 @@ const server = new WebpackDevServer(devServerOptions, compiler);
 //         );
 //         process.exit(1);
 //     }
-
 //     console.log(
 //         '构建完成！',
 //         stats.toString({
@@ -160,11 +176,3 @@ const server = new WebpackDevServer(devServerOptions, compiler);
 //         }),
 //     );
 // });
-server
-    .start()
-    .then(() => {
-        console.log('Dev server is running...');
-    })
-    .catch((err) => {
-        console.error(err);
-    });
