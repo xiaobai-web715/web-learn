@@ -2,10 +2,10 @@ import React , {useState, useEffect , useRef} from 'react';
 const Css = require('./index.scss');
 import PropTypes from 'prop-types';
 //还未实现的(
-    // 1.select的样式要修改(√)
-    // 2.遮罩产生的时候如何禁止掉其可以触发一下穿透的事件(像window下的滚动条滚动,touchmove事件等等)
-    // 3.还可以添加一个字段(表示用户需不需要将选择部分在下拉框中也呈现出来，然后给与对应的高亮提示)
-    // 4.还有select的滚动条如何去掉(以及其滚动到底部的时候如何也禁止掉其可以继续去滚动window下的滚动条的操作)(√)
+// 1.select的样式要修改(√)
+// 2.遮罩产生的时候如何禁止掉其可以触发一下穿透的事件(像window下的滚动条滚动,touchmove事件等等)
+// 3.还可以添加一个字段(表示用户需不需要将选择部分在下拉框中也呈现出来，然后给与对应的高亮提示)
+// 4.还有select的滚动条如何去掉(以及其滚动到底部的时候如何也禁止掉其可以继续去滚动window下的滚动条的操作)(√)
 // )
 const Select = (props) => {
     const {options , onChange , placeholder, root} = props;

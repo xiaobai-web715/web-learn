@@ -65,8 +65,8 @@ const Index = () => {
     };
     const getCsv = () => {
         //window.open('/api/static/excel/ceshi.csv'); //通过window.open方式打开新的页面来下载文件
-                                                      //配合着express的中间件express.static来获取静态文件
-                                                      //不过这样会存在一个问题就是页面会闪烁一下
+        //配合着express的中间件express.static来获取静态文件
+        //不过这样会存在一个问题就是页面会闪烁一下
         const iframe = document.createElement('iframe');
         iframe.src = '/api/static/excel/ceshi.csv';
         iframe.style.display = 'none';

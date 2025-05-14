@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate , Outlet} from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 const Css = require('./App.scss');
 
 const App = () => {
@@ -8,11 +8,13 @@ const App = () => {
     const navigate = useNavigate();
     const goPage = (url: string) => {
         navigate('/app-react/app' + url);
-        if(window.__POWERED_BY_QIANKUN__){
+        if (window.__POWERED_BY_QIANKUN__) {
             setRouter('/app-react/app' + url);
         }
     };
-    useEffect(() => {console.log('我执行了几次');}, []);
+    useEffect(() => {
+        console.log('我执行了几次');
+    }, []);
     useEffect(() => {
         console.log('router', router);
         if (router) {
@@ -23,7 +25,7 @@ const App = () => {
             }
         }
     }, [router]);
-    return(
+    return (
         <React.Fragment>
             <div className={Css['page']}>
                 <div className={Css['tabnv']}>
@@ -42,9 +44,10 @@ const App = () => {
                     <div onClick={() => goPage('/screenShot')}>数据可视化</div>
                     <div onClick={() => goPage('/squared')}>九宫格抽奖</div>
                     <div onClick={() => goPage('/css_property')}>@property</div>
+                    <div onClick={() => goPage('/intersection_observer')}>IntersectionObserver</div>
                 </div>
                 <div className={Css['content']}>
-                    <Outlet/>
+                    <Outlet />
                 </div>
             </div>
         </React.Fragment>

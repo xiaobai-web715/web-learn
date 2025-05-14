@@ -53,7 +53,7 @@ interface Window {
   __POWERED_BY_QIANKUN__: string,
   WebViewBridgeNativeEmulator: {[key: string]: any},
   webViewBridge: object
-};
+}
 
 declare let ga: () => void;
 

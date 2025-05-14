@@ -1,4 +1,6 @@
 const path = require('path');
+const WebpackDevServer = require('webpack-dev-server');
+const webpack = require('webpack');
 const process = require('process');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const appSrc = path.resolve(process.cwd(), 'src');
@@ -9,73 +11,69 @@ const appHtml = modules.reduce((pv, cv) => {
     const options = {
         template: `./public/${cv}.html`,
         chunks: [cv],
-        filename: `${cv}.html`
+        filename: `${cv}.html`,
     };
-    console.log('options', options);
     pv.push(new HtmlWebpackPlugin(options));
     return pv;
 }, []);
-const rewrites = modules.map(item => {
-    const redirect = {
+const rewrites = [
+    ...modules.map((item) => ({
         from: new RegExp(`^/app-react/${item}`),
         to: `/${item}.html`,
-    };
-    return redirect;
-});
-rewrites.push(
+    })),
     {
-        form : /./,
-        to: '/app.html'
-    }
-);
-// console.log('rewrites', rewrites);
-module.exports = {
-    // mode : 'production', webpack如何打包生产环境下的
-    mode: 'development',
-    entry: {
-        app: './src/entry/app.js',
-        test: './src/entry/test.js'
-        //app : path.resolve(__dirname, '..' ,'./src/index.js'), //这里改成绝对路径也没有用在处理history二级路由请求资源的时候
+        from: /./,
+        to: '/app.html',
     },
-    devtool: 'inline-source-map', //好像这个可以解决debugger的时候报一个奇怪的错误
+];
+console.log('====开始打包====', 1234);
+const config = {
+    mode: 'development',
+    entry: modules.reduce((entry, module) => {
+        entry[module] = path.resolve(process.cwd(), `src/entry/${module}.js`);
+        return entry;
+    }, {}),
+    devtool: 'inline-source-map',
     output: {
-        publicPath: '/', //这里指定加载文件的相对路径
-        path: path.join(__dirname, '..', 'dist'), //这里要使用绝对路径
+        publicPath: '/',
+        path: path.join(__dirname, '..', 'dist'),
         filename: '[name].js',
         library: `${name}-[name]`,
-        libraryTarget: "umd",
-        jsonpFunction: `webpackJsonp_${name}`
+        libraryTarget: 'umd',
+        chunkLoadingGlobal: `webpackJsonp_${name}`,
     },
     module: {
         rules: [
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                use: [
-                    {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: ['@babel/preset-react', '@babel/preset-env'],
-                        },
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-react', '@babel/preset-env'],
                     },
-                ],
+                },
             },
             {
                 test: [/\.tsx$/, /\.ts$/],
                 exclude: /node_modules/,
-                use: [
-                    {
-                        loader: 'ts-loader',
-                        // options : {
-                        //     presets : ['@babel/preset-react']
-                        // },
-                    },
-                ],
+                use: 'ts-loader',
             },
             {
                 test: /\.css$/,
                 exclude: /node_modules/,
-                use: ['style-loader', 'css-loader'],
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                                config: path.resolve(process.cwd(), 'postcss.config.js'),
+                            },
+                        },
+                    },
+                ],
             },
             {
                 test: /\.s[ac]ss$/i,
@@ -88,7 +86,7 @@ module.exports = {
                             modules: true,
                         },
                     },
-                    'sass-loader', //目前的这里的配置可以实现对sass编译成css文件(这时css文件的内容时在html页面的head标签下的<style>标签中，如果还想在打包时将css文件单独打包出来，需要以下操作npm install --save-dev mini-css-extract-plugin)
+                    'sass-loader',
                     {
                         loader: 'sass-resources-loader',
                         options: {
@@ -100,26 +98,24 @@ module.exports = {
             {
                 test: [/\.png$/, /\.jpeg$/, /\.jpg$/],
                 exclude: /node_modules/,
-                use: ['url-loader'], //, 在output中不加入publicPath时,url-loader可以成功
-                // use: ['file-loader'] //file-loader会将图片也打包,所以不加public就会导致访问不到图片
+                use: ['url-loader'],
             },
         ],
     },
-    // plugins: [new HtmlWebpackPlugin({ template: './public/index.html' })],
     plugins: appHtml,
     resolve: {
         alias: {
-            'src': path.resolve(__dirname, '..', 'src'), //获取绝对路径下的src文件夹,在后面的引入中就可以通过@来开始
+            '@': path.resolve(process.cwd(), 'src'),
+            src: path.resolve(process.cwd(), 'src'),
         },
-        extensions: ['.js', '.json', '.ts', '.tsx', '.jsx'], //告诉webpack你引入的文件要寻找哪些后缀的。
+        extensions: ['.js', '.json', '.ts', '.tsx', '.jsx'],
     },
     devServer: {
-        //historyApiFallback: true, //因为刷新页面的情况下会向服务器发送请求(因为hash模式下#后面的不会作为参数去请求，但history模式下后面的会成为请求的样式但是服务器又没有这个响应所以会报错，这里是一种方式来解决 =》但是否是最好的办法目前不清楚)
         historyApiFallback: {
             rewrites,
         },
         headers: {
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': '*',
         },
         proxy: {
             '/api': {
@@ -127,13 +123,48 @@ module.exports = {
                 pathRewrite: { '^/api': '' },
             },
         },
-        // contentBase: './index.html',
-        //contentBase: "./", //本地服务器所加载的页面所在的目录
         hot: true,
         port: 3025,
-        watchContentBase: false,
+        static: {
+            // 监听静态文件目录
+            directory: path.join(__dirname, '../public'),
+            watch: true,
+        },
         liveReload: false,
-        disableHostCheck: true,
+        allowedHosts: 'all', // 允许所有主机访问
         compress: true,
     },
 };
+const devServerOptions = config.devServer || {};
+debugger;
+const compiler = webpack(config);
+const server = new WebpackDevServer(devServerOptions, compiler);
+// compiler.run((err, stats) => {
+//     if (err || stats.hasErrors()) {
+//         console.error(
+//             '构建出错：',
+//             err ||
+//                 stats.toString({
+//                     chunks: false,
+//                     colors: true,
+//                 }),
+//         );
+//         process.exit(1);
+//     }
+
+//     console.log(
+//         '构建完成！',
+//         stats.toString({
+//             chunks: false,
+//             colors: true,
+//         }),
+//     );
+// });
+server
+    .start()
+    .then(() => {
+        console.log('Dev server is running...');
+    })
+    .catch((err) => {
+        console.error(err);
+    });

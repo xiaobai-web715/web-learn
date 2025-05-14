@@ -22,6 +22,7 @@ import ScrollDate from 'src/page/view/ScrollDate/index';
 import ScreenShot from 'src/page/view/screenshot/index';
 import Squared from 'src/page/view/Squared/index';
 import CssProperty from 'src/page/view/CssProperty/index';
+import IntersectionObserverTest from 'src/page/view/IntersectionObserver/index';
 
 const store = configureStore({
     reducer,
@@ -57,6 +58,10 @@ function RouterIndex() {
                                 <Route path="screenShot" element={<ScreenShot></ScreenShot>}></Route>
                                 <Route path="squared" element={<Squared></Squared>}></Route>
                                 <Route path="css_property" element={<CssProperty></CssProperty>}></Route>
+                                <Route
+                                    path="intersection_observer"
+                                    element={<IntersectionObserverTest></IntersectionObserverTest>}
+                                ></Route>
                             </Route>
                         </Route>
                         <Route path="*" element={<div>当前页面不存在</div>}></Route>

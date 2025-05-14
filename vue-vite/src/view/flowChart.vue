@@ -30,7 +30,7 @@ onMounted(async () => {
         const { warnings } = result;
         console.log('success !', warnings);
         resizeHandler()
-    }).catch(function(err) {
+    }).catch(function (err) {
         const { warnings, message } = err;
         console.log('something went wrong:', warnings, message);
     });
@@ -40,12 +40,13 @@ onBeforeMount(() => {
 })
 </script>
 <style lang="less" scoped>
-.flowChart{
-	background-color: #ffffff;
-	width: 100%;
-	height: calc(100% - 52px);
+.flowChart {
+    background-color: #ffffff;
+    width: 100%;
+    height: calc(100% - 52px);
     padding: 15px;
 }
+
 .djs-outline {
     display: none !important;
 }

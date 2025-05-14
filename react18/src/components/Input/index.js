@@ -24,9 +24,9 @@ const Index = (props) => {
         setValue(defaultValue);
     }, []);
     return (
-    <React.Fragment>
-        <input className={Css['input']} ref={props.refContent} type='text' value={value} placeholder={props.placeholder} onChange={changeValue} onBlur = {blurValue}></input>
-    </React.Fragment>
+        <React.Fragment>
+            <input className={Css['input']} ref={props.refContent} type='text' value={value} placeholder={props.placeholder} onChange={changeValue} onBlur = {blurValue}></input>
+        </React.Fragment>
     );
 };
 

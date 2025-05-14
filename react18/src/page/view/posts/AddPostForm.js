@@ -13,17 +13,17 @@ export const AddPostForm = () => {
     const onContentChanged = e => setContent(e.target.value);
     const onAuthorChanged = e => setUserId(e.target.value);
     const onSavePostClicked = () => {
-            // dispatch(
-            //     postAdded({
-            //         id: nanoid(),
-            //         title,
-            //         content,
-            //     })
-            // ) //这里通过在reducer当中对reducer函数添加一个prepare函数进行取代(减少不同页面重复编写的低效)
-            dispatch(postAdded(title, content, userId));
-            setTitle('');
-            setContent('');
-            setUserId('');
+        // dispatch(
+        //     postAdded({
+        //         id: nanoid(),
+        //         title,
+        //         content,
+        //     })
+        // ) //这里通过在reducer当中对reducer函数添加一个prepare函数进行取代(减少不同页面重复编写的低效)
+        dispatch(postAdded(title, content, userId));
+        setTitle('');
+        setContent('');
+        setUserId('');
     };
     //将用户列列表变成下拉框
     const usersOptions = users.map(user => (

@@ -23,6 +23,7 @@
     "md5": "^2.3.0",
     "mitt": "^3.0.0",
     "moment": "^2.29.4",
+    "prettier": "^3.5.2",
     "unplugin-auto-import": "^0.16.4",
     "unplugin-vue-components": "^0.25.1",
     "vite-plugin-qiankun": "^1.0.15",
