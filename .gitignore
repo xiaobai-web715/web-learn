@@ -5,5 +5,5 @@
 /javascript/out
 /javascript/files
 /vue-vite/dist.rar
-/.vscode
+# /.vscode
 /node_modules

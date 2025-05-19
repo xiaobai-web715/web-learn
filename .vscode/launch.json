@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "react18",
+            // 指定调试时的工作目录
+            // 这里设置为 react18 目录，这样 Node.js 就会在这个目录下查找 node_modules
+            "cwd": "${workspaceFolder}/react18",
+            // 指定调试模式为启动新进程（launch）而不是附加到已运行的进程（attach）
+            "request": "launch",
+            // 指定调试器类型为node
+            "type": "node",
+            // 指定调试的入口文件
+            "program": "${workspaceFolder}/react18/config/webpack.config.js",
+            // 指定调试输出显示在 VSCode 的集成终端中(但是默认的调试控制台在复制粘贴查看变量的值的时候更加方便)
+            // "console": "integratedTerminal",
+            // 指定要跳过的文件
+            // <node_internals>/** 表示跳过所有 Node.js 内部模块的代码
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+        }
+    ]
+}
