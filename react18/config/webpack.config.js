@@ -144,35 +144,34 @@ const config = {
     },
 };
 const compiler = webpack(config);
-const devServerOptions = config.devServer || {};
-const server = new WebpackDevServer(devServerOptions, compiler);
-server
-    .start()
-    .then(() => {
-        console.log('Dev server is running...');
-    })
-    .catch((err) => {
-        console.error(err);
-    });
+// const devServerOptions = config.devServer || {};
+// const server = new WebpackDevServer(devServerOptions, compiler);
+// server
+//     .start()
+//     .then(() => {
+//         console.log('Dev server is running...');
+//     })
+//     .catch((err) => {
+//         console.error(err);
+//     });
 
-// debugger;
-// compiler.run((err, stats) => {
-//     if (err || stats.hasErrors()) {
-//         console.error(
-//             '构建出错：',
-//             err ||
-//                 stats.toString({
-//                     chunks: false,
-//                     colors: true,
-//                 }),
-//         );
-//         process.exit(1);
-//     }
-//     console.log(
-//         '构建完成！',
-//         stats.toString({
-//             chunks: false,
-//             colors: true,
-//         }),
-//     );
-// });
+compiler.run((err, stats) => {
+    if (err || stats.hasErrors()) {
+        console.error(
+            '构建出错：',
+            err ||
+                stats.toString({
+                    chunks: false,
+                    colors: true,
+                }),
+        );
+        process.exit(1);
+    }
+    console.log(
+        '构建完成！',
+        stats.toString({
+            chunks: false,
+            colors: true,
+        }),
+    );
+});

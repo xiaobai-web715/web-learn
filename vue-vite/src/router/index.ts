@@ -14,7 +14,8 @@ import Login from '../view/Login.vue';
 import testVXTable from '../view/testVXTable.vue';
 import Register from '@/view/Register.vue';
 import nestingTable from '@/view/nestingTable.vue';
-import flowChart from '@/view/flowChart.vue';    
+import flowChart from '@/view/flowChart.vue';   
+import testComputed from '@/view/testComputed.vue';
 import {
     qiankunWindow
 } from 'vite-plugin-qiankun/dist/helper.js';
@@ -43,6 +44,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/flowChart',
         name: 'FlowChart',
         component: flowChart
+    },
+    {
+        path: '/testComputed',
+        name: 'testComputed',
+        component: testComputed
     }
 ];
 
