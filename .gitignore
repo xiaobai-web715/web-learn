@@ -1,10 +1,9 @@
-/*/node_modules
-/*/dist
-/*/build
-/node初体验/logs
-/node初体验/tmp
+# 忽略所有层级下的node_modules, dist, build, logs, tmp
+/**/node_modules   
+/**/dist
+/**/build
+/**/logs
+/**/tmp
 /javascript/out
 /javascript/files
 /vue-vite/dist.rar
-# /.vscode
-/node_modules

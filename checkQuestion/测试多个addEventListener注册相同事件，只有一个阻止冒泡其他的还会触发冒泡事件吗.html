@@ -1,0 +1,50 @@
+<!-- 结论: 不会 -->
+<html>
+    <head>
+        <script>
+            const originDocument = Document.prototype;
+            const proxyProp = ['createElement', 'querySelector'];
+            const proxyDocument = new Proxy(
+                {},
+                {
+                    get: (target, prop, handler) => {
+                        console.log('我是代理的信息', target, prop, handler);
+                        return;
+                    },
+                },
+            );
+            proxyProp.map((key) => {
+                const des = Object.getOwnPropertyDescriptor(Document.prototype, key) || { enumerable: true };
+                Object.defineProperty(Document.prototype, key, {
+                    enumerable: des.enumerable,
+                    get: () => proxyDocument[key],
+                });
+            });
+        </script>
+    </head>
+    <body onclick="getEvent">
+        <div id="my" data-test onclick="test1">1234</div>
+    </body>
+    <script>
+        function getEvent(e) {
+            console.log('我是事件代理冒泡上来的', e);
+        }
+        const myBody = document.querySelector('body');
+        // myBody.addEventListener('click', () => {
+        //     console.log("测试body")
+        // })
+        // function test1(e) {
+        //     console.log("我是测试一函数的执行")
+        // }
+        // const myDom = document.querySelector('[data-test]')
+        // console.log("属性选择器获取的dom", myDom)
+        // myDom.addEventListener('click', (e) => {
+        //     console.log("我是测试二函数的执行")
+
+        // })
+        // myDom.addEventListener('click', (e) => {
+        //     e.stopPropagation()
+        //     console.log("我是测试三函数的执行")
+        // })
+    </script>
+</html>

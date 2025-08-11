@@ -16,6 +16,7 @@ import Register from '@/view/Register.vue';
 import nestingTable from '@/view/nestingTable.vue';
 import flowChart from '@/view/flowChart.vue';   
 import testComputed from '@/view/testComputed.vue';
+import testKey from '@/view/testKey.vue';
 import {
     qiankunWindow
 } from 'vite-plugin-qiankun/dist/helper.js';
@@ -49,6 +50,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/testComputed',
         name: 'testComputed',
         component: testComputed
+    },
+    {
+        path: '/testKey',
+        name: 'testKey',
+        component: testKey
     }
 ];
 

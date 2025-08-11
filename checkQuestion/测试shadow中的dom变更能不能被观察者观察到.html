@@ -1,0 +1,34 @@
+<!-- 结论: 观察者观察documnet，没办法观察到shadow下的dom的变化 -->
+<html>
+    <head></head>
+    <body>
+        <script>
+            function callback(mutationList, observe) {
+                for (let mutation of mutationList) {
+                    if (mutation.addedNodes) {
+                        Array.from(mutation.addedNodes).forEach((node) => {
+                            if (node.nodeType === 1) {
+                                // 这里是元素节点
+                                console.log('dom', node);
+                            }
+                        });
+                    }
+                }
+            }
+            const observe = new MutationObserver(callback);
+            observe.observe(document, {
+                childList: true,
+                subtree: true,
+            });
+        </script>
+        <script>
+            const shodowRoot = document.body.attachShadow({ mode: 'open' });
+            const myDiv = document.createElement('div');
+            myDiv.textContent = '123';
+            shodowRoot.appendChild(myDiv);
+            const myDiv2 = document.createElement('div');
+            myDiv2.textContent = '456';
+            document.body.append(myDiv2);
+        </script>
+    </body>
+</html>
