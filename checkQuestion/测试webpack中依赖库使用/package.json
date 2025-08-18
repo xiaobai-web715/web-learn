@@ -10,6 +10,7 @@
         "@rollup/plugin-typescript": "^12.1.4",
         "@types/node": "^24.2.1",
         "@types/tapable": "^2.2.7",
+        "enhanced-resolve": "^5.18.3",
         "rollup": "^4.46.2",
         "tapable": "^2.2.2",
         "typescript": "^5.9.2"
