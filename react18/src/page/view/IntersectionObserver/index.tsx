@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 
 const IntersectionObserverTest = () => {
     const targetList = new Array(10000).fill(0);
@@ -27,7 +27,7 @@ const IntersectionObserverTest = () => {
     );
     return (
         <div className="container w-[100vh] h-[100vh]" ref={containerRef}>
-            {targetList.map((item, index) => {
+            {targetList.map((index) => {
                 return (
                     <div
                         className="target w-[100%] h-[25px]"

@@ -4,10 +4,9 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server --open --config ./config/webpack.config.js",
-        "dev": "node ./config/webpack.config.js",
+        "start": "node ./config/webpack.config.js --mode development",
         "lint": "eslint src",
-        "build": "./config/webpack.config.js"
+        "build": "node ./config/webpack.config.js --mode production"
     },
     "author": "",
     "license": "ISC",
@@ -43,6 +42,7 @@
         "@babel/core": "^7.18.9",
         "@babel/preset-env": "^7.18.9",
         "@rescripts/cli": "0.0.16",
+        "@tailwindcss/postcss": "^4.1.12",
         "@typescript-eslint/eslint-plugin": "^5.62.0",
         "@typescript-eslint/parser": "^5.62.0",
         "autoprefixer": "^10.4.20",

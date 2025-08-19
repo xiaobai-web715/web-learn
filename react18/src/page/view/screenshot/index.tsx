@@ -6,7 +6,7 @@ const Index = () => {
     const day = ['sun', 'mon', 'tue', 'wen', 'thu', 'fri', 'sat'];
     const scrollDom = useRef<Element>();
     const [timeList, setTimeList] = useState<Array<any>>([]);
-    const [frontIndex, setFrontIndex] = useState(0);
+    const [frontIndex] = useState(0);
     useEffect(() => {
         const timeDataList: Array<TimeInfoI> = [];
         for(let i = serviceTime; i >= 0; i--) {

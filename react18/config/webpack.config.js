@@ -1,4 +1,6 @@
 const path = require('path');
+const devConfig = require('./webpack.config.dev');
+const prodConfig = require('./webpack.config.prod');
 const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
 const process = require('process');
@@ -16,35 +18,22 @@ const appHtml = modules.reduce((pv, cv) => {
     pv.push(new HtmlWebpackPlugin(options));
     return pv;
 }, []);
-const rewrites = [
-    ...modules.map((item) => ({
-        from: new RegExp(`^/app-react/${item}`),
-        to: `/${item}.html`,
-    })),
-    {
-        from: /./,
-        to: '/app.html',
-    },
-];
-console.log('====开始打包====', 1234);
-const config = {
-    mode: 'development',
+const environment = process.argv[3] || 'production';
+const baseConfig = {
+    mode: environment,
     entry: modules.reduce((entry, module) => {
         entry[module] = path.resolve(__dirname, '..', `src/entry/${module}.js`);
         return entry;
     }, {}),
-    devtool: 'eval-source-map',
+    devtool: 'source-map', // 控制是否开启source-map  https://www.webpackjs.com/configuration/devtool/#root
     output: {
         publicPath: '/',
         path: path.join(__dirname, '..', 'dist'),
-        filename: '[name].js',
-        library: `${name}-[name]`,
+        filename: '[name]-[contenthash].js',
+        chunkFilename: '[name]-[contenthash].js',
+        library: `${name}-[name]`, // 打包暴露库的方法
         libraryTarget: 'umd',
         chunkLoadingGlobal: `webpackJsonp_${name}`,
-    },
-    optimization: {
-        moduleIds: 'named',
-        chunkIds: 'named',
     },
     stats: {
         loggingDebug: ['webpack-dev-server'],
@@ -118,60 +107,44 @@ const config = {
         },
         extensions: ['.js', '.json', '.ts', '.tsx', '.jsx'],
     },
-    devServer: {
-        historyApiFallback: {
-            rewrites,
-        },
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-        },
-        proxy: {
-            '/api': {
-                target: 'http://localhost:3001',
-                pathRewrite: { '^/api': '' },
-            },
-        },
-        hot: true,
-        port: 3025,
-        static: {
-            // 监听静态文件目录
-            directory: path.join(__dirname, '..', 'public'),
-            watch: true,
-        },
-        liveReload: false,
-        allowedHosts: 'all', // 允许所有主机访问
-        compress: true,
-    },
+};
+
+const config = {
+    ...baseConfig,
+    ...(environment === 'development' ? devConfig : prodConfig),
 };
 const compiler = webpack(config);
-// const devServerOptions = config.devServer || {};
-// const server = new WebpackDevServer(devServerOptions, compiler);
-// server
-//     .start()
-//     .then(() => {
-//         console.log('Dev server is running...');
-//     })
-//     .catch((err) => {
-//         console.error(err);
-//     });
-
-compiler.run((err, stats) => {
-    if (err || stats.hasErrors()) {
-        console.error(
-            '构建出错：',
-            err ||
-                stats.toString({
-                    chunks: false,
-                    colors: true,
-                }),
+if (environment === 'development') {
+    const devServerOptions = config.devServer || {};
+    const server = new WebpackDevServer(devServerOptions, compiler);
+    server
+        .start()
+        .then(() => {
+            console.log('Dev server is running...');
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+} else {
+    compiler.run((err, stats) => {
+        if (err || stats.hasErrors()) {
+            console.error(
+                '构建出错：',
+                err ||
+                    stats.toString({
+                        chunks: false,
+                        colors: true,
+                    }),
+            );
+            process.exit(1);
+        }
+        console.log(
+            '构建完成！',
+            stats.toString({
+                chunks: false,
+                colors: true,
+            }),
         );
-        process.exit(1);
-    }
-    console.log(
-        '构建完成！',
-        stats.toString({
-            chunks: false,
-            colors: true,
-        }),
-    );
-});
+    });
+}
+
