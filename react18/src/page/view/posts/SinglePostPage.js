@@ -5,7 +5,7 @@ import { PostAuthor } from './PostAuthor';
 import { TimeAgo } from './TimeAgo';
 import { ReactionButtons } from './ReactionButtons';
 
-export const SinglePostPage = () => {
+const SinglePostPage = () => {
     const {postId} = useParams();
     const post = useSelector(state => state.postsSlice.posts.find(post => post.id === postId));
     const navigate = useNavigate();
@@ -35,3 +35,5 @@ export const SinglePostPage = () => {
         </section>
     );
 };
+
+export default SinglePostPage;

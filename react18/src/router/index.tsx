@@ -1,28 +1,28 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 // configureStore 带来的好处是直接内置了 redux-thunk 和 redux-devtools-extension，这个 devtools 只要将 devTools: true 就可以直接使用。
 import reducer from 'src/reducer/index.js';
 import App from 'src/page/view/App';
-import SelectIndex from 'src/page/view/SelectContent/index.js';
-import TableIndex from 'src/page/view/todoList/index';
-import ZendeskIndex from 'src/page/view/zendesk/index';
-import TouchByMiatask from 'src/page/view/touchByMiatask/index';
-import Charge from 'src/page/view/CSS动画/充电效果/index';
-import Button from 'src/page/view/CSS动画/button动画/index';
-import Posts from 'src/page/view/posts/PostsList';
-import { SinglePostPage } from 'src/page/view/posts/SinglePostPage';
-import { EditPostForm } from 'src/page/view/posts/EditPostForm';
-import HOC from 'src/page/view/HOC/index';
-import ReactRender from 'src/page/view/ReactRender/index';
-import UploadFile from 'src/page/view/uploadFile';
-import UpFile from 'src/page/view/upFile/upFile';
-import ScrollDate from 'src/page/view/ScrollDate/index';
-import ScreenShot from 'src/page/view/screenshot/index';
-import Squared from 'src/page/view/Squared/index';
-import CssProperty from 'src/page/view/CssProperty/index';
-import IntersectionObserverTest from 'src/page/view/IntersectionObserver/index';
+const SelectIndex = lazy(() => import('src/page/view/SelectContent/index.js'));
+const TableIndex = lazy(() => import('src/page/view/todoList/index'));
+const ZendeskIndex = lazy(() => import('src/page/view/zendesk/index'));
+const TouchByMiatask = lazy(() => import('src/page/view/touchByMiatask/index'));
+const Charge = lazy(() => import('src/page/view/CSS动画/充电效果/index'));
+const Button = lazy(() => import('src/page/view/CSS动画/button动画/index'));
+const Posts = lazy(() => import('src/page/view/posts/PostsList'));
+const SinglePostPage = lazy(() => import('src/page/view/posts/SinglePostPage'));
+const EditPostForm = lazy(() => import('src/page/view/posts/EditPostForm'));
+const HOC = lazy(() => import('src/page/view/HOC/index'));
+const ReactRender = lazy(() => import('src/page/view/ReactRender/index'));
+const UploadFile = lazy(() => import('src/page/view/uploadFile'));
+const UpFile = lazy(() => import('src/page/view/upFile/upFile'));
+const ScrollDate = lazy(() => import('src/page/view/ScrollDate/index'));
+const ScreenShot = lazy(() => import('src/page/view/screenshot/index'));
+const Squared = lazy(() => import('src/page/view/Squared/index'));
+const CssProperty = lazy(() => import('src/page/view/CssProperty/index'));
+const IntersectionObserverTest = lazy(() => import('src/page/view/IntersectionObserver/index'));
 
 const store = configureStore({
     reducer,

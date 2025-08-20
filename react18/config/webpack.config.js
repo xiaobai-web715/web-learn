@@ -27,8 +27,8 @@ const baseConfig = {
     }, {}),
     devtool: 'source-map', // 控制是否开启source-map  https://www.webpackjs.com/configuration/devtool/#root
     output: {
-        publicPath: '/',
-        path: path.join(__dirname, '..', 'dist'),
+        path: path.resolve(__dirname, '..' ,'dist'), // 打包文件输出目录的绝对路径，__dirname是当前文件所处的文件目录
+        publicPath: '/', // 静态资源引用地址
         filename: '[name]-[contenthash].js',
         chunkFilename: '[name]-[contenthash].js',
         library: `${name}-[name]`, // 打包暴露库的方法
@@ -95,7 +95,16 @@ const baseConfig = {
             {
                 test: [/\.png$/, /\.jpeg$/, /\.jpg$/],
                 exclude: /node_modules/,
-                use: ['url-loader'],
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 25600, // 25kb以上不会再转化成一个base64的图片资源
+                            name: '[name]-[contenthash].[ext]',
+                            outputPath: 'images',
+                        }
+                    }
+                ],
             },
         ],
     },
