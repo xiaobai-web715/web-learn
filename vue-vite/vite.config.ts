@@ -4,7 +4,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import { fileURLToPath, URL } from 'url';
 import { resolve, join } from 'path';
 import qiankun from 'vite-plugin-qiankun';
-
+console.log('1234')
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [vue({}), vueJsx({}), qiankun('vueApp', { useDevMode: true })],
@@ -44,12 +44,13 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 index: resolve(__dirname, 'index.html'),
-                sdk: resolve(__dirname, 'nested/index.html'),
+                nested: resolve(__dirname, 'nested.html'),
+                test: resolve(__dirname, 'test.html'),
             },
             output: {
-                assetFileNames: 'assets/[name].[hash].[ext]',
-                chunkFileNames: 'assets/[name].[hash].js',
-                entryFileNames: 'assets/[name].[hash].js',
+                entryFileNames: '[name]_[hash].js',
+                assetFileNames: 'assets/[name]_[hash].[ext]',
+                chunkFileNames: 'assets/[name]_[hash].js',
             },
         },
         // target: 'modules',

@@ -18,6 +18,23 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
+        },
+        {
+            "name": "vue-vite",
+            "type": "node",
+            "request": "launch",
+            "args": [
+                "${relativeFile}"
+            ],
+            "runtimeArgs": [
+                "-r",
+                "ts-node/register"
+            ],
+            "cwd": "${workspaceFolder}/vue-vite",
+            // "protocol": "inspector",
+            "internalConsoleOptions": "openOnSessionStart",
+            "program": "${workspaceFolder}/vue-vite/vite.config.ts",
+            "skipFiles": ["<node_internals>/**"],
         }
     ]
 }

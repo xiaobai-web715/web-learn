@@ -17,6 +17,7 @@ import nestingTable from '@/view/nestingTable.vue';
 import flowChart from '@/view/flowChart.vue';   
 import testComputed from '@/view/testComputed.vue';
 import testKey from '@/view/testKey.vue';
+import map from '@/view/map/index.vue';
 import {
     qiankunWindow
 } from 'vite-plugin-qiankun/dist/helper.js';
@@ -55,6 +56,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/testKey',
         name: 'testKey',
         component: testKey
+    },
+    {
+        path: '/map',
+        name: 'map',
+        component: map
     }
 ];
 

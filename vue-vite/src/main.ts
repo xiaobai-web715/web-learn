@@ -24,7 +24,21 @@ import {
 } from 'vite-plugin-qiankun/dist/helper.js';
 import VxeTable from 'vxe-table';
 import 'vxe-table/lib/style.css';
-
+declare global {
+    interface Window {
+        AMap: {
+            Map: any;
+            LngLat: any;
+            Pixel: any;
+            Marker: any;
+            Polygon: any;
+        },
+        __POWERED_BY_WUJIE__: any;
+        __WUJIE_MOUNT: any;
+        __WUJIE_UNMOUNT: any;
+        __WUJIE: any;
+    }
+}
 const test = import.meta.env.BASE_URL;
 let instance: AppI<Element> | null = null;
 function render(props) {

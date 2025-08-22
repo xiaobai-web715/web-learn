@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <script>
+            window.onload = function(){
+                const app = document.querySelector('#app')
+                console.log("我是获取的dom的内容", app)
+                setTimeout(() => {  
+                    app.style.setProperty('--width', '100px')
+                    app.style.setProperty('--height', '100px')
+                    app.style.setProperty('--background-color', 'red')
+                }, 3000)
+            }
+        </script>
+        <style>
+            
+            #app {
+                --width: 50px;
+                --height: 50px;
+                --background-color: blue;
+                width: var(--width);
+                height: var(--height);
+                background-color: var(--background-color);
+                border: 1px solid #ccc;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app"></div>
+    </body>
+</html>

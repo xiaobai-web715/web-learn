@@ -7,7 +7,7 @@
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "strict": false, // js,ts混用时设为false
     "jsx": "preserve",
     "sourceMap": true,
