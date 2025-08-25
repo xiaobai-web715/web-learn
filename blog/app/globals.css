@@ -1,9 +1,28 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
+/**
+ * 定义基础底层颜色
+*/
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --text-base: 0.8rem;
+  --text-lg: 1rem;
 }
+
+/* 暗色主题 */
+html[data-theme="dark"] {
+    --background: #171717;
+    --foreground: #ffffff;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--foreground);
+}
+/**
+ * 
+*/
 
 @theme inline {
   --color-background: var(--background);
@@ -12,15 +31,20 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/**
+ * 设置命中器，用于暗色主题
+*/
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+/**
+ * 
+*/
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/**
+ * 定义组合基础类
+*/ 
+@layer components {
+    .text-responsive { @apply text-base md:text-lg; }
 }
+/**
+ * 
+*/
