@@ -1,7 +1,7 @@
 function DocsContent() {
     return (
-      <div className="docs-header flex-shrink-0">
-          <div className="docs-header-title">content</div>
+      <div className="docs-content flex-shrink-0">
+          <div className="docs-content-title">content</div>
       </div>
     )
 }
