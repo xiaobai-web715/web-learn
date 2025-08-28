@@ -1,7 +1,13 @@
-const Editor = () => {
+import React from "react"
+import Editor from "./tiptapEditor/index"
+import EditorHeader from "./EditorHeader/index"
+const Index = () => {
     return (
-        <div>Editor</div>
+        <React.Fragment>
+            <EditorHeader />
+            <Editor />
+        </React.Fragment>
     )
 }
 
-export default Editor
+export default Index

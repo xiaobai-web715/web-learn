@@ -4,14 +4,14 @@
  * 定义基础底层颜色
 */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --text-base: 0.8rem;
-  --text-lg: 1rem;
+    --background: #ffffff;
+    --foreground: #171717;
+    --text-base: 0.8rem;
+    --text-lg: 1rem;
 }
 
 /* 暗色主题 */
-html[data-theme="dark"] {
+html[data-theme='dark'] {
     --background: #171717;
     --foreground: #ffffff;
 }
@@ -25,10 +25,10 @@ body {
 */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
 }
 
 /**
@@ -41,10 +41,17 @@ body {
 
 /**
  * 定义组合基础类
-*/ 
+*/
 @layer components {
-    .text-responsive { @apply text-base md:text-lg; }
-    .background-line-gradient { @apply bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-pink-500/20 dark:from-cyan-900/50 dark:to-violet-900/50 }
+    .text-responsive {
+        @apply text-base md:text-lg;
+    }
+    .background-line-gradient {
+        @apply bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-pink-500/20 dark:from-cyan-900/50 dark:to-violet-900/50;
+    }
+    .editor-button-style {
+        @apply p-[0.2rem] rounded-[0.3rem]
+    }
 }
 /**
  * 
