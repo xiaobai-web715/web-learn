@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
             '*.less': {
                 loaders: ['less-loader'],
                 as: '*.css'
-            }
+            },
         }
     },
 };
