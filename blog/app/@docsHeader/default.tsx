@@ -32,6 +32,7 @@ function DocsHeader() {
             </div>
         </div>
     )
+
 }
 
 export default DocsHeader
