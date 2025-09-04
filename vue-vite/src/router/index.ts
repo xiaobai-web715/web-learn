@@ -1,7 +1,7 @@
 /*
  * @Author: ***
  * @Date: 2023-11-30 20:56:05
- * @LastEditTime: 2024-08-14 09:07:02
+ * @LastEditTime: 2025-08-30 10:57:48
  * @LastEditors: ***
  * @Description: 
  * @FilePath: \web-learn\vue-vite\src\router\index.ts
@@ -14,7 +14,7 @@ import Login from '../view/Login.vue';
 import testVXTable from '../view/testVXTable.vue';
 import Register from '@/view/Register.vue';
 import nestingTable from '@/view/nestingTable.vue';
-import flowChart from '@/view/flowChart.vue';   
+import flowChart from '@/view/flowChart.vue';
 import testComputed from '@/view/testComputed.vue';
 import testKey from '@/view/testKey.vue';
 import map from '@/view/map/index.vue';
@@ -61,6 +61,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/map',
         name: 'map',
         component: map
+    },
+    {
+        path: '/debugger-snapdom',
+        name: 'debugger-snapdom',
+        component: () => import('@/view/debugger-snapdom.vue')
     }
 ];
 
