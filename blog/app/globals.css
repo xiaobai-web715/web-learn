@@ -12,7 +12,7 @@
 
 /* 暗色主题 */
 html[data-theme='dark'] {
-    --background: #171717;
+    --background: lab(7.78673% 1.82346 -15.0537);
     --foreground: #ffffff;
 }
 

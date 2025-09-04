@@ -5,6 +5,7 @@
 /**/logs
 /**/tmp
 /**/lib
+!/blog/lib
 /javascript/out
 /javascript/files
 /vue-vite/dist.rar

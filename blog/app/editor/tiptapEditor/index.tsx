@@ -10,7 +10,7 @@ const EditorPage = () => {
             TextStyleKit, 
             StarterKit
         ],
-        immediatelyRender: true,
+        immediatelyRender: false,
         shouldRerenderOnTransaction: false,
     })
     return (

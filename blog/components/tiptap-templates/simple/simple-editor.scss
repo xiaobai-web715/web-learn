@@ -1,3 +1,12 @@
+/*
+ * @Author: ***
+ * @Date: 2025-09-04 22:46:13
+ * @LastEditTime: 2025-09-04 22:58:37
+ * @LastEditors: ***
+ * @Description: 
+ * @FilePath: \web-learn\blog\components\tiptap-templates\simple\simple-editor.scss
+ * 加油搞起来
+ */
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 body {
@@ -56,8 +65,8 @@ body,
 
 .simple-editor-wrapper {
   width: 100vw;
-  height: 100vh;
-  overflow: auto;
+  // height: 100vh;
+  // overflow: auto;
 }
 
 .simple-editor-content {
