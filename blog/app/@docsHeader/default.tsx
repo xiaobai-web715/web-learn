@@ -6,11 +6,19 @@ import { FaRegMoon } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
 import { AiFillSun, AiTwotoneHome } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
+import { useTipStore } from '@/store/tiptap';
 function DocsHeader() {
+    const { setDarkMode } = useTipStore()
     const router = useRouter();
     const [currentIcon, setCurrentIcon] = useState<'light' | 'dark'>('light')
     useEffect(() => {
         setTheme(currentIcon)
+        if (currentIcon === 'dark') {
+            setDarkMode(true)
+        } else {
+            setDarkMode(false)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentIcon])
     const changeTheme = () => {
         setCurrentIcon(currentIcon === 'light' ? 'dark' : 'light')

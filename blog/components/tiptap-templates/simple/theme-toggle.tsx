@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-
+import { useTipStore } from "@/store/tiptap"
 // --- UI Primitives ---
 import { Button } from "@/components/tiptap-ui-primitive/button"
 
@@ -10,8 +10,11 @@ import { MoonStarIcon } from "@/components/tiptap-icons/moon-star-icon"
 import { SunIcon } from "@/components/tiptap-icons/sun-icon"
 
 export function ThemeToggle() {
+  const { isDark } = useTipStore()
   const [isDarkMode, setIsDarkMode] = React.useState<boolean>(false)
-
+  React.useEffect(() => {
+    setIsDarkMode(isDark)
+  }, [isDark])
   React.useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
     const handleChange = () => setIsDarkMode(mediaQuery.matches)
@@ -37,6 +40,7 @@ export function ThemeToggle() {
       onClick={toggleDarkMode}
       aria-label={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
       data-style="ghost"
+      className="!hidden"
     >
       {isDarkMode ? (
         <MoonStarIcon className="tiptap-button-icon" />
