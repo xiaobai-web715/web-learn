@@ -1,12 +1,3 @@
-/*
- * @Author: ***
- * @Date: 2024-06-23 11:26:22
- * @LastEditTime: 2024-08-14 08:58:49
- * @LastEditors: ***
- * @Description: 
- * @FilePath: \web-learn\vue-vite\src\main.ts
- * 加油搞起来
- */
 import { createApp, App as AppI } from 'vue';
 import store from './store/index.js';
 import router from './router/index.js';
@@ -17,11 +8,7 @@ import ElementPlus from 'element-plus';
 import * as Antd from 'ant-design-vue';
 import mitt from 'mitt';
 import 'element-plus/dist/index.css';
-import {
-    renderWithQiankun,
-    qiankunWindow,
-    QiankunProps,
-} from 'vite-plugin-qiankun/dist/helper.js';
+import { renderWithQiankun, qiankunWindow, QiankunProps } from 'vite-plugin-qiankun/dist/helper.js';
 import VxeTable from 'vxe-table';
 import 'vxe-table/lib/style.css';
 declare global {
@@ -32,7 +19,7 @@ declare global {
             Pixel: any;
             Marker: any;
             Polygon: any;
-        },
+        };
         __POWERED_BY_WUJIE__: any;
         __WUJIE_MOUNT: any;
         __WUJIE_UNMOUNT: any;
@@ -48,9 +35,13 @@ function render(props) {
     instance = createApp(App);
     console.log('instance', instance, props);
     instance.config.globalProperties.eventHub = eventHub;
-    instance.use(store).use(router).use(ElementPlus).use(Antd).use(VxeTable).mount(
-        container ? container.querySelector('#app') : '#app'
-    );
+    instance
+        .use(store)
+        .use(router)
+        .use(ElementPlus)
+        .use(Antd)
+        .use(VxeTable)
+        .mount(container ? container.querySelector('#app') : '#app');
 }
 if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
     render({});
@@ -74,7 +65,8 @@ if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
         bootstrap() {
             console.log('[vue] vue app bootstraped');
         },
-        mount(props) { // 获取主应用传入数据
+        mount(props) {
+            // 获取主应用传入数据
             console.log('[vue] props from main framework', props);
             render(props);
         },

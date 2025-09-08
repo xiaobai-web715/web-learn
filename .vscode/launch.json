@@ -24,7 +24,11 @@
             "type": "node",
             "request": "launch",
             "args": [
-                "${relativeFile}"
+                "build",
+                // "--base",
+                // "/",
+                // "--mode",
+                // "development"
             ],
             "runtimeArgs": [
                 "-r",
@@ -33,7 +37,7 @@
             "cwd": "${workspaceFolder}/vue-vite",
             // "protocol": "inspector",
             "internalConsoleOptions": "openOnSessionStart",
-            "program": "${workspaceFolder}/vue-vite/vite.config.ts",
+            "program": "${workspaceFolder}/vue-vite/node_modules/vite/bin/vite.js",
             "skipFiles": ["<node_internals>/**"],
         }
     ]
