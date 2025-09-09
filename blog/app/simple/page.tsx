@@ -8,7 +8,8 @@ export default function Page() {
     const editorRef = useRef<SimpleEditorRef>(null);
     const saveArticle = () => {
         const editor = editorRef.current?.getEditor();
-        console.log('我是获取的editor', editor);
+        // @ts-expect-error 此属性为添加额外库后增加的属性
+        const output = editor?.storage?.markdown?.getMarkdown()
     };
     return (
         <React.Fragment>

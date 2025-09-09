@@ -23,7 +23,8 @@ import { Toolbar, ToolbarGroup, ToolbarSeparator } from '@/components/tiptap-ui-
 import { ImageUploadNode } from '@/components/tiptap-node/image-upload-node/image-upload-node-extension';
 import { HorizontalRule } from '@/components/tiptap-node/horizontal-rule-node/horizontal-rule-node-extension';
 import '@/components/tiptap-node/blockquote-node/blockquote-node.scss';
-import '@/components/tiptap-node/code-block-node/code-block-node.scss';
+// import '@/components/tiptap-node/code-block-node/code-block-node.scss';
+import '@/components/tiptap-node/code-block-light-node/code-block-light-node.scss';
 import '@/components/tiptap-node/horizontal-rule-node/horizontal-rule-node.scss';
 import '@/components/tiptap-node/list-node/list-node.scss';
 import '@/components/tiptap-node/image-node/image-node.scss';
@@ -35,7 +36,8 @@ import { HeadingDropdownMenu } from '@/components/tiptap-ui/heading-dropdown-men
 import { ImageUploadButton } from '@/components/tiptap-ui/image-upload-button';
 import { ListDropdownMenu } from '@/components/tiptap-ui/list-dropdown-menu';
 import { BlockquoteButton } from '@/components/tiptap-ui/blockquote-button';
-import { CodeBlockButton } from '@/components/tiptap-ui/code-block-button';
+// import { CodeBlockButton } from '@/components/tiptap-ui/code-block-button';
+import { CodeBlockLightButton } from '@/components/tiptap-ui/code-block-light-button';
 import {
     ColorHighlightPopover,
     ColorHighlightPopoverContent,
@@ -67,7 +69,42 @@ import '@/components/tiptap-templates/simple/simple-editor.scss';
 
 import content from '@/components/tiptap-templates/simple/data/content.json';
 
+import { Markdown } from 'tiptap-markdown'; // 使用当前库替代tiptap产生markdown的付费方案
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'; // 代码块高亮
+import css from 'highlight.js/lib/languages/css'
+import js from 'highlight.js/lib/languages/javascript'
+import ts from 'highlight.js/lib/languages/typescript'
+import html from 'highlight.js/lib/languages/xml'
+import bash from 'highlight.js/lib/languages/bash'
+import { all, createLowlight } from 'lowlight'
+
 import type { Editor } from '@tiptap/react';
+
+const lowlight = createLowlight(all)
+
+lowlight.register('html', html)
+lowlight.register('css', css)
+lowlight.register('js', js)
+lowlight.register('ts', ts)
+lowlight.register('bash', bash)
+
+const filteredLists = [
+    {
+        label: "typescript",
+    },
+    {
+        label: "javascript",
+    },
+    {
+        label: "css",
+    },
+    {
+        label: "html",
+    },
+    {
+        label: "bash",
+    },
+]
 
 const MainToolbarContent = ({
     onHighlighterClick,
@@ -93,7 +130,8 @@ const MainToolbarContent = ({
                 <HeadingDropdownMenu levels={[1, 2, 3, 4]} portal={isMobile} />
                 <ListDropdownMenu types={['bulletList', 'orderedList', 'taskList']} portal={isMobile} />
                 <BlockquoteButton />
-                <CodeBlockButton />
+                {/* <CodeBlockButton /> */}
+                <CodeBlockLightButton filteredLists={filteredLists}/>
             </ToolbarGroup>
 
             <ToolbarSeparator />
@@ -206,6 +244,10 @@ export const SimpleEditor = React.forwardRef<SimpleEditorRef>(function SimpleEdi
                 limit: 3,
                 upload: handleImageUpload,
                 onError: (error) => console.error('Upload failed:', error),
+            }),
+            Markdown,
+            CodeBlockLowlight.configure({
+                lowlight
             }),
         ],
         content,
