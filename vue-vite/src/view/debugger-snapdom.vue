@@ -25,8 +25,7 @@ const getImage = () => {
     const startTime = new Date().valueOf();
     snapdom
         .toCanvas(document.body, {
-            performance: true, // 性能开关
-            targetLevel: 10,
+            fast: false, // 性能开关
         })
         .then((canvas: HTMLCanvasElement) => {
             console.log('canvas', canvas);

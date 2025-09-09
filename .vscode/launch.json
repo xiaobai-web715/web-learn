@@ -32,7 +32,8 @@
             ],
             "runtimeArgs": [
                 "-r",
-                "ts-node/register"
+                "ts-node/register",
+                "--inspect-brk"
             ],
             "cwd": "${workspaceFolder}/vue-vite",
             // "protocol": "inspector",
