@@ -5,6 +5,8 @@
 /**/logs
 /**/tmp
 /**/lib
+/**/.next
+/blog/next-env.d.ts
 /javascript/out
 /javascript/files
 /vue-vite/dist.rar
