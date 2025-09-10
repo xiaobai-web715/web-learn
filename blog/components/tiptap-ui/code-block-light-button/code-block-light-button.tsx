@@ -13,33 +13,66 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
 } from "@/components/tiptap-ui-primitive/dropdown-menu"
+import { useCodeBlock } from "./use-code-block-light"
 export interface ListDropdownMenuProps extends Omit<ButtonProps, "type"> {
     editor?: Editor,
     filteredLists: { label: string }[],
+    hideWhenUnavailable?: boolean,
+    onToggled?: () => void
 }
 export const CodeBlockLightButton = ({
     editor: providedEditor,
     filteredLists = [],
+    hideWhenUnavailable = false,
+    onToggled
 } : ListDropdownMenuProps) => {
     const [ currentCodeType, setCurrentCodeType ] = useState('')
     const { editor } = useTiptapEditor(providedEditor)
+    const [isOpen, setIsOpen] = useState(false)
+    const {
+        isVisible,
+        canToggle,
+        isActive,
+        handleToggle,
+        label,
+        shortcutKeys,
+        Icon,
+    } = useCodeBlock({
+        editor,
+        hideWhenUnavailable,
+        onToggled,
+    })
+    const handleOpenChange = useCallback(
+        (open: boolean) => {
+          if (!editor || !canToggle) return
+          setIsOpen(open)
+        },
+        [canToggle, editor]
+    )
     const handlerCallback = useCallback((codeType: string) => {
         if (!editor) return
-        editor.chain().focus().toggleCodeBlock({ language: codeType }).run() // 新建代码块指定语言
-    }, [editor])
+        handleToggle()
+        editor.chain().focus().toggleCodeBlock({ language: codeType }).run()
+    }, [editor, handleToggle])
     const handlerCodeType = (codeType: string) => {
         setCurrentCodeType(codeType)
         handlerCallback(codeType)
     }
     return (
-        <DropdownMenu>
+        <DropdownMenu modal open={isOpen} onOpenChange={handleOpenChange}>
             <DropdownMenuTrigger asChild>
                 <Button
                     type="button"
-                    tooltip="List"
+                    tooltip="Code Block Light"
                     data-style="ghost"
+                    data-active-state={isActive ? "on" : "off"}
+                    disabled={!canToggle}
+                    data-disabled={!canToggle}
+                    tabIndex={-1}
+                    aria-label={label}
+                    aria-pressed={isActive}
                 >
-                    <FaCode></FaCode>
+                    <FaCode className='tiptap-button-icon'></FaCode>
                     <ChevronDownIcon className="tiptap-button-dropdown-small" />
                 </Button>
             </DropdownMenuTrigger>
@@ -57,7 +90,7 @@ export const CodeBlockLightButton = ({
                                         }
                                         onClick={() => handlerCodeType(option.label)}
                                     >
-                                        <FaBars className=""/>
+                                        <FaBars />
                                         <div>{option.label}</div>
                                     </Button>
                                 </DropdownMenuItem>

@@ -78,7 +78,6 @@ export const BlockquoteButton = React.forwardRef<
       hideWhenUnavailable,
       onToggled,
     })
-
     const handleClick = React.useCallback(
       (event: React.MouseEvent<HTMLButtonElement>) => {
         onClick?.(event)
