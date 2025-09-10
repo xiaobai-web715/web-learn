@@ -10,7 +10,7 @@ export default function Page() {
         const editor = editorRef.current?.getEditor();
         // @ts-expect-error 此属性为添加额外库后增加的属性
         const output = editor?.storage?.markdown?.getMarkdown()
-        // console.log('output', output);
+        console.log('output', output);
     };
     return (
         <React.Fragment>
