@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .grid-wrapper {
+                display: grid;
+                grid-template-rows: repeat(3, 50px);
+                grid-auto-rows: 80px;
+                grid-template-columns: repeat(1, 50px 1fr 50px);
+                grid-auto-columns: 80px;
+                grid-auto-flow: column dense; /*行优先*/
+                > div {
+                    box-sizing: border-box;
+                    border-right: 1px solid red;
+                    border-bottom: 1px solid red;
+                }
+            }
+            .box1{}
+            .box2{
+                grid-column-start: 1;
+            }
+            .box3{
+                grid-column-start: 1;
+            }
+            .box4 {
+                grid-row-start: 3;
+            }
+            .box5 {
+                grid-row-start: 3;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="grid-wrapper">
+            <div class="box1">box1</div>
+            <div class="box2">box2</div>
+            <div class="box3">box3</div>
+            <div class="box4">box4</div>
+            <div class="box5">box5</div>
+            <div class="box6">box6</div>
+        </div>
+    </body>
+</html>

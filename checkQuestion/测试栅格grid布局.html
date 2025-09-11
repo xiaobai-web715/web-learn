@@ -5,25 +5,46 @@
             .grid-wrapper {
                 display: grid;
                 /* grid: repeat(2, 50px) / repeat(1, 50px 1fr 50px); */
-                grid-template-rows: repeat(2, 50px);
-                grid-template-columns: repeat(1, 50px 1fr 50px);
-                /* grid-auto-rows: 60px; */
+                /* grid-template-rows: repeat(1, 50px);
+                grid-template-columns: repeat(1, 50px 1fr 50px); */
+                grid-auto-rows: 40px;
+                grid-template-rows: repeat(3, 50px);
+                grid-template-columns: 50px 1fr 50px;
+                grid-template-areas:
+                    "b a a"
+                    "b a a"
+                    "d d c";
                 .box {
                     background-color: #1677ff;
                     width: 100%;
+                    min-width: 5px;
+                    min-height: 5px;
                     height: 100%;
                     box-sizing: border-box;
                     border-bottom: 1px solid red;
                     border-right: 1px solid red;
+                    &.a {
+                        grid-area: a;
+                    }
+                    &.b {
+                        grid-area: b;
+                    }
+                    &.c {
+                        grid-area: c;
+                    }
+                    &.d {
+                        grid-area: d;
+                    }
                 }
             }
         </style>
     </head>
     <body>
         <div class="grid-wrapper">
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
+            <div class="box a">boxA</div>
+            <div class="box b">boxB</div>
+            <div class="box c">boxC</div>
+            <div class="box d">boxD</div>
             <div class="box"></div>
             <div class="box"></div>
             <div class="box"></div>
