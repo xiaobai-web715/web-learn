@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@floating-ui/react": "^0.27.16",
+    "@mapbox/rehype-highlight-code-block": "^1.0.0",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-popover": "^1.1.15",
     "@tiptap/extension-highlight": "^3.4.1",
@@ -28,6 +29,10 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hotkeys-hook": "^5.1.0",
+    "rehype-class-names": "^2.0.0",
+    "rehype-parse": "^9.0.1",
+    "rehype-raw": "^7.0.0",
+    "rehype-sanitize": "^6.0.0",
     "tiptap-markdown": "^0.9.0",
     "zustand": "^5.0.8",
     "zustand-computed": "^2.1.0"

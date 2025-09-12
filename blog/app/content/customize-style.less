@@ -1,0 +1,17 @@
+:root {
+    --content-width: 60%;
+}
+
+// 媒体查询移动端设置宽度
+@media (max-width: 768px) {
+    :root {
+        --content-width: 100%;
+    }
+}
+
+.customize-style {
+    width: var(--content-width);
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 5%;
+}
