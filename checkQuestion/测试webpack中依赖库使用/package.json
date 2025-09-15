@@ -1,9 +1,16 @@
 {
     "type": "module",
+    "name": "webpack-test",
     "scripts": {
-        "build": "rollup -c -w"
+        "build": "rollup -c -w",
+        "test-cirDep": "cir-dep",
+        "test-cirDep-esm": "cir-dep-esm"
     },
     "main": "lib/index.js",
+    "bin": {
+        "cir-dep": "./bin/circularDependency/index.cjs",
+        "cir-dep-esm": "./bin/circularDependencyESM/index.js"
+    },
     "devDependencies": {
         "@rollup/plugin-commonjs": "^28.0.6",
         "@rollup/plugin-node-resolve": "^16.0.1",
