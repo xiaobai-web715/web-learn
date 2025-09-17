@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@shikijs/rehype": "^3.12.2",
     "@tailwindcss/postcss": "^4",
     "@tiptap/extension-code-block-lowlight": "^3.4.1",
     "@tiptap/extension-text-style": "^3.3.0",

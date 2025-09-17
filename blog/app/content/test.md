@@ -1,13 +1,31 @@
 ```javascript
-Getting started
+computed: {
+
+  selectedTabIdModel: {
+
+    get () {
+
+       return this.selectedTabId;
+
+    },
+
+    set (val) {
+
+      this.handleClick(val);
+
+    }
+
+ }
+
+}
 ```
 
 Welcome to the *<mark data-color="var(--tt-color-highlight-yellow)" style="background-color: var(--tt-color-highlight-yellow); color: inherit;">Simple Editor</mark>* template! This template integrates **open source** UI components and Tiptap extensions licensed under **MIT**.
 
 Integrate it by following the [Tiptap UI Components docs](https://tiptap.dev/docs/ui-components/templates/simple-editor) or using our CLI tool.
 
-```
-npx @tiptap/cli init
+```bash
+bash ls -la
 ```
 
 ## Features
