@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                margin: 0;
+            }
+            .layout {
+                width: 100%;
+                height: 100vh;
+                display: grid;
+                grid-template-columns: 100px 1fr;
+                grid-template-rows: 50px 1fr 50px;
+                > div {
+                    border: 1px solid red;
+                }
+                .header {
+                    grid-column-start: 1;
+                    grid-column-end: 3;
+                }
+                .nav {
+                    grid-row-start: 2;
+                    grid-row-end: 3;
+                }
+                .footer {
+                    grid-column-start: 1;
+                    grid-column-end: 3;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="layout">
+            <div class="header">header</div>
+            <div class="nav">nav</div>
+            <div class="main">main</div>
+            <div class="footer">footer</div>
+        </div>
+    </body>
+</html>
