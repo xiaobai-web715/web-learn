@@ -1,4 +1,4 @@
-import { SyncHook, AsyncParallelHook, HookMap, SyncWaterfallHook, UnsetAdditionalOptions } from 'tapable';
+import { SyncHook, AsyncParallelHook, HookMap, SyncWaterfallHook, UnsetAdditionalOptions, AsyncSeriesHook } from 'tapable';
 class Car {
     hooks;
     constructor() {
@@ -12,6 +12,7 @@ class Car {
             resolveOptions: new HookMap(() => {
                 return new SyncWaterfallHook(['resolveOptions']);
             }),
+            norelease: new AsyncSeriesHook<any>(['item'])
         };
     }
 }
@@ -123,3 +124,12 @@ if (resolveHook) {
 /**
  *
  */
+
+/**
+ * --- start ---
+ * norelease 测试不发布事件只订阅事件，看看可不可以触发订阅的回调
+ */
+
+myCar.hooks.norelease.callAsync('123', () => {
+    console.log('回调函数执行了-norelease')
+})
