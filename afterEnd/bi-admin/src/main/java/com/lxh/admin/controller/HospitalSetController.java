@@ -11,9 +11,9 @@ import com.lxh.mybatis.entity.hospSet;
 import com.lxh.utils.result.Result;
 import com.lxh.utils.utils.print;
 import com.lxh.dao.HospitalSetShortInfo;
-import org.apache.shenyu.client.apidocs.annotations.ApiDoc;
-import org.apache.shenyu.client.apidocs.annotations.ApiModule;
-import org.apache.shenyu.client.springmvc.annotation.ShenyuSpringMvcClient;
+//import org.apache.shenyu.client.apidocs.annotations.ApiDoc;
+//import org.apache.shenyu.client.apidocs.annotations.ApiModule;
+//import org.apache.shenyu.client.springmvc.annotation.ShenyuSpringMvcClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,15 +26,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/list")
-@ShenyuSpringMvcClient("/list/**")
-@ApiModule("/list")
+//@ShenyuSpringMvcClient("/list/**")
+//@ApiModule("/list")
 public class HospitalSetController {
     // 注入service进行调用
     @Autowired
     private HospitalSetService hospitalSetService;
 
     @PostMapping("/query")
-    @ApiDoc(desc = "query")
+//    @ApiDoc(desc = "query")
     @ServiceTokenRequired
     public Result findHospitalSet(@RequestBody pageClass hospInfo) {
 //        System.out.println(hospInfo);
@@ -49,7 +49,7 @@ public class HospitalSetController {
         return Result.success(list);
     }
     @PostMapping("/edit")
-    @ApiDoc(desc = "edit")
+//    @ApiDoc(desc = "edit")
     @ServiceTokenRequired
     public Result editHospitalInfo(@RequestBody hospSet hospInfo) {
 //        System.out.println(hospInfo);
@@ -58,7 +58,7 @@ public class HospitalSetController {
         return Result.success(result);
     }
     @PostMapping("/add")
-    @ApiDoc(desc = "add")
+//    @ApiDoc(desc = "add")
     @ServiceTokenRequired
     public Result addHospitalInfo(@RequestBody hospSet hospInfo) {
 //        System.out.print(hospInfo);
@@ -70,7 +70,7 @@ public class HospitalSetController {
         }
     }
     @PostMapping("/delete")
-    @ApiDoc(desc = "delete")
+//    @ApiDoc(desc = "delete")
     @ServiceTokenRequired
     public Result deleteHospitalInfo(@RequestBody hospSet hospInfo) {
 //        System.out.println(hospInfo);
@@ -82,7 +82,7 @@ public class HospitalSetController {
         }
     }
     @PostMapping("/get/info")
-    @ApiDoc(desc = "get/info")
+//    @ApiDoc(desc = "get/info")
     @ServiceTokenRequired
     public Result getInfoHospitalInfo(@RequestBody hospSet hospInfo) {
         hospSet info = hospitalSetService.getById(hospInfo.getId());
@@ -90,7 +90,7 @@ public class HospitalSetController {
         return Result.success(info);
     }
     @PostMapping("/get/briefInfo")
-    @ApiDoc(desc = "get/briefInfo")
+//    @ApiDoc(desc = "get/briefInfo")
     @ServiceTokenRequired
     public Result getBriefInfo(@RequestBody hospSet hospInfo) {
         LambdaQueryWrapper<hospSet> queryWrapper = new LambdaQueryWrapper<>();

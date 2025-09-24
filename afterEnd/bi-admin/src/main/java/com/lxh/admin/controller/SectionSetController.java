@@ -9,9 +9,9 @@ import com.lxh.joint.Section;
 import com.lxh.joint.SetHospSection;
 import com.lxh.mybatis.entity.hospPriv;
 import com.lxh.utils.result.Result;
-import org.apache.shenyu.client.apidocs.annotations.ApiDoc;
-import org.apache.shenyu.client.apidocs.annotations.ApiModule;
-import org.apache.shenyu.client.springmvc.annotation.ShenyuSpringMvcClient;
+//import org.apache.shenyu.client.apidocs.annotations.ApiDoc;
+//import org.apache.shenyu.client.apidocs.annotations.ApiModule;
+//import org.apache.shenyu.client.springmvc.annotation.ShenyuSpringMvcClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +21,8 @@ import static com.baomidou.mybatisplus.core.toolkit.ObjectUtils.isNotNull;
 
 @RestController
 @RequestMapping("/section")
-@ShenyuSpringMvcClient("/section/**")
-@ApiModule("/section")
+//@ShenyuSpringMvcClient("/section/**")
+//@ApiModule("/section")
 public class SectionSetController {
     @Autowired
     hospSectionMapper jointSectionSetService;
@@ -30,7 +30,7 @@ public class SectionSetController {
     HospPrivSetService hospPrivSetService;
 
     @GetMapping("/query")
-    @ApiDoc(desc = "query")
+//    @ApiDoc(desc = "query")
     @ServiceTokenRequired
     public Result getSectionList() {
         try{
@@ -42,7 +42,7 @@ public class SectionSetController {
     }
 
     @GetMapping("/get/hospSection")
-    @ApiDoc(desc = "get/hospSection")
+//    @ApiDoc(desc = "get/hospSection")
     @ServiceTokenRequired
     public Result getHospSection(Integer hospId) {
         System.out.println(hospId);
@@ -58,7 +58,7 @@ public class SectionSetController {
     }
 
     @PostMapping("/set/hospSection")
-    @ApiDoc(desc = "set/hospSection")
+//    @ApiDoc(desc = "set/hospSection")
     @ServiceTokenRequired
     public Result setHospSection(@RequestBody hospPriv info) {
         LambdaQueryWrapper<hospPriv> queryWrapper = new LambdaQueryWrapper<>();

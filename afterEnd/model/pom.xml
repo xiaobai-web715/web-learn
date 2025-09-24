@@ -37,6 +37,14 @@
     </dependencies>
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <release>17</release> <!-- 或 11/17 -->
+                </configuration>
+            </plugin>
             <!--mybatis自动生成实体类,类型等于数据库对等的模板配置-->
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
