@@ -43,7 +43,7 @@ const Content = async ({ params }: { params: Promise<{ id: number }> }) => {
         },
     };
     return (
-        <div className="tiptap ProseMirror simple-editor customize-style">
+        <div className="tiptap ProseMirror simple-editor customize-style no-first-p-not-margin-top">
             <MarkdownAsync
                 rehypePlugins={[
                     rehypeRaw,

@@ -14,4 +14,20 @@
     margin: 0 auto;
     box-sizing: border-box;
     padding: 5%;
+    &.no-first-p-not-margin-top {
+        p {
+            &:not(:first-child) {
+                margin-top: 0 !important;
+            }
+        }
+        h1,
+        h2,
+        h3,
+        h4 {
+            margin-top: 0 !important;
+        }
+        pre {
+            overflow-x: auto;
+        }
+    }
 }

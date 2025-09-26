@@ -71,40 +71,40 @@ import content from '@/components/tiptap-templates/simple/data/content.json';
 
 import { Markdown } from 'tiptap-markdown'; // 使用当前库替代tiptap产生markdown的付费方案
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'; // 代码块高亮
-import css from 'highlight.js/lib/languages/css'
-import js from 'highlight.js/lib/languages/javascript'
-import ts from 'highlight.js/lib/languages/typescript'
-import html from 'highlight.js/lib/languages/xml'
-import bash from 'highlight.js/lib/languages/bash'
-import { all, createLowlight } from 'lowlight'
+import css from 'highlight.js/lib/languages/css';
+import js from 'highlight.js/lib/languages/javascript';
+import ts from 'highlight.js/lib/languages/typescript';
+import html from 'highlight.js/lib/languages/xml';
+import bash from 'highlight.js/lib/languages/bash';
+import { all, createLowlight } from 'lowlight';
 
 import type { Editor } from '@tiptap/react';
 
-const lowlight = createLowlight(all)
+const lowlight = createLowlight(all);
 
-lowlight.register('html', html)
-lowlight.register('css', css)
-lowlight.register('js', js)
-lowlight.register('ts', ts)
-lowlight.register('bash', bash)
+lowlight.register('html', html);
+lowlight.register('css', css);
+lowlight.register('js', js);
+lowlight.register('ts', ts);
+lowlight.register('bash', bash);
 
 const filteredLists = [
     {
-        label: "typescript",
+        label: 'typescript',
     },
     {
-        label: "javascript",
+        label: 'javascript',
     },
     {
-        label: "css",
+        label: 'css',
     },
     {
-        label: "html",
+        label: 'html',
     },
     {
-        label: "bash",
+        label: 'bash',
     },
-]
+];
 
 const MainToolbarContent = ({
     onHighlighterClick,
@@ -131,7 +131,7 @@ const MainToolbarContent = ({
                 <ListDropdownMenu types={['bulletList', 'orderedList', 'taskList']} portal={isMobile} />
                 <BlockquoteButton />
                 {/* <CodeBlockButton /> */}
-                <CodeBlockLightButton filteredLists={filteredLists}/>
+                <CodeBlockLightButton filteredLists={filteredLists} />
             </ToolbarGroup>
 
             <ToolbarSeparator />
@@ -247,10 +247,10 @@ export const SimpleEditor = React.forwardRef<SimpleEditorRef>(function SimpleEdi
             }),
             Markdown,
             CodeBlockLowlight.configure({
-                lowlight
+                lowlight,
             }),
         ],
-        content,
+        // content,
     });
 
     const rect = useCursorVisibility({

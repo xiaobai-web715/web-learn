@@ -4,7 +4,7 @@ import { setTheme } from '@/utils/setTheme';
 import React, { useState, useEffect, Fragment } from 'react';
 import { FaRegMoon } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
-import { AiFillSun, AiTwotoneHome } from 'react-icons/ai';
+import { AiFillSun, AiTwotoneHome, AiFillEdit } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
 import { useTipStore } from '@/store/tiptap';
 function DocsHeader() {
@@ -36,10 +36,16 @@ function DocsHeader() {
     return (
         <Fragment>
             <div className="DocsHeader pl-[0.5rem] pr-[0.5rem] md:pl-[1rem] md:pr-[1rem] md:h-[4rem] h-[3rem]">
-                <AiTwotoneHome
-                    className="header-left cursor-pointer mr-[1rem] w-[1.5rem] md:w-[2rem] h-[1.5rem] md:h-[2rem]"
-                    onClick={() => router.push('/')}
-                ></AiTwotoneHome>
+                <div className="flex">
+                    <AiTwotoneHome
+                        className="header-left cursor-pointer mr-[1rem] w-[1.5rem] md:w-[2rem] h-[1.5rem] md:h-[2rem]"
+                        onClick={() => router.push('/')}
+                    ></AiTwotoneHome>
+                    <AiFillEdit
+                        className="header-left cursor-pointer mr-[1rem] w-[1.5rem] md:w-[2rem] h-[1.5rem] md:h-[2rem]"
+                        onClick={() => router.push('/simple')}
+                    ></AiFillEdit>
+                </div>
                 <div className="md:w-[40%] w-[45%] header-middle border-[2px] border-rose-500/10 rounded-[1.6rem] h-[66.6%] flex shrink-1 items-center pl-[1rem]">
                     <FiSearch className="shrink-0 grow-0 w-[1.2rem] h-[1.2rem] md:w-[1.8rem] md:h-[1.8rem]"></FiSearch>
                     <input
