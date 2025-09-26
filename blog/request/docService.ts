@@ -7,3 +7,7 @@ export const setDoc = <T, R>(data: T) => {
 export const getDocInfo = <R>() => {
     return get<R>(`${serverUrl}/doc/queryDoc`)
 }
+
+export const getDocContent = <R>(id: number) => {
+    return get<R>(`${serverUrl}/doc/getDocContent?id=${id}`)
+}

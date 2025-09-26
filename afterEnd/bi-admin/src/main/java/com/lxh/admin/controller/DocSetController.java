@@ -7,8 +7,10 @@ import com.lxh.admin.service.DocContentSetService;
 import com.lxh.utils.result.Result;
 import com.lxh.admin.dto.saveDocRequest;
 import com.lxh.admin.entity.Doc;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.lxh.admin.service.DocSetService;
 
@@ -19,6 +21,7 @@ import java.util.Map;
 import static com.baomidou.mybatisplus.core.toolkit.ObjectUtils.isNotNull;
 
 @RestController
+@Validated
 @RequestMapping("/doc")
 public class DocSetController {
     @Autowired
@@ -65,5 +68,16 @@ public class DocSetController {
         ov.put("pages", pages);
         ov.put("records", records);
         return Result.success(ov);
+    }
+
+    @GetMapping("getDocContent")
+    public Result getDocContent (
+            @RequestParam @NotNull(message = "id 不能为空") long id
+    ) {
+        LambdaQueryWrapper<DocContent> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(DocContent::getId, id);
+        DocContent contentInfo = docContentSetService.getOne(queryWrapper);
+        System.out.println(contentInfo);
+        return Result.success(contentInfo);
     }
 }

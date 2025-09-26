@@ -1,5 +1,5 @@
 import React from 'react';
-import DocsContent from './DocsContent';
+import DocsContent from './docsContent/DocsContent';
 import DocsFooter from './DocsFooter/index';
 export default function DocsPage() {
     return (
