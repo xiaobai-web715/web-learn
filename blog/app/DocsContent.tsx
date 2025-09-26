@@ -1,8 +1,24 @@
-function DocsContent() {
-    return (
-      <div className="docs-content flex-shrink-0">
-          <div className="docs-content-title">content</div>
-      </div>
-    )
+import { getDocInfo } from '@/request/docService';
+interface IDoc {
+    id: number;
+    title: string;
 }
-export default DocsContent
+interface IData {
+    pages: number;
+    total: number;
+    records: Array<IDoc>;
+}
+async function DocsContent() {
+    const getDocInfoData = await getDocInfo<IData>();
+    const docInfo = getDocInfoData.data || {};
+    return (
+        <div className="docs-content flex-shrink-0 overflow-y-scroll">
+            <div className="docs-content-title">
+                {(docInfo?.records || []).map((info) => {
+                    return <div>{info.title}</div>;
+                })}
+            </div>
+        </div>
+    );
+}
+export default DocsContent;

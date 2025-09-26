@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import com.lxh.admin.service.DocSetService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.baomidou.mybatisplus.core.toolkit.ObjectUtils.isNotNull;
@@ -47,15 +48,22 @@ public class DocSetController {
         return Result.success(vo);
     }
 
-//    @GetMapping("/queryDoc")
-//    public Result queryAllDoc (
-//            @RequestParam(defaultValue = "1") long current,
-//            @RequestParam(defaultValue = "10") long size
-//    ) {
-//        Page<DocContent> page = new Page<>(current, size);
-//        LambdaQueryWrapper<DocContent> queryWrapper = new LambdaQueryWrapper<>();
-//        queryWrapper.orderByDesc(DocContent::getUpdateTime);
-//        Page<DocContent> docContentList = docContentSetService.page(page, queryWrapper);
-//        return Result.success("124");
-//    }
+    @GetMapping("/queryDoc")
+    public Result queryAllDoc (
+            @RequestParam(defaultValue = "1") long current,
+            @RequestParam(defaultValue = "10") long size
+    ) {
+        Page<Doc> page = new Page<>(current, size);
+        LambdaQueryWrapper<Doc> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.orderByDesc(Doc::getUpdateTime);
+        Page<Doc> docPage = docSetService.page(page, queryWrapper);
+        long total = docPage.getTotal();
+        long pages = docPage.getPages();
+        List<Doc> records = docPage.getRecords();
+        Map<String, Object> ov = new HashMap();
+        ov.put("total", total);
+        ov.put("pages", pages);
+        ov.put("records", records);
+        return Result.success(ov);
+    }
 }

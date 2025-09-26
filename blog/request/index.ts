@@ -7,7 +7,6 @@ interface Response<R> {
 }
 
 const request = axios.create({
-    baseURL: '/api',
     withCredentials: true,
 })
 
