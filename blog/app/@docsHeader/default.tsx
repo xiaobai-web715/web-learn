@@ -5,9 +5,10 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { FaRegMoon } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
 import { AiFillSun, AiTwotoneHome, AiFillEdit } from 'react-icons/ai';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useTipStore } from '@/store/tiptap';
 function DocsHeader() {
+    const params = useParams();
     const { setDarkMode } = useTipStore();
     const router = useRouter();
     const [currentIcon, setCurrentIcon] = useState<'light' | 'dark'>('light');
@@ -33,6 +34,14 @@ function DocsHeader() {
     const changeTheme = () => {
         setCurrentIcon(currentIcon === 'light' ? 'dark' : 'light');
     };
+    const goEdit = () => {
+        let path = '/simple';
+        if (params.id) {
+            // console.log('我是当前的id', params.id);
+            path += `/${params.id}`;
+        }
+        router.push(path);
+    };
     return (
         <Fragment>
             <div className="DocsHeader pl-[0.5rem] pr-[0.5rem] md:pl-[1rem] md:pr-[1rem] md:h-[4rem] h-[3rem]">
@@ -43,7 +52,7 @@ function DocsHeader() {
                     ></AiTwotoneHome>
                     <AiFillEdit
                         className="header-left cursor-pointer mr-[1rem] w-[1.5rem] md:w-[2rem] h-[1.5rem] md:h-[2rem]"
-                        onClick={() => router.push('/simple')}
+                        onClick={goEdit}
                     ></AiFillEdit>
                 </div>
                 <div className="md:w-[40%] w-[45%] header-middle border-[2px] border-rose-500/10 rounded-[1.6rem] h-[66.6%] flex shrink-1 items-center pl-[1rem]">

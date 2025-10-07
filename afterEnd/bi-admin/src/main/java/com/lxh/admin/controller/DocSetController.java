@@ -1,6 +1,7 @@
 package com.lxh.admin.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import org.springframework.beans.BeanUtils;
 import com.lxh.admin.converter.DocRequestConverter;
 import com.lxh.admin.entity.DocContent;
 import com.lxh.admin.service.DocContentSetService;
@@ -10,6 +11,7 @@ import com.lxh.admin.entity.Doc;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.context.annotation.Bean;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.lxh.admin.service.DocSetService;
@@ -75,9 +77,15 @@ public class DocSetController {
             @RequestParam @NotNull(message = "id 不能为空") long id
     ) {
         LambdaQueryWrapper<DocContent> queryWrapper = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<Doc> queryWrapper1 = new LambdaQueryWrapper<>();
         queryWrapper.eq(DocContent::getId, id);
+        queryWrapper1.eq(Doc::getId, id);
         DocContent contentInfo = docContentSetService.getOne(queryWrapper);
-        System.out.println(contentInfo);
-        return Result.success(contentInfo);
+        Doc docInfo = docSetService.getOne(queryWrapper1);
+        saveDocRequest vo = new saveDocRequest();
+        BeanUtils.copyProperties(contentInfo, vo);
+        BeanUtils.copyProperties(docInfo, vo);
+        System.out.println(vo);
+        return Result.success(vo);
     }
 }

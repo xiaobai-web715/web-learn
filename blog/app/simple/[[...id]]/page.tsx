@@ -1,16 +1,48 @@
 'use client';
 import { message } from 'antd';
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useReducer } from 'react';
 import SaveArticle from './SaveArticle';
 import ArticleTitle, { ArticleTitleRef } from './ArticleTitle';
 import { setDoc } from '@/request/docService';
 import { SimpleEditor } from '@/components/tiptap-templates/simple/simple-editor';
 import type { SimpleEditorRef } from '@/components/tiptap-templates/simple/simple-editor';
-
+import { useParams } from 'next/navigation';
+interface IDocInfo {
+    title: string;
+    id: number | null;
+    content: string;
+}
+type ActionType = 'update';
+interface IAction {
+    type: ActionType;
+    data: IDocInfo;
+}
 export default function Page() {
+    const params = useParams();
     const [messageApi, contextHolder] = message.useMessage();
+    const [state, dispatch] = useReducer<IDocInfo, [IAction]>(
+        (state, action) => {
+            if (action.type === 'update') {
+                return {
+                    ...state,
+                    ...action.data,
+                };
+            } else {
+                return state;
+            }
+        },
+        {
+            title: '',
+            id: null,
+            content: '',
+        },
+    );
     const editorRef = useRef<SimpleEditorRef>(null);
     const titleRef = useRef<ArticleTitleRef>(null);
+    useEffect(() => {
+        if (params.id) {
+        }
+    }, []);
     const saveArticle = () => {
         const title = titleRef.current?.getValue();
         const editor = editorRef.current?.getEditor();
@@ -23,8 +55,8 @@ export default function Page() {
             content: output,
             userId: '11',
             title,
+            id: state.id,
         }).then((res) => {
-            console.log('我是响应的值', res);
             if (res.code === 200) {
                 messageApi.success('保存成功');
             } else {
@@ -35,8 +67,8 @@ export default function Page() {
     return (
         <React.Fragment>
             {contextHolder}
-            <ArticleTitle ref={titleRef}></ArticleTitle>
-            <SimpleEditor ref={editorRef} />
+            <ArticleTitle ref={titleRef} title={state.title}></ArticleTitle>
+            <SimpleEditor ref={editorRef} content={state.content} />
             <SaveArticle saveArticle={saveArticle} />
         </React.Fragment>
     );
