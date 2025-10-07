@@ -3,8 +3,8 @@ import { Fragment, forwardRef, useImperativeHandle, useState } from 'react';
 import AntdThemeChange from '@/components/high-level/antd-theme';
 
 export type ArticleTitleRef = { getValue: () => string | undefined };
-const ArticleTitle = forwardRef<ArticleTitleRef>((_, ref) => {
-    const [title, setTitle] = useState<string>();
+const ArticleTitle = forwardRef<ArticleTitleRef, { title?: string }>(({ title: propsTitle }, ref) => {
+    const [title, setTitle] = useState<string>(propsTitle || '');
     useImperativeHandle(
         ref,
         () => ({

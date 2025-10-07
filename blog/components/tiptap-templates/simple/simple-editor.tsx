@@ -202,7 +202,10 @@ export type SimpleEditorRef = {
     getEditor: () => Editor | null;
 };
 
-export const SimpleEditor = React.forwardRef<SimpleEditorRef>(function SimpleEditor(_, ref) {
+export const SimpleEditor = React.forwardRef<SimpleEditorRef, { content: string }>(function SimpleEditor(
+    { content },
+    ref,
+) {
     const isMobile = useIsMobile();
     const { height } = useWindowSize();
     const [mobileView, setMobileView] = React.useState<'main' | 'highlighter' | 'link'>('main');
@@ -250,7 +253,7 @@ export const SimpleEditor = React.forwardRef<SimpleEditorRef>(function SimpleEdi
                 lowlight,
             }),
         ],
-        // content,
+        content,
     });
 
     const rect = useCursorVisibility({
