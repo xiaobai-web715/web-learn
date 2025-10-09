@@ -40,12 +40,6 @@
         </dependency>
         <dependency>
             <groupId>com.lxh</groupId>
-            <artifactId>model</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.lxh</groupId>
             <artifactId>service-util</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
