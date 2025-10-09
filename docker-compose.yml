@@ -1,0 +1,55 @@
+services:
+  nacos:
+    image: nacos/nacos-server:latest
+    container_name: docker-nacos
+    environment:
+      MODE: standalone
+      PREFER_HOST_MODE: ipv4
+      NACOS_AUTH_TOKEN: 6oguXwmk9gVU74pEAzZ7LpBElHQZSVdlCVxQCSeUCQY=%
+      NACOS_AUTH_IDENTITY_KEY: name
+      NACOS_AUTH_IDENTITY_VALUE: lxh
+      JVM_XMS: 256m        # 初始堆
+      JVM_XMX: 256m        # 最大堆
+      JVM_XMN: 128m        # 新生代
+      JVM_MetaspaceSize: 128m
+      JVM_MaxMetaspaceSize: 128m
+    ports:
+      - "8080:8080"
+      - "8848:8848"
+      - "9848:9848"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 640M        # 容器硬上限 ≥ JVM + OS
+        reservations:
+          memory: 512M
+    volumes:
+      - /data/nacos/logs:/home/nacos/logs
+      - /data/nacos/data:/home/nacos/data
+    restart: unless-stopped
+  next:
+    build: ./blog
+    container_name: next
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+  bi-admin:
+    build:
+      context: ./afterEnd
+      dockerfile: bi-admin/Dockerfile
+    container_name: bi-admin
+    environment:
+      SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR: docker-nacos:8848
+      SPRING_CLOUD_NACOS_CONFIG_USERNAME: nacos
+      SPRING_CLOUD_NACOS_CONFIG_PASSWORD: nacos
+      SPRING_CLOUD_NACOS_CONFIG_NAMESPACE: 0a8b602b-54ce-4ba9-84d0-32401dc10d43
+    depends_on:
+      nacos:
+        condition: service_healthy
+    ports:
+      - "8201:8201"
+    restart: unless-stopped
