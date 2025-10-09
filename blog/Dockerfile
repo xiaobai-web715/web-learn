@@ -25,7 +25,7 @@ RUN addgroup -g 1001 -S nodejs && \
 # 只复制 standalone 产物 + 静态资源
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/public ./public
+# COPY --from=builder /app/public ./public
 USER nextjs
 EXPOSE 3000
 CMD ["node", "server.js"]        # standalone 生成的入口
