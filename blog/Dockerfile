@@ -17,9 +17,6 @@ RUN npm run build
 # ------- 运行阶段 -------
 FROM swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/library/node:22-alpine AS runner
 WORKDIR /app
-ENV NODE_ENV=production
-# 2. 注入环境变量（如需要）
-ENV SERVER_REQUEST_BASE=http://127.0.0.1:8201
 # 创建非 root 用户
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nextjs -u 1001

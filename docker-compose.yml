@@ -39,6 +39,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
+      - SERVER_REQUEST_BASE=http://127.0.0.1:8201 # next服务端运行api需要的访问地址
     ports:
       - "3000:3000"
     restart: unless-stopped
