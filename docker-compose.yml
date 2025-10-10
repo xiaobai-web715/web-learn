@@ -26,7 +26,7 @@ services:
       resources:
         limits:
           cpus: "1.0"
-          memory: 640M        # 容器硬上限 ≥ JVM + OS
+          memory: 720M        # 容器硬上限 ≥ JVM + OS
         reservations:
           memory: 512M
     volumes:
@@ -39,7 +39,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - SERVER_REQUEST_BASE=http://127.0.0.1:8201 # next服务端运行api需要的访问地址
+      - SERVER_REQUEST_BASE=http://bi-admin:8201 # next服务端运行api需要的访问地址
     ports:
       - "3000:3000"
     restart: unless-stopped
