@@ -21,6 +21,8 @@ WORKDIR /app
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nextjs -u 1001
 COPY --from=builder /app/.next ./.next
+# 复制运行时入口文件
+COPY --from=builder /app/package.json ./package.json
 # COPY --from=builder /app/.next/static ./.next/static
 USER nextjs
 EXPOSE 3000
