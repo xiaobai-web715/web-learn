@@ -52,7 +52,7 @@ services:
       SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR: docker-nacos:8848
       SPRING_CLOUD_NACOS_CONFIG_USERNAME: nacos
       SPRING_CLOUD_NACOS_CONFIG_PASSWORD: nacos
-      SPRING_CLOUD_NACOS_CONFIG_NAMESPACE: 0a8b602b-54ce-4ba9-84d0-32401dc10d43
+      SPRING_CLOUD_NACOS_CONFIG_NAMESPACE: cea4c864-8bd2-4d43-9ea3-6b92597cacb6
     depends_on:
       nacos:
         condition: service_healthy
