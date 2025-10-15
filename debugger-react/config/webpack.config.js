@@ -229,6 +229,12 @@ module.exports = function (webpackEnv) {
         : isEnvDevelopment &&
           (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
     },
+    externals: [
+      {
+        react: 'React',
+        'react-dom': 'ReactDOM',
+      },
+    ],
     cache: {
       type: 'filesystem',
       version: createEnvironmentHash(env.raw),
