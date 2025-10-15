@@ -33,29 +33,29 @@ services:
       - /data/nacos/logs:/home/nacos/logs
       - /data/nacos/data:/home/nacos/data
     restart: unless-stopped
-  # next:
-  #   build: ./blog
-  #   container_name: next
-  #   environment:
-  #     - NODE_ENV=production
-  #     - PORT=3000
-  #     - SERVER_REQUEST_BASE=http://bi-admin:8201 # next服务端运行api需要的访问地址
-  #   ports:
-  #     - "3000:3000"
-  #   restart: unless-stopped
-  # bi-admin:
-  #   build:
-  #     context: ./afterEnd
-  #     dockerfile: bi-admin/Dockerfile
-  #   container_name: bi-admin
-  #   environment:
-  #     SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR: docker-nacos:8848
-  #     SPRING_CLOUD_NACOS_CONFIG_USERNAME: nacos
-  #     SPRING_CLOUD_NACOS_CONFIG_PASSWORD: nacos
-  #     SPRING_CLOUD_NACOS_CONFIG_NAMESPACE: 0a8b602b-54ce-4ba9-84d0-32401dc10d43
-  #   depends_on:
-  #     nacos:
-  #       condition: service_healthy
-  #   ports:
-  #     - "8201:8201"
-  #   restart: unless-stopped
+  next:
+    build: ./blog
+    container_name: next
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - SERVER_REQUEST_BASE=http://bi-admin:8201 # next服务端运行api需要的访问地址
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+  bi-admin:
+    build:
+      context: ./afterEnd
+      dockerfile: bi-admin/Dockerfile
+    container_name: bi-admin
+    environment:
+      SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR: docker-nacos:8848
+      SPRING_CLOUD_NACOS_CONFIG_USERNAME: nacos
+      SPRING_CLOUD_NACOS_CONFIG_PASSWORD: nacos
+      SPRING_CLOUD_NACOS_CONFIG_NAMESPACE: 0a8b602b-54ce-4ba9-84d0-32401dc10d43
+    depends_on:
+      nacos:
+        condition: service_healthy
+    ports:
+      - "8201:8201"
+    restart: unless-stopped
