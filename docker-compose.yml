@@ -8,11 +8,11 @@ services:
       NACOS_AUTH_TOKEN: 6oguXwmk9gVU74pEAzZ7LpBElHQZSVdlCVxQCSeUCQY=%
       NACOS_AUTH_IDENTITY_KEY: name
       NACOS_AUTH_IDENTITY_VALUE: lxh
-      JVM_XMS: 256m        # 初始堆
-      JVM_XMX: 256m        # 最大堆
-      JVM_XMN: 128m        # 新生代
-      JVM_MetaspaceSize: 128m
-      JVM_MaxMetaspaceSize: 128m
+      JVM_XMS: 512m        # 初始堆
+      JVM_XMX: 512m        # 最大堆
+      JVM_XMN: 256m        # 新生代
+      JVM_MetaspaceSize: 256m
+      JVM_MaxMetaspaceSize: 256m
     ports:
       - "8080:8080"
       - "8848:8848"
@@ -25,25 +25,25 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "1.0"
-          memory: 720M        # 容器硬上限 ≥ JVM + OS
+          cpus: "2.0"
+          memory: 1024M        # 容器硬上限 ≥ JVM + OS
         reservations:
           memory: 512M
     volumes:
       - /data/nacos/logs:/home/nacos/logs
       - /data/nacos/data:/home/nacos/data
     restart: unless-stopped
-  next:
-    build: ./blog
-    container_name: next
-    environment:
-      - NODE_ENV=production
-      - PORT=3000
-      - SERVER_REQUEST_BASE=http://bi-admin:8201 # next服务端运行api需要的访问地址
-    ports:
-      - "3000:3000"
-    restart: unless-stopped
-  bi-admin:
+  # next:
+  #   build: ./blog
+  #   container_name: next
+  #   environment:
+  #     - NODE_ENV=production
+  #     - PORT=3000
+  #     - SERVER_REQUEST_BASE=http://bi-admin:8201 # next服务端运行api需要的访问地址
+  #   ports:
+  #     - "3000:3000"
+  #   restart: unless-stopped
+  # bi-admin:
     build:
       context: ./afterEnd
       dockerfile: bi-admin/Dockerfile
