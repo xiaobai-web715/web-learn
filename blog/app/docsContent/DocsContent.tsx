@@ -8,7 +8,7 @@ async function DocsContent() {
         <div className="docs-content flex-shrink-0 overflow-y-scroll">
             <div className="md:w-[60%] w-[80%] m-auto">
                 {(docInfo?.records || []).map((info) => {
-                    return <DocsItem info={info}></DocsItem>;
+                    return <DocsItem info={info} key={info.id}></DocsItem>;
                 })}
             </div>
         </div>

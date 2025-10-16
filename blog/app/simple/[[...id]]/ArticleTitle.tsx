@@ -1,10 +1,13 @@
 import { Input } from 'antd';
-import { Fragment, forwardRef, useImperativeHandle, useState } from 'react';
+import { Fragment, forwardRef, useImperativeHandle, useState, useEffect } from 'react';
 import AntdThemeChange from '@/components/high-level/antd-theme';
 
 export type ArticleTitleRef = { getValue: () => string | undefined };
 const ArticleTitle = forwardRef<ArticleTitleRef, { title?: string }>(({ title: propsTitle }, ref) => {
-    const [title, setTitle] = useState<string>(propsTitle || '');
+    const [title, setTitle] = useState<string>('');
+    useEffect(() => {
+        setTitle(propsTitle || '');
+    }, [propsTitle]);
     useImperativeHandle(
         ref,
         () => ({
@@ -20,7 +23,6 @@ const ArticleTitle = forwardRef<ArticleTitleRef, { title?: string }>(({ title: p
                     value={title}
                     placeholder="请输入文章标题"
                     onChange={(e) => {
-                        console.log('我是文章的标题', e.target.value);
                         setTitle(e.target.value);
                     }}
                 />
@@ -28,5 +30,5 @@ const ArticleTitle = forwardRef<ArticleTitleRef, { title?: string }>(({ title: p
         </Fragment>
     );
 });
-
+ArticleTitle.displayName = 'ArticleTitle';
 export default AntdThemeChange(ArticleTitle);

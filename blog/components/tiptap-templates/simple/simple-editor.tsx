@@ -256,6 +256,12 @@ export const SimpleEditor = React.forwardRef<SimpleEditorRef, { content: string 
         content,
     });
 
+    React.useEffect(() => {
+        if (content) {
+            editor?.commands.setContent(content);
+        }
+    }, [content])
+
     const rect = useCursorVisibility({
         editor,
         overlayHeight: toolbarRef.current?.getBoundingClientRect().height ?? 0,

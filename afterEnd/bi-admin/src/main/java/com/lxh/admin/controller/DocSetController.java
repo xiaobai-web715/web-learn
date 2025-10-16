@@ -41,13 +41,13 @@ public class DocSetController {
         DocContent contentEntity = docRequestConverter.toDocContentEntity(params);
         LambdaQueryWrapper<Doc> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(isNotNull(entity.getId()), Doc::getId, entity.getId());
-        docSetService.save(entity);
+        docSetService.saveOrUpdate(entity);
         int id = entity.getId();
         LambdaQueryWrapper<DocContent> queryContentWrapper = new LambdaQueryWrapper<>();
         queryContentWrapper.eq(DocContent::getId, id);
         contentEntity.setId(id);
         System.out.println(id);
-        docContentSetService.save(contentEntity);
+        docContentSetService.saveOrUpdate(contentEntity);
         Map<String, Integer> vo = new HashMap<>();
         vo.put("id", entity.getId());
         return Result.success(vo);

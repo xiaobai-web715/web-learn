@@ -3,7 +3,7 @@ import { message } from 'antd';
 import React, { useRef, useEffect, useReducer } from 'react';
 import SaveArticle from './SaveArticle';
 import ArticleTitle, { ArticleTitleRef } from './ArticleTitle';
-import { setDoc } from '@/request/docService';
+import { setDoc, getDocContentInWeb } from '@/request/docService';
 import { SimpleEditor } from '@/components/tiptap-templates/simple/simple-editor';
 import type { SimpleEditorRef } from '@/components/tiptap-templates/simple/simple-editor';
 import { useParams } from 'next/navigation';
@@ -41,6 +41,18 @@ export default function Page() {
     const titleRef = useRef<ArticleTitleRef>(null);
     useEffect(() => {
         if (params.id) {
+            if (Array.isArray(params.id)) {
+                getDocContentInWeb<IDocInfo>(Number(params.id[0])).then((res) => {
+                    if (res.code === 200) {
+                        dispatch({
+                            type: 'update',
+                            data: res.data,
+                        })
+                    } else {
+                        messageApi.error(res.message || '获取失败')
+                    }
+                })
+            }
         }
     }, []);
     const saveArticle = () => {
