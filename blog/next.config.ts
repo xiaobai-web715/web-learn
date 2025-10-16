@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
         return [
             {
                 source: '/api/:path*',
-                destination: 'http://bi-admin/:path*'
+                destination: 'http://bi-admin:8201/:path*'
             }
         ]
     }
