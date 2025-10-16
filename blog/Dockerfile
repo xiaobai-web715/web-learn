@@ -8,6 +8,8 @@ RUN npm ci --only=production && \
 # ------- 构建阶段 -------
 FROM swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/library/node:22-alpine AS builder
 WORKDIR /app
+# 0. 先声明构建期环境变量
+ENV SERVER_REQUEST_BASE=http://bi-admin:8201
 # 1. 先复制依赖（利用缓存）
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -23,6 +25,7 @@ RUN addgroup -g 1001 -S nodejs && \
 COPY --from=builder /app/.next ./.next
 # 复制运行时入口文件
 COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/node_modules ./node_modules
 # COPY --from=builder /app/.next/static ./.next/static
 USER nextjs
 EXPOSE 3000
