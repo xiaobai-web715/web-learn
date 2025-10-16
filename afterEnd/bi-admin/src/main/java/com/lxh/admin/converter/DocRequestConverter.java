@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface DocRequestConverter {
 
-    @Mapping(target = "userid", source = "userId")
+    // @Mapping(target = "userid", source = "userId")
     Doc toDocEntity(saveDocRequest dto);
 
     DocContent toDocContentEntity(saveDocRequest dto);
