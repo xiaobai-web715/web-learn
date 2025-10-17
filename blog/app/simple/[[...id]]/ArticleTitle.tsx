@@ -25,6 +25,7 @@ const ArticleTitle = forwardRef<ArticleTitleRef, { title?: string }>(({ title: p
                     onChange={(e) => {
                         setTitle(e.target.value);
                     }}
+                    size="large"
                 />
             </div>
         </Fragment>

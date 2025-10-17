@@ -1,7 +1,7 @@
 import { ConfigProvider, theme } from 'antd';
 import { useTipStore } from '@/store/tiptap';
-const AntdThemeChange = <P extends Object>(Wrapper: React.ComponentType<P>) => {
-    return (props: P) => {
+const AntdThemeChange = <P extends object>(Wrapper: React.ComponentType<P>) => {
+    const AntdTheme = (props: P) => {
         const { isDark } = useTipStore();
         return (
             <ConfigProvider
@@ -13,6 +13,7 @@ const AntdThemeChange = <P extends Object>(Wrapper: React.ComponentType<P>) => {
             </ConfigProvider>
         );
     };
+    return AntdTheme;
 };
 
 export default AntdThemeChange;

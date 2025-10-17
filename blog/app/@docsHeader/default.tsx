@@ -7,6 +7,7 @@ import { FiSearch } from 'react-icons/fi';
 import { AiFillSun, AiTwotoneHome, AiFillEdit } from 'react-icons/ai';
 import { useParams, useRouter } from 'next/navigation';
 import { useTipStore } from '@/store/tiptap';
+import Link from 'next/link';
 function DocsHeader() {
     const params = useParams();
     const { setDarkMode } = useTipStore();
@@ -66,12 +67,14 @@ function DocsHeader() {
                     </div>
                 </div>
                 <div className="header-right flex items-center justify-between text-responsive ml-[0.5rem]">
-                    <div className="pl-[0.4rem] md:pl-[0.8rem] pr-[0.4rem] md:pr-[0.8rem] pt-[0.4rem] md:pt-[0.5rem] pb-[0.4rem] md:pb-[0.5rem] whitespace-nowrap rounded-[0.3rem] md:rounded-[0.5rem] cursor-pointer background-line-gradient">
-                        登录
-                    </div>
-                    <div className="pl-[0.4rem] md:pl-[0.8rem] pr-[0.4rem] md:pr-[0.8rem] pt-[0.4rem] md:pt-[0.5rem] pb-[0.4rem] md:pb-[0.5rem] whitespace-nowrap rounded-[0.3rem] md:rounded-[0.5rem] ml-[0.5rem] cursor-pointer background-line-gradient">
+                    <Link href="/login">
+                        <div className="pl-[0.4rem] md:pl-[0.8rem] pr-[0.4rem] md:pr-[0.8rem] pt-[0.4rem] md:pt-[0.5rem] pb-[0.4rem] md:pb-[0.5rem] whitespace-nowrap rounded-[0.3rem] md:rounded-[0.5rem] cursor-pointer background-line-gradient">
+                            登录
+                        </div>
+                    </Link>
+                    {/* <div className="pl-[0.4rem] md:pl-[0.8rem] pr-[0.4rem] md:pr-[0.8rem] pt-[0.4rem] md:pt-[0.5rem] pb-[0.4rem] md:pb-[0.5rem] whitespace-nowrap rounded-[0.3rem] md:rounded-[0.5rem] ml-[0.5rem] cursor-pointer background-line-gradient">
                         注册
-                    </div>
+                    </div> */}
                     <div className="theme-icon cursor-pointer ml-[0.5rem]" onClick={changeTheme}>
                         {currentIcon === 'light' ? (
                             <AiFillSun className="w-[1rem] h-[1rem] md:w-[1.5rem] md:h-[1.5rem]" />

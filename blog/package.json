@@ -51,6 +51,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "axios": "^1.12.2",
+    "dayjs": "^1.11.18",
     "eslint": "^9",
     "eslint-config-next": "15.5.0",
     "less-loader": "^12.3.0",
