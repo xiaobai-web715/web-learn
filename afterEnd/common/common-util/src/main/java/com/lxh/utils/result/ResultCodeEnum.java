@@ -2,8 +2,10 @@ package com.lxh.utils.result;
 
 public enum ResultCodeEnum {
     SUCCESS(200, "成功"),
-    PASSWORDERROR(3987, "密码或账号不正确，请重新输入！"),
+    PASSWORDERROR(3987, "密码不正确，请重新输入！"),
     NOUSER(3988, "当前账号不存在，请注册"),
+    ACCOUNT_HAVE_EXIST(3999, "邮箱已被注册"),
+    CREATE_FAIL(4000, "账号创建失败"),
     /* 参数错误：10001-19999 */
     PARAM_IS_INVALID(10001, "参数无效"),
     PARAM_IS_BLANK(10002, "参数为空"),

@@ -5,6 +5,7 @@ import com.lxh.admin.entity.User;
 import com.lxh.admin.service.UserSetService;
 import com.lxh.admin.util.IdUtil;
 import com.lxh.utils.result.Result;
+import com.lxh.utils.result.ResultCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,11 +29,11 @@ public class UserSetController {
         queryWrapper.eq(isNotNull(params.getEmail()), User::getEmail, params.getEmail());
         User userInfo = userSetService.getOne(queryWrapper);
         if (userInfo == null) {
-            return Result.fail("邮箱未注册");
+            return Result.build(null, ResultCodeEnum.NOUSER);
         } else if (userInfo.getPassword().equals(params.getPassword())) {
             return Result.success(userInfo);
         } else {
-            return Result.fail("密码错误");
+            return Result.build(null, ResultCodeEnum.PASSWORDERROR);
         }
     }
 
@@ -42,7 +43,7 @@ public class UserSetController {
         queryWrapper.eq(isNotNull(params.getEmail()), User::getEmail, params.getEmail());
         User userInfo = userSetService.getOne(queryWrapper);
         if (userInfo != null) {
-            return Result.fail("邮箱已被注册");
+            return Result.build(null, ResultCodeEnum.ACCOUNT_HAVE_EXIST);
         } else {
             User user = new User();
             user.setUserId(IdUtil.nextId());
@@ -53,7 +54,7 @@ public class UserSetController {
             if (res) {
                 return Result.success(user);
             } else {
-                return Result.fail("创建失败");
+                return Result.build(null, ResultCodeEnum.CREATE_FAIL);
             }
         }
     }
