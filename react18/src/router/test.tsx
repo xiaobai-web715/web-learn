@@ -23,8 +23,8 @@ const testRouter = () => {
                             <Route path='concurrency' element={<Concurrency></Concurrency>}></Route>
                             <Route path='operationPosition' element={<OperationPosition></OperationPosition>}></Route>
                             <Route path='versionGetTest' element={<VersionGetTest></VersionGetTest>}></Route>
-                            <Route path='mobax' element={<Mobax></Mobax>}></Route>
-                            <Route path="mobax/context" element={
+                            <Route path='mobx' element={<Mobax></Mobax>}></Route>
+                            <Route path="mobx/context" element={
                                 <OtherStoreContext.Provider value={new OtherStore()}>
                                     <MobaxContext></MobaxContext>
                                 </OtherStoreContext.Provider>
