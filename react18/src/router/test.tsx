@@ -5,6 +5,7 @@ import OperationPosition from 'src/page/test/operationPosition/index';
 import VersionGetTest from 'src/page/test/versionGetTest/index';
 import Mobax from 'src/page/test/mobax/index';
 import MobaxContext from 'src/page/test/mobax/context/index';
+import MessageChannel from 'src/page/test/messageChannel';
 import { OtherStore, OtherStoreContext } from "src/context/index";
 
 const testRouter = () => {
@@ -29,6 +30,7 @@ const testRouter = () => {
                                     <MobaxContext></MobaxContext>
                                 </OtherStoreContext.Provider>
                             }></Route>
+                            <Route path="messageChannel" element={<MessageChannel></MessageChannel>}></Route>
                         </Route>
                     </Route>
                 </Routes>
