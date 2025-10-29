@@ -1,9 +1,9 @@
 import axios, { Axios, AxiosRequestConfig } from 'axios'
 
-interface Response<R> {
-    code: number;
-    message: string;
-    data: R;
+export interface Response<R> {
+    code: number | null;
+    message: string | null;
+    data: R | null;
 }
 
 const request = axios.create({

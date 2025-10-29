@@ -51,6 +51,13 @@
                     <version>3.13.0</version>
                     <configuration>
                         <release>17</release>   <!-- 仅此一处即可 -->
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>1.18.20</version>
+                            </path>
+                        </annotationProcessorPaths>
                     </configuration>
                 </plugin>
                 <plugin>
