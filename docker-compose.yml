@@ -1,6 +1,6 @@
 services:
   nacos:
-    image: nacos/nacos-server:latest
+    image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/nacos/nacos-server:v3.0.3
     container_name: docker-nacos
     environment:
       MODE: standalone
