@@ -1,7 +1,4 @@
 import React from 'react';
-import fs from 'fs';
-import path from 'path';
-import { text } from 'node:stream/consumers';
 import { getDocContent } from '@/request/docService';
 import { MarkdownAsync } from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
@@ -22,7 +19,6 @@ interface IDocContent {
 const Content = async ({ params }: { params: Promise<{ id: number }> }) => {
     const { id } = await params;
     const res = await getDocContent<IDocContent>(id);
-    console.log('我是获取的请求信息的内容', res);
     const mdInfo = res.data;
     // const filePath = path.resolve(process.cwd(), 'app', 'content', 'test.md');
     // const rs = fs.createReadStream(filePath);

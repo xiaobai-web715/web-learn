@@ -1,5 +1,5 @@
 import { get, Response } from './index'
-
+import { UploadRequestFile } from 'rc-upload/lib/interface';
 declare global {
     interface Window {
         OSS: new (options: any) => any
@@ -13,7 +13,7 @@ export interface OssConfig {
 }
 
 export interface OssFileInfo {
-    file: File,
+    file: File | UploadRequestFile,
     options: OssConfig,
 }
 
@@ -38,7 +38,7 @@ export const uploadFileToOSS = async <T extends OssFileInfo>({file, options}: T)
             stsToken: options.securityToken,
             bucket: 'lxh-doc-test',
         })
-        const response = await client.put(file.name, file)
+        const response = await client.put((file as File).name, file)
         if (response.res.status === 200) {
             return {
                 code: 200,

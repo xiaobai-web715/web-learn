@@ -3,6 +3,7 @@ export interface IDoc {
     title: string;
     createTime: string;
     updateTime: string;
+    imageAddress: string;
 }
 export interface IData {
     pages: number;

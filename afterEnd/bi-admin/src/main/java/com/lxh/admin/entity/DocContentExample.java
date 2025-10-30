@@ -253,6 +253,76 @@ public class DocContentExample {
             addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
+
+        public Criteria andImageAddressIsNull() {
+            addCriterion("image_address is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageAddressIsNotNull() {
+            addCriterion("image_address is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageAddressEqualTo(String value) {
+            addCriterion("image_address =", value, "imageAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageAddressNotEqualTo(String value) {
+            addCriterion("image_address <>", value, "imageAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageAddressGreaterThan(String value) {
+            addCriterion("image_address >", value, "imageAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageAddressGreaterThanOrEqualTo(String value) {
+            addCriterion("image_address >=", value, "imageAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageAddressLessThan(String value) {
+            addCriterion("image_address <", value, "imageAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageAddressLessThanOrEqualTo(String value) {
+            addCriterion("image_address <=", value, "imageAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageAddressLike(String value) {
+            addCriterion("image_address like", value, "imageAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageAddressNotLike(String value) {
+            addCriterion("image_address not like", value, "imageAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageAddressIn(List<String> values) {
+            addCriterion("image_address in", values, "imageAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageAddressNotIn(List<String> values) {
+            addCriterion("image_address not in", values, "imageAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageAddressBetween(String value1, String value2) {
+            addCriterion("image_address between", value1, value2, "imageAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageAddressNotBetween(String value1, String value2) {
+            addCriterion("image_address not between", value1, value2, "imageAddress");
+            return (Criteria) this;
+        }
     }
 
     /**

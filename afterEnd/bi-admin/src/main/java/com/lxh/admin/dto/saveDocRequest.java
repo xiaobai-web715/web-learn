@@ -8,4 +8,5 @@ public class saveDocRequest {
     private String title; // 文档名称
     private Integer userId; // 上传用户id
     private String content;
+    private String imageAddress;
 }
