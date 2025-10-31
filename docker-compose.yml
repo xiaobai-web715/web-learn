@@ -58,4 +58,4 @@ services:
         condition: service_healthy
     ports:
       - "8201:8201"
-    restart: unless-stopped
+    restart: "no"
