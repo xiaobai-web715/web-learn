@@ -49,6 +49,8 @@ services:
       dockerfile: bi-admin/Dockerfile
     container_name: bi-admin
     environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_CONFIG_IMPORT: nacos:blog-dev
       SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR: docker-nacos:8848
       SPRING_CLOUD_NACOS_CONFIG_USERNAME: nacos
       SPRING_CLOUD_NACOS_CONFIG_PASSWORD: nacos
