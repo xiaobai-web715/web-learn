@@ -23,6 +23,8 @@ WORKDIR /app
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nextjs -u 1001
 COPY --from=builder /app/.next ./.next
+# 复制配置，remotePatterns匹配图片需要使用对应配置信息
+COPY --from=builder /app/next.config.ts ./next.config.ts
 # 复制运行时入口文件
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/node_modules ./node_modules
