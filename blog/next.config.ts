@@ -18,6 +18,7 @@ const nextConfig: NextConfig = {
                 protocol: 'http',
                 hostname: 'lxh-doc-test.oss-cn-beijing.aliyuncs.com',
                 pathname: '/**',
+                search: '',
             }
         ]
     },
