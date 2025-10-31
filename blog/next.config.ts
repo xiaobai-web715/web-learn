@@ -11,6 +11,16 @@ const nextConfig: NextConfig = {
             },
         },
     },
+    images: {
+        // domains: ['lxh-doc-test.oss-cn-beijing.aliyuncs.com'],
+        remotePatterns: [
+            {
+                protocol: 'http',
+                hostname: 'lxh-doc-test.oss-cn-beijing.aliyuncs.com',
+                pathname: '/**',
+            }
+        ]
+    },
     async rewrites() {
         return [
             {
