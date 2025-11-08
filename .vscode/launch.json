@@ -40,6 +40,14 @@
             "internalConsoleOptions": "openOnSessionStart",
             "program": "${workspaceFolder}/vue-vite/node_modules/vite/bin/vite.js",
             "skipFiles": ["<node_internals>/**"],
+        },
+        {
+            "name": "debugger-vue",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:5173",
+            "sourceMaps": true,
+            "webRoot": "${workspaceFolder}/debugger-vue"
         }
     ]
 }
