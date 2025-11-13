@@ -1,0 +1,6 @@
+@import "tailwindcss";
+/* @plugin "@tailwindcss/container-queries"; */
+
+body {
+    margin: 0;
+}
