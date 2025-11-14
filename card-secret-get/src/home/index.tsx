@@ -20,7 +20,7 @@ const HomePage = () => {
                     卡密领取
                 </div>
                 <div className="[@media(max-height:700px)]:col-start-2">
-                    <div className="leading-14 group relative m-auto h-14 w-32 cursor-pointer overflow-hidden bg-[#A5FF14] text-center font-bold text-black">
+                    <div className="leading-14 group relative m-auto h-14 w-32 cursor-pointer overflow-hidden bg-[#A5FF14] text-center font-bold text-black active:scale-95 active:shadow-md">
                         <span className="relative z-10" onClick={() => gotoEntryPage()}>
                             进入首页
                         </span>
