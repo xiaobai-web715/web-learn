@@ -22,7 +22,7 @@ const Receive = () => {
                     toast.success(res.data.message);
                     setCardTest(res.data.card_code);
                 } else {
-                    setCardTest("123456");
+                    // setCardTest("123456");
                     toast.error(res.data.message);
                 }
             })
