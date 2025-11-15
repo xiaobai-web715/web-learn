@@ -11,6 +11,7 @@ const RoutePage = () => {
                 <Route path="/gameEntry" element={<GamesEntry />}></Route>
                 <Route path="/introduction" element={<Introduction />}></Route>
                 <Route path="/receive" element={<Receive />}></Route>
+                <Route path="*" element={<HomePage />}></Route>
             </Routes>
         </HashRouter>
     );

@@ -4,3 +4,15 @@
 body {
     margin: 0;
 }
+
+@font-face {
+    font-family: 'MyTai';
+    src: url('@/font/t.ttf') format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'MyKai';
+    src: url('@/font/o.ttf') format('truetype');
+    font-display: swap;
+}

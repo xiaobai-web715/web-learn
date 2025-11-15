@@ -11,14 +11,19 @@
         "prettier": "npx prettier . --write"
     },
     "dependencies": {
+        "axios": "^1.13.2",
+        "lodash": "^4.17.21",
         "react": "^19.2.0",
         "react-dom": "^19.2.0",
+        "react-hot-toast": "^2.6.0",
         "react-router-dom": "^7.9.5"
     },
     "devDependencies": {
         "@eslint/js": "^9.39.1",
         "@tailwindcss/container-queries": "^0.1.1",
         "@tailwindcss/postcss": "^4.1.17",
+        "@types/axios": "^0.14.4",
+        "@types/lodash": "^4.17.20",
         "@types/node": "^24.10.0",
         "@types/react": "^19.2.2",
         "@types/react-dom": "^19.2.2",
