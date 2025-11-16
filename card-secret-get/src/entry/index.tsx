@@ -16,6 +16,7 @@ const GamesEntry = () => {
             name: "穹顶突击队",
             samelName: "ARC Raiders",
             image: "/qdtjd.jpeg",
+            // image: "/aqtu.png",
             tag: PageTag.QDTJD,
             top: "25%",
             left: "0%",
@@ -51,8 +52,8 @@ const GamesEntry = () => {
                                             
                                         </div> */}
                                         {/* <div className="box-shadow-[0_0_60px_4px_rgba(0,0,0,0.5)] absolute inset-0 left-[-10%] top-[30%] h-full w-[160%] rounded-[5px] border-l-4 border-r-4 border-gray-700 shadow-lg group-hover:border-[#da7b2c]"></div> */}
-                                        <div className="box-shadow-[0_0_60px_4px_rgba(0,0,0,0.5)] border-l-6 border-r-6 absolute inset-0 left-[-6.5%] top-[15%] h-full w-[153%] rounded-[5px] border-gray-700 shadow-lg group-hover:border-[#da7b2c]"></div>
-                                        <div className="box-shadow-[0_0_60px_4px_rgba(0,0,0,0.5)] border-l-6 border-r-6 relative inset-0 left-0 top-0 w-[140%] rounded-[5px] border-gray-700 shadow-lg group-hover:border-[#da7b2c]">
+                                        <div className="box-shadow-[0_0_60px_4px_rgba(0,0,0,0.5)] border-l-6 border-r-6 absolute inset-0 left-[-6.5%] top-[15%] h-full w-[153%] rounded-[5px] border-gray-700 shadow-lg group-hover:border-[#16b9ff]"></div>
+                                        <div className="box-shadow-[0_0_60px_4px_rgba(0,0,0,0.5)] border-l-6 border-r-6 relative inset-0 left-0 top-0 w-[140%] rounded-[5px] border-gray-700 shadow-lg group-hover:border-[#16b9ff]">
                                             <div
                                                 className="inset-0 max-h-max w-full rounded-lg border-gray-800"
                                                 style={{ top: item.top, left: item.left }}
@@ -71,14 +72,14 @@ const GamesEntry = () => {
                                     </div>
                                 </div>
                                 <div className="game-item-name relative translate-y-[45%] text-center text-[22px] font-bold">
-                                    <div>
+                                    <div className="bg-linear-to-r from-cyan-400 to-purple-400 bg-clip-text tracking-widest text-transparent drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]">
                                         <span className="font-kai text-[20px]">{item.name}</span>
                                         <span className="font-tai ml-2 text-[14px]">
                                             {item.samelName}
                                         </span>
                                     </div>
                                     <div
-                                        className="m-auto mt-2 max-w-max cursor-pointer whitespace-nowrap rounded-[5px] border-2 border-[#da7b2c] pb-2 pl-3 pr-3 pt-2 text-[16px] text-[#da7b2c] active:scale-95 active:shadow-md"
+                                        className="bg-linear-to-r m-auto mt-2 max-w-max cursor-pointer whitespace-nowrap rounded-[5px] border-2 border-[#16b9ff] from-cyan-400 to-purple-400 bg-clip-text pb-2 pl-3 pr-3 pt-2 text-[16px] tracking-widest text-transparent drop-shadow-[0_0_10px_rgba(255,255,255,0.4)] active:scale-95 active:shadow-md"
                                         onClick={() => gotoReceivePage(item.tag)}
                                     >
                                         卡密领取

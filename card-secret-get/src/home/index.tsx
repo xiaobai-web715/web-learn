@@ -25,7 +25,7 @@ const HomePage = () => {
                 </div>
                 <div className="flex items-center justify-center [@media(max-height:700px)]:col-start-2">
                     <div
-                        className="leading-14 group relative m-auto h-14 w-32 cursor-pointer overflow-hidden bg-[#da7b2c] text-center font-bold text-white active:scale-95 active:shadow-md"
+                        className="leading-14 group relative m-auto h-14 w-32 cursor-pointer overflow-hidden bg-[#1668dc] text-center font-bold text-white active:scale-95 active:shadow-md"
                         onClick={() => gotoEntryPage()}
                     >
                         <span className="font-tai relative z-10 whitespace-nowrap">进入首页</span>
@@ -34,18 +34,31 @@ const HomePage = () => {
                 </div>
                 <div className="m-auto flex flex-wrap items-center pb-8 pl-8 pr-8 [@media(max-height:700px)]:col-start-1 [@media(max-height:700px)]:col-end-3">
                     <div
-                        className="mb-5 ml-11 mr-11 cursor-pointer text-start"
+                        className="z-1 relative mb-5 ml-11 mr-11 flex cursor-pointer items-center justify-center text-start"
                         onClick={() => gotoExternal(homePageLinkUrl.tgChannel)}
                     >
-                        <div className="font-kai whitespace-nowrap text-[14px]">JOIN TG</div>
-                        <div className="font-tai whitespace-nowrap text-[22px]">加入TG频道</div>
+                        <img
+                            src="/tg.png"
+                            width="62"
+                            className="relative translate-x-[15%] object-contain"
+                        ></img>
+                        <div className="absolute left-[10%] top-[27%] z-[-1] h-6 w-6 translate-x-[35%] bg-white"></div>
+                        <div>
+                            <div className="font-kai whitespace-nowrap text-[14px]">JOIN TG</div>
+                            <div className="font-tai whitespace-nowrap text-[22px]">加入TG频道</div>
+                        </div>
                     </div>
                     <div
-                        className="mb-5 ml-11 mr-11 cursor-pointer"
+                        className="mb-5 ml-11 mr-11 flex cursor-pointer items-center justify-start"
                         onClick={() => gotoExternal(homePageLinkUrl.discordChannel)}
                     >
-                        <div className="font-kai whitespace-nowrap text-[14px]">JOIN DISCORD</div>
-                        <div className="font-tai whitespace-nowrap text-[22px]">加入DISCRD</div>
+                        <img src="/discount.png" width="45" className="object-contain"></img>
+                        <div>
+                            <div className="font-kai whitespace-nowrap text-[14px]">
+                                JOIN DISCORD
+                            </div>
+                            <div className="font-tai whitespace-nowrap text-[22px]">加入DISCRD</div>
+                        </div>
                     </div>
                     <div
                         className="mb-5 ml-11 mr-11 cursor-pointer whitespace-nowrap"

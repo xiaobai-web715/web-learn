@@ -68,11 +68,11 @@ const Receive = () => {
                                 Click to Claim
                             </div>
                         </div>
-                        <div className="ml-4 mr-4 cursor-pointer rounded-[5px] bg-[#1677ff] pb-2 pl-6 pr-6 pt-2 text-center active:scale-95 active:shadow-md">
-                            <div
-                                className="font-kai whitespace-nowrap text-center text-[16px]"
-                                onClick={() => gotoExternal(link.downloadAddress)}
-                            >
+                        <div
+                            className="ml-4 mr-4 cursor-pointer rounded-[5px] bg-[#1677ff] pb-2 pl-6 pr-6 pt-2 text-center active:scale-95 active:shadow-md"
+                            onClick={() => gotoExternal(link.downloadAddress)}
+                        >
+                            <div className="font-kai whitespace-nowrap text-center text-[16px]">
                                 点击下载
                             </div>
                             <div className="font-tai whitespace-nowrap text-center text-[12px]">
@@ -99,7 +99,7 @@ const Receive = () => {
                     </div>
                     {cardText ? (
                         <div className="mt-6 pl-4 pr-4 text-start font-bold text-red-500">
-                            !!!注意提前保存好卡密信息后再关闭当前页面，防止损失
+                            !!!保存好卡密信息后再关闭当前页面，防止丢失
                         </div>
                     ) : (
                         ""
