@@ -1,6 +1,9 @@
 @import "tailwindcss";
 /* @plugin "@tailwindcss/container-queries"; */
-
+html {
+    /* 375 画布 → 100px；414 画布 → 110.4px；360 画布 → 96px */
+    font-size: clamp(80px, 26.6667vw, 120px); /* 26.6667vw = 100/375*100 */
+}
 body {
     margin: 0;
 }
