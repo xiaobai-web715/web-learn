@@ -6,5 +6,5 @@ export const getReceiveRequest = (tag: string) => {
         message: string;
         card_type: string;
         card_code: string;
-    }>(`/carmine/free/get/${tag}`);
+    }>(`/api/carmine/free/get/${tag}`);
 };

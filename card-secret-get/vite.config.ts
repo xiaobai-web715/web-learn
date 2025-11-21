@@ -11,4 +11,13 @@ export default defineConfig({
             "@": path.resolve(__dirname, "./src"),
         },
     },
+    server: {
+        proxy: {
+            '/api' : {
+                target: "http://104.143.32.25:80",
+                changeOrigin: true,              // 修改请求头中的 host
+                // rewrite: (path) => path.replace(/^\/api/, ''), // 可选：去掉 /api 前缀
+            }
+        }
+    }
 });

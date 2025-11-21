@@ -26,8 +26,12 @@ const Receive = () => {
                     toast.error(res.data.message);
                 }
             })
-            .catch(() => {
-                toast.error("获取失败");
+            .catch((err) => {
+                if (err?.response?.data?.message) {
+                    toast.error(err.response.data.message);
+                } else {
+                    toast.error("获取失败");
+                }
             })
             .finally(() => {
                 setIsGetIng(false);

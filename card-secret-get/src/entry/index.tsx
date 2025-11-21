@@ -33,7 +33,10 @@ const GamesEntry = () => {
             <div className="grid-style grid h-screen">
                 <div className="pt-6">
                     <div className="font-kai text-center text-[40px] font-bold">GAMERS STORE</div>
-                    <div className="font-tai text-center text-[14px]">点击游戏图标查看详情介绍</div>
+                    <div className="text-center text-[1.5rem] font-bold mt-2">
+                        <div className="font-tai">点击游戏图标查看详情介绍</div>
+                        <div className="font-kai text-[1rem]">Click on the game icon to view the details</div>
+                    </div>
                 </div>
                 <div className="flex items-start justify-center">
                     {myGamesList.map((item, index) => {
