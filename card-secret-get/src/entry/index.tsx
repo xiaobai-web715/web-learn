@@ -31,8 +31,10 @@ const GamesEntry = () => {
     return (
         <div className="entry-page overflow-y-scroll bg-cover bg-center bg-no-repeat text-white">
             <div className="grid-style grid h-screen">
-                <div className="pt-[0.24rem]">
-                    <div className="font-kai text-center text-[0.4rem] font-bold">GAMERS STORE</div>
+                <div className="mb-[0.4rem] pt-[0.24rem]">
+                    <div className="font-kai text-center text-[0.4rem] font-bold text-[#16b9ff]">
+                        GAMERS STORE
+                    </div>
                     <div className="mt-[0.08rem] text-center text-[0.24rem] font-bold">
                         <div className="font-tai">点击游戏图标查看详情介绍</div>
                         <div className="font-kai text-[0.16rem]">
@@ -97,7 +99,7 @@ const GamesEntry = () => {
                                 className="[@media(max-width:900px)]:mb-[0.2rem] [@media(max-width:900px)]:mt-[0.2rem]"
                             >
                                 <div
-                                    className="border-box group relative m-auto w-[3rem] cursor-pointer border-[0.03rem] border-gray-600 [@media(max-width:750px)]:w-[70%]"
+                                    className="border-box group relative m-auto w-12 cursor-pointer border-[0.03rem] border-gray-600 [@media(max-width:750px)]:w-[70%]"
                                     key={index}
                                     onClick={() => gotoInterPage(item.tag)}
                                 >

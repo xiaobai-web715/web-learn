@@ -49,42 +49,46 @@ const Receive = () => {
         <React.Fragment>
             <Toaster position="top-right" />
             <div className="receive-page bg-linear-to-br flex h-screen w-screen items-center justify-center from-indigo-900 via-purple-800 to-fuchsia-700">
-                <div className="max-h-max w-[400px] rounded-2xl bg-transparent pb-12 pt-6 text-white shadow-2xl">
-                    <div className="pb-3 text-center text-[20px] font-bold">BBC-DMA</div>
-                    <div className="relative m-auto box-border w-[80%] rounded-[10px] bg-[#eee]/30 p-4">
-                        <div className="absolute left-0 top-0 h-full w-full rounded-[10px] border-l-4 border-l-amber-600"></div>
-                        <div className="font-kai mb-2 text-[18px] font-bold">系统公告</div>
-                        <div className="font-kai text-[14px]">每人每天限制领取2张卡密</div>
-                        <div className="font-tai text-[14px]">Maximum 2 keys per user per day</div>
+                <div className="max-h-max w-16 rounded-[0.16rem] bg-transparent pb-[0.48rem] pt-[0.24rem] text-white shadow-2xl [@media(max-width:520px)]:w-[80%]">
+                    <div className="pb-[0.12rem] text-center text-[0.2rem] font-bold">BBC-DMA</div>
+                    <div className="relative m-auto box-border w-[80%] rounded-[0.1rem] bg-[#eee]/30 p-[0.16rem]">
+                        <div className="absolute left-0 top-0 h-full w-full rounded-[0.1rem] border-l-4 border-l-amber-600"></div>
+                        <div className="font-kai mb-[0.08rem] text-[0.18rem] font-bold">
+                            系统公告
+                        </div>
+                        <div className="font-kai text-[0.14rem]">每人每天限制领取2张卡密</div>
+                        <div className="font-tai text-[0.14rem]">
+                            Maximum 2 keys per user per day
+                        </div>
                         {/* <div>--------------------------</div>
                         <div className="font-kai text-[14px]">官方网站【https://bbcdma.com/ 】</div>
                         <div className="font-tai text-[14px]">{`Official Website [https://bbcdma.com/]`}</div> */}
                     </div>
-                    <div className="mb-6 mt-6 flex items-center justify-center text-[16px] font-bold">
+                    <div className="mb-[0.24rem] mt-[0.24rem] flex items-center justify-center text-[0.16rem] font-bold">
                         <div
-                            className="ml-4 mr-4 cursor-pointer rounded-[5px] bg-[#52c41a] pb-2 pl-6 pr-6 pt-2 text-center active:scale-95 active:shadow-md"
+                            className="ml-[0.16rem] mr-[0.16rem] cursor-pointer rounded-[0.05rem] bg-[#52c41a] pb-[0.08rem] pl-[0.24rem] pr-[0.24rem] pt-[0.08rem] text-center active:scale-95 active:shadow-md [@media(max-width:520px)]:pl-[0.14rem] [@media(max-width:520px)]:pr-[0.14rem]"
                             onClick={() => getReceive()}
                         >
-                            <div className="font-kai whitespace-nowrap text-center text-[16px]">
+                            <div className="font-kai whitespace-nowrap text-center text-[0.16rem]">
                                 点击领取
                             </div>
-                            <div className="font-tai whitespace-nowrap text-center text-[12px]">
+                            <div className="font-tai whitespace-nowrap text-center text-[0.12rem]">
                                 Click to Claim
                             </div>
                         </div>
                         <div
-                            className="ml-4 mr-4 cursor-pointer rounded-[5px] bg-[#1677ff] pb-2 pl-6 pr-6 pt-2 text-center active:scale-95 active:shadow-md"
+                            className="ml-[0.16rem] mr-[0.16rem] cursor-pointer rounded-[0.05rem] bg-[#1677ff] pb-[0.08rem] pl-[0.24rem] pr-[0.24rem] pt-[0.08rem] text-center active:scale-95 active:shadow-md [@media(max-width:520px)]:pl-[0.14rem] [@media(max-width:520px)]:pr-[0.14rem]"
                             onClick={() => gotoExternal(link.downloadAddress)}
                         >
-                            <div className="font-kai whitespace-nowrap text-center text-[16px]">
+                            <div className="font-kai whitespace-nowrap text-center text-[0.16rem]">
                                 点击下载
                             </div>
-                            <div className="font-tai whitespace-nowrap text-center text-[12px]">
+                            <div className="font-tai whitespace-nowrap text-center text-[0.12rem]">
                                 Download
                             </div>
                         </div>
                     </div>
-                    <div className="m-auto w-[80%] rounded-[5px] bg-white pb-8 pt-8 text-center text-[14px] font-normal text-black">
+                    <div className="m-auto w-[80%] rounded-[0.05rem] bg-white pb-[0.32rem] pt-[0.32rem] text-center text-[0.14rem] font-normal text-black">
                         {cardText ? (
                             <React.Fragment>
                                 <div>Game：{GetReceiveName[(tag as PageTag) || PageTag.AQTW]}</div>
@@ -95,14 +99,14 @@ const Receive = () => {
                                 <div className="font-kai whitespace-nowrap text-center">
                                     点击上方获取卡密
                                 </div>
-                                <div className="font-kai whitespace-nowrap text-center text-[12px] text-[#999]">
+                                <div className="font-kai whitespace-nowrap text-center text-[0.12rem] text-[#999]">
                                     每日可以领取：2次
                                 </div>
                             </React.Fragment>
                         )}
                     </div>
                     {cardText ? (
-                        <div className="mt-6 pl-4 pr-4 text-start font-bold text-red-500">
+                        <div className="mt-[0.24rem] pl-[0.16rem] pr-[0.16rem] text-start font-bold text-red-500">
                             !!!保存好卡密信息后再关闭当前页面，防止丢失
                         </div>
                     ) : (
