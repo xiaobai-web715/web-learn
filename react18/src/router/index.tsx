@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
@@ -23,6 +23,7 @@ const ScreenShot = lazy(() => import('src/page/view/screenshot/index'));
 const Squared = lazy(() => import('src/page/view/Squared/index'));
 const CssProperty = lazy(() => import('src/page/view/CssProperty/index'));
 const IntersectionObserverTest = lazy(() => import('src/page/view/IntersectionObserver/index'));
+const Closure = lazy(() => import('src/page/view/closure/index')); // 闭包测试
 
 const store = configureStore({
     reducer,
@@ -34,39 +35,42 @@ function RouterIndex() {
     return (
         <Provider store={store}>
             <Router>
-                <Routes>
-                    <Route path="/" element={<App />}>
-                        <Route path="app-react">
-                            <Route path="app">
-                                <Route path="select" element={<SelectIndex></SelectIndex>}></Route>
-                                <Route path="todoList" element={<TableIndex></TableIndex>}></Route>
-                                <Route path="zendesk" element={<ZendeskIndex></ZendeskIndex>}></Route>
-                                <Route path="touchByMiatask" element={<TouchByMiatask></TouchByMiatask>}></Route>
-                                <Route path="CSS/charge" element={<Charge></Charge>}></Route>
-                                <Route path="CSS/button" element={<Button></Button>}></Route>
-                                <Route path="ReduxPosts" element={<Posts></Posts>}></Route>
-                                <Route path="ReduxPosts/:postId" element={<SinglePostPage></SinglePostPage>}></Route>
-                                <Route
-                                    path="ReduxPosts/editPost/:postId"
-                                    element={<EditPostForm></EditPostForm>}
-                                ></Route>
-                                <Route path="HOC" element={<HOC></HOC>}></Route>
-                                <Route path="ReactRender" element={<ReactRender></ReactRender>}></Route>
-                                <Route path="UploadFile" element={<UploadFile></UploadFile>}></Route>
-                                <Route path="upFile" element={<UpFile></UpFile>}></Route>
-                                <Route path="scrollDate" element={<ScrollDate></ScrollDate>}></Route>
-                                <Route path="screenShot" element={<ScreenShot></ScreenShot>}></Route>
-                                <Route path="squared" element={<Squared></Squared>}></Route>
-                                <Route path="css_property" element={<CssProperty></CssProperty>}></Route>
-                                <Route
-                                    path="intersection_observer"
-                                    element={<IntersectionObserverTest></IntersectionObserverTest>}
-                                ></Route>
+                <Suspense fallback={<div>加载中...</div>}>
+                    <Routes>
+                        <Route path="/" element={<App />}>
+                            <Route path="app-react">
+                                <Route path="app">
+                                    <Route path="select" element={<SelectIndex></SelectIndex>}></Route>
+                                    <Route path="todoList" element={<TableIndex></TableIndex>}></Route>
+                                    <Route path="zendesk" element={<ZendeskIndex></ZendeskIndex>}></Route>
+                                    <Route path="touchByMiatask" element={<TouchByMiatask></TouchByMiatask>}></Route>
+                                    <Route path="CSS/charge" element={<Charge></Charge>}></Route>
+                                    <Route path="CSS/button" element={<Button></Button>}></Route>
+                                    <Route path="ReduxPosts" element={<Posts></Posts>}></Route>
+                                    <Route path="ReduxPosts/:postId" element={<SinglePostPage></SinglePostPage>}></Route>
+                                    <Route
+                                        path="ReduxPosts/editPost/:postId"
+                                        element={<EditPostForm></EditPostForm>}
+                                    ></Route>
+                                    <Route path="HOC" element={<HOC></HOC>}></Route>
+                                    <Route path="ReactRender" element={<ReactRender></ReactRender>}></Route>
+                                    <Route path="UploadFile" element={<UploadFile></UploadFile>}></Route>
+                                    <Route path="upFile" element={<UpFile></UpFile>}></Route>
+                                    <Route path="scrollDate" element={<ScrollDate></ScrollDate>}></Route>
+                                    <Route path="screenShot" element={<ScreenShot></ScreenShot>}></Route>
+                                    <Route path="squared" element={<Squared></Squared>}></Route>
+                                    <Route path="css_property" element={<CssProperty></CssProperty>}></Route>
+                                    <Route
+                                        path="intersection_observer"
+                                        element={<IntersectionObserverTest></IntersectionObserverTest>}
+                                    ></Route>
+                                    <Route path="closure" element={<Closure></Closure>}></Route>
+                                </Route>
                             </Route>
+                            <Route path="*" element={<div>当前页面不存在</div>}></Route>
                         </Route>
-                        <Route path="*" element={<div>当前页面不存在</div>}></Route>
-                    </Route>
-                </Routes>
+                    </Routes>
+                </Suspense>
             </Router>
         </Provider>
     );

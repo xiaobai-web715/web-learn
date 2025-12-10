@@ -45,6 +45,7 @@ const App = () => {
                     <div onClick={() => goPage('/squared')}>九宫格抽奖</div>
                     <div onClick={() => goPage('/css_property')}>@property</div>
                     <div onClick={() => goPage('/intersection_observer')}>IntersectionObserver</div>
+                    <div onClick={() => goPage('/closure')}>closure</div>
                 </div>
                 <div className={Css['content']}>
                     <Outlet />
