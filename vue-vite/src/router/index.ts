@@ -66,6 +66,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/debugger-snapdom',
         name: 'debugger-snapdom',
         component: () => import('@/view/debugger-snapdom.vue')
+    },
+    {
+        path: '/test-defineAsyncComponent',
+        name: 'test-defineAsyncComponent',
+        component: () => import('@/view/test-defineAsyncComponent/index.vue')
     }
 ];
 
