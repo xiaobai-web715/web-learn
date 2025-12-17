@@ -1,2 +1,15 @@
 {
-}
+    "editor.formatOnSave": true,
+  
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "always"
+    },
+  
+    "eslint.validate": [
+      "javascript",
+      "typescript",
+      "typescriptreact",
+      "vue"
+    ]
+  }
+  

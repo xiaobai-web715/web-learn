@@ -10,7 +10,8 @@
     "devDependencies": {
         "commitizen": "^4.3.0",
         "conventional-changelog-cli": "^2.2.2",
-        "cz-customizable": "^7.0.0"
+        "cz-customizable": "^7.0.0",
+        "turbo": "^2.6.3"
     },
     "dependencies": {
         "babel-loader": "^10.0.0",
@@ -20,7 +21,15 @@
         "style-loader": "^4.0.0"
     },
     "workspaces": [
-        "./hello-qiankun",
-        "./react18"
-    ]
+        "blog",
+        "card-secret-get",
+        "checkQuestion/*",
+        "debugger-vue",
+        "javascript",
+        "node初体验",
+        "plugIn",
+        "react-optimize",
+        "vue-vite"
+    ],
+    "packageManager": "npm@10.9.0"
 }

@@ -1,45 +1,45 @@
 {
-  "name": "lowcodetest",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc && vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@ant-design/icons-vue": "^7.0.1",
-    "@types/axios": "^0.14.0",
-    "@unocss/preset-rem-to-px": "^0.58.8",
-    "@vue/babel-plugin-jsx": "^1.2.2",
-    "@vue/runtime-dom": "^3.4.21",
-    "@vueuse/core": "^10.9.0",
-    "ant-design-vue": "^4.1.2",
-    "axios": "^1.6.8",
-    "lodash": "^4.17.21",
-    "react": "^18.2.0",
-    "unocss": "^0.58.8",
-    "vue": "^3.4.21",
-    "vue-class-component": "^7.2.6",
-    "vue-property-decorator": "^9.1.2",
-    "vue-router": "^4.3.0",
-    "vue3-smooth-dnd": "^0.0.6"
-  },
-  "devDependencies": {
-    "@rollup/plugin-babel": "^6.0.4",
-    "@types/react": "^18.2.67",
-    "@types/react-dom": "^18.2.22",
-    "@typescript-eslint/eslint-plugin": "^7.3.1",
-    "@typescript-eslint/parser": "^7.3.1",
-    "@vitejs/plugin-vue": "^5.0.4",
-    "@vitejs/plugin-vue-jsx": "^3.1.0",
-    "@vuedx/typescript-plugin-vue": "^0.7.6",
-    "eslint": "^8.57.0",
-    "eslint-plugin-vue": "^9.23.0",
-    "less": "^4.2.0",
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0",
-    "vue-tsc": "^2.0.6"
-  }
+    "name": "lowcodetest",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vue-tsc && vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "@ant-design/icons-vue": "^7.0.1",
+        "@types/axios": "^0.14.0",
+        "@unocss/preset-rem-to-px": "^0.58.8",
+        "@vue/babel-plugin-jsx": "^1.2.2",
+        "@vue/runtime-dom": "^3.4.21",
+        "@vueuse/core": "^10.9.0",
+        "ant-design-vue": "^4.1.2",
+        "axios": "^1.6.8",
+        "lodash": "^4.17.21",
+        "react": "^18.2.0",
+        "unocss": "^0.58.8",
+        "vue": "^3.4.21",
+        "vue-class-component": "^7.2.6",
+        "vue-property-decorator": "^9.1.2",
+        "vue-router": "^4.3.0",
+        "vue3-smooth-dnd": "^0.0.6"
+    },
+    "devDependencies": {
+        "@rollup/plugin-babel": "^6.0.4",
+        "@types/react": "^18.2.67",
+        "@types/react-dom": "^18.2.22",
+        "@typescript-eslint/eslint-plugin": "^7.3.1",
+        "@typescript-eslint/parser": "^7.3.1",
+        "@vitejs/plugin-vue": "^5.0.4",
+        "@vitejs/plugin-vue-jsx": "^3.1.0",
+        "@vuedx/typescript-plugin-vue": "^0.7.6",
+        "eslint": "^8.57.0",
+        "eslint-plugin-vue": "^9.23.0",
+        "less": "^4.2.0",
+        "typescript": "^5.2.2",
+        "vite": "^5.2.0",
+        "vue-tsc": "^2.0.6"
+    }
 }

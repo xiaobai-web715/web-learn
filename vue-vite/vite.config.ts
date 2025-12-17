@@ -4,10 +4,22 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import { fileURLToPath, URL } from 'url';
 import { resolve, join } from 'path';
 import qiankun from 'vite-plugin-qiankun';
-console.log('1234')
+import Components from 'unplugin-vue-components/vite';
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+console.log('1234');
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [vue({}), vueJsx({}), qiankun('vueApp', { useDevMode: true })],
+    plugins: [
+        vue({}),
+        vueJsx({}),
+        qiankun('vueApp', { useDevMode: true }),
+        Components({
+            dirs: ['src/components'],
+            resolvers: [ElementPlusResolver()],
+            dts: true,
+            include: [/\.vue$/, /\.vue\?vue/, /\.vue\.[tj]sx?\?vue/, /\.md$/],
+        }),
+    ],
     // 静态资源服务文件夹
     publicDir: 'public',
     base: './',
