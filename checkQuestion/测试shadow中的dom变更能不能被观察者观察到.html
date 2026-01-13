@@ -2,14 +2,53 @@
 <html>
     <head></head>
     <body>
+        <div id="wujie-app"></div>
         <script>
+            const targetRegExp = /_--_([\w\d]+)_--_/g; // 正则匹配目标信息
+            function dealNeedEncryptNode(parentNode) {
+                const childList = parentNode?.childNodes || [];
+                if (childList.length) {
+                    Array.from(childList).forEach((node) => {
+                        if (node.nodeType === 3) {
+                            console.log(
+                                '我是目标文本节点',
+                                node,
+                                node.textContent,
+                                node.textContent.length,
+                                node?.childList,
+                                targetRegExp.test(node.textContent),
+                            );
+                        }
+                        if (targetRegExp.test(node.textContent)) {
+                            if (node.nodeType === 3) {
+                                const targetElement = document.createElement('span');
+                                targetElement.innerHTML = node.textContent.replace(targetRegExp, (match, id) => {
+                                    return `<span id="${id}">${id}</span>`;
+                                });
+                                parentNode.replaceChild(targetElement, node);
+                            } else {
+                                dealNeedEncryptNode(node);
+                            }
+                        }
+                    });
+                } else {
+                    debugger;
+                    const targetElement = document.createElement('div');
+                    targetElement.innerHTML = parentNode.textContent.replace(targetRegExp, (match, id) => {
+                        return `<span id="${id}">${id}</span>`;
+                    });
+                    if (parentNode.parentNode) {
+                        parentNode.parentNode.replaceChild(targetElement, parentNode);
+                    }
+                }
+            }
             function callback(mutationList, observe) {
                 for (let mutation of mutationList) {
                     if (mutation.addedNodes) {
                         Array.from(mutation.addedNodes).forEach((node) => {
-                            if (node.nodeType === 1) {
-                                // 这里是元素节点
-                                console.log('dom', node);
+                            if (targetRegExp.test(node.textContent)) {
+                                dealNeedEncryptNode(node);
+                            } else if (node.nodeType === 1) {
                             }
                         });
                     }
@@ -19,10 +58,11 @@
             observe.observe(document, {
                 childList: true,
                 subtree: true,
+                characterData: true,
             });
         </script>
         <script>
-            const shodowRoot = document.body.attachShadow({ mode: 'open' });
+            const shodowRoot = document.querySelector('#wujie-app').attachShadow({ mode: 'open' });
             const myDiv = document.createElement('div');
             myDiv.textContent = '123';
             shodowRoot.appendChild(myDiv);
@@ -30,5 +70,13 @@
             myDiv2.textContent = '456';
             document.body.append(myDiv2);
         </script>
+        <div style="height: 150px; background-color: #eee">
+            <div>
+                <div>
+                    <div>_--_lhh_--_</div>
+                </div>
+            </div>
+            <div>_--_1234_--_-_--_5678_--_-_--_9_--_</div>
+        </div>
     </body>
 </html>

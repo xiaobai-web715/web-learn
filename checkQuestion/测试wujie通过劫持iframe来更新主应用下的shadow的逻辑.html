@@ -1,31 +1,36 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-    <head>
-    </head>
+    <head> </head>
     <body>
         <!-- <button onclick="addDomToIframe()">点我</button> -->
         <!-- <iframe src="https://wujie-micro.github.io/doc/api/setupApp.html" id="test-add-dom"></iframe> -->
     </body>
     <script>
-        function getAbsolutePath (url, base) {
-            console.log("我是设置的url", url, base, new URL(url, base).href)
-            return new URL(url, base).href
+        function getAbsolutePath(url, base) {
+            console.log('我是设置的url', url, base, new URL(url, base).href);
+            return new URL(url, base).href;
         }
     </script>
     <script lang="ts">
-        document.cookie = 'test=123; Path=/; SameSite=Strict';
+        document.cookie = 'test=123; Path=/; SameSite=None; Secure'; // 不写domain默认绑定到当前document的host上
+        console.log('设置的cookie信息', document.cookie);
         let iframeContent = null;
         let iframeWindow = null;
         const customElements = window.customElements;
-        let shodowRoot = null
-        const proxyDocument = new Proxy({}, {
-            get(target, prop, handler) {
-                return shodowRoot[prop].bind(shodowRoot)
-            }
-        })
+        let shodowRoot = null;
+        const proxyDocument = new Proxy(
+            {},
+            {
+                get(target, prop, handler) {
+                    return shodowRoot[prop].bind(shodowRoot);
+                },
+            },
+        );
         class MyDom extends HTMLElement {
             connectedCallback() {
-                shodowRoot = this.attachShadow({ mode: 'open'}) // mode：shadow root允许访问的模式
+                shodowRoot = this.attachShadow({ mode: 'open' }); // mode：shadow root允许访问的模式
+                debugger;
+                console.log('我是shodowRoot的属性', [shodowRoot]);
                 Object.defineProperties(shodowRoot, {
                     baseURI: {
                         configurable: true,
@@ -38,50 +43,53 @@
                     },
                     _hasPatch: { get: () => true },
                 });
-            };
+            }
             disconnectedCallback() {
-                console.log('dom-leave')
-            };
-        };
-        function createMyAppElement () {
-            const testDom = document.createElement('my-app')
-            document.body.appendChild(testDom)
+                console.log('dom-leave');
+            }
         }
-        function proxyDocumentPrototype () {
+        function createMyAppElement() {
+            const testDom = document.createElement('my-app');
+            document.body.appendChild(testDom);
+        }
+        function proxyDocumentPrototype() {
             Object.defineProperty(iframeWindow.Document.prototype, 'append', {
-                get: () => proxyDocument['append']
-            })
+                get: () => proxyDocument['append'],
+            });
         }
-        function proxyHTMLImageElement () {
-            const HTMLImageElementDescriptor = Object.getOwnPropertyDescriptor(iframeWindow.HTMLImageElement.prototype, 'src')
+        function proxyHTMLImageElement() {
+            const HTMLImageElementDescriptor = Object.getOwnPropertyDescriptor(
+                iframeWindow.HTMLImageElement.prototype,
+                'src',
+            );
             Object.defineProperty(iframeWindow.HTMLImageElement.prototype, 'src', {
                 set: function (href) {
-                    return HTMLImageElementDescriptor.set.call(this, getAbsolutePath(href, this.baseURI))
-                }
-            })
+                    return HTMLImageElementDescriptor.set.call(this, getAbsolutePath(href, this.baseURI));
+                },
+            });
         }
-        function addDomToIframe () {
-            iframeContent = document.createElement('iframe')
-            const src = getSandboxEmptyPageURL()
-            iframeContent.src = src
-            iframeContent.style = 'display: none'
-            document.body.appendChild(iframeContent)
-            iframeWindow = iframeContent.contentWindow // 必须append之后才有值
-            proxyDocumentPrototype() // 代理Documnet.prototype
-            proxyHTMLImageElement() // 代理HTMLImageElement.prototype
-            createMyAppElement() // 创建自定义元素
+        function addDomToIframe() {
+            iframeContent = document.createElement('iframe');
+            const src = getSandboxEmptyPageURL();
+            iframeContent.src = src;
+            iframeContent.style = 'display: none';
+            document.body.appendChild(iframeContent);
+            iframeWindow = iframeContent.contentWindow; // 必须append之后才有值
+            proxyDocumentPrototype(); // 代理Documnet.prototype
+            proxyHTMLImageElement(); // 代理HTMLImageElement.prototype
+            createMyAppElement(); // 创建自定义元素
             iframeContent.onload = function () {
-                const base = iframeContent.contentWindow.document.createElement('base')
-                base.setAttribute('href', 'https://wujie-micro.github.io')
+                const base = iframeContent.contentWindow.document.createElement('base');
+                base.setAttribute('href', 'https://wujie-micro.github.io');
 
-                const scriptCookie = iframeContent.contentWindow.document.createElement('script')
+                const scriptCookie = iframeContent.contentWindow.document.createElement('script');
                 scriptCookie.textContent = `
                     const testDiv = document.createElement('div')
                     testDiv.textContent = '123'
                     document.append(testDiv)
 
                     const img = document.createElement('img')
-                    img.src = '/doc/wujie.svg'
+                    img.src = 'http://127.0.0.1:3000/doc/wujie.svg'
                     img.alt = '查询的值'
                     img.style = 'width: 50px; height: 50px;'
                     img.onerror = () => console.log("图片请求失败")
@@ -90,17 +98,17 @@
                 `;
 
                 if (iframeContent) {
-                    iframeContent.contentDocument.head.appendChild(base)
-                    iframeContent.contentDocument.body.appendChild(scriptCookie)
+                    iframeContent.contentDocument.head.appendChild(base);
+                    iframeContent.contentDocument.body.appendChild(scriptCookie);
                 }
             };
-        };
-        addDomToIframe()
-        customElements.define('my-app', MyDom)
-        function getSandboxEmptyPageURL () {
-            const blob = new Blob(["<!DOCTYPE html><html><head></head><body></body></html>"], { type: "text/html" });
+        }
+        addDomToIframe();
+        customElements.define('my-app', MyDom);
+        function getSandboxEmptyPageURL() {
+            const blob = new Blob(['<!DOCTYPE html><html><head></head><body></body></html>'], { type: 'text/html' });
             prevURL = URL.createObjectURL(blob);
             return prevURL;
-        };
+        }
     </script>
 </html>
