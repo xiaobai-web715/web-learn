@@ -1,4 +1,4 @@
-import { getEleStruc } from '@/utils/domOptions';
+import { getEleStruc } from '@//utils/domOptions';
 import MessageBusInfo from './messageBusInfo';
 const canModifyDomStyle = (message: any, sender: chrome.runtime.MessageSender, sendResponse: ((response?: any) => void), needInfo: MessageBusInfo) => {
     if (needInfo && needInfo.dom) {

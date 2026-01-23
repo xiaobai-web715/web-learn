@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import { useSelector } from "react-redux"
 import "./index.scss"
 import { AppStore } from "@/view/store"
-import { RegisterIframeEventKey } from "@/content/getPageDomPath/registerResponseToIframeMessage"
+import { RegisterIframeEventKey } from "@//content/getPageDomPath/registerResponseToIframeMessage"
 const ModalContainer = () => {
     const messageBus = useSelector((state: AppStore) => state.messageBus.value)
     useEffect(() => {

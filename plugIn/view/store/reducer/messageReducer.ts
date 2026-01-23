@@ -1,4 +1,4 @@
-import CorresPoand from "@/utils/correspond";
+import CorresPoand from "@//utils/correspond";
 import { createSlice } from "@reduxjs/toolkit";
 interface InitialState {
     value: CorresPoand | null

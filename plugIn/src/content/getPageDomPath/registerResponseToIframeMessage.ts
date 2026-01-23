@@ -1,5 +1,5 @@
-import CorresPoand from "@/utils/correspond"
-import {getSelectTargetHandler} from '@/content/handler'
+import CorresPoand from "@//utils/correspond"
+import {getSelectTargetHandler} from '@//content/handler'
 import { MessageInfo } from "../handler/type"
 export enum RegisterIframeEventKey {
     GET_SELECT_TARGET = 'GET_SELECT_TARGET'

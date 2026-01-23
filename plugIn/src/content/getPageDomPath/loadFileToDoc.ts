@@ -1,4 +1,4 @@
-import CorresPoand from "@/utils/correspond"
+import CorresPoand from "@//utils/correspond"
 
 const addStyleToContent = () => {
     const link = document.createElement('link')

@@ -1,5 +1,5 @@
-import CorresPoand from "@/utils/correspond"
-import { carryIdTpSenderHandler } from "@/utils/handler"
+import CorresPoand from "@//utils/correspond"
+import { carryIdTpSenderHandler } from "@//utils/handler"
 export enum ReturnToSender {
     CARRY_ID_TO_SENDER = "CARRY_ID_TO_SENDER"
 }

@@ -1,4 +1,4 @@
-import { ChromeEventType } from "@/content/getPageDomPath/chomeEventMap"
+import { ChromeEventType } from "@//content/getPageDomPath/chomeEventMap"
 
 export interface MessageInfo<T> {
     type: ChromeEventType,

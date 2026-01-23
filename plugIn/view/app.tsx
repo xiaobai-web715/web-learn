@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { init } from "./store/reducer/messageReducer";
 // import TestButton from "./page/test/index"
 import ModalContainer from '@/view/page/modalContainer'
-import Correspond from "@/utils/correspond";
+import Correspond from "@//utils/correspond";
 import { AppDispatch } from "./store";
 import registerResponseToContentMessage from "./register";
 const Test = () => {

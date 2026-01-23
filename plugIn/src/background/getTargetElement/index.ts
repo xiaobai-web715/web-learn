@@ -1,5 +1,5 @@
-import { ChromeEventType } from "@/content/getPageDomPath/chomeEventMap";
-import { postMessageToTab } from "@/utils/chromeMessage"
+import { ChromeEventType } from "@//content/getPageDomPath/chomeEventMap";
+import { postMessageToTab } from "@//utils/chromeMessage"
 import ChromeStorage from "@/background/chromeStorage";
 import {ChromeStorageEnum} from '@/background/chromeStorage' 
 import CryptoJS from "crypto-js"
