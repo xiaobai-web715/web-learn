@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { useDispatch, useSelector} from 'react-redux';
-import { postAdded } from 'src/reducer/postsSlice'; //导出action creator函数
+import { postAdded, otherTouchToSaga } from 'src/reducer/postsSlice'; //导出action creator函数
 
 export const AddPostForm = () => {
     const dispatch = useDispatch();
@@ -33,6 +33,10 @@ export const AddPostForm = () => {
     ));
     //当标题作者内容都存在的时候才让他发表
     const canSave = Boolean(title) && Boolean(userId) && Boolean(content);
+
+    const onTestSagaAddEventListener = () => {
+        dispatch(otherTouchToSaga());
+    };
     return(
         <section>
             <h2>添加新帖子</h2>
@@ -48,6 +52,7 @@ export const AddPostForm = () => {
                 <textarea id='postContent' name='postContent' value={content} onChange={onContentChanged}></textarea>
                 <button type='button' onClick={onSavePostClicked} disabled={!canSave}>保存帖子</button>
             </form>
+            <button type='button' onClick={onTestSagaAddEventListener}>测试saga</button>
         </section>
     );
 };

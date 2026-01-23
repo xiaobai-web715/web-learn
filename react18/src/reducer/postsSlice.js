@@ -9,35 +9,15 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts',
 );
 const postsSlice = createSlice({
     name: 'posts',
-    // initialState: [
-    //     { id: '1', title: 'First Post!', content: 'Hello!' , date: sub(new Date(), {minutes: 10}).toISOString(), reactions: {
-    //         thumbsUp: 0,
-    //         hooray: 0,
-    //         heart: 0,
-    //         rocket: 0,
-    //         eyes: 0
-    //     }},
-    //     { id: '2', title: 'Second Post', content: 'More text', date: sub(new Date(), {minutes: 5}).toISOString(), reactions: {
-    //         thumbsUp: 0,
-    //         hooray: 0,
-    //         heart: 0,
-    //         rocket: 0,
-    //         eyes: 0
-    //     }},
-    // ],
     initialState: {
         posts: [],
         status: 'idle',
         error: null,
     },
     reducers: {
-        // postAdded(state, action){
-        //     //再次重申一下 => 之所以可以这样写是因为createSlice里面内置了Immer库
-        //     state.push(action.payload);
-        // },
         postAdded: {
             reducer(state, action){
-                state.push(action.payload);
+                state.posts.push(action.payload);
             },
             prepare(title, content, useId){
                 //接收多个参数返回一个我们想要的payload
@@ -80,15 +60,6 @@ const postsSlice = createSlice({
                 };
             }
         },
-        // postUpdated(state, action){
-        //     //对帖子进行编辑
-        //     const {id, title, content} = action.payload;
-        //     const existingPost = state.find(post => post.id === id);
-        //     if(existingPost) {
-        //         existingPost.title = title;
-        //         existingPost.content = content;
-        //     }
-        // }
         reactionAdded: {
             prepare(postId, reaction){
                 return {
@@ -104,6 +75,16 @@ const postsSlice = createSlice({
                 if(existingPost) {
                     existingPost.reactions[reaction] += 1;
                 }
+            }
+        },
+        otherTouchToSaga: {
+            reducer(state, action){
+                console.log('otherTouchToSaga', action);
+            },
+            prepare(){ 
+                return {
+                    payload: {}
+                };
             }
         }
     },
@@ -125,5 +106,5 @@ const postsSlice = createSlice({
             });
     }
 });
-export const {postAdded, postUpdated, reactionAdded} = postsSlice.actions;
+export const {postAdded, postUpdated, reactionAdded, otherTouchToSaga} = postsSlice.actions;
 export default postsSlice.reducer;

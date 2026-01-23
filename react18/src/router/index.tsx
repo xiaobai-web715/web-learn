@@ -2,6 +2,8 @@ import React, { lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import saga, { myMiddleWare1, myMiddleWare2 } from "src/reducer/saga";
+import createSagaMiddleware  from 'redux-saga';
 // configureStore 带来的好处是直接内置了 redux-thunk 和 redux-devtools-extension，这个 devtools 只要将 devTools: true 就可以直接使用。
 import reducer from 'src/reducer/index.js';
 import App from 'src/page/view/App';
@@ -24,10 +26,15 @@ const Squared = lazy(() => import('src/page/view/Squared/index'));
 const CssProperty = lazy(() => import('src/page/view/CssProperty/index'));
 const IntersectionObserverTest = lazy(() => import('src/page/view/IntersectionObserver/index'));
 
+const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
     reducer,
     devTools: true,
+    middleware: (getDefaultMiddleware) => {
+        return getDefaultMiddleware().concat(sagaMiddleware, myMiddleWare2, myMiddleWare1);
+    }
 });
+sagaMiddleware.run(saga);
 function RouterIndex() {
     console.log('我没有执行吗');
     console.log('乾坤属性', window.__POWERED_BY_QIANKUN__);
