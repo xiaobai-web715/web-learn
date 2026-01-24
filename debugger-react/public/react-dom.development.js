@@ -29629,7 +29629,7 @@
   // TODO: This module is used both by the release scripts and to expose a version
   // at runtime. We should instead inject the version number as part of the build
   // process, and use the ReactVersions.js module as the single source of truth.
-  var ReactVersion = '18.3.0';
+  var ReactVersion = '18.3.1';
 
   function createPortal(children, containerInfo, // TODO: figure out the API for cross-renderer implementation.
   implementation) {

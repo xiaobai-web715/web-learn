@@ -12,7 +12,7 @@
   // TODO: This module is used both by the release scripts and to expose a version
   // at runtime. We should instead inject the version number as part of the build
   // process, and use the ReactVersions.js module as the single source of truth.
-  var ReactVersion = '18.3.0';
+  var ReactVersion = '18.3.1';
 
   // ATTENTION
   // When adding new symbols to this file,
@@ -3422,6 +3422,7 @@
   exports.Suspense = REACT_SUSPENSE_TYPE;
   exports.SuspenseList = REACT_SUSPENSE_LIST_TYPE;
   exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals$1;
+  exports.act = act;
   exports.cloneElement = cloneElement$1;
   exports.createContext = createContext;
   exports.createElement = createElement$1;
