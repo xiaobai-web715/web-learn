@@ -10,7 +10,6 @@ const dataFormatProcess = <T, D>(data: T | undefined, config: AxiosRequestConfig
 }
 
 request.interceptors.request.use((config) => {
-    console.log('请求信息', config)
     return config
 }, (error) => {
     console.log("请求出错拦截", error)

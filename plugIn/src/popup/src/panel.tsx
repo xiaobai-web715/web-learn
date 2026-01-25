@@ -1,5 +1,5 @@
 import React, { ReactElement, useState, useEffect } from "react"
-import './panel.scss'
+import './panel.less'
 const EasyFunc = () => {
     const [tabs, setTabs] = useState<chrome.tabs.Tab[]>();
     useEffect(() => {
