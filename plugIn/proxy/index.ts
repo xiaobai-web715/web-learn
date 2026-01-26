@@ -1,4 +1,5 @@
 import { ChromeEventType } from "root/types"
+import { LiePinUrl } from "./targetRequetUrl"
 const haveProxyXHR = Symbol.for('haveProxyXHR')
 // @ts-ignore
 if (window[haveProxyXHR]) {
@@ -7,13 +8,19 @@ if (window[haveProxyXHR]) {
     function myXHR() {
         const xhr = new OriginlXHR()
         xhr.addEventListener('readystatechange', function (e: Event) {
+            const targetUrl = Array.prototype.concat.call([], LiePinUrl)
             if (this.readyState === 4) {
-                window.postMessage({
-                    type: ChromeEventType.GETRequestURL,
-                    data: {
-                        url: this.responseURL,
-                    }
-                })
+                const needResponseData = targetUrl.some(url => this.responseURL.includes(url))
+                if (needResponseData) {
+                    // console.log("我是监听到的目标url", this.responseURL)
+                    window.postMessage({
+                        type: ChromeEventType.GETRequestURL,
+                        data: {
+                            url: this.responseURL,
+                            response: this.response
+                        }
+                    })
+                }
             }
         })
         return xhr

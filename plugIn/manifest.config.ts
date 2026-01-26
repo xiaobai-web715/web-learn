@@ -21,6 +21,7 @@ export default defineManifest({
   content_scripts: [{
     js: ['src/content/main.ts'], // 需要注入的css文件可以通过js引入，编译后的清单会自动注入对应的css资源文件
     matches: ['https://*/*'],
+    run_at: 'document_start'
   }],
   permissions: [
     'sidePanel', // 侧边栏权限
