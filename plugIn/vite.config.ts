@@ -17,6 +17,7 @@ export default defineConfig((env: ConfigEnv) => {
       resolve: {
         alias: {
           '@': `${path.resolve(__dirname, 'src')}`,
+          'root': `${path.resolve(__dirname)}`
         },
       },
       plugins: [
@@ -41,12 +42,20 @@ export default defineConfig((env: ConfigEnv) => {
   } else {
     // 仅打包ts资源，使用库模式
     return {
+      resolve: {
+        alias: {
+          '@': `${path.resolve(__dirname, 'proxy')}`,
+          'root': `${path.resolve(__dirname)}`
+        },
+      },
       build: {
+        target: 'es2015', // 转换语法
         emptyOutDir: true,
         lib: {
           entry: path.resolve(__dirname, 'proxy/index.ts'),
           outDir: 'dist',
           name: "ProxyRequest",
+          formats: ['iife'],
           fileName: 'proxyRequest'
         },
         rollupOptions: {
