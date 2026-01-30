@@ -21,15 +21,9 @@
         "style-loader": "^4.0.0"
     },
     "workspaces": [
-        "blog",
-        "card-secret-get",
-        "checkQuestion/*",
-        "debugger-vue",
-        "javascript",
-        "node初体验",
-        "plugIn",
-        "react-optimize",
-        "vue-vite"
+        "react18",
+        "mobx-test",
+        "mobx-test/packages/*"
     ],
-    "packageManager": "npm@10.9.0"
+    "packageManager": "yarn@4.9.1+sha256.6ffc213b3ce0af5c92507977d9537ea3cc085caa52d1c3f08e94d613407fed19"
 }

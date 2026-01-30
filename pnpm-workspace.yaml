@@ -1,3 +1,4 @@
 packages:
-  - 'packages/*'
-  - 'vue-vite/*'
+  - 'react18'
+  - 'mobx-test'
+  - 'mobx-test/packages/*'

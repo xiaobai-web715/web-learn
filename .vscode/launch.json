@@ -1,6 +1,16 @@
 {
     "configurations": [
         {
+            "name": "mobx-build",
+            "cwd": "${workspaceFolder}/mobx/packages/mobx",
+            "request": "launch",
+            "type": "node",
+            "program": "${workspaceFolder}/mobx/scripts/build.js",
+            "args": [
+                "mobx"
+            ]
+        },
+        {
             "name": "react18",
             // 指定调试时的工作目录
             // 这里设置为 react18 目录，这样 Node.js 就会在这个目录下查找 node_modules
